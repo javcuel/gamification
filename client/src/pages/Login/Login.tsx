@@ -10,17 +10,17 @@ const Login: React.FC = () => {
       <div className="container">
         <div className="row">
           <div className="col">
-            <h1>GAMISPACE</h1>
+            <h1 className="mb-5">GAMISPACE</h1>
           </div>
         </div>
 
         <div className="row">
           <div className="col-3">
             <LinkImage
-              src="src/assets/images/imagesLogin/uva_inf_logo.png"
-              alt="inf_logo"
-              url="https://www.inf.uva.es"
-              width={'60%'}
+              src="images/imagesLogin/uva.png"
+              alt="uva_logo"
+              url="https://www.uva.es"
+              width={'45%'}
             />
           </div>
           <div className="col-6">
@@ -28,10 +28,10 @@ const Login: React.FC = () => {
           </div>
           <div className="col-3">
             <LinkImage
-              src="src/assets/images/imagesLogin/uva_logo_color.png"
-              alt="uva_logo"
-              url="https://www.uva.es"
-              width={'60%'}
+              src="images/imagesLogin/inf.png"
+              alt="inf_logo"
+              url="https://www.inf.uva.es"
+              width={'65%'}
             />
           </div>
         </div>
@@ -39,10 +39,10 @@ const Login: React.FC = () => {
         <div className="row mt-5">
           <div className="col">
             <LinkImage
-              src="src/assets/images/imagesLogin/uva_logo_color.png"
-              alt="uva_logo"
-              url="https://www.uva.es"
-              width={'15%'}
+              src="images/imagesLogin/greidi.jpg"
+              alt="greidi_logo"
+              url="https://www.greidi.infor.uva.es"
+              width={'10%'}
             />
           </div>
         </div>

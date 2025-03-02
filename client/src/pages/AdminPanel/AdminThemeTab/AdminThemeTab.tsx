@@ -1,33 +1,39 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from '../../../components/ui/Button';
+import { ThemeContext } from '../../../context/ThemeContext'; // Asegúrate de importar el ThemeContext
 import ColorPicker from './ColorPicker';
 
-//TODO: CAMBIAR BOTON TEMPORAL POR BOTON ERSONALIZADO DE UI COMPONENTES
 const AdminThemeTab: React.FC = () => {
+  const themeContext = useContext(ThemeContext); // Obtener el contexto
+
+  // Asegurarnos de que el contexto esté definido
+  if (!themeContext) {
+    throw new Error(
+      'ThemeContext is undefined, make sure you are inside the ThemeProvider',
+    );
+  }
+
+  const { updateTheme } = themeContext; // Extraer setTheme y updateTheme de themeContext
   const [colors, setColors] = useState({
-    primary: '#ff0000',
-    secondary: '#00ff00',
-    text: '#0000ff',
+    primary: '#2a2d3d',
+    secondary: '#4f5be5',
+    text: '#d2d7e1',
   });
 
-  const handleSave = () => {
-    // Cambiar las variables CSS en el documento
-    document.documentElement.style.setProperty('--primary', colors.primary);
-    document.documentElement.style.setProperty('--secondary', colors.secondary);
-    document.documentElement.style.setProperty('--text', colors.text);
+  // Función para manejar el guardado del tema
+  const handleSave = async () => {
+    try {
+      // Solo llamamos a updateTheme para actualizar y guardar el tema
+      await updateTheme({
+        primary: colors.primary,
+        secondary: colors.secondary,
+        text: colors.text,
+      });
 
-    // Aquí puedes hacer la llamada a tu backend para guardar estos colores
-    // y asegurarte de que persistan en futuras sesiones de los usuarios.
-    // Ejemplo con fetch:
-    /*
-      fetch('/api/save-colors', {
-        method: 'POST',
-        body: JSON.stringify(colors),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-    */
+      console.log('Colores guardados y aplicados');
+    } catch (error) {
+      console.error('Error al guardar los colores:', error);
+    }
   };
 
   return (
@@ -49,10 +55,7 @@ const AdminThemeTab: React.FC = () => {
               />
               <p className="mt-2">Secundario</p>
             </div>
-            <div
-              className="col-12 col-sm-4 d-flex flex-column align-items-center
-            "
-            >
+            <div className="col-12 col-sm-4 d-flex flex-column align-items-center">
               <ColorPicker
                 initialColor={colors.text}
                 onChange={(c) => setColors({ ...colors, text: c })}
@@ -77,6 +80,7 @@ const AdminThemeTab: React.FC = () => {
             </button>
           </div>
         </div>
+
         <div>
           <Button text="Guardar" onClick={handleSave}></Button>
         </div>

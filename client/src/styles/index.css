@@ -33,6 +33,15 @@ body {
   box-sizing: border-box;
 } */
 
+/* .text-with-background {
+  display: inline-block;
+  background-color: var(--secondary); /* Color de fondo 
+  color: var(--text); 
+  padding: 10px; 
+  border-radius: 20px; 
+  margin-bottom: 1rem;
+} */
+
 .custom-flex-center {
   display: flex;
   align-items: center;

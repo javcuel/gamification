@@ -1,8 +1,9 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import { AuthProvider } from "../context/AuthContext";
-import "../styles/index.css";
-import App from "./App";
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { AuthProvider } from '../context/AuthContext';
+import { ThemeProvider } from '../context/ThemeContext';
+import '../styles/index.css';
+import App from './App';
 
 /**
  * Entry point for the React application.
@@ -10,7 +11,7 @@ import App from "./App";
  * It also sets up global context providers, such as `AuthProvider`, and applies `StrictMode` for debugging.
  */
 
-const rootElement = document.getElementById("root");
+const rootElement = document.getElementById('root');
 
 if (rootElement) {
   /**
@@ -21,8 +22,10 @@ if (rootElement) {
   createRoot(rootElement).render(
     <StrictMode>
       <AuthProvider>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </AuthProvider>
-    </StrictMode>
+    </StrictMode>,
   );
 }

@@ -8,6 +8,7 @@ import authRoutes from "./routes/authRoutes.js"; // Importa las rutas de autenti
 import gameRoutes from "./routes/gameRoutes.js";
 import rankingRoutes from "./routes/rankingRoutes.js"; // Importa las rutas de ranking
 import scoreRoutes from "./routes/scoreRoutes.js"; // Importa las rutas de puntuaciones
+import themeRoutes from "./routes/themeRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import worldRoutes from "./routes/worldRoutes.js";
 
@@ -31,6 +32,7 @@ app.use("/api/ranking", rankingRoutes);
 app.use("/api/worlds", worldRoutes);
 app.use("/api/games", gameRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/theme", themeRoutes);
 
 // Rutas protegidas
 //app.use("/api/protected", protectedRoutes);
