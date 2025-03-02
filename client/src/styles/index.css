@@ -1,0 +1,114 @@
+@import './normalize.css';
+
+:root {
+  --primary: #2a2d3d;
+  --secondary: #4f5be5;
+
+  --text: #d2d7e1;
+  --dark-black: #1c1e2d;
+  --dark-dark-black: #080a12;
+  --dark-blue: #130b40;
+
+  --light-gray: #5f6370;
+  --light-white: #d2d7e1;
+  --highlight-white: #b2d9ff;
+
+  --alert-red: #9c3232;
+  --alert-purple: #424ece;
+  --main-font-family: 'Poppins', sans-serif;
+  --main-font-weight: 600;
+  font-size: 0.9rem;
+}
+
+body {
+  font-family: var(--main-font-family);
+  font-weight: var(--main-font-weight);
+  color: var(--light-white);
+  background-color: var(--dark-black);
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.custom-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-overflow {
+  overflow: hidden;
+}
+
+.carousel .card {
+  display: flex;
+  flex-direction: column; /* Coloca los elementos en columna */
+  justify-content: space-between; /* Asegura que el contenido se distribuya */
+  height: 100%; /* Todas las tarjetas ocuparán el 100% de la altura del contenedor */
+}
+
+.custom-toggle-button {
+  background-color: var(--desaturated-blue);
+  color: var(--light-white);
+  border-radius: 20px;
+  border: none;
+  padding: 10px 25px;
+  transition:
+    background-color 0.5s,
+    color 0.5s;
+  cursor: pointer;
+}
+
+/* Estados de toggle */
+.custom-toggle-button.active {
+  background-color: var(
+    --dark-blue
+  ); /* Nuevo color de fondo cuando está activo */
+  color: var(--dark-white); /* Nuevo color de texto cuando está activo */
+}
+
+/*---------------------------*/
+/*----------PRUEBAS----------*/
+/*---------------------------*/
+
+.custom-planet-card-2 {
+  /*border: none;*/
+
+  border-radius: 60px;
+  margin-bottom: 50px;
+  overflow: hidden;
+  background-color: var(--light-white);
+  color: var(--dark-black);
+}
+
+.custom-top-bg {
+  background-color: #4682b4; /* Color de fondo superior */
+  padding: 20px;
+}
+
+.custom-bottom-bg {
+  background-color: white;
+  padding: 20px;
+}
+
+.custom-planet-img {
+  width: 85%;
+  height: auto;
+  margin: 20px auto;
+  border: 5px solid white;
+}
+
+.custom-button-2 {
+  background-color: #4682b4;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.custom-button-2:hover {
+  background-color: #365f8a;
+}

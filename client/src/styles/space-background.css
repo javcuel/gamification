@@ -1,0 +1,105 @@
+/*TODO: PROVISIONAL ESTO PARA QUE NO SE HAGA SCROLL EN EL LOGIN DESDE MOVIL*/
+
+.universe-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+
+  /* Circle gradient option */
+  /*   background: radial-gradient(
+    circle,
+    var(--dark-dark-black),
+    var(--dark-black)
+  ); */
+
+  background: radial-gradient(
+      ellipse at 20% 30%,
+      var(--dark-dark-black),
+      transparent
+    ),
+    radial-gradient(ellipse at 100% 20%, var(--dark-black), transparent),
+    radial-gradient(
+      ellipse at 10% 80%,
+      var(--dark-blue),
+      var(--dark-dark-black)
+    ),
+    radial-gradient(ellipse at 70% 90%, var(--dark-dark-black), transparent);
+
+  overflow: hidden;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+}
+
+/*radial-gradient([tamaño] [forma] at [posición], [color1], [color2], ...)*/
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background: transparent;
+  background-image: radial-gradient(
+      2px 2px at 20% 30%,
+      var(--light-white),
+      transparent
+    ),
+    radial-gradient(2px 2px at 20% 30%, var(--light-white), transparent),
+    radial-gradient(3.5px 3.5px at 60% 80%, var(--light-white), transparent),
+    radial-gradient(1px 1px at 30% 50%, var(--light-white), transparent),
+    radial-gradient(3px 3px at 75% 25%, var(--light-white), transparent),
+    radial-gradient(1.5px 1.5px at 15% 70%, var(--light-white), transparent),
+    radial-gradient(2.5px 2.5px at 85% 60%, var(--light-white), transparent),
+    radial-gradient(1px 1px at 40% 90%, var(--light-white), transparent),
+    radial-gradient(3px 3px at 60% 50%, var(--light-white), transparent),
+    /*More stars*/
+      radial-gradient(2px 2px at 10% 10%, var(--light-white), transparent),
+    radial-gradient(1.5px 1.5px at 50% 20%, var(--light-white), transparent),
+    radial-gradient(3px 3px at 90% 40%, var(--light-white), transparent),
+    radial-gradient(2px 2px at 35% 75%, var(--light-white), transparent),
+    radial-gradient(1px 1px at 70% 95%, var(--light-white), transparent);
+  background-size: 400px 400px;
+  animation: stars-animation 30s linear infinite;
+}
+
+@keyframes stars-animation {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(-400px, -400px);
+  }
+}
+
+.fast-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background: transparent;
+  background-image: radial-gradient(
+      1px 1px at 10% 20%,
+      var(--light-white),
+      transparent
+    ),
+    radial-gradient(1.5px 1.5px at 30% 40%, var(--light-white), transparent),
+    radial-gradient(1px 1px at 70% 80%, var(--light-white), transparent),
+    radial-gradient(1px 1px at 90% 90%, var(--light-white), transparent),
+    radial-gradient(1.5px 1.5px at 20% 80%, var(--light-white), transparent),
+    radial-gradient(1px 1px at 40% 10%, var(--light-white), transparent);
+  background-size: 500px 500px; /* Estrellas más pequeñas y densas */
+  animation: fast-stars-animation 50s linear infinite; /* Más rápida */
+}
+
+@keyframes fast-stars-animation {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(-500px, -500px);
+  }
+}
