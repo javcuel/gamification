@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import useLogout from "../../hooks/useLogout";
-import AdminAddGameTab from "./AdminAddGameTab/AdminAddGameTab";
-import AdminAddUserTab from "./AdminAddUserTab/AdminAddUserTab";
-import AdminAddWorldTab from "./AdminAddWorldTab/AdminAddWorldTab";
-import AdminManageUsersTab from "./AdminManageUsersTab/AdminManageUsersTab";
-import AdminWorldsGamesTab from "./AdminWorldsGamesTab/AdminWorldsGamesTab";
+import React, { useState } from 'react';
+import useLogout from '../../hooks/useLogout';
+import AdminAddGameTab from './AdminAddGameTab/AdminAddGameTab';
+import AdminAddUserTab from './AdminAddUserTab/AdminAddUserTab';
+import AdminAddWorldTab from './AdminAddWorldTab/AdminAddWorldTab';
+import AdminManageUsersTab from './AdminManageUsersTab/AdminManageUsersTab';
+import AdminThemeTab from './AdminThemeTab/AdminThemeTab';
+import AdminWorldsGamesTab from './AdminWorldsGamesTab/AdminWorldsGamesTab';
 
 const AdminPanel: React.FC = () => {
-  const [activeTab, setActiveTab] = useState("tab1");
+  const [activeTab, setActiveTab] = useState('tab1');
   const logout = useLogout();
 
   const handleTabChange = (tab: string) => {
@@ -23,16 +24,18 @@ const AdminPanel: React.FC = () => {
 
   const renderComponent = () => {
     switch (activeTab) {
-      case "tab1":
+      case 'tab1':
         return <AdminWorldsGamesTab />;
-      case "tab2":
+      case 'tab2':
         return <AdminManageUsersTab />;
-      case "tab3":
+      case 'tab3':
         return <AdminAddWorldTab />;
-      case "tab4":
+      case 'tab4':
         return <AdminAddGameTab />;
-      case "tab5":
+      case 'tab5':
         return <AdminAddUserTab />;
+      case 'tab6':
+        return <AdminThemeTab />;
       default:
         return <AdminWorldsGamesTab />;
     }
@@ -43,22 +46,22 @@ const AdminPanel: React.FC = () => {
       {/* Header Section */}
       <div
         style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "20px",
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '20px',
         }}
       >
         <h2>AdminPanel</h2>
         <button
           onClick={handleLogoutClick}
           style={{
-            backgroundColor: "#d9534f",
-            color: "white",
-            border: "none",
-            padding: "10px 15px",
-            borderRadius: "5px",
-            cursor: "pointer",
+            backgroundColor: '#d9534f',
+            color: 'white',
+            border: 'none',
+            padding: '10px 15px',
+            borderRadius: '5px',
+            cursor: 'pointer',
           }}
         >
           Logout
@@ -69,55 +72,57 @@ const AdminPanel: React.FC = () => {
       <ul className="nav nav-tabs">
         <li className="nav-item">
           <a
-            className={`nav-link ${activeTab === "tab1" ? "active" : ""}`}
+            className={`nav-link ${activeTab === 'tab1' ? 'active' : ''}`}
             href="#"
-            onClick={() => handleTabChange("tab1")}
+            onClick={() => handleTabChange('tab1')}
           >
             Worlds and Games
           </a>
         </li>
         <li className="nav-item">
           <a
-            className={`nav-link ${activeTab === "tab2" ? "active" : ""}`}
+            className={`nav-link ${activeTab === 'tab2' ? 'active' : ''}`}
             href="#"
-            onClick={() => handleTabChange("tab2")}
+            onClick={() => handleTabChange('tab2')}
           >
             Manage Users
           </a>
         </li>
         <li className="nav-item">
           <a
-            className={`nav-link ${activeTab === "tab3" ? "active" : ""}`}
+            className={`nav-link ${activeTab === 'tab3' ? 'active' : ''}`}
             href="#"
-            onClick={() => handleTabChange("tab3")}
+            onClick={() => handleTabChange('tab3')}
           >
             Add World
           </a>
         </li>
         <li className="nav-item">
           <a
-            className={`nav-link ${activeTab === "tab4" ? "active" : ""}`}
+            className={`nav-link ${activeTab === 'tab4' ? 'active' : ''}`}
             href="#"
-            onClick={() => handleTabChange("tab4")}
+            onClick={() => handleTabChange('tab4')}
           >
             Add Game
           </a>
         </li>
         <li className="nav-item">
           <a
-            className={`nav-link ${activeTab === "tab5" ? "active" : ""}`}
+            className={`nav-link ${activeTab === 'tab5' ? 'active' : ''}`}
             href="#"
-            onClick={() => handleTabChange("tab5")}
+            onClick={() => handleTabChange('tab5')}
           >
             Add User
           </a>
         </li>
         <li className="nav-item">
           <a
-            className={`nav-link ${activeTab === "tab6" ? "active" : ""}`}
+            className={`nav-link ${activeTab === 'tab6' ? 'active' : ''}`}
             href="#"
-            onClick={() => handleTabChange("tab6")}
-          ></a>
+            onClick={() => handleTabChange('tab6')}
+          >
+            Add Theme
+          </a>
         </li>
       </ul>
       <div>{renderComponent()}</div>

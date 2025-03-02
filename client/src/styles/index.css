@@ -5,7 +5,7 @@
   --secondary: #4f5be5;
 
   --text: #d2d7e1;
-  --dark-black: #1c1e2d;
+  --dark-black: #1e33d3;
   --dark-dark-black: #080a12;
   --dark-blue: #130b40;
 
@@ -23,15 +23,15 @@
 body {
   font-family: var(--main-font-family);
   font-weight: var(--main-font-weight);
-  color: var(--light-white);
-  background-color: var(--dark-black);
+  color: var(--text);
+  background-color: var(--primary);
   margin: 0;
   padding: 0;
 }
 
-* {
+/* * {
   box-sizing: border-box;
-}
+} */
 
 .custom-flex-center {
   display: flex;

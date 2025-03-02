@@ -1,8 +1,8 @@
 import React from 'react';
 import SpaceBackground from '../../components/SpaceBackground';
-import LoginForm from './components/LoginForm';
 import LinkImage from '../../components/ui/LinkImage';
-
+import LoginForm from './components/LoginForm';
+//TODO: Mirar si el segundo div container sirve para algo o es redundante con el de arriba
 const Login: React.FC = () => {
   return (
     <div className="container min-vh-100 custom-flex-center text-center">
