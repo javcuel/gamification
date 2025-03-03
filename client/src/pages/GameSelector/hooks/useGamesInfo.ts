@@ -2,24 +2,28 @@ import { useEffect, useState } from 'react';
 import { Game } from '../../../entities/game';
 import { fetchGames } from '../adapters/api/gameService';
 
-const useGamesInfo = () => {
+const useFetchGames = (subjectId: number) => {
+  // State to store the fetched games
   const [games, setGames] = useState<Game[]>([]);
+
+  // State to store an error message if the fetch fails
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadPlanets = async () => {
+    const loadGames = async () => {
       try {
-        const data = await fetchGames();
-        setGames(data);
+        const gameData = await fetchGames(subjectId);
+        setGames(gameData);
       } catch (error) {
-        setError('Failed to load Subjects');
+        console.error('Error fetching games:', error);
+        setError('Failed to load games');
       }
     };
 
-    loadPlanets();
-  }, []);
+    loadGames();
+  }, [subjectId]); // Empty dependency array ensures this runs only once
 
   return { games, error };
 };
 
-export default useGamesInfo;
+export default useFetchGames;

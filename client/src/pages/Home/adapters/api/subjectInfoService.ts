@@ -2,10 +2,8 @@ import httpClient from '../../../../adapters/api/httpClient';
 import { Subject } from '../../../../entities/subject';
 
 export const fetchSubjects = async (): Promise<Subject[]> => {
-  /*  
-  
   try {
-  const apiResponse = await httpClient.get('/subjects/');
+    const apiResponse = await httpClient.get('/subjects/');
     return apiResponse.map((subject: any) => ({
       id: subject.IDMundo,
       name: subject.Nombre,
@@ -18,8 +16,8 @@ export const fetchSubjects = async (): Promise<Subject[]> => {
   } catch (error) {
     console.error('Error fetching subjects data');
     throw new Error('Error fetching subjects data');
-  } */
-  try {
+  }
+  /* try {
     return [
       {
         id: 1,
@@ -70,5 +68,5 @@ export const fetchSubjects = async (): Promise<Subject[]> => {
   } catch (error) {
     console.error('Error fetching subjects data');
     throw new Error('Error fetching subjects data');
-  }
+  } */
 };

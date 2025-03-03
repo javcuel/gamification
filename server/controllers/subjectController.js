@@ -1,12 +1,6 @@
 import db from "../config/db.js";
 
-/**
- * Fetch all worlds.
- * @function getWorlds
- * @param {Request} req - Express request object.
- * @param {Response} res - Express response object.
- */
-export const getWorlds = async (req, res) => {
+export const getSubjects = async (req, res) => {
   try {
     const [rows] = await db.query("SELECT * FROM Mundos ORDER BY Posicion ASC");
     res.json(rows);
@@ -16,13 +10,7 @@ export const getWorlds = async (req, res) => {
   }
 };
 
-/**
- * Update a world.
- * @function updateWorld
- * @param {Request} req - Express request object.
- * @param {Response} res - Express response object.
- */
-export const updateWorld = async (req, res) => {
+export const updateSubject = async (req, res) => {
   const { id } = req.params;
   const { name, imgWorldUrl, imgBackgroundUrl } = req.body;
 
@@ -38,13 +26,7 @@ export const updateWorld = async (req, res) => {
   }
 };
 
-/**
- * Delete a world.
- * @function deleteWorld
- * @param {Request} req - Express request object.
- * @param {Response} res - Express response object.
- */
-export const deleteWorld = async (req, res) => {
+export const deleteSubject = async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -56,13 +38,7 @@ export const deleteWorld = async (req, res) => {
   }
 };
 
-/**
- * Add a new world to the database.
- * @function addWorld
- * @param {Request} req - Express request object.
- * @param {Response} res - Express response object.
- */
-export const addWorld = async (req, res) => {
+export const addSubject = async (req, res) => {
   const { name } = req.body;
   const worldImage = req.files["worldImage"]?.[0]?.filename;
   const backgroundImage = req.files["backgroundImage"]?.[0]?.filename;
@@ -85,13 +61,7 @@ export const addWorld = async (req, res) => {
   }
 };
 
-/**
- * Toggle open/closed state of a world.
- * @function updateWorldOpenState
- * @param {Request} req - Express request object.
- * @param {Response} res - Express response object.
- */
-export const updateWorldOpenState = async (req, res) => {
+export const updateSubjectOpenState = async (req, res) => {
   const { id } = req.params; // Extract world ID from the request parameters
   const { isOpen } = req.body; // Extract the new "open" state from the request body
 
@@ -108,13 +78,7 @@ export const updateWorldOpenState = async (req, res) => {
   }
 };
 
-/**
- * Toggle visible/invisible state of a world.
- * @function updateWorldVisibleState
- * @param {Request} req - Express request object.
- * @param {Response} res - Express response object.
- */
-export const updateWorldVisibleState = async (req, res) => {
+export const updateSubjectVisibleState = async (req, res) => {
   const { id } = req.params; // Extract world ID from the request parameters
   const { isVisible } = req.body; // Extract the new "open" state from the request body
 

@@ -5,8 +5,8 @@
     filter 0.3s ease-in-out;
   color: var(--text);
 
+  border: 2px solid var(--text);
   border-radius: 20px;
-  border: none;
 
   padding: 10px 25px;
 }

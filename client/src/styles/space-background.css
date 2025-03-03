@@ -19,7 +19,7 @@
     radial-gradient(ellipse at 100% 20%, var(--secondary), transparent),
     radial-gradient(ellipse at 10% 80%, var(--primary), var(--secondary)),
     radial-gradient(ellipse at 70% 90%, var(--secondary), transparent);
-  filter: brightness(0.6);
+  filter: brightness(0.5);
   background-attachment: fixed;
   background-size: cover;
   background-position: center center;

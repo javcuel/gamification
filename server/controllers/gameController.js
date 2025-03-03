@@ -1,18 +1,12 @@
 import db from "../config/db.js";
 
-/**
- * Fetch all games for a specific world.
- * @function getGamesByWorld
- * @param {Request} req - Express request object.
- * @param {Response} res - Express response object.
- */
-export const getGamesByWorld = async (req, res) => {
-  const { worldId } = req.params;
+export const getGamesBySubject = async (req, res) => {
+  const { subjectId } = req.params;
 
   try {
     const [rows] = await db.query(
       "SELECT * FROM Minijuegos WHERE IDMundo = ? ORDER BY Posicion ASC",
-      [worldId]
+      [subjectId]
     );
     res.json(rows);
   } catch (error) {
@@ -21,20 +15,14 @@ export const getGamesByWorld = async (req, res) => {
   }
 };
 
-/**
- * Update a game.
- * @function updateGame
- * @param {Request} req - Express request object.
- * @param {Response} res - Express response object.
- */
 export const updateGame = async (req, res) => {
   const { id } = req.params;
-  const { name, maxScore, worldId, imgUrl } = req.body;
+  const { name, maxScore, subjectId, imgUrl } = req.body;
 
   try {
     await db.query(
       "UPDATE Minijuegos SET Nombre = ?, PuntuacionMaxima = ?, IDMundo = ?, UrlImagen = ? WHERE IDMinijuego = ?",
-      [name, maxScore, worldId, imgUrl, id]
+      [name, maxScore, subjectId, imgUrl, id]
     );
     res.json({ message: "Game updated successfully" });
   } catch (error) {
@@ -43,12 +31,6 @@ export const updateGame = async (req, res) => {
   }
 };
 
-/**
- * Delete a game.
- * @function deleteGame
- * @param {Request} req - Express request object.
- * @param {Response} res - Express response object.
- */
 export const deleteGame = async (req, res) => {
   const { id } = req.params;
 

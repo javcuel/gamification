@@ -1,7 +1,7 @@
 import express from "express";
 import {
   deleteGame,
-  getGamesByWorld,
+  getGamesBySubject,
   updateGame,
   updateGameOpenState,
   updateGameVisibleState,
@@ -9,7 +9,7 @@ import {
 const router = express.Router();
 
 // Fetch all games for a specific world
-router.get("/:worldId", getGamesByWorld);
+router.get("/:subjectId", getGamesBySubject);
 
 // Update a specific game
 router.put("/:id", updateGame);

@@ -19,11 +19,12 @@ const GameItem: React.FC<GameProps> = ({ game }) => {
     ? 'image-container'
     : 'image-container-disabled';
 
+  //TODO: IMAGEN PROVISIONAL, SUSTITUIR POR GAME.IMG
   return (
     <div className={gameClassName}>
       <img
         className="button-img"
-        src={game.img}
+        src={'/images/imagesGames/apuntados.png'}
         alt={game.name}
         onClick={() => handleClick()}
       ></img>

@@ -8,9 +8,9 @@ import authRoutes from "./routes/authRoutes.js"; // Importa las rutas de autenti
 import gameRoutes from "./routes/gameRoutes.js";
 import rankingRoutes from "./routes/rankingRoutes.js"; // Importa las rutas de ranking
 import scoreRoutes from "./routes/scoreRoutes.js"; // Importa las rutas de puntuaciones
+import subjectRoutes from "./routes/subjectRoutes.js";
 import themeRoutes from "./routes/themeRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-import worldRoutes from "./routes/worldRoutes.js";
 
 //Instancia de una aplicación express
 const app = express();
@@ -29,7 +29,7 @@ app.use(express.json()); // Para parsear el JSON en las solicitudes
 app.use("/api/score", scoreRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/ranking", rankingRoutes);
-app.use("/api/worlds", worldRoutes);
+app.use("/api/subjects", subjectRoutes);
 app.use("/api/games", gameRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/theme", themeRoutes);

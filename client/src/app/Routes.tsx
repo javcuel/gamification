@@ -70,7 +70,7 @@ const routes: RouteObject[] = [
      */
   },
   {
-    path: '/GameSelector',
+    path: '/GameSelector/:subjectId',
     element: (
       /* <ProtectedRoute
         allowedRoles={roleService.getAllowedRolesForRoute('/GameSelector')}
