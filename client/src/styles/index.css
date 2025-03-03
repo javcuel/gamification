@@ -115,16 +115,9 @@ body {
   overflow: hidden;
 }
 
-.carousel .card {
-  display: flex;
-  flex-direction: column; /* Coloca los elementos en columna */
-  justify-content: space-between; /* Asegura que el contenido se distribuya */
-  height: 100%; /* Todas las tarjetas ocuparán el 100% de la altura del contenedor */
-}
-
 .custom-toggle-button {
-  background-color: var(--desaturated-blue);
-  color: var(--light-white);
+  background-color: var(--text);
+  color: var(--text);
   border-radius: 20px;
   border: none;
   padding: 10px 25px;
@@ -140,47 +133,4 @@ body {
     --dark-blue
   ); /* Nuevo color de fondo cuando está activo */
   color: var(--dark-white); /* Nuevo color de texto cuando está activo */
-}
-
-/*---------------------------*/
-/*----------PRUEBAS----------*/
-/*---------------------------*/
-
-.custom-planet-card-2 {
-  /*border: none;*/
-
-  border-radius: 60px;
-  margin-bottom: 50px;
-  overflow: hidden;
-  background-color: var(--light-white);
-  color: var(--dark-black);
-}
-
-.custom-top-bg {
-  background-color: #4682b4; /* Color de fondo superior */
-  padding: 20px;
-}
-
-.custom-bottom-bg {
-  background-color: white;
-  padding: 20px;
-}
-
-.custom-planet-img {
-  width: 85%;
-  height: auto;
-  margin: 20px auto;
-  border: 5px solid white;
-}
-
-.custom-button-2 {
-  background-color: #4682b4;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-}
-
-.custom-button-2:hover {
-  background-color: #365f8a;
 }
