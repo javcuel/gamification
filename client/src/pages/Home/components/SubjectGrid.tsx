@@ -1,9 +1,9 @@
 import React from 'react';
-import useGamesInfo from '../hooks/useGamesInfo';
-import GameItem from './GameItem';
+import useSubjectInfo from '../hooks/useSubjectInfo';
+import SubjectItem from './SubjectItem';
 
 const SubjectGrid: React.FC = () => {
-  const { games, error } = useGamesInfo();
+  const { subjects, error } = useSubjectInfo();
 
   /*TODO: EL FILTER DE SUBKECT EN BASE A SI ES VISIBLE O NO IGUAL NOS LO PODRIAMOS AHORRAR
   SI HACEMOS QUE EL ENDPOINT DEVUELVA DIRECTAMENTE SOLO LAS ASIGNATURAS QUE SEAN VISIBLES??*/
@@ -15,11 +15,11 @@ const SubjectGrid: React.FC = () => {
       </div>
 
       <div className="row  custom-flex-center text-center">
-        {games
-          .filter((game) => game.isVisible)
-          .map((game, index) => (
+        {subjects
+          .filter((subject) => subject.isVisible)
+          .map((subject, index) => (
             <div className="col-auto" key={index}>
-              <GameItem game={game} />
+              <SubjectItem subject={subject} />
             </div>
           ))}
       </div>

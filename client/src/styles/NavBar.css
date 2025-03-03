@@ -1,9 +1,14 @@
 .navbar {
-  margin: 10px 0px;
   padding: 10px 20px;
+  margin: 10px 10px;
   background-color: var(--secondary);
   border-radius: 20px;
   color: var(--text);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% - 20px);
+  z-index: 9999;
 }
 
 .navbar-brand {

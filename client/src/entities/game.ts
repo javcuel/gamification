@@ -1,7 +1,7 @@
 export interface Game {
   id: number;
-  idWorld: number;
-  imgUrl: string;
+  idSubject: number;
+  img: string;
   name: string;
   maxScore: number;
   isOpen: boolean;

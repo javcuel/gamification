@@ -1,36 +1,29 @@
-import NavBar from "../../components/NavBar/NavBar";
-import SpaceBackground from "../../components/SpaceBackground";
-import GameGrid from "./components/GameGrid";
-import GameIframe from "./components/GameIframe";
-import useFetchGames from "./hooks/useFetchGames";
-import useSelectedGame from "./hooks/useSelectedGame";
+import useUserInfo from '../../hooks/useUserInfo';
+import NavBar from '../../components/NavBar/NavBar';
+import SpaceBackground from '../../components/SpaceBackground';
+import GameGrid from './components/GameGrid';
 
 const GameSelector: React.FC = () => {
-  const { games, error } = useFetchGames();
-  const { selectedGame, loadGame } = useSelectedGame();
-
+  const { name, type, totalScore, completedSubjects } = useUserInfo();
   return (
-    <div className="container-fluid" style={{ height: "100vh" }}>
-      {/* Space Background */}
+    <div className="container-fluid" style={{ height: '100vh' }}>
       <SpaceBackground />
 
-      {/* NavBar*/}
       <div className="row">
-        <div className="col-12 grid-element">
-          <NavBar />
+        <div className="col">
+          <NavBar
+            userName={name}
+            userType={type}
+            userTotalScore={totalScore}
+            userCompletedSubjects={completedSubjects}
+          />
         </div>
       </div>
 
-      {/* Game Grid*/}
-      <div className="row custom-overflow">
-        <div className="col-12 grid-element">
-          <GameGrid games={games} onGameSelect={loadGame} />
+      <div className="row custom-flex-center " style={{ marginTop: '20%' }}>
+        <div className="col">
+          <GameGrid />
         </div>
-      </div>
-
-      {/* Iframe */}
-      <div className="row">
-        {selectedGame && <GameIframe selectedGame={selectedGame} />}
       </div>
     </div>
   );

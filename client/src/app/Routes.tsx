@@ -56,11 +56,11 @@ const routes: RouteObject[] = [
   {
     path: '/Ranking',
     element: (
-      <ProtectedRoute
+      /* <ProtectedRoute
         allowedRoles={roleService.getAllowedRolesForRoute('/Ranking')}
-      >
-        <Ranking />
-      </ProtectedRoute>
+      > */
+      <Ranking />
+      /* </ProtectedRoute> */
     ),
     /**
      * Ranking Route
@@ -72,11 +72,11 @@ const routes: RouteObject[] = [
   {
     path: '/GameSelector',
     element: (
-      <ProtectedRoute
+      /* <ProtectedRoute
         allowedRoles={roleService.getAllowedRolesForRoute('/GameSelector')}
-      >
-        <GameSelector />
-      </ProtectedRoute>
+      > */
+      <GameSelector />
+      /*  </ProtectedRoute> */
     ),
     /**
      * GameSelector Route

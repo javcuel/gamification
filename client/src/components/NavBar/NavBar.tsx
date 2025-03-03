@@ -12,6 +12,7 @@ interface NavBarProps {
   userCompletedSubjects: number;
 }
 
+//TODO: REalizar la llamada a fetchuserinfo
 const NavBar: React.FC<NavBarProps> = ({
   webName = 'Gamispace',
   userName,

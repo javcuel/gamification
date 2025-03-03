@@ -42,6 +42,69 @@ body {
   margin-bottom: 1rem;
 } */
 
+.image-container {
+  position: relative; /*Esto vete a saber */
+  display: inline-block;
+  cursor: pointer;
+  overflow: hidden; /* Esto vete a saber*/
+}
+
+.image-container-disabled {
+  position: relative; /*Esto vete a saber */
+  display: inline-block;
+  cursor: not-allowed;
+  overflow: hidden; /* Esto vete a saber*/
+  filter: brightness(0.4);
+}
+
+.button-img {
+  width: 200px;
+  height: auto;
+  margin: 10px 10px;
+  transition: transform 0.3s ease;
+}
+
+.image-container:hover .button-img {
+  transform: scale(1.1);
+}
+
+.image-container-disabled:hover .button-img {
+  transform: scale(1.1);
+}
+
+.image-overlay {
+  position: absolute;
+  top: 50%; /*Manera como un poco artesanal de centrar el texto*/
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--primary);
+  color: var(--text);
+  padding: 10px;
+  border-radius: 20px;
+  opacity: 0; /* Para que el texto no sea visible al principio */
+  transition: opacity 0.3s ease;
+}
+
+.image-container:hover .image-overlay {
+  opacity: 1;
+}
+
+.image-container-disabled:hover .image-overlay {
+  opacity: 1;
+}
+.image-overlay p {
+  margin: 0;
+  font-size: 1.2 rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  /* Para pantallas de hasta 768px */
+  .image-overlay {
+    opacity: 1;
+  }
+}
+
 .custom-flex-center {
   display: flex;
   align-items: center;

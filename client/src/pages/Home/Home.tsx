@@ -1,18 +1,16 @@
 import useUserInfo from '../../hooks/useUserInfo';
 import NavBar from '../../components/NavBar/NavBar';
 import SpaceBackground from '../../components/SpaceBackground';
-import WorldGrid from './components/WorldGrid';
+import SubjectGrid from './components/SubjectGrid';
 
 const Home: React.FC = () => {
   const { name, type, totalScore, completedSubjects } = useUserInfo();
   return (
     <div className="container-fluid" style={{ height: '100vh' }}>
-      {/* Space Background}*/}
       <SpaceBackground />
 
-      {/* NavBar*/}
       <div className="row">
-        <div className="col-12 grid-element">
+        <div className="col">
           <NavBar
             userName={name}
             userType={type}
@@ -22,10 +20,9 @@ const Home: React.FC = () => {
         </div>
       </div>
 
-      {/* Carrusel*/}
-      <div className="row custom-flex-center" style={{ height: '80vh' }}>
-        <div className="col-12 grid-element">
-          <WorldGrid />
+      <div className="row custom-flex-center " style={{ marginTop: '20%' }}>
+        <div className="col">
+          <SubjectGrid />
         </div>
       </div>
     </div>
