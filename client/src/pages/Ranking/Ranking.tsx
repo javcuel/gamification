@@ -1,19 +1,30 @@
-import React from "react";
-import NavBar from "../../components/NavBar/NavBar";
-import SpaceBackground from "../../components/SpaceBackground";
-import RankingTable from "./components/RankingTable";
+import React from 'react';
+import NavBar from '../../components/NavBar/NavBar';
+import SpaceBackground from '../../components/SpaceBackground';
+import useUserInfo from '../../hooks/useUserInfo';
+import RankingTable from './components/RankingTable';
 
 const Ranking: React.FC = () => {
+  const { name, type, totalScore, completedSubjects } = useUserInfo();
+
   return (
-    <div className="container-fluid" style={{ height: "100vh" }}>
+    <div className="container-fluid" style={{ height: '100vh' }}>
       <SpaceBackground />
-      <div className="row">
-        <div className="col-12 grid-element">
-          <NavBar />
+
+      <div
+        className="container-fluid d-flex flex-column"
+        style={{ height: '100vh' }}
+      >
+        <div style={{ height: '5vh' }}>
+          <NavBar
+            userName={name}
+            userType={type}
+            userTotalScore={totalScore}
+            userCompletedSubjects={completedSubjects}
+          />
         </div>
-      </div>
-      <div className="row">
-        <div className="container custom-flex-center">
+
+        <div className="d-flex flex-grow-1 justify-content-center align-items-center">
           <RankingTable />
         </div>
       </div>

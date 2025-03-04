@@ -40,16 +40,16 @@ const useUserInfo = () => {
         if (decoded) {
           setUserInfo((prev) => ({
             ...prev,
-            userName: decoded.userName,
-            userType: getUserType(decoded.userType),
+            name: decoded.userName,
+            type: getUserType(decoded.userType),
           }));
 
           const scoreData = await UserService.fetchUserScore(); // Fetch score and stars
           if (scoreData) {
             setUserInfo((prev) => ({
               ...prev,
-              userScore: scoreData.score,
-              userStars: scoreData.stars,
+              totalScore: scoreData.score,
+              completedSubjects: scoreData.stars,
             }));
           }
         }

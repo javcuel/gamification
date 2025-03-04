@@ -1,6 +1,6 @@
-import useUserInfo from '../../hooks/useUserInfo';
 import NavBar from '../../components/NavBar/NavBar';
 import SpaceBackground from '../../components/SpaceBackground';
+import useUserInfo from '../../hooks/useUserInfo';
 import SubjectGrid from './components/SubjectGrid';
 
 const Home: React.FC = () => {
@@ -9,8 +9,11 @@ const Home: React.FC = () => {
     <div className="container-fluid" style={{ height: '100vh' }}>
       <SpaceBackground />
 
-      <div className="row">
-        <div className="col">
+      <div
+        className="container-fluid d-flex flex-column"
+        style={{ height: '100vh' }}
+      >
+        <div style={{ height: '5vh' }}>
           <NavBar
             userName={name}
             userType={type}
@@ -18,10 +21,8 @@ const Home: React.FC = () => {
             userCompletedSubjects={completedSubjects}
           />
         </div>
-      </div>
 
-      <div className="row custom-flex-center " style={{ marginTop: '20%' }}>
-        <div className="col">
+        <div className="d-flex flex-grow-1 justify-content-center align-items-center">
           <SubjectGrid />
         </div>
       </div>

@@ -1,7 +1,8 @@
 .navbar {
   padding: 10px 20px;
   margin: 10px 10px;
-  background-color: var(--secondary);
+  /*TODO: Decidir si dejar el color transparente o con var(--secondary)*/
+  background-color: 'transparent';
   border: solid 2px var(--text);
   border-radius: 20px;
   color: var(--text);
