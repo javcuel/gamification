@@ -4,9 +4,14 @@
   color: var(--text);
 
   border: 2px solid var(--text);
-  border-radius: 20px;
+
+  border-radius: 15px;
 
   padding: 15px 15px;
+  letter-spacing: 1px;
+
+  width: 70%;
+  margin: 0 auto; /* Centra el input dentro del contenedor */
 }
 
 .input:focus {

@@ -1,3 +1,5 @@
+import '../../styles/LinkImage.css';
+
 type LinkImageProps = {
   src: string;
   alt: string;
@@ -15,7 +17,13 @@ const LinkImage: React.FC<LinkImageProps> = ({
 }) => {
   return (
     <a href={url} target="_blank" rel="noopener noreferrer">
-      <img src={src} alt={alt} width={width} height={height} />
+      <img
+        className="link-image"
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+      />
     </a>
   );
 };

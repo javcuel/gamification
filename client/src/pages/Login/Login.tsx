@@ -1,5 +1,6 @@
 import React from 'react';
 import SpaceBackground from '../../components/SpaceBackground';
+import FloatingText from '../../components/ui/FloatingText';
 import LinkImage from '../../components/ui/LinkImage';
 import LoginForm from './components/LoginForm';
 //TODO: Mirar si el segundo div container sirve para algo o es redundante con el de arriba
@@ -7,10 +8,12 @@ const Login: React.FC = () => {
   return (
     <div className="container min-vh-100 custom-flex-center text-center">
       <SpaceBackground />
-      <div className="container">
+      <div className="container ">
         <div className="row">
-          <div className="col">
-            <h1 className="mb-5">GAMISPACE</h1>
+          <div className="col mb-5">
+            <FloatingText />
+
+            {/*  <h1 className="mb-5">GAMISPACE</h1> */}
           </div>
         </div>
 
@@ -20,7 +23,7 @@ const Login: React.FC = () => {
               src="images/imagesLogin/uva.png"
               alt="uva_logo"
               url="https://www.uva.es"
-              width={'45%'}
+              width={'60%'}
             />
           </div>
           <div className="col-6">
@@ -31,7 +34,7 @@ const Login: React.FC = () => {
               src="images/imagesLogin/inf.png"
               alt="inf_logo"
               url="https://www.inf.uva.es"
-              width={'65%'}
+              width={'60%'}
             />
           </div>
         </div>
