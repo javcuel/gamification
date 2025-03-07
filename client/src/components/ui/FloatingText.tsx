@@ -1,7 +1,12 @@
 import { animated, useSpring } from 'react-spring';
 import '../../styles/FloatingText.css'; // O puedes agregar el estilo directamente en este archivo
+import React from 'react';
 
-const FloatingText = () => {
+interface FloatingTexProps {
+  text: string;
+}
+
+const FloatingText: React.FC<FloatingTexProps> = ({ text }) => {
   // Animación de flotación (movimiento sutil)
   const springStyles = useSpring({
     from: { transform: 'translateY(0px)' }, // Posición inicial
@@ -14,7 +19,7 @@ const FloatingText = () => {
 
   return (
     <animated.h1 className="floating-title" style={springStyles}>
-      Gamispace
+      {text}
     </animated.h1>
   );
 };

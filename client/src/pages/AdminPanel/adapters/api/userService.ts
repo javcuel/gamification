@@ -1,16 +1,16 @@
-import httpClient from "../../../../adapters/api/httpClient";
-import { User } from "../../../../entities/user";
+import httpClient from '../../../../adapters/api/httpClient';
+import { User } from '../../../../entities/user';
 
 interface AddUserPayload {
   name: string;
-  password: string;
-  role: string;
+  passwd: string;
+  type: string;
   group: string;
 }
 
 export const fetchUsers = async (): Promise<User[]> => {
   try {
-    const apiResponse = await httpClient.get("/users/");
+    const apiResponse = await httpClient.get('/users/');
     return apiResponse.map((user: any) => ({
       id: user.IDUsuario,
       name: user.Nombre,
@@ -19,8 +19,8 @@ export const fetchUsers = async (): Promise<User[]> => {
       stars: 0,
     }));
   } catch (error) {
-    console.error("Error fetching users:", error);
-    throw new Error("Failed to fetch users");
+    console.error('Error fetching users:', error);
+    throw new Error('Failed to fetch users');
   }
 };
 
@@ -34,7 +34,7 @@ export const deleteUser = async (userId: number): Promise<void> => {
     await httpClient.delete(`/users/${userId}`);
   } catch (error) {
     console.error(`Error deleting user (ID: ${userId}):`, error);
-    throw new Error("Failed to delete user");
+    throw new Error('Failed to delete user');
   }
 };
 
@@ -44,12 +44,12 @@ export const deleteUser = async (userId: number): Promise<void> => {
  * @returns {Promise<void>} A promise resolving when the user is added.
  */
 export const addUserService = async (
-  payload: AddUserPayload
+  payload: AddUserPayload,
 ): Promise<void> => {
   try {
-    await httpClient.post("/users/add", payload);
+    await httpClient.post('/users/add', payload);
   } catch (error) {
-    console.error("Error adding user:", error);
-    throw new Error("Failed to add user");
+    console.error('Error adding user:', error);
+    throw new Error('Failed to add user');
   }
 };

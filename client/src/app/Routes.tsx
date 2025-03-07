@@ -8,6 +8,7 @@ import Login from '../pages/Login/Login';
 import NotFound from '../pages/NotFound/NotFound';
 import Ranking from '../pages/Ranking/Ranking';
 import roleService from '../services/roleService';
+import React from 'react';
 
 /**
  * Route Configuration
@@ -88,11 +89,11 @@ const routes: RouteObject[] = [
   {
     path: '/AdminPanel',
     element: (
-      <ProtectedRoute
+      /* <ProtectedRoute
         allowedRoles={roleService.getAllowedRolesForRoute('/AdminPanel')}
-      >
-        <AdminPanel />
-      </ProtectedRoute>
+      > */
+      <AdminPanel />
+      /*  </ProtectedRoute> */
     ),
     /**
      * AdminPanel Route

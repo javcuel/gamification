@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { addUserService } from "../../adapters/api/userService";
+import { useState } from 'react';
+import { addUserService } from '../../adapters/api/userService';
 
 interface AddUserPayload {
   name: string;
-  password: string;
-  role: string;
+  passwd: string;
+  type: string;
   group: string;
 }
 
@@ -26,7 +26,7 @@ const useAddUser = () => {
       await addUserService(payload);
       setSuccess(true);
     } catch (err) {
-      setError((err as Error).message || "Failed to add user");
+      setError((err as Error).message || 'Failed to add user');
     } finally {
       setLoading(false);
     }

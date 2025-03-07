@@ -37,7 +37,10 @@ const AdminThemeTab: React.FC = () => {
   };
 
   return (
-    <div className="container min-vh-100 d-flex flex-column align-items-center text-center py-4">
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{ minHeight: '100%' }}
+    >
       <div className="row w-100">
         <div className="col-md-8">
           <div className="row g-3">

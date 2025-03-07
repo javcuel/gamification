@@ -1,25 +1,18 @@
 import React, { useState } from 'react';
-import useLogout from '../../hooks/useLogout';
 import AdminAddGameTab from './AdminAddGameTab/AdminAddGameTab';
 import AdminAddUserTab from './AdminAddUserTab/AdminAddUserTab';
 import AdminAddWorldTab from './AdminAddWorldTab/AdminAddWorldTab';
 import AdminManageUsersTab from './AdminManageUsersTab/AdminManageUsersTab';
 import AdminThemeTab from './AdminThemeTab/AdminThemeTab';
 import AdminWorldsGamesTab from './AdminWorldsGamesTab/AdminWorldsGamesTab';
+import SpaceBackground from '../../components/SpaceBackground';
+import NavBar from '../../components/NavBar/NavBar';
 
 const AdminPanel: React.FC = () => {
   const [activeTab, setActiveTab] = useState('tab1');
-  const logout = useLogout();
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
-  };
-
-  /**
-   * Handles the logout action.
-   */
-  const handleLogoutClick = () => {
-    logout();
   };
 
   const renderComponent = () => {
@@ -42,90 +35,84 @@ const AdminPanel: React.FC = () => {
   };
 
   return (
-    <div>
-      {/* Header Section */}
+    <div className="container-fluid" style={{ height: '100vh' }}>
+      <SpaceBackground />
       <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '20px',
-        }}
+        className="container-fluid d-flex flex-column"
+        style={{ height: '100vh' }}
       >
-        <h2>AdminPanel</h2>
-        <button
-          onClick={handleLogoutClick}
-          style={{
-            backgroundColor: '#d9534f',
-            color: 'white',
-            border: 'none',
-            padding: '10px 15px',
-            borderRadius: '5px',
-            cursor: 'pointer',
-          }}
-        >
-          Logout
-        </button>
-      </div>
+        <div style={{ height: '15vh' }}>
+          <NavBar webName="Gamispace" />
+        </div>
 
-      {/* Navigation Tabs*/}
-      <ul className="nav nav-tabs">
-        <li className="nav-item">
-          <a
-            className={`nav-link ${activeTab === 'tab1' ? 'active' : ''}`}
-            href="#"
-            onClick={() => handleTabChange('tab1')}
-          >
-            Worlds and Games
-          </a>
-        </li>
-        <li className="nav-item">
-          <a
-            className={`nav-link ${activeTab === 'tab2' ? 'active' : ''}`}
-            href="#"
-            onClick={() => handleTabChange('tab2')}
-          >
-            Manage Users
-          </a>
-        </li>
-        <li className="nav-item">
-          <a
-            className={`nav-link ${activeTab === 'tab3' ? 'active' : ''}`}
-            href="#"
-            onClick={() => handleTabChange('tab3')}
-          >
-            Add World
-          </a>
-        </li>
-        <li className="nav-item">
-          <a
-            className={`nav-link ${activeTab === 'tab4' ? 'active' : ''}`}
-            href="#"
-            onClick={() => handleTabChange('tab4')}
-          >
-            Add Game
-          </a>
-        </li>
-        <li className="nav-item">
-          <a
-            className={`nav-link ${activeTab === 'tab5' ? 'active' : ''}`}
-            href="#"
-            onClick={() => handleTabChange('tab5')}
-          >
-            Add User
-          </a>
-        </li>
-        <li className="nav-item">
-          <a
-            className={`nav-link ${activeTab === 'tab6' ? 'active' : ''}`}
-            href="#"
-            onClick={() => handleTabChange('tab6')}
-          >
-            Add Theme
-          </a>
-        </li>
-      </ul>
-      <div>{renderComponent()}</div>
+        {/* Tabs + Contenido */}
+        <div>
+          {/* Tabs */}
+          <div>
+            <ul className="nav nav-tabs d-flex justify-content-center gap-5 fs-5">
+              {' '}
+              {/* Centrar los tabs y aumentar el tamaño del texto */}
+              <li className="nav-item">
+                <a
+                  className={`nav-link ${activeTab === 'tab1' ? 'active' : ''}`}
+                  href="#"
+                  onClick={() => handleTabChange('tab1')}
+                >
+                  Subjects
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className={`nav-link ${activeTab === 'tab2' ? 'active' : ''}`}
+                  href="#"
+                  onClick={() => handleTabChange('tab2')}
+                >
+                  Users
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className={`nav-link ${activeTab === 'tab3' ? 'active' : ''}`}
+                  href="#"
+                  onClick={() => handleTabChange('tab3')}
+                >
+                  Add Subjects
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className={`nav-link ${activeTab === 'tab4' ? 'active' : ''}`}
+                  href="#"
+                  onClick={() => handleTabChange('tab4')}
+                >
+                  Add Game
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className={`nav-link ${activeTab === 'tab5' ? 'active' : ''}`}
+                  href="#"
+                  onClick={() => handleTabChange('tab5')}
+                >
+                  Add User
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className={`nav-link ${activeTab === 'tab6' ? 'active' : ''}`}
+                  href="#"
+                  onClick={() => handleTabChange('tab6')}
+                >
+                  Add Theme
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contenido dinámico */}
+          <div className="flex-grow-1 overflow-auto">{renderComponent()}</div>
+        </div>
+      </div>
     </div>
   );
 };

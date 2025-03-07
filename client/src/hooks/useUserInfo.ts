@@ -10,8 +10,10 @@ export const getUserType = (userTypeCode: string): string => {
       return 'Admin';
     case 'D':
       return 'Dev';
+    case 'G':
+      return 'Guest';
     default:
-      return 'User';
+      return 'Userdadas';
   }
 };
 
@@ -35,7 +37,7 @@ const useUserInfo = () => {
       const token = StorageService.getItem('token');
 
       if (token) {
-        const decoded = TokenService.decodeAndValidateToken(token); // Decode the token for user info
+        const decoded = TokenService.decodeAndValidateToken(token);
 
         if (decoded) {
           setUserInfo((prev) => ({
@@ -44,7 +46,7 @@ const useUserInfo = () => {
             type: getUserType(decoded.userType),
           }));
 
-          const scoreData = await UserService.fetchUserScore(); // Fetch score and stars
+          const scoreData = await UserService.fetchUserScore();
           if (scoreData) {
             setUserInfo((prev) => ({
               ...prev,

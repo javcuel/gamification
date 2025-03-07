@@ -11,9 +11,7 @@ const Login: React.FC = () => {
       <div className="container ">
         <div className="row">
           <div className="col mb-5">
-            <FloatingText />
-
-            {/*  <h1 className="mb-5">GAMISPACE</h1> */}
+            <FloatingText text="Gamispace" />
           </div>
         </div>
 

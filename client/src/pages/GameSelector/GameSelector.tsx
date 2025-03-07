@@ -1,22 +1,16 @@
-import useUserInfo from '../../hooks/useUserInfo';
+import React from 'react';
 import NavBar from '../../components/NavBar/NavBar';
 import SpaceBackground from '../../components/SpaceBackground';
 import GameGrid from './components/GameGrid';
 
 const GameSelector: React.FC = () => {
-  const { name, type, totalScore, completedSubjects } = useUserInfo();
   return (
     <div className="container-fluid" style={{ height: '100vh' }}>
       <SpaceBackground />
 
       <div className="row">
         <div className="col">
-          <NavBar
-            userName={name}
-            userType={type}
-            userTotalScore={totalScore}
-            userCompletedSubjects={completedSubjects}
-          />
+          <NavBar webName="Gamispace" />
         </div>
       </div>
 

@@ -1,4 +1,5 @@
 import '../../styles/Input.css';
+import React from 'react';
 
 type InputProps = {
   placeholder: string;

@@ -1,25 +1,17 @@
 import React from 'react';
 import useUserInfo from '../../hooks/useUserInfo';
 import '../../styles/NavBar.css';
-import NavLinks from './NavLinkList';
+import NavLinksList from './NavLinkList';
 import NavUserInfo from './NavUserInfo';
 
 interface NavBarProps {
   webName?: string;
-  userName: string;
-  userType: string;
-  userTotalScore: number;
-  userCompletedSubjects: number;
 }
 
 //TODO: REalizar la llamada a fetchuserinfo
-const NavBar: React.FC<NavBarProps> = ({
-  webName = 'Gamispace',
-  userName,
-  userType,
-  userTotalScore,
-  userCompletedSubjects,
-}) => {
+const NavBar: React.FC<NavBarProps> = ({ webName = 'Gamispace' }) => {
+  const { name, type, totalScore, completedSubjects } = useUserInfo();
+
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
@@ -37,12 +29,16 @@ const NavBar: React.FC<NavBarProps> = ({
         </button>
 
         <div className="collapse navbar-collapse" id="navbarNav">
-          <NavLinks />
+          {/* TODO: Aqui habria que poner esto
+          
+          <NavLinks userType={type}/> */}
+
+          <NavLinksList userType="Admin" />
           <NavUserInfo
-            name={userName}
-            type={userType}
-            totalScore={userTotalScore}
-            completedSubjects={userCompletedSubjects}
+            name={name}
+            type={type}
+            totalScore={totalScore}
+            completedSubjects={completedSubjects}
           />
         </div>
       </div>

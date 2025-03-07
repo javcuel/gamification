@@ -62,7 +62,7 @@ const LoginForm: React.FC = () => {
 
         {error && <div className="alert custom-alert">{error}</div>}
 
-        <Button text="Login"></Button>
+        <Button text="Login" />
       </form>
     </div>
   );

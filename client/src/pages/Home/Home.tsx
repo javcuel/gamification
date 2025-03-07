@@ -1,10 +1,10 @@
 import NavBar from '../../components/NavBar/NavBar';
+import React from 'react';
 import SpaceBackground from '../../components/SpaceBackground';
-import useUserInfo from '../../hooks/useUserInfo';
+
 import SubjectGrid from './components/SubjectGrid';
 
 const Home: React.FC = () => {
-  const { name, type, totalScore, completedSubjects } = useUserInfo();
   return (
     <div className="container-fluid" style={{ height: '100vh' }}>
       <SpaceBackground />
@@ -14,12 +14,7 @@ const Home: React.FC = () => {
         style={{ height: '100vh' }}
       >
         <div style={{ height: '5vh' }}>
-          <NavBar
-            userName={name}
-            userType={type}
-            userTotalScore={totalScore}
-            userCompletedSubjects={completedSubjects}
-          />
+          <NavBar webName="Gamispace" />
         </div>
 
         <div className="d-flex flex-grow-1 justify-content-center align-items-center">
