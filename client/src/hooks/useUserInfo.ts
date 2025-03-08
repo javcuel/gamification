@@ -13,7 +13,7 @@ export const getUserType = (userTypeCode: string): string => {
     case 'G':
       return 'Guest';
     default:
-      return 'Userdadas';
+      return 'User';
   }
 };
 

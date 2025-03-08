@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
+import NavBar from '../../components/NavBar/NavBar';
+import SpaceBackground from '../../components/SpaceBackground';
 import AdminAddGameTab from './AdminAddGameTab/AdminAddGameTab';
 import AdminAddUserTab from './AdminAddUserTab/AdminAddUserTab';
 import AdminAddWorldTab from './AdminAddWorldTab/AdminAddWorldTab';
 import AdminManageUsersTab from './AdminManageUsersTab/AdminManageUsersTab';
 import AdminThemeTab from './AdminThemeTab/AdminThemeTab';
 import AdminWorldsGamesTab from './AdminWorldsGamesTab/AdminWorldsGamesTab';
-import SpaceBackground from '../../components/SpaceBackground';
-import NavBar from '../../components/NavBar/NavBar';
 
 const AdminPanel: React.FC = () => {
   const [activeTab, setActiveTab] = useState('tab1');
@@ -110,7 +110,12 @@ const AdminPanel: React.FC = () => {
           </div>
 
           {/* Contenido dinámico */}
-          <div className="flex-grow-1 overflow-auto">{renderComponent()}</div>
+          <div
+            className="d-flex justify-content-center align-items-center flex-grow-1 overflow-auto"
+            style={{ minHeight: '70vh' }}
+          >
+            {renderComponent()}
+          </div>
         </div>
       </div>
     </div>

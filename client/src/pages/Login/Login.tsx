@@ -1,7 +1,8 @@
 import React from 'react';
 import SpaceBackground from '../../components/SpaceBackground';
-import FloatingText from '../../components/ui/FloatingText';
+//import FloatingText from '../../components/ui/FloatingText';
 import LinkImage from '../../components/ui/LinkImage';
+import WavesText from '../../components/ui/WavesText';
 import LoginForm from './components/LoginForm';
 //TODO: Mirar si el segundo div container sirve para algo o es redundante con el de arriba
 const Login: React.FC = () => {
@@ -11,7 +12,7 @@ const Login: React.FC = () => {
       <div className="container ">
         <div className="row">
           <div className="col mb-5">
-            <FloatingText text="Gamispace" />
+            <WavesText text="Gamispace" />
           </div>
         </div>
 
