@@ -1,13 +1,15 @@
 import { motion } from 'framer-motion';
 import '../../styles/WavesText.css';
+import React from 'react';
 
 interface WavesTextProps {
   text: string;
+  size?: string; // Permite valores como "2rem", "24px" o números (automáticamente en px)
 }
 
-const WavesText: React.FC<WavesTextProps> = ({ text }) => {
+const WavesText: React.FC<WavesTextProps> = ({ text, size = '4vw' }) => {
   return (
-    <div className="waves-title">
+    <div className="waves-title" style={{ fontSize: size }}>
       {text.split('').map((char, index) => (
         <motion.span
           key={index}
@@ -16,7 +18,7 @@ const WavesText: React.FC<WavesTextProps> = ({ text }) => {
           transition={{
             duration: 1.8, // Ajusta la velocidad
             repeat: Infinity,
-            repeatType: 'reverse', // Hace que la animación se devuelva suavemente
+            repeatType: 'reverse',
             ease: 'easeInOut',
             delay: index * 0.1, // Ajusta el desfase del efecto ola
           }}

@@ -1,8 +1,9 @@
 import '../../styles/Button.css';
+import React from 'react';
 
 //TODO: QUE DIFENCIA HAY ENTRE ESTAS DOS OPCIONES
 type ButtonProps = {
-  text: String;
+  text: string;
   onClick?: () => void;
 };
 

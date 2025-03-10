@@ -3,7 +3,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import SpaceBackground from '../../components/SpaceBackground';
 import AdminAddGameTab from './AdminAddGameTab/AdminAddGameTab';
 import AdminAddUserTab from './AdminAddUserTab/AdminAddUserTab';
-import AdminAddWorldTab from './AdminAddWorldTab/AdminAddWorldTab';
+import AdminAddSubjectTab from './AdminAddSubjectTab/AddAddSubjectTab';
 import AdminManageUsersTab from './AdminManageUsersTab/AdminManageUsersTab';
 import AdminThemeTab from './AdminThemeTab/AdminThemeTab';
 import AdminWorldsGamesTab from './AdminWorldsGamesTab/AdminWorldsGamesTab';
@@ -22,7 +22,7 @@ const AdminPanel: React.FC = () => {
       case 'tab2':
         return <AdminManageUsersTab />;
       case 'tab3':
-        return <AdminAddWorldTab />;
+        return <AdminAddSubjectTab />;
       case 'tab4':
         return <AdminAddGameTab />;
       case 'tab5':
