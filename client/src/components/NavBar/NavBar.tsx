@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useUserInfo from '../../hooks/useUserInfo';
 import '../../styles/NavBar.css';
 import NavLinksList from './NavLinkList';
@@ -8,12 +8,12 @@ interface NavBarProps {
   webName?: string;
 }
 
-//TODO: REalizar la llamada a fetchuserinfo
 const NavBar: React.FC<NavBarProps> = ({ webName = 'Gamispace' }) => {
   const { name, type, totalScore, completedSubjects } = useUserInfo();
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <nav className="navbar navbar-expand-lg">
+    <nav className={`navbar navbar-expand-lg ${isExpanded ? 'expanded' : ''}`}>
       <div className="container-fluid">
         <a className="navbar-brand">{webName}</a>
         <button
@@ -22,17 +22,18 @@ const NavBar: React.FC<NavBarProps> = ({ webName = 'Gamispace' }) => {
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
           aria-controls="navbarNav"
-          aria-expanded="false"
+          aria-expanded={isExpanded}
           aria-label="Toggle navigation"
+          onClick={() => setIsExpanded(!isExpanded)}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarNav">
-          {/* TODO: Aqui habria que poner esto
-          
-          <NavLinks userType={type}/> */}
-
+        <div
+          className="collapse navbar-collapse"
+          id="navbarNav"
+          onTransitionEnd={() => setIsExpanded(false)}
+        >
           <NavLinksList userType="Admin" />
           <NavUserInfo
             name={name}
