@@ -1,15 +1,15 @@
 import { motion } from 'framer-motion';
-import '../../styles/WavesText.css';
 import React from 'react';
+import '../../styles/WavesText.css';
 
 interface WavesTextProps {
   text: string;
-  size?: string; // Permite valores como "2rem", "24px" o números (automáticamente en px)
+  // Permite valores como "2rem", "24px" o números (automáticamente en px)
 }
 
-const WavesText: React.FC<WavesTextProps> = ({ text, size = '4vw' }) => {
+const WavesText: React.FC<WavesTextProps> = ({ text }) => {
   return (
-    <div className="waves-title" style={{ fontSize: size }}>
+    <div className="waves-title">
       {text.split('').map((char, index) => (
         <motion.span
           key={index}

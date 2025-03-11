@@ -9,7 +9,7 @@ const Login: React.FC = () => {
   return (
     <div className="container min-vh-100 custom-flex-center text-center">
       <SpaceBackground />
-      <div className="container ">
+      <div className="container">
         <div className="row">
           <div className="col mb-5">
             <WavesText text="Gamispace" />

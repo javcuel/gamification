@@ -40,8 +40,8 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="col align-self-center">
-      <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="d-flex justify-content-center">
+      <div className="d-flex flex-column align-items-center">
         <div className="mb-3">
           <Input
             placeholder="User"
@@ -59,12 +59,10 @@ const LoginForm: React.FC = () => {
             onChange={handlePasswdChange}
           />
         </div>
-
         {error && <div className="alert custom-alert">{error}</div>}
-
         <Button text="Login" />
-      </form>
-    </div>
+      </div>
+    </form>
   );
 };
 
