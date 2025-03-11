@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { deleteWorld } from "../adapters/api/worldGamesService";
+import { useState } from 'react';
+import { deleteWorld } from '../adapters/api/worldGamesService';
 
 const useDeleteWorld = (onDeleteSuccess: (worldId: number) => void) => {
   const [loading, setLoading] = useState(false);
@@ -14,7 +14,7 @@ const useDeleteWorld = (onDeleteSuccess: (worldId: number) => void) => {
       onDeleteSuccess(worldId); // Notifies the parent component of the world's deletion
     } catch (err: any) {
       console.error(`Error deleting world (ID: ${worldId}):`, err);
-      setError(err.message || "Failed to delete the world.");
+      setError(err.message || 'Failed to delete the world.');
     } finally {
       setLoading(false);
     }

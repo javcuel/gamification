@@ -1,8 +1,8 @@
-import { faPencilAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { User } from "../../../entities/user";
-import "./styles/user-item.css";
+import { faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
+import { User } from '../../../entities/user';
+import './styles/user-item.css';
 
 interface UserItemProps {
   user: User;

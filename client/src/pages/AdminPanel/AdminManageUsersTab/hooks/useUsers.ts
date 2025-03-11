@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { User } from "../../../../entities/user";
+import { useEffect, useState } from 'react';
+import { User } from '../../../../entities/user';
 import {
   deleteUser as deleteUserService,
   fetchUsers,
-} from "../../adapters/api/userService";
+} from '../../adapters/api/userService';
 /** TODO: Esto igual separarlo en dos hooks, uno que haga el fetch de los usuarios y otro que haga el delete */
 
 /**
@@ -21,7 +21,7 @@ const useUsers = () => {
         setUsers(fetchedUsers);
       } catch (err) {
         console.error(err);
-        setError("Failed to fetch users");
+        setError('Failed to fetch users');
       }
     };
 
@@ -34,7 +34,7 @@ const useUsers = () => {
       setUsers((prev) => prev.filter((user) => user.id !== userId));
     } catch (err) {
       console.error(err);
-      setError("Failed to delete user");
+      setError('Failed to delete user');
     }
   };
 

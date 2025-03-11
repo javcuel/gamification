@@ -1,6 +1,6 @@
-import React from "react";
-import WorldItem from "../components/WorldItem";
-import useWorlds from "./hooks/useWorlds";
+import React from 'react';
+import WorldItem from '../components/WorldItem';
+import useWorlds from './hooks/useWorlds';
 
 /**
  * AdminWorldGamesTab Component

@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 /**
  * Custom Hook: useLogout
@@ -17,7 +17,7 @@ const useLogout = () => {
    */
   const handleLogout = () => {
     logout();
-    navigate("/"); // Redirect to Login
+    navigate('/'); // Redirect to Login
   };
 
   return handleLogout;

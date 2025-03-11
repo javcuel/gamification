@@ -14,7 +14,7 @@ interface ThemeContextType {
 }
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(
-  undefined,
+  undefined
 );
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -31,7 +31,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     document.documentElement.style.setProperty('--primary', newTheme.primary);
     document.documentElement.style.setProperty(
       '--secondary',
-      newTheme.secondary,
+      newTheme.secondary
     );
     document.documentElement.style.setProperty('--text', newTheme.text);
   };

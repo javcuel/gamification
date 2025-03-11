@@ -5,16 +5,16 @@ import {
   faPencilAlt,
   faTimes,
   faUnlock,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { World } from "../../../entities/world";
-import useDeleteWorld from "../hooks/useDeleteWorld";
-import useExpandWorld from "../hooks/useExpandWorld";
-import useToggleWorldOpenState from "../hooks/useToggleWorldOpenState";
-import useToggleWorldVisibleState from "../hooks/useToggleWorldVisibleState";
-import "../styles/admin-panel.css";
-import GameItem from "./GameItem";
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
+import { World } from '../../../entities/world';
+import useDeleteWorld from '../hooks/useDeleteWorld';
+import useExpandWorld from '../hooks/useExpandWorld';
+import useToggleWorldOpenState from '../hooks/useToggleWorldOpenState';
+import useToggleWorldVisibleState from '../hooks/useToggleWorldVisibleState';
+import '../styles/admin-panel.css';
+import GameItem from './GameItem';
 
 interface WorldItemProps {
   world: World;
@@ -38,7 +38,7 @@ const WorldItem: React.FC<WorldItemProps> = ({ world, onWorldDeleted }) => {
   } = useDeleteWorld(onWorldDeleted);
 
   const handleDeleteClick = () => {
-    if (window.confirm("Are you sure you want to delete this world?")) {
+    if (window.confirm('Are you sure you want to delete this world?')) {
       handleDeleteWorld(world.id);
     }
   };
@@ -47,10 +47,10 @@ const WorldItem: React.FC<WorldItemProps> = ({ world, onWorldDeleted }) => {
     <div className="custom-admin-panel-world-item">
       {/* World Header */}
       <div className="d-flex justify-content-between align-items-center">
-        <div onClick={toggleExpand} style={{ cursor: "pointer" }}>
+        <div onClick={toggleExpand} style={{ cursor: 'pointer' }}>
           {/* TODO: Replace with actual world.imgWorldUrl */}
           <img
-            src={"src/assets/images/imagesPlanets/purple_planet.png"}
+            src={'src/assets/images/imagesPlanets/purple_planet.png'}
             alt={world.name}
             width="60"
             className="me-3"
@@ -60,7 +60,7 @@ const WorldItem: React.FC<WorldItemProps> = ({ world, onWorldDeleted }) => {
         <div>
           {/* Locked Button */}
           <button
-            className={"btn custom-button m-1"}
+            className={'btn custom-button m-1'}
             onClick={toggleOpenState}
             disabled={openLoading}
           >
@@ -69,7 +69,7 @@ const WorldItem: React.FC<WorldItemProps> = ({ world, onWorldDeleted }) => {
 
           {/* Visible Button */}
           <button
-            className={"btn custom-button m-1"}
+            className={'btn custom-button m-1'}
             onClick={toggleVisibleState}
             disabled={visibleLoading}
           >

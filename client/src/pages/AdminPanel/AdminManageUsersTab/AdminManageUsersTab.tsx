@@ -1,6 +1,6 @@
-import React from "react";
-import useUsers from "./hooks/useUsers";
-import UserItem from "./UserItem";
+import React from 'react';
+import useUsers from './hooks/useUsers';
+import UserItem from './UserItem';
 
 /**
  * ManageUsersTab Component

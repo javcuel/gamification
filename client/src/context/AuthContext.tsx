@@ -4,9 +4,9 @@ import React, {
   useContext,
   useEffect,
   useState,
-} from "react";
-import AuthService from "../adapters/api/authService";
-import TokenService from "../services/tokenService";
+} from 'react';
+import AuthService from '../adapters/api/authService';
+import TokenService from '../services/tokenService';
 
 interface AuthContextType {
   isAuthenticated: boolean; // Tracks if the user is logged in
@@ -50,7 +50,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
    * - Updates authentication state if the token is valid.
    */
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     const decoded = token ? TokenService.decodeAndValidateToken(token) : null;
 
     if (decoded) {
@@ -78,7 +78,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     const result = await AuthService.loginRequest(userName, userPasswd);
 
     if (result.success && result.token) {
-      localStorage.setItem("token", result.token);
+      localStorage.setItem('token', result.token);
       const decoded = TokenService.decodeAndValidateToken(result.token);
 
       if (decoded) {
@@ -89,7 +89,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       }
     }
 
-    setError(result.message || "Login failed");
+    setError(result.message || 'Login failed');
     return { success: false };
   };
 
@@ -139,7 +139,7 @@ export const useAuth = () => {
   const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
 
   return context;

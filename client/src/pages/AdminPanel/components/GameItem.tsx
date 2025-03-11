@@ -5,13 +5,13 @@ import {
   faPencilAlt,
   faTimes,
   faUnlock,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { Game } from "../../../entities/game";
-import useToggleGameOpenState from "../hooks/useToggleGameOpenState";
-import useToggleGameVisibleState from "../hooks/useToggleGameVisibleState";
-import "../styles/admin-panel.css";
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
+import { Game } from '../../../entities/game';
+import useToggleGameOpenState from '../hooks/useToggleGameOpenState';
+import useToggleGameVisibleState from '../hooks/useToggleGameVisibleState';
+import '../styles/admin-panel.css';
 
 interface GameItemProps {
   game: Game;
@@ -34,7 +34,7 @@ const GameItem: React.FC<GameItemProps> = ({ game }) => {
     <div className="custom-admin-panel-game-item custom-flex-center">
       {/* TODO: IMAGEN PROVISIONAL, CAMBIAR POR src={game.imgUrl} */}
       <img
-        src={"src/assets/images/imagesGames/marsMiners.png"}
+        src={'src/assets/images/imagesGames/marsMiners.png'}
         alt={game.name}
         width="60"
         className="me-3"
@@ -45,7 +45,7 @@ const GameItem: React.FC<GameItemProps> = ({ game }) => {
       <div>
         {/* Locked Button */}
         <button
-          className={"btn custom-button m-1"}
+          className={'btn custom-button m-1'}
           onClick={toggleOpenState}
           disabled={openLoading} // Disable while toggling
         >
@@ -54,7 +54,7 @@ const GameItem: React.FC<GameItemProps> = ({ game }) => {
 
         {/* Visible Button */}
         <button
-          className={"btn custom-button m-1"}
+          className={'btn custom-button m-1'}
           onClick={toggleVisibleState}
           disabled={visibleLoading} // Disable while toggling
         >

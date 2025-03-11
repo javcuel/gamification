@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   fetchRankingGG,
   fetchRankingGJ,
   fetchRankingJG,
   fetchRankingJJ,
-} from "../adapters/api/rankingService";
+} from '../adapters/api/rankingService';
 
 interface RankingEntry {
   userName?: string;
@@ -21,18 +21,18 @@ const useRankings = (rankingType: string, selectedGame: number) => {
     const loadRankingData = async () => {
       try {
         let data;
-        if (rankingType === "JG") {
+        if (rankingType === 'JG') {
           data = await fetchRankingJG();
-        } else if (rankingType === "GG") {
+        } else if (rankingType === 'GG') {
           data = await fetchRankingGG();
-        } else if (rankingType === "JJ") {
+        } else if (rankingType === 'JJ') {
           data = await fetchRankingJJ(selectedGame);
-        } else if (rankingType === "GJ") {
+        } else if (rankingType === 'GJ') {
           data = await fetchRankingGJ(selectedGame);
         }
         setRankings(data);
       } catch (error) {
-        setError("Error loading rankings");
+        setError('Error loading rankings');
         console.error(error);
       }
     };

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { updateWorldVisibleState } from "../adapters/api/worldGamesService";
+import { useState } from 'react';
+import { updateWorldVisibleState } from '../adapters/api/worldGamesService';
 
 /**
  * Hook to toggle the visible state of a world.
@@ -18,7 +18,7 @@ const useToggleWorldVisibleState = (worldId: number, initialState: boolean) => {
       await updateWorldVisibleState(worldId, newState);
       setIsVisible(newState);
     } catch (error) {
-      console.error("Error toggling world open state:", error);
+      console.error('Error toggling world open state:', error);
     } finally {
       setLoading(false);
     }

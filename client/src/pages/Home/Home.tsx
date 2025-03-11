@@ -1,7 +1,6 @@
-import NavBar from '../../components/NavBar/NavBar';
 import React from 'react';
+import NavBar from '../../components/NavBar/NavBar';
 import SpaceBackground from '../../components/SpaceBackground';
-
 import SubjectGrid from './components/SubjectGrid';
 
 const Home: React.FC = () => {

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import BoltIcon from "../../../components/ui/BoltIcon";
-import StarIcon from "../../../components/ui/StarIcon";
-import useRankings from "../hooks/useRankings";
-import "../styles/ranking.css";
+import React, { useState } from 'react';
+import BoltIcon from '../../../components/ui/BoltIcon';
+import StarIcon from '../../../components/ui/StarIcon';
+import useRankings from '../hooks/useRankings';
+import '../styles/ranking.css';
 /* TODO: Entiendo que el la tabla del ranking deberá coger los nombres de losjuegos de la BD*/
 
 const RankingTable: React.FC = () => {
-  const [rankingType, setRankingType] = useState<string>("JG");
+  const [rankingType, setRankingType] = useState<string>('JG');
   const [selectedGame, setSelectedGame] = useState<number>(0);
 
   const { rankings, error } = useRankings(rankingType, selectedGame);
@@ -30,12 +30,12 @@ const RankingTable: React.FC = () => {
         </div>
 
         {/* Dropdown for selecting specific game, enabled only for JJ and GJ */}
-        {(rankingType === "JJ" || rankingType === "GJ") && (
+        {(rankingType === 'JJ' || rankingType === 'GJ') && (
           <div className="col-md-6">
             <label>Select game</label>
             <select
               className="form-control custom-dropdown"
-              value={selectedGame || ""}
+              value={selectedGame || ''}
               onChange={(e) => setSelectedGame(Number(e.target.value))}
             >
               <option value={120}>Apilas</option>
@@ -60,7 +60,7 @@ const RankingTable: React.FC = () => {
             <thead>
               <tr>
                 <th>Position</th>
-                {rankingType === "GG" || rankingType === "GJ" ? (
+                {rankingType === 'GG' || rankingType === 'GJ' ? (
                   <th>Group</th>
                 ) : (
                   <>
@@ -87,12 +87,12 @@ const RankingTable: React.FC = () => {
               {rankings.slice(0, 10).map((entry, index) => (
                 <tr key={index} className="custom-table-row">
                   <td>{index + 1}</td>
-                  {rankingType === "GG" || rankingType === "GJ" ? (
-                    <td>{entry.userGroup || "N/A"}</td>
+                  {rankingType === 'GG' || rankingType === 'GJ' ? (
+                    <td>{entry.userGroup || 'N/A'}</td>
                   ) : (
                     <>
-                      <td>{entry.userName || "N/A"}</td>
-                      <td>{entry.userGroup || "N/A"}</td>
+                      <td>{entry.userName || 'N/A'}</td>
+                      <td>{entry.userGroup || 'N/A'}</td>
                     </>
                   )}
                   <td>{entry.totalStars || 0}</td>

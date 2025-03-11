@@ -1,9 +1,9 @@
-import httpClient from "../../../../adapters/api/httpClient";
+import httpClient from '../../../../adapters/api/httpClient';
 /*:TODO: Tienes que cambiar el nombre de las funciones, por que las iniciasles JG hacen referencia a nombre españoles y no en ingles*/
 // Mirar a ver tambien si hace falta un tipo ranking fila
 export const fetchRankingJG = async () => {
   try {
-    const apiResponse = await httpClient.get("/ranking/jg");
+    const apiResponse = await httpClient.get('/ranking/jg');
 
     return apiResponse.map((ranking: any) => ({
       userName: ranking.Nombre,
@@ -12,14 +12,14 @@ export const fetchRankingJG = async () => {
       totalScore: ranking.TotalPuntos,
     }));
   } catch (error) {
-    console.error("An error occurred while fetching JG ranking:", error);
+    console.error('An error occurred while fetching JG ranking:', error);
     throw error;
   }
 };
 
 export const fetchRankingGG = async () => {
   try {
-    const apiResponse = await httpClient.get("/ranking/gg");
+    const apiResponse = await httpClient.get('/ranking/gg');
 
     return apiResponse.map((ranking: any) => ({
       userName: ranking.Nombre,
@@ -28,7 +28,7 @@ export const fetchRankingGG = async () => {
       totalScore: ranking.TotalPuntos,
     }));
   } catch (error) {
-    console.error("An error occurred while fetching GG ranking:", error);
+    console.error('An error occurred while fetching GG ranking:', error);
     throw error;
   }
 };
@@ -45,7 +45,7 @@ export const fetchRankingJJ = async (gameId: number) => {
       totalScore: ranking.TotalPuntos,
     }));
   } catch (error) {
-    console.error("An error occurred while fetching JJ ranking:", error);
+    console.error('An error occurred while fetching JJ ranking:', error);
     throw error;
   }
 };
@@ -62,7 +62,7 @@ export const fetchRankingGJ = async (gameId: number) => {
       totalScore: ranking.TotalPuntos,
     }));
   } catch (error) {
-    console.error("An error occurred while fetching GJ ranking:", error);
+    console.error('An error occurred while fetching GJ ranking:', error);
     throw error;
   }
 };

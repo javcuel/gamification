@@ -1,6 +1,6 @@
-import { jwtDecode } from "jwt-decode";
-import { DecodedToken } from "../types/DecodedToken";
-import roleService from "./roleService";
+import { jwtDecode } from 'jwt-decode';
+import { DecodedToken } from '../types/DecodedToken';
+import roleService from './roleService';
 
 /**
  * TokenService
@@ -23,7 +23,7 @@ const TokenService = {
       }
       return null;
     } catch (error) {
-      console.error("Error decoding token:", error);
+      console.error('Error decoding token:', error);
       return null;
     }
   },

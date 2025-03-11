@@ -1,6 +1,6 @@
-import React from "react";
-import { BrowserRouter, useRoutes } from "react-router-dom";
-import routes from "./Routes";
+import React from 'react';
+import { BrowserRouter, useRoutes } from 'react-router-dom';
+import routes from './Routes';
 
 /**
  * AppRoutes Component

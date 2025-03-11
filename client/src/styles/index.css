@@ -58,14 +58,20 @@ body {
   filter: brightness(0.4);
 }
 
+/* TODO: Sacarlo archivo externo */
 .button-img {
   width: 200px;
   height: auto;
   margin: 10px 10px;
-  transition: transform 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+  border-radius: 15px;
+  opacity: 0.8;
 }
 
 .image-container:hover .button-img {
+  opacity: 1;
   transform: scale(1.1);
 }
 
@@ -75,7 +81,7 @@ body {
 
 .image-overlay {
   position: absolute;
-  top: 50%; /*Manera como un poco artesanal de centrar el texto*/
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--secondary);
@@ -83,7 +89,7 @@ body {
   color: var(--text);
   padding: 10px 20px;
   border-radius: 20px;
-  opacity: 0; /* Para que el texto no sea visible al principio */
+  opacity: 0;
   transition: opacity 0.5s ease;
 }
 

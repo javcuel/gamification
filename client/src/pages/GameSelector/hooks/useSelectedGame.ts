@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Game } from "../types/game";
+import { useState } from 'react';
+import { Game } from '../types/game';
 
 const useSelectedGame = () => {
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);

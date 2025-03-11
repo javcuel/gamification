@@ -1,7 +1,6 @@
 .navbar {
   padding: 10px 20px;
   margin: 10px 10px;
-  /*TODO: Decidir si dejar el color transparente o con var(--secondary)*/
   background-color: 'transparent';
 
   border: solid 2px var(--text);
@@ -29,8 +28,9 @@
   text-decoration: none;
   color: var(--text);
 }
+
 @media (max-width: 991px) {
   .navbar {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.8);
   }
 }

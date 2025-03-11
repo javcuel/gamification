@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { World } from "../../../../entities/world";
-import { fetchWorlds } from "../../adapters/api/worldGamesService";
+import { useEffect, useState } from 'react';
+import { World } from '../../../../entities/world';
+import { fetchWorlds } from '../../adapters/api/worldGamesService';
 
 const useWorlds = () => {
   const [worlds, setWorlds] = useState<World[]>([]);
@@ -13,7 +13,7 @@ const useWorlds = () => {
         setWorlds(data);
       } catch (err) {
         console.error(err);
-        setError("Failed to load worlds and games");
+        setError('Failed to load worlds and games');
       }
     };
 

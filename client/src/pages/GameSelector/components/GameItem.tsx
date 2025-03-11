@@ -1,32 +1,32 @@
 import React from 'react';
-import { Game } from '../../../entities/game';
+import { useNavigate } from 'react-router-dom';
+import { Game } from '../api/game';
 
 interface GameProps {
   game: Game;
-  /* onClick: () => void; */
 }
-const handleClick = () => {
-  console.log('CLikc en juego');
-};
 
 const GameItem: React.FC<GameProps> = ({ game }) => {
-  //TODO: COMPROBAR SI SE ESTAN OBTIENDO LOS OBJECTOS NO VISIBLES DE LA BASE DE DATOS, SI NO SE OBTIENEN ESTO ES UNREACHEABLE CODE.
-  /*  if(!subject.isVisible){
+  if (!game.isVisible) {
     return null;
-  } */
+  }
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/Play/${game.id}`);
+  };
 
   const gameClassName = game.isOpen
     ? 'image-container'
     : 'image-container-disabled';
 
-  //TODO: IMAGEN PROVISIONAL, SUSTITUIR POR GAME.IMG
   return (
-    <div className={gameClassName}>
+    <div className={gameClassName} onClick={() => handleClick()}>
       <img
         className="button-img"
-        src={'/images/imagesGames/apuntados.png'}
+        src={game.img || 'images/no_image.jpg'}
         alt={game.name}
-        onClick={() => handleClick()}
       ></img>
       <div className="image-overlay">
         <p>{game.name}</p>

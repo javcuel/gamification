@@ -1,8 +1,8 @@
 // IconoEstrella.tsx
-import { SizeProp } from "@fortawesome/fontawesome-svg-core"; // Importar SizeProp
-import { faBolt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import { SizeProp } from '@fortawesome/fontawesome-svg-core'; // Importar SizeProp
+import { faBolt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 
 interface BoltIconProps {
   color?: string;
@@ -11,9 +11,9 @@ interface BoltIconProps {
 }
 
 const BoltIcon: React.FC<BoltIconProps> = ({
-  color = "#5865f2",
-  size = "1x",
-  className = "",
+  color = '#5865f2',
+  size = '1x',
+  className = '',
 }) => {
   return (
     <FontAwesomeIcon

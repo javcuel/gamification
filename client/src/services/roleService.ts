@@ -22,11 +22,11 @@
 const roleService = {
   getAllowedRolesForRoute: (path: string) => {
     const rolesMap: { [key: string]: string[] } = {
-      "/AdminPanel": ["A"],
-      "/DevPanel": ["D"],
-      "/GameSelector": ["D", "P", "U"],
-      "/Home": ["D", "P", "U"],
-      "/Ranking": ["P", "U"],
+      '/AdminPanel': ['A'],
+      '/DevPanel': ['D'],
+      '/GameSelector': ['D', 'P', 'U'],
+      '/Home': ['D', 'P', 'U'],
+      '/Ranking': ['P', 'U'],
     };
     return rolesMap[path] || [];
   },
@@ -42,7 +42,7 @@ const roleService = {
    * console.log(isValid); // Output: true
    */
   isValidRole: (role: string): boolean => {
-    const validRoles = ["A", "D", "P", "U"]; // Define all valid roles here.
+    const validRoles = ['A', 'D', 'P', 'U']; // Define all valid roles here.
     return validRoles.includes(role);
   },
 };

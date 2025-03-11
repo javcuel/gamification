@@ -1,6 +1,7 @@
 import React from 'react';
-import FloatingText from '../../components/ui/FloatingText';
 import SpaceBackground from '../../components/SpaceBackground';
+import FloatingText from '../../components/ui/FloatingText';
+import WavesText from '../../components/ui/WavesText';
 
 const NotFound: React.FC = () => {
   return (
@@ -8,10 +9,10 @@ const NotFound: React.FC = () => {
       <SpaceBackground />
       <div className="container">
         <div className="row">
-          <FloatingText text="Not Found" />
+          <WavesText text="Not-Found" />
         </div>
         <div className="row">
-          <h1>This page doesnt exist</h1>
+          <FloatingText text="This page doesnt exist" />
         </div>
       </div>
     </div>

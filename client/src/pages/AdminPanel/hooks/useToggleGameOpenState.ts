@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { updateGameOpenState } from "../adapters/api/worldGamesService";
+import { useState } from 'react';
+import { updateGameOpenState } from '../adapters/api/worldGamesService';
 
 /**
  * Hook to toggle the open state of a game.
@@ -18,7 +18,7 @@ const useToggleGameOpenState = (gameId: number, initialState: boolean) => {
       await updateGameOpenState(gameId, newState);
       setIsOpen(newState);
     } catch (error) {
-      console.error("Error toggling game open state:", error);
+      console.error('Error toggling game open state:', error);
     } finally {
       setLoading(false);
     }

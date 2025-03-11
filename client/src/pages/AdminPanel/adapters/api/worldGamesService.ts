@@ -1,6 +1,6 @@
-import httpClient from "../../../../adapters/api/httpClient";
-import { Game } from "../../../../entities/game";
-import { World } from "../../../../entities/world";
+import httpClient from '../../../../adapters/api/httpClient';
+import { Game } from '../../../../entities/game';
+import { World } from '../../../../entities/world';
 
 /**
  * Fetches all worlds and their associated games from the API.
@@ -9,7 +9,7 @@ import { World } from "../../../../entities/world";
  */
 export const fetchWorlds = async (): Promise<World[]> => {
   try {
-    const apiResponse = await httpClient.get("/worlds/");
+    const apiResponse = await httpClient.get('/worlds/');
     return apiResponse.map((world: any) => ({
       id: world.IDMundo,
       name: world.Nombre,
@@ -21,8 +21,8 @@ export const fetchWorlds = async (): Promise<World[]> => {
       games: [],
     }));
   } catch (error) {
-    console.error("Error fetching worlds and games:", error);
-    throw new Error("Failed to fetch worlds and games");
+    console.error('Error fetching worlds and games:', error);
+    throw new Error('Failed to fetch worlds and games');
   }
 };
 
@@ -48,7 +48,7 @@ export const fetchGamesByWorld = async (worldId: number): Promise<Game[]> => {
     }));
   } catch (error) {
     console.error(`Error fetching games for world ID: ${worldId}`, error);
-    throw new Error("Failed to fetch games");
+    throw new Error('Failed to fetch games');
   }
 };
 
@@ -69,7 +69,7 @@ export const updateWorldOpenState = async (
       `Error updating open state for world (ID: ${worldId}):`,
       error
     );
-    throw new Error("Failed to update the world open state.");
+    throw new Error('Failed to update the world open state.');
   }
 };
 
@@ -90,7 +90,7 @@ export const updateWorldVisibleState = async (
       `Error updating visible state for world (ID: ${worldId}):`,
       error
     );
-    throw new Error("Failed to update the world visible state.");
+    throw new Error('Failed to update the world visible state.');
   }
 };
 
@@ -108,7 +108,7 @@ export const updateGameOpenState = async (
     await httpClient.put(`/games/${gameId}/open`, { isOpen });
   } catch (error) {
     console.error(`Error updating open state for game (ID: ${gameId}):`, error);
-    throw new Error("Failed to update the game open state.");
+    throw new Error('Failed to update the game open state.');
   }
 };
 
@@ -129,7 +129,7 @@ export const updateGameVisibleState = async (
       `Error updating visible state for game (ID: ${gameId}):`,
       error
     );
-    throw new Error("Failed to update the game visible state.");
+    throw new Error('Failed to update the game visible state.');
   }
 };
 
@@ -141,12 +141,12 @@ export const updateGameVisibleState = async (
  */
 export const addWorld = async (formData: FormData): Promise<void> => {
   try {
-    await httpClient.post("/worlds/add", formData, {
-      "Content-Type": "multipart/form-data",
+    await httpClient.post('/worlds/add', formData, {
+      'Content-Type': 'multipart/form-data',
     });
   } catch (error) {
-    console.error("Error adding world:", error);
-    throw new Error("Failed to add world.");
+    console.error('Error adding world:', error);
+    throw new Error('Failed to add world.');
   }
 };
 
@@ -155,6 +155,6 @@ export const deleteWorld = async (worldId: number): Promise<void> => {
     await httpClient.delete(`/worlds/${worldId}/delete`);
   } catch (error) {
     console.error(`Error deleting world (ID: ${worldId}):`, error);
-    throw new Error("Failed to delete world.");
+    throw new Error('Failed to delete world.');
   }
 };

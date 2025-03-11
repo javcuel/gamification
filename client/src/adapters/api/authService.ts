@@ -1,5 +1,5 @@
-import StorageService from "../../services/storageService";
-import HttpClient from "./httpClient";
+import StorageService from '../../services/storageService';
+import HttpClient from './httpClient';
 
 /**
  * AuthService
@@ -26,17 +26,17 @@ const AuthService = {
       });
 
       if (response && response.token) {
-        StorageService.setItem("token", response.token);
+        StorageService.setItem('token', response.token);
         return { success: true, token: response.token };
       }
 
       return {
         success: false,
-        message: response.message || "Login Error",
+        message: response.message || 'Login Error',
       };
     } catch (error) {
-      console.error("Login Request Error;", error);
-      return { success: false, message: "Server Error" };
+      console.error('Login Request Error;', error);
+      return { success: false, message: 'Server Error' };
     }
   },
 
@@ -45,7 +45,7 @@ const AuthService = {
    * @function logoutRequest
    */
   logoutRequest: (): void => {
-    StorageService.removeItem("token");
+    StorageService.removeItem('token');
   },
 };
 

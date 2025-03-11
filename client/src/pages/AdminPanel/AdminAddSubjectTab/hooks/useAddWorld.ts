@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { addWorld as addWorldService } from "../../adapters/api/worldGamesService";
+import { useState } from 'react';
+import { addWorld as addWorldService } from '../../adapters/api/worldGamesService';
 
 const useAddWorld = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,7 +15,7 @@ const useAddWorld = () => {
       await addWorldService(formData);
       setSuccess(true);
     } catch (err: any) {
-      setError(err.message || "Failed to add world.");
+      setError(err.message || 'Failed to add world.');
     } finally {
       setIsLoading(false);
     }

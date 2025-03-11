@@ -44,7 +44,7 @@ export const deleteUser = async (userId: number): Promise<void> => {
  * @returns {Promise<void>} A promise resolving when the user is added.
  */
 export const addUserService = async (
-  payload: AddUserPayload,
+  payload: AddUserPayload
 ): Promise<void> => {
   try {
     await httpClient.post('/users/add', payload);

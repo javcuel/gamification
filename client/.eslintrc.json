@@ -1,18 +1,9 @@
 {
-    "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended",
-      "prettier"
-    ],
-    "plugins": ["react", "prettier"],
-    "env": {
-      "browser": true,
-      "node": true,
-      "es2021": true
-    },
-    "rules": {
-      "prettier/prettier": "error",
-      "react/react-in-jsx-scope": "off"  // Si usas React 17 o superior
-    }
+  "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"]
   }
-  
+}

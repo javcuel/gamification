@@ -1,5 +1,5 @@
-import React from "react";
-import { Game } from "../types/game";
+import React from 'react';
+import { Game } from '../types/game';
 
 interface GameIframeProps {
   selectedGame: Game;
@@ -15,7 +15,7 @@ const GameIframe: React.FC<GameIframeProps> = ({ selectedGame }) => {
         src={`src/juegos/${selectedGame.gameId}/index.html`} // Cargar el juego usando su ID
         width="70%"
         height="700px"
-        style={{ border: "none" }}
+        style={{ border: 'none' }}
       />
     </div>
   );

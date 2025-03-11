@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Game } from "../../../entities/game";
-import { fetchGamesByWorld } from "../adapters/api/worldGamesService";
+import { useState } from 'react';
+import { Game } from '../../../entities/game';
+import { fetchGamesByWorld } from '../adapters/api/worldGamesService';
 
 /**
  * Custom Hook: useExpandableWorld
@@ -25,7 +25,7 @@ const useExpandWorld = (worldId: number) => {
         setGames(fetchedGames);
       } catch (err) {
         console.error(err);
-        setError("Failed to load games");
+        setError('Failed to load games');
       } finally {
         setLoading(false);
       }
