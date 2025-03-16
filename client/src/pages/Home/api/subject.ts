@@ -1,4 +1,4 @@
-import httpClient from '../../../adapters/api/httpClient';
+import httpClient from '../../../api/httpClient';
 
 export interface Subject {
   id: number;

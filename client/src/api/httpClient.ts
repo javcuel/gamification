@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5000/api';
+import { API_URLS } from '../constants/apiUrls';
 
 interface HttpClientOptions {
   method: string;
@@ -9,7 +9,7 @@ interface HttpClientOptions {
 const httpClient = {
   request: async (url: string, options: HttpClientOptions) => {
     try {
-      const response = await fetch(`${API_BASE_URL}${url}`, {
+      const response = await fetch(`${API_URLS.BASE_URL}${url}`, {
         method: options.method,
         headers: {
           'Content-Type': 'application/json',

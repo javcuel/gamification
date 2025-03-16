@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
+import { ROUTES } from '../../../constants/routes';
 import { useAuth } from '../../../context/AuthContext';
 
 const LoginForm: React.FC = () => {
@@ -23,24 +25,12 @@ const LoginForm: React.FC = () => {
     e.preventDefault();
     const result = await login(user, passwd);
     if (result.success && result.userType) {
-      switch (result.userType) {
-        case 'A':
-          navigate('/AdminPanel');
-          break;
-        case 'D':
-        case 'P':
-        case 'U':
-          navigate('/Home');
-          break;
-        default:
-          console.warn('Unknown user type:', result.userType);
-          navigate('/');
-      }
+      navigate(ROUTES.HOME);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="d-flex justify-content-center">
+    <form onSubmit={handleSubmit} className="custom-flex-center">
       <div className="d-flex flex-column align-items-center">
         <div className="mb-3">
           <Input

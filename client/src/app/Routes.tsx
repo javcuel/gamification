@@ -1,5 +1,8 @@
+import React from 'react';
 import { RouteObject } from 'react-router-dom';
+
 import ProtectedRoute from '../components/Routes/ProtectedRoute';
+import { ROUTES } from '../constants/routes';
 import AdminPanel from '../pages/AdminPanel/AdminPanel';
 import DevPanel from '../pages/DevPanel/DevPanel';
 import GameSelector from '../pages/GameSelector/GameSelector';
@@ -8,102 +11,58 @@ import Login from '../pages/Login/Login';
 import NotFound from '../pages/NotFound/NotFound';
 import Ranking from '../pages/Ranking/Ranking';
 import roleService from '../services/roleService';
-import React from 'react';
 
-/**
- * Route Configuration
- * @description Defines the routing structure for the application.
- * Each route specifies the path and the component to render.
- * Some routes are protected by role-based access or require authentication.
- *
- * @type {RouteObject[]}
- * @property {string} path - The path for the route.
- * @property {JSX.Element} element - The component or route guard to render.
- * @property {RoleBasedRoute} RoleBasedRoute - Guards routes based on user roles.
- * @property {PrivateRoute} PrivateRoute - Guards routes requiring authentication.
- *
- * Role Definitions:
- * - A: Admin
- * - D: Developer
- * - P: Test Player
- * - U: Normal User
- *
- */
+void React;
+
+//TODO: Separar los imports de librerias externas de los de arch¡ivos internos
+// Como se hace arriba
 const routes: RouteObject[] = [
   {
-    path: '/',
+    path: ROUTES.LOGIN,
     element: <Login />,
-    /**
-     * Default route
-     * Accesible to all useres
-     */
   },
   {
-    path: '/Home',
+    path: ROUTES.HOME,
     element: (
-      /* <ProtectedRoute
-        allowedRoles={roleService.getAllowedRolesForRoute("/Home")}
-      > */
-      <Home />
-      /*  </ProtectedRoute> */
+      <ProtectedRoute
+        allowedRoles={roleService.getAllowedRolesForRoute(ROUTES.HOME)}
+      >
+        <Home />
+      </ProtectedRoute>
     ),
-    /**
-     * Home Route
-     * @protected
-     * Requires authentication via `PrivateRoute`.
-     * Accessible to authenticated users of all roles.
-     */
   },
   {
-    path: '/Ranking',
+    path: ROUTES.RANKING,
     element: (
-      /* <ProtectedRoute
-        allowedRoles={roleService.getAllowedRolesForRoute('/Ranking')}
-      > */
-      <Ranking />
-      /* </ProtectedRoute> */
+      <ProtectedRoute
+        allowedRoles={roleService.getAllowedRolesForRoute(ROUTES.RANKING)}
+      >
+        <Ranking />
+      </ProtectedRoute>
     ),
-    /**
-     * Ranking Route
-     * @protected
-     * Requires authentication via `PrivateRoute`.
-     * Accessible to authenticated users of all roles.
-     */
   },
   {
-    path: '/GameSelector/:subjectId',
+    path: ROUTES.GAME_SELECTOR(':subjectId'),
     element: (
-      /* <ProtectedRoute
+      <ProtectedRoute
         allowedRoles={roleService.getAllowedRolesForRoute('/GameSelector')}
-      > */
-      <GameSelector />
-      /*  </ProtectedRoute> */
+      >
+        <GameSelector />
+      </ProtectedRoute>
     ),
-    /**
-     * GameSelector Route
-     * @protected
-     * Role-based access control via `RoleBasedRoute`.
-     * Allowed Roles: "Developer" (D), "Player" (P), "User" (U).
-     */
   },
   {
-    path: '/AdminPanel',
+    path: ROUTES.ADMIN_PANEL,
     element: (
-      /* <ProtectedRoute
+      <ProtectedRoute
         allowedRoles={roleService.getAllowedRolesForRoute('/AdminPanel')}
-      > */
-      <AdminPanel />
-      /*  </ProtectedRoute> */
+      >
+        <AdminPanel />
+      </ProtectedRoute>
     ),
-    /**
-     * AdminPanel Route
-     * @protected
-     * Role-based access control via `RoleBasedRoute`.
-     * Allowed Role: "Admin" (A).
-     */
   },
   {
-    path: '/DevPanel',
+    path: ROUTES.DEV_PANEL,
     element: (
       <ProtectedRoute
         allowedRoles={roleService.getAllowedRolesForRoute('/DevPanel')}
@@ -111,17 +70,11 @@ const routes: RouteObject[] = [
         <DevPanel />
       </ProtectedRoute>
     ),
-    /**
-     * DevPanel Route
-     * @protected
-     * Role-based access control via `RoleBasedRoute`.
-     * Allowed Role: "Developer" (D).
-     */
   },
   {
+    // Matches all undefined routes
     path: '*',
     element: <NotFound />,
-    // Matches all undefined routes
   },
 ];
 

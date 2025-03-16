@@ -1,10 +1,10 @@
 import React from 'react';
+
 import SpaceBackground from '../../components/SpaceBackground';
-//import FloatingText from '../../components/ui/FloatingText';
 import LinkImage from '../../components/ui/LinkImage';
 import WavesText from '../../components/ui/WavesText';
 import LoginForm from './components/LoginForm';
-//TODO: Mirar si el segundo div container sirve para algo o es redundante con el de arriba
+
 const Login: React.FC = () => {
   return (
     <div className="container min-vh-100 custom-flex-center text-center">
@@ -15,7 +15,6 @@ const Login: React.FC = () => {
             <WavesText text="Gamispace" />
           </div>
         </div>
-
         <div className="row">
           <div className="col-3">
             <LinkImage
@@ -37,7 +36,6 @@ const Login: React.FC = () => {
             />
           </div>
         </div>
-
         <div className="row mt-5">
           <div className="col">
             <LinkImage

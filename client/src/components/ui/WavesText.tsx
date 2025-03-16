@@ -4,7 +4,6 @@ import '../../styles/WavesText.css';
 
 interface WavesTextProps {
   text: string;
-  // Permite valores como "2rem", "24px" o números (automáticamente en px)
 }
 
 const WavesText: React.FC<WavesTextProps> = ({ text }) => {
@@ -14,13 +13,13 @@ const WavesText: React.FC<WavesTextProps> = ({ text }) => {
         <motion.span
           key={index}
           initial={{ y: 0 }}
-          animate={{ y: [-5, 5, -5] }} // Movimiento arriba y abajo más fluido
+          animate={{ y: [-5, 5, -5] }}
           transition={{
-            duration: 1.8, // Ajusta la velocidad
+            duration: 1.8,
             repeat: Infinity,
             repeatType: 'reverse',
             ease: 'easeInOut',
-            delay: index * 0.1, // Ajusta el desfase del efecto ola
+            delay: index * 0.1,
           }}
           style={{ display: 'inline-block' }}
         >

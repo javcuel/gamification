@@ -1,4 +1,4 @@
-import httpClient from '../../../../adapters/api/httpClient';
+import httpClient from '../../../../api/httpClient';
 import { User } from '../../../../entities/user';
 
 interface AddUserPayload {

@@ -1,4 +1,4 @@
-import httpClient from '../../../../adapters/api/httpClient';
+import httpClient from '../../../../api/httpClient';
 /*:TODO: Tienes que cambiar el nombre de las funciones, por que las iniciasles JG hacen referencia a nombre españoles y no en ingles*/
 // Mirar a ver tambien si hace falta un tipo ranking fila
 export const fetchRankingJG = async () => {

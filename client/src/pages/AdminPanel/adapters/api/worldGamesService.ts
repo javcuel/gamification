@@ -1,4 +1,4 @@
-import httpClient from '../../../../adapters/api/httpClient';
+import httpClient from '../../../../api/httpClient';
 import { Game } from '../../../../entities/game';
 import { World } from '../../../../entities/world';
 

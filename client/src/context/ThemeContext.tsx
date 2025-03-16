@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import httpClient from '../adapters/api/httpClient';
+import httpClient from '../api/httpClient';
 
 interface Theme {
   primary: string;
