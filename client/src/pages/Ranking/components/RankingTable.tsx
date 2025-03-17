@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
+
 import BoltIcon from '../../../components/ui/BoltIcon';
 import StarIcon from '../../../components/ui/StarIcon';
 import useRankings from '../hooks/useRankings';
 import '../styles/ranking.css';
-/* TODO: Entiendo que el la tabla del ranking deberá coger los nombres de losjuegos de la BD*/
+import { RANKING_TYPES } from '../../../constants/rankingTypes';
+const DEFAULT_RANKING = RANKING_TYPES.PLAYERS;
+const DEFAULT_GAME = 0;
 
 const RankingTable: React.FC = () => {
-  const [rankingType, setRankingType] = useState<string>('JG');
-  const [selectedGame, setSelectedGame] = useState<number>(0);
+  const [rankingType, setRankingType] = useState<string>(DEFAULT_RANKING);
+  const [selectedGame, setSelectedGame] = useState<number>(DEFAULT_GAME);
 
   const { rankings, error } = useRankings(rankingType, selectedGame);
 
   return (
     <div className="container mt-5">
-      {/* Dropdowns for ranking selection */}
       <div className="row mb-3">
         <div className="col-md-6">
           <label>Select ranking</label>
@@ -22,15 +24,16 @@ const RankingTable: React.FC = () => {
             value={rankingType}
             onChange={(e) => setRankingType(e.target.value)}
           >
-            <option value="JG">General - User</option>
-            <option value="GG">General - Group</option>
-            <option value="JJ">Game - User</option>
-            <option value="GJ">Game- Group</option>
+            <option value={RANKING_TYPES.PLAYERS}>General - User</option>
+            <option value={RANKING_TYPES.GROUPS}>General - Group</option>
+            <option value={RANKING_TYPES.PLAYERS_BY_GAME}>Game - User</option>
+            <option value={RANKING_TYPES.GROUPS_BY_GAME}>Game- Group</option>
           </select>
         </div>
 
         {/* Dropdown for selecting specific game, enabled only for JJ and GJ */}
-        {(rankingType === 'JJ' || rankingType === 'GJ') && (
+        {(rankingType === RANKING_TYPES.PLAYERS_BY_GAME ||
+          rankingType === RANKING_TYPES.GROUPS_BY_GAME) && (
           <div className="col-md-6">
             <label>Select game</label>
             <select
@@ -50,17 +53,16 @@ const RankingTable: React.FC = () => {
         )}
       </div>
 
-      {/* Display error message if there is an error */}
       {error && <div className="alert alert-danger">{error}</div>}
 
-      {/* Ranking Table */}
       <div className="row">
         <div className="col">
           <table className="table table-striped table-bordered table-hover">
             <thead>
               <tr>
                 <th>Position</th>
-                {rankingType === 'GG' || rankingType === 'GJ' ? (
+                {rankingType === RANKING_TYPES.GROUPS ||
+                rankingType === RANKING_TYPES.GROUPS_BY_GAME ? (
                   <th>Group</th>
                 ) : (
                   <>
@@ -70,7 +72,7 @@ const RankingTable: React.FC = () => {
                 )}
                 <th>
                   <span>
-                    Stars
+                    Completed Subjects
                     <StarIcon className="ms-2" />
                   </span>
                 </th>
@@ -87,7 +89,8 @@ const RankingTable: React.FC = () => {
               {rankings.slice(0, 10).map((entry, index) => (
                 <tr key={index} className="custom-table-row">
                   <td>{index + 1}</td>
-                  {rankingType === 'GG' || rankingType === 'GJ' ? (
+                  {rankingType === RANKING_TYPES.GROUPS ||
+                  rankingType === RANKING_TYPES.GROUPS_BY_GAME ? (
                     <td>{entry.userGroup || 'N/A'}</td>
                   ) : (
                     <>
@@ -95,8 +98,8 @@ const RankingTable: React.FC = () => {
                       <td>{entry.userGroup || 'N/A'}</td>
                     </>
                   )}
-                  <td>{entry.totalStars || 0}</td>
-                  <td>{entry.totalScore || 0}</td>
+                  <td>{entry.userCompletedSubjects || 0}</td>
+                  <td>{entry.userTotalScore || 0}</td>
                 </tr>
               ))}
             </tbody>

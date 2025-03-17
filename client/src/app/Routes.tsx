@@ -52,6 +52,16 @@ const routes: RouteObject[] = [
     ),
   },
   {
+    path: ROUTES.PLAY(':gameId'),
+    element: (
+      <ProtectedRoute
+        allowedRoles={roleService.getAllowedRolesForRoute('/Play')}
+      >
+        <GameSelector />
+      </ProtectedRoute>
+    ),
+  },
+  {
     path: ROUTES.ADMIN_PANEL,
     element: (
       <ProtectedRoute

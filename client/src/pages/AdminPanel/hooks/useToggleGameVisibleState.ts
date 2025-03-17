@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { updateGameVisibleState } from '../adapters/api/worldGamesService';
+import { updateGameVisibleState } from '../api/worldGamesService';
 
 /**
  * Hook to toggle the visible state of a game.

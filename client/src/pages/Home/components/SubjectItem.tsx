@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Subject } from '../api/subject';
+import { ROUTES } from '../../../constants/routes';
 
 interface SubjectProps {
   subject: Subject;
@@ -12,7 +13,7 @@ const SubjectItem: React.FC<SubjectProps> = ({ subject }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/GameSelector/${subject.id}`);
+    navigate(ROUTES.GAME_SELECTOR(subject.id));
   };
 
   const subjectClassName = subject.isOpen

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { updateWorldOpenState } from '../adapters/api/worldGamesService';
+import { updateWorldOpenState } from '../api/worldGamesService';
 
 /**
  * Hook to toggle the open state of a world.

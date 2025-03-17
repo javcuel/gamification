@@ -1,4 +1,5 @@
 import httpClient from '../../../api/httpClient';
+import { API_URLS } from '../../../constants/apiUrls';
 
 export interface Game {
   id: number;
@@ -30,7 +31,7 @@ interface GameApiResponse {
 
 export const fetchGames = async (subjectId: number): Promise<Game[]> => {
   try {
-    const data = await httpClient.get(`/games/${subjectId}`);
+    const data = await httpClient.get(API_URLS.GET_GAMES(subjectId));
 
     return data.map((game: GameApiResponse) => ({
       id: game.IDMinijuego,

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Game } from '../../../entities/game';
-import { fetchGamesByWorld } from '../adapters/api/worldGamesService';
+import { fetchGamesByWorld } from '../api/worldGamesService';
 
 /**
  * Custom Hook: useExpandableWorld

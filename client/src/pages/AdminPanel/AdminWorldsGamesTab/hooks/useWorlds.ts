@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { World } from '../../../../entities/world';
-import { fetchWorlds } from '../../adapters/api/worldGamesService';
+import { fetchWorlds } from '../../api/worldGamesService';
 
 const useWorlds = () => {
   const [worlds, setWorlds] = useState<World[]>([]);

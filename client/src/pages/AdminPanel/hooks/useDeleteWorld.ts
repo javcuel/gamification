@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { deleteWorld } from '../adapters/api/worldGamesService';
+import { deleteWorld } from '../api/worldGamesService';
 
 const useDeleteWorld = (onDeleteSuccess: (worldId: number) => void) => {
   const [loading, setLoading] = useState(false);

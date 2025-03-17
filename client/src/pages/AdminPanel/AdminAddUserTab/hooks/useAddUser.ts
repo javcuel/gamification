@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { addUserService } from '../../adapters/api/userService';
+import { addUserService } from '../../api/userService';
 
 interface AddUserPayload {
   name: string;

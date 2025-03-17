@@ -7,7 +7,6 @@ const GameSelector: React.FC = () => {
   return (
     <div className="container-fluid" style={{ height: '100vh' }}>
       <SpaceBackground />
-
       <div
         className="container-fluid d-flex flex-column"
         style={{ height: '100vh' }}
@@ -15,7 +14,6 @@ const GameSelector: React.FC = () => {
         <div style={{ height: '5vh' }}>
           <NavBar webName="Gamispace" />
         </div>
-
         <div className="d-flex flex-grow-1 justify-content-center align-items-center">
           <GameGrid />
         </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Game } from '../api/game';
+import { ROUTES } from '../../../constants/routes';
 
 interface GameProps {
   game: Game;
@@ -14,7 +15,7 @@ const GameItem: React.FC<GameProps> = ({ game }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/Play/${game.id}`);
+    navigate(ROUTES.PLAY(game.id));
   };
 
   const gameClassName = game.isOpen

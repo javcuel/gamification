@@ -1,13 +1,20 @@
-import httpClient from '../../../../api/httpClient';
-import { Game } from '../../../../entities/game';
-import { World } from '../../../../entities/world';
+import httpClient from '../../../api/httpClient';
+import { Game } from '../../GameSelector/api/game';
+import { Subject } from '../../Home/api/subject';
+import { API_URLS } from '../../../constants/apiUrls';
 
-/**
- * Fetches all worlds and their associated games from the API.
- * Transforms API response keys to match frontend expectations.
- * @returns {Promise<World[]>} A promise resolving to the transformed worlds array.
- */
-export const fetchWorlds = async (): Promise<World[]> => {
+interface SubjectApiOpenStatePayload {
+  subjectId: number;
+  isOpen: boolean;
+}
+
+interface SubjectApiVisibleStatePayload {
+  subjectId: number;
+  isVisible: boolean;
+}
+
+//TODO: IMPORTAR ESTO DE SUBJECTS API -----------------------------------------------------
+export const fetchSubjects = async (): Promise<Subject[]> => {
   try {
     const apiResponse = await httpClient.get('/worlds/');
     return apiResponse.map((world: any) => ({
@@ -24,15 +31,9 @@ export const fetchWorlds = async (): Promise<World[]> => {
     console.error('Error fetching worlds and games:', error);
     throw new Error('Failed to fetch worlds and games');
   }
-};
+}; // -------------------------------------------------------------------------------
 
-/**
- * Fetches all games for a specific world.
- * @async
- * @function fetchGamesByWorld
- * @param {number} worldId - The ID of the world to fetch games for.
- * @returns {Promise<Game[]>} A promise that resolves to a list of games.
- */
+//TODO: IMPORTAR ESTO DE GAMESELECTOR API ------------------------------------------------------------
 export const fetchGamesByWorld = async (worldId: number): Promise<Game[]> => {
   try {
     const apiResponse = await httpClient.get(`/games/${worldId}`);
@@ -50,56 +51,40 @@ export const fetchGamesByWorld = async (worldId: number): Promise<Game[]> => {
     console.error(`Error fetching games for world ID: ${worldId}`, error);
     throw new Error('Failed to fetch games');
   }
-};
+}; // --------------------------------------------------------------------------------------------------
 
-/**
- * Updates the "open" state of a world.
- * @param {number} worldId - The ID of the world to update.
- * @param {boolean} isOpen - The new open state (true = open, false = locked).
- * @returns {Promise<void>} A promise that resolves when the update is successful.
- */
-export const updateWorldOpenState = async (
-  worldId: number,
-  isOpen: boolean
+export const updateSubjectOpenState = async (
+  payload: SubjectApiOpenStatePayload
 ): Promise<void> => {
   try {
-    await httpClient.put(`/worlds/${worldId}/open`, { isOpen });
+    await httpClient.put(API_URLS.UPDATE_SUBJECT_OPEN(payload.subjectId), {
+      isOpen: payload.isOpen,
+    });
   } catch (error) {
     console.error(
-      `Error updating open state for world (ID: ${worldId}):`,
+      `Error updating open state for world (ID: ${payload.subjectId}):`,
       error
     );
     throw new Error('Failed to update the world open state.');
   }
 };
 
-/**
- * Updates the "visible" state of a world.
- * @param {number} worldId - The ID of the world to update.
- * @param {boolean} isVisible - The new visible state (true = visible, false = invisible).
- * @returns {Promise<void>} A promise that resolves when the update is successful.
- */
 export const updateWorldVisibleState = async (
-  worldId: number,
-  isVisible: boolean
+  payload: SubjectApiVisibleStatePayload
 ): Promise<void> => {
   try {
-    await httpClient.put(`/worlds/${worldId}/visible`, { isVisible });
+    await httpClient.put(API_URLS.UPDATE_SUBJECT_VISIBLE(payload.subjectId), {
+      isVisible: payload.isVisible,
+    });
   } catch (error) {
     console.error(
-      `Error updating visible state for world (ID: ${worldId}):`,
+      `Error updating visible state for world (ID: ${payload.subjectId}):`,
       error
     );
     throw new Error('Failed to update the world visible state.');
   }
 };
 
-/**
- * Updates the "open" state of a game.
- * @param {number} gameId - The ID of the game to update.
- * @param {boolean} isOpen - The new open state (true = open, false = locked).
- * @returns {Promise<void>} A promise that resolves when the update is successful.
- */
 export const updateGameOpenState = async (
   gameId: number,
   isOpen: boolean
@@ -112,12 +97,6 @@ export const updateGameOpenState = async (
   }
 };
 
-/**
- * Updates the "visible" state of a game.
- * @param {number} gameId - The ID of the game to update.
- * @param {boolean} isVisible - The new visible state (true = visible, false = invisible).
- * @returns {Promise<void>} A promise that resolves when the update is successful.
- */
 export const updateGameVisibleState = async (
   gameId: number,
   isVisible: boolean
@@ -133,12 +112,6 @@ export const updateGameVisibleState = async (
   }
 };
 
-/**
- * Sends a request to add a new world.
- * @param {FormData} formData - The form data containing world details and images.
- * @returns {Promise<void>} Resolves if the request is successful.
- * @throws {Error} If the request fails.
- */
 export const addWorld = async (formData: FormData): Promise<void> => {
   try {
     await httpClient.post('/worlds/add', formData, {

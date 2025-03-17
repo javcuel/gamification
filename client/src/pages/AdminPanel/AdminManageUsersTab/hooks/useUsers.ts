@@ -3,7 +3,7 @@ import { User } from '../../../../entities/user';
 import {
   deleteUser as deleteUserService,
   fetchUsers,
-} from '../../adapters/api/userService';
+} from '../../api/userService';
 /** TODO: Esto igual separarlo en dos hooks, uno que haga el fetch de los usuarios y otro que haga el delete */
 
 /**
