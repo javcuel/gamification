@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import BoltIcon from '../../../components/ui/BoltIcon';
-import StarIcon from '../../../components/ui/StarIcon';
+import BoltIcon from '../../shared/ui/BoltIcon';
+import StarIcon from '../../shared/ui/StarIcon';
 import useRankings from '../hooks/useRankings';
 import '../styles/ranking.css';
 import { RANKING_TYPES } from '../../../constants/rankingTypes';

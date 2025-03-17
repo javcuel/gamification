@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Button from '../../../components/ui/Button';
-import Input from '../../../components/ui/Input';
+import Button from '../../shared/ui/Button';
+import Input from '../../shared/ui/Input';
 import { ROUTES } from '../../../constants/routes';
 import { useAuth } from '../../../context/AuthContext';
 

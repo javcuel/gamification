@@ -1,8 +1,8 @@
 import React from 'react';
 
-import SpaceBackground from '../../components/SpaceBackground';
-import LinkImage from '../../components/ui/LinkImage';
-import WavesText from '../../components/ui/WavesText';
+import SpaceBackground from '../shared/ui/SpaceBackground';
+import LinkImage from '../shared/ui/LinkImage';
+import WavesText from '../shared/ui/WavesText';
 import LoginForm from './components/LoginForm';
 
 const Login: React.FC = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
-import NavBar from '../../components/NavBar/NavBar';
-import SpaceBackground from '../../components/SpaceBackground';
+import NavBar from '../shared/NavBar/NavBar';
+import SpaceBackground from '../shared/ui/SpaceBackground';
 import GameGrid from './components/GameGrid';
 
 const GameSelector: React.FC = () => {

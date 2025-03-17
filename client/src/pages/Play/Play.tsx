@@ -1,11 +1,15 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import NavBar from '../../components/NavBar/NavBar';
-import SpaceBackground from '../../components/SpaceBackground';
+import NavBar from '../shared/NavBar/NavBar';
+import SpaceBackground from '../shared/ui/SpaceBackground';
+import Iframe from './Iframe';
+import usePlay from './usePlay';
 
 const Play: React.FC = () => {
   const { gameId } = useParams<{ gameId: string }>();
+
+  const data = usePlay(Number(gameId));
 
   return (
     <div className="container-fluid" style={{ height: '100vh' }}>
@@ -18,7 +22,11 @@ const Play: React.FC = () => {
           <NavBar webName="Gamispace" />
         </div>
         <div className="d-flex flex-grow-1 justify-content-center align-items-center">
-          <p>JUGANDO A: {gameId} </p>
+          {data.game ? (
+            <Iframe selectedGame={data.game} />
+          ) : (
+            <p>No Game founded</p>
+          )}
         </div>
       </div>
     </div>

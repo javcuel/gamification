@@ -1,7 +1,7 @@
 import React from 'react';
-import SpaceBackground from '../../components/SpaceBackground';
-import FloatingText from '../../components/ui/FloatingText';
-import WavesText from '../../components/ui/WavesText';
+import SpaceBackground from '../shared/ui/SpaceBackground';
+import FloatingText from '../shared/ui/FloatingText';
+import WavesText from '../shared/ui/WavesText';
 
 const NotFound: React.FC = () => {
   return (

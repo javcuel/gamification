@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Input from '../../../components/ui/Input';
-import Button from '../../../components/ui/Button';
+import Input from '../../shared/ui/Input';
+import Button from '../../shared/ui/Button';
 import '../styles/AdminAddCard.css';
 
 const AdminAddSubjectTab: React.FC = () => {

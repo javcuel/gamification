@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import useAddUser from './hooks/useAddUser';
-import Input from '../../../components/ui/Input';
-import Button from '../../../components/ui/Button';
-import Dropdown from '../../../components/ui/DropDown';
+import Input from '../../shared/ui/Input';
+import Button from '../../shared/ui/Button';
+import Dropdown from '../../shared/ui/DropDown';
 import '../styles/AdminAddCard.css';
 
 const AdminAddUserTab: React.FC = () => {

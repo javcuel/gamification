@@ -51,3 +51,26 @@ export const fetchGames = async (subjectId: number): Promise<Game[]> => {
     throw new Error('Failed to fetch games');
   }
 };
+
+export const fetchGameById = async (gameId: number): Promise<Game> => {
+  try {
+    const data = await httpClient.get(API_URLS.GET_GAME_BY_ID(gameId));
+
+    return data.map((game: GameApiResponse) => ({
+      id: game.IDMinijuego,
+      idSubject: game.IDMundo,
+      img: game.UrlImagen,
+      name: game.Nombre,
+      maxScore: game.PuntuacionMaxima,
+      isOpen: game.Abierto,
+      isVisible: game.Visible,
+      position: game.Posicion,
+      userId: game.IDUsuario,
+      isNew: game.Nuevo,
+      isUploaded: game.Subido,
+    }));
+  } catch (error) {
+    console.error(`Error fetching games for subject ID: ${gameId}`, error);
+    throw new Error('Failed to fetch games');
+  }
+};

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import NavBar from '../../components/NavBar/NavBar';
-import SpaceBackground from '../../components/SpaceBackground';
+import NavBar from '../shared/NavBar/NavBar';
+import SpaceBackground from '../shared/ui/SpaceBackground';
 import AdminAddGameTab from './AdminAddGameTab/AdminAddGameTab';
 import AdminAddSubjectTab from './AdminAddSubjectTab/AddAddSubjectTab';
 import AdminAddUserTab from './AdminAddUserTab/AdminAddUserTab';

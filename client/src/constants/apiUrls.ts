@@ -19,6 +19,7 @@ export const API_URLS = {
 
   // Games
   GET_GAMES: (subjectId: string | number) => `/games/${subjectId}`,
+  GET_GAME_BY_ID: (gameId: number) => `/games/${gameId}`,
   UPDATE_GAME_OPEN: (gameId: string | number) => `/games/${gameId}/open`,
   UPDATE_GAME_VISIBLE: (gameId: string | number) => `/games/${gameId}/visible`,
 
