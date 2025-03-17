@@ -13,6 +13,22 @@ interface SubjectApiVisibleStatePayload {
   isVisible: boolean;
 }
 
+interface GameApiOpenStatePayload {
+  gameId: number;
+  isOpen: boolean;
+}
+
+interface GameApiVisibleStatePayload {
+  gameId: number;
+  isVisible: boolean;
+}
+
+interface SubjectApiPayload {
+  name: string;
+  img: string;
+  imgBackground: string;
+}
+
 //TODO: IMPORTAR ESTO DE SUBJECTS API -----------------------------------------------------
 export const fetchSubjects = async (): Promise<Subject[]> => {
   try {
@@ -62,14 +78,14 @@ export const updateSubjectOpenState = async (
     });
   } catch (error) {
     console.error(
-      `Error updating open state for world (ID: ${payload.subjectId}):`,
+      `Error updating open state for subject (ID: ${payload.subjectId}):`,
       error
     );
-    throw new Error('Failed to update the world open state.');
+    throw new Error('Failed to update the subject open state.');
   }
 };
 
-export const updateWorldVisibleState = async (
+export const updateSubjectVisibleState = async (
   payload: SubjectApiVisibleStatePayload
 ): Promise<void> => {
   try {
@@ -78,56 +94,61 @@ export const updateWorldVisibleState = async (
     });
   } catch (error) {
     console.error(
-      `Error updating visible state for world (ID: ${payload.subjectId}):`,
+      `Error updating visible state for subject (ID: ${payload.subjectId}):`,
       error
     );
-    throw new Error('Failed to update the world visible state.');
+    throw new Error('Failed to update the subject visible state.');
   }
 };
 
 export const updateGameOpenState = async (
-  gameId: number,
-  isOpen: boolean
+  payload: GameApiOpenStatePayload
 ): Promise<void> => {
   try {
-    await httpClient.put(`/games/${gameId}/open`, { isOpen });
+    await httpClient.put(API_URLS.UPDATE_GAME_OPEN(payload.gameId), {
+      isOpen: payload.isOpen,
+    });
   } catch (error) {
-    console.error(`Error updating open state for game (ID: ${gameId}):`, error);
+    console.error(
+      `Error updating open state for game (ID: ${payload.gameId}):`,
+      error
+    );
     throw new Error('Failed to update the game open state.');
   }
 };
 
 export const updateGameVisibleState = async (
-  gameId: number,
-  isVisible: boolean
+  payload: GameApiVisibleStatePayload
 ): Promise<void> => {
   try {
-    await httpClient.put(`/games/${gameId}/visible`, { isVisible });
+    await httpClient.put(API_URLS.UPDATE_GAME_VISIBLE(payload.gameId), {
+      isVisible: payload.isVisible,
+    });
   } catch (error) {
     console.error(
-      `Error updating visible state for game (ID: ${gameId}):`,
+      `Error updating visible state for game (ID: ${payload.gameId}):`,
       error
     );
     throw new Error('Failed to update the game visible state.');
   }
 };
 
-export const addWorld = async (formData: FormData): Promise<void> => {
+export const createSubject = async (
+  payload: SubjectApiPayload
+): Promise<void> => {
   try {
-    await httpClient.post('/worlds/add', formData, {
-      'Content-Type': 'multipart/form-data',
-    });
+    await httpClient.post(API_URLS.CREATE_SUBJECT, payload);
   } catch (error) {
-    console.error('Error adding world:', error);
-    throw new Error('Failed to add world.');
+    console.error('Error adding subject:', error);
+    throw new Error('Failed to add subject.');
   }
 };
 
-export const deleteWorld = async (worldId: number): Promise<void> => {
+export const deleteSubject = async (subjectId: number): Promise<void> => {
   try {
-    await httpClient.delete(`/worlds/${worldId}/delete`);
+    await httpClient.delete(API_URLS.DELETE_SUBJECT(subjectId));
   } catch (error) {
-    console.error(`Error deleting world (ID: ${worldId}):`, error);
-    throw new Error('Failed to delete world.');
+    console.error(`Error deleting subject (ID: ${subjectId}):`, error);
+    throw new Error('Failed to delete subject.');
   }
 };

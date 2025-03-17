@@ -17,10 +17,6 @@ interface GameItemProps {
   game: Game;
 }
 
-/**
- * GameItem Component
- * Represents a single game row within a world.
- */
 const GameItem: React.FC<GameItemProps> = ({ game }) => {
   const [isOpen, toggleOpenState, openLoading] = useToggleGameOpenState(
     game.id,
@@ -43,30 +39,26 @@ const GameItem: React.FC<GameItemProps> = ({ game }) => {
         <strong>{game.name}</strong> - Max Score: {game.maxScore}
       </div>
       <div>
-        {/* Locked Button */}
         <button
           className={'btn custom-button m-1'}
           onClick={toggleOpenState}
-          disabled={openLoading} // Disable while toggling
+          disabled={openLoading}
         >
           <FontAwesomeIcon icon={isOpen ? faUnlock : faLock} />
         </button>
 
-        {/* Visible Button */}
         <button
           className={'btn custom-button m-1'}
           onClick={toggleVisibleState}
-          disabled={visibleLoading} // Disable while toggling
+          disabled={visibleLoading}
         >
           <FontAwesomeIcon icon={isVisible ? faEye : faEyeSlash} />
         </button>
 
-        {/* Modify button */}
         <button className="btn custom-button m-1">
           <FontAwesomeIcon icon={faPencilAlt} />
         </button>
 
-        {/* Delete Button */}
         <button className="btn custom-button m-1">
           <FontAwesomeIcon icon={faTimes} />
         </button>
