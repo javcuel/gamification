@@ -1,7 +1,7 @@
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 
-import ProtectedRoute from '../components/Routes/ProtectedRoute';
+import ProtectedRoute from './ProtectedRoute';
 import { ROUTES } from '../constants/routes';
 import AdminPanel from '../pages/AdminPanel/AdminPanel';
 import DevPanel from '../pages/DevPanel/DevPanel';
@@ -14,8 +14,6 @@ import roleService from '../services/roleService';
 
 void React;
 
-//TODO: Separar los imports de librerias externas de los de arch¡ivos internos
-// Como se hace arriba
 const routes: RouteObject[] = [
   {
     path: ROUTES.LOGIN,
@@ -65,7 +63,7 @@ const routes: RouteObject[] = [
     path: ROUTES.ADMIN_PANEL,
     element: (
       <ProtectedRoute
-        allowedRoles={roleService.getAllowedRolesForRoute('/AdminPanel')}
+        allowedRoles={roleService.getAllowedRolesForRoute(ROUTES.ADMIN_PANEL)}
       >
         <AdminPanel />
       </ProtectedRoute>
@@ -75,7 +73,7 @@ const routes: RouteObject[] = [
     path: ROUTES.DEV_PANEL,
     element: (
       <ProtectedRoute
-        allowedRoles={roleService.getAllowedRolesForRoute('/DevPanel')}
+        allowedRoles={roleService.getAllowedRolesForRoute(ROUTES.DEV_PANEL)}
       >
         <DevPanel />
       </ProtectedRoute>

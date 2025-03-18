@@ -1,14 +1,16 @@
 import React from 'react';
 import useLogout from '../../../hooks/useLogout';
 import NavLinkItem from './NavLinkItem';
+import { ROLES } from '../../../constants/roles';
+import { ROUTES } from '../../../constants/routes';
 
 interface NavLinkProps {
   userType: string;
 }
 
 const NAV_LINKS = [
-  { to: '/Home', label: 'Home' },
-  { to: '/Ranking', label: 'Ranking' },
+  { to: ROUTES.HOME, label: 'Home' },
+  { to: ROUTES.RANKING, label: 'Ranking' },
 ];
 
 const NavLinkList: React.FC<NavLinkProps> = ({ userType }) => {
@@ -19,7 +21,13 @@ const NavLinkList: React.FC<NavLinkProps> = ({ userType }) => {
         <NavLinkItem key={to} to={to} label={label} />
       ))}
 
-      {userType === 'Admin' && <NavLinkItem to="/AdminPanel" label="Admin" />}
+      {userType === ROLES.ADMIN && (
+        <NavLinkItem to={ROUTES.ADMIN_PANEL} label="Admin" />
+      )}
+
+      {userType === ROLES.DEV && (
+        <NavLinkItem to={ROUTES.DEV_PANEL} label="Dev" />
+      )}
 
       <NavLinkItem label="Logout" onClick={logout} />
     </ul>
