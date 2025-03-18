@@ -1,15 +1,12 @@
-import '../../styles/Button.css';
 import React from 'react';
+import '../styles/Button.css';
 
-//TODO: QUE DIFENCIA HAY ENTRE ESTAS DOS OPCIONES
-type ButtonProps = {
+void React;
+
+interface ButtonProps {
   text: string;
   onClick?: () => void;
-};
-
-/* interface ButtonProps {
-  text: String;
-} */
+}
 
 const Button = ({ text, onClick }: ButtonProps) => {
   return (

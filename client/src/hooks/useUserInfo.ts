@@ -1,21 +1,8 @@
 import { useEffect, useState } from 'react';
-import UserService from '../api/userService';
 
+import UserService from '../api/userService';
 import StorageService from '../services/storageService';
 import TokenService from '../services/tokenService';
-
-export const getUserType = (userTypeCode: string): string => {
-  switch (userTypeCode) {
-    case 'A':
-      return 'Admin';
-    case 'D':
-      return 'Dev';
-    case 'G':
-      return 'Guest';
-    default:
-      return 'User';
-  }
-};
 
 interface UserInfo {
   name: string;
@@ -43,7 +30,7 @@ const useUserInfo = () => {
           setUserInfo((prev) => ({
             ...prev,
             name: decoded.userName,
-            type: getUserType(decoded.userType),
+            type: decoded.userType,
           }));
 
           const scoreData = await UserService.fetchUserScore();

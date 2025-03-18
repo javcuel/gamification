@@ -1,8 +1,8 @@
 import React from 'react';
-import useLogout from '../../../hooks/useLogout';
-import NavLinkItem from './NavLinkItem';
 import { ROLES } from '../../../constants/roles';
 import { ROUTES } from '../../../constants/routes';
+import useLogout from '../../../hooks/useLogout';
+import NavLinkItem from './NavLinkItem';
 
 interface NavLinkProps {
   userType: string;
@@ -15,6 +15,7 @@ const NAV_LINKS = [
 
 const NavLinkList: React.FC<NavLinkProps> = ({ userType }) => {
   const logout = useLogout();
+
   return (
     <ul className="navbar-nav">
       {NAV_LINKS.map(({ to, label }) => (

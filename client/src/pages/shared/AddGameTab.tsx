@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import Input from './ui/Input';
 import Button from './ui/Button';
 import Dropdown from './ui/DropDown';
-import '../styles/AdminAddCard.css';
+import Input from './ui/Input';
+//TODO: cambiar esto
+//import '../styles/AdminAddCard.css';
 
 const AddGameTab: React.FC = () => {
   const [name, setName] = useState<string>('');

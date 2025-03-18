@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import { updateGameOpenState } from '../api/GameService';
+import { updateSubjectOpenState } from '../api/SubjectService';
 
-const useToggleGameOpenState = (gameId: number, initialState: boolean) => {
+const useToggleSubjectOpenState = (
+  subjectId: number,
+  initialState: boolean
+) => {
   const [isOpen, setIsOpen] = useState(initialState);
   const [loading, setLoading] = useState(false);
 
@@ -9,12 +12,11 @@ const useToggleGameOpenState = (gameId: number, initialState: boolean) => {
     setLoading(true);
     try {
       const newState = !isOpen;
-      const payload = { gameId, isOpen: newState };
-
-      await updateGameOpenState(payload);
+      const payload = { subjectId, isOpen: newState };
+      await updateSubjectOpenState(payload);
       setIsOpen(newState);
     } catch (error) {
-      console.error('Error toggling game open state:', error);
+      console.error('Error toggling subject open state:', error);
     } finally {
       setLoading(false);
     }
@@ -23,4 +25,4 @@ const useToggleGameOpenState = (gameId: number, initialState: boolean) => {
   return [isOpen, toggleOpenState, loading] as const;
 };
 
-export default useToggleGameOpenState;
+export default useToggleSubjectOpenState;

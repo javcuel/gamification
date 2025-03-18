@@ -8,57 +8,58 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { World } from '../../../entities/world';
-import useDeleteWorld from '../hooks/useDeleteWorld';
-import useExpandWorld from '../hooks/useExpandWorld';
-import useToggleWorldOpenState from '../hooks/useToggleWorldOpenState';
-import useToggleWorldVisibleState from '../hooks/useToggleWorldVisibleState';
+import { Subject } from '../api/SubjectService';
+import useDeleteSubject from '../hooks/useDeleteSubject';
+import useExpandSubject from '../hooks/useExpandSubject';
+import useToggleSubjectOpenState from '../hooks/useToggleSubjectOpenState';
+import useToggleSubjectVisibleState from '../hooks/useToggleSubjectVisibleState';
 import '../styles/admin-panel.css';
 import GameItem from './GameItem';
 
-interface WorldItemProps {
-  world: World;
-  onWorldDeleted: (worldId: number) => void;
+interface SubjectiItemProps {
+  subject: Subject;
+  onSubjectDeleted: (subjectId: number) => void;
 }
 
-const WorldItem: React.FC<WorldItemProps> = ({ world, onWorldDeleted }) => {
-  const { games, isExpanded, loading, error, toggleExpand } = useExpandWorld(
-    world.id
+const SubjectItem: React.FC<SubjectiItemProps> = ({
+  subject,
+  onSubjectDeleted,
+}) => {
+  const { games, isExpanded, loading, error, toggleExpand } = useExpandSubject(
+    subject.id
   );
-  const [isOpen, toggleOpenState, openLoading] = useToggleWorldOpenState(
-    world.id,
-    world.isOpen
+  const [isOpen, toggleOpenState, openLoading] = useToggleSubjectOpenState(
+    subject.id,
+    subject.isOpen
   );
   const [isVisible, toggleVisibleState, visibleLoading] =
-    useToggleWorldVisibleState(world.id, world.isVisible);
+    useToggleSubjectVisibleState(subject.id, subject.isVisible);
   const {
-    handleDeleteWorld,
+    handleDeleteSubject,
     loading: deleteLoading,
     error: deleteError,
-  } = useDeleteWorld(onWorldDeleted);
+  } = useDeleteSubject(onSubjectDeleted);
 
   const handleDeleteClick = () => {
-    if (window.confirm('Are you sure you want to delete this world?')) {
-      handleDeleteWorld(world.id);
+    if (window.confirm('Are you sure you want to delete this subject?')) {
+      handleDeleteSubject(subject.id);
     }
   };
 
   return (
-    <div className="custom-admin-panel-world-item">
-      {/* World Header */}
+    <div className="custom-admin-panel-subject-item">
       <div className="d-flex justify-content-between align-items-center">
         <div onClick={toggleExpand} style={{ cursor: 'pointer' }}>
-          {/* TODO: Replace with actual world.imgWorldUrl */}
+          {/* TODO: Replace with actual subject.imgsubjectUrl */}
           <img
             src={'src/assets/images/imagesPlanets/purple_planet.png'}
-            alt={world.name}
+            alt={subject.name}
             width="60"
             className="me-3"
           />
-          <strong>{world.name}</strong>
+          <strong>{subject.name}</strong>
         </div>
         <div>
-          {/* Locked Button */}
           <button
             className={'btn custom-button m-1'}
             onClick={toggleOpenState}
@@ -67,7 +68,6 @@ const WorldItem: React.FC<WorldItemProps> = ({ world, onWorldDeleted }) => {
             <FontAwesomeIcon icon={isOpen ? faUnlock : faLock} />
           </button>
 
-          {/* Visible Button */}
           <button
             className={'btn custom-button m-1'}
             onClick={toggleVisibleState}
@@ -76,12 +76,10 @@ const WorldItem: React.FC<WorldItemProps> = ({ world, onWorldDeleted }) => {
             <FontAwesomeIcon icon={isVisible ? faEye : faEyeSlash} />
           </button>
 
-          {/* Modify Button */}
           <button className="btn custom-button m-1">
             <FontAwesomeIcon icon={faPencilAlt} />
           </button>
 
-          {/* Delete Button */}
           <button
             className="btn custom-button m-1"
             onClick={handleDeleteClick}
@@ -92,18 +90,15 @@ const WorldItem: React.FC<WorldItemProps> = ({ world, onWorldDeleted }) => {
         </div>
       </div>
 
-      {/* Error Messages */}
       {error && <div className="text-danger">{error}</div>}
       {deleteError && <div className="text-danger">{deleteError}</div>}
 
-      {/* Loading Indicator */}
       {loading && <div>Loading games...</div>}
 
-      {/* Game List */}
       {isExpanded &&
         games.map((game) => <GameItem key={game.id} game={game} />)}
     </div>
   );
 };
 
-export default WorldItem;
+export default SubjectItem;

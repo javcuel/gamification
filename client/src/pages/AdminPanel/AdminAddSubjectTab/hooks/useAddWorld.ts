@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { addWorld as addWorldService } from '../../api/worldGamesService';
+import { addWorld as addWorldService } from '../../api/SubjectService';
 
 const useAddWorld = () => {
   const [isLoading, setIsLoading] = useState(false);

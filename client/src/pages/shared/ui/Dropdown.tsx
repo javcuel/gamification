@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../styles/Dropdown.css';
+import '../styles/Dropdown.css';
 
 interface DropdownProps {
   options: string[];

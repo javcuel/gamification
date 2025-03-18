@@ -1,8 +1,8 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { ROUTES } from '../../constants/routes';
-import { useAuth } from '../../context/AuthContext';
+import { ROUTES } from '../constants/routes';
+import { useAuth } from '../context/AuthContext';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -14,7 +14,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   allowedRoles,
 }) => {
   const { isAuthenticated, isLoading, user } = useAuth();
-
+  console.log('uer type', user?.userType);
+  console.log(allowedRoles);
   // Authentication is loading
   if (isLoading) {
     return <div>Loading...</div>;

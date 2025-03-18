@@ -1,7 +1,6 @@
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 
-import ProtectedRoute from './ProtectedRoute';
 import { ROUTES } from '../constants/routes';
 import AdminPanel from '../pages/AdminPanel/AdminPanel';
 import DevPanel from '../pages/DevPanel/DevPanel';
@@ -11,6 +10,7 @@ import Login from '../pages/Login/Login';
 import NotFound from '../pages/NotFound/NotFound';
 import Ranking from '../pages/Ranking/Ranking';
 import roleService from '../services/roleService';
+import ProtectedRoute from './ProtectedRoute';
 
 void React;
 
@@ -43,7 +43,9 @@ const routes: RouteObject[] = [
     path: ROUTES.GAME_SELECTOR(':subjectId'),
     element: (
       <ProtectedRoute
-        allowedRoles={roleService.getAllowedRolesForRoute('/GameSelector')}
+        allowedRoles={roleService.getAllowedRolesForRoute(
+          ROUTES.GAME_SELECTOR(':subjectId')
+        )}
       >
         <GameSelector />
       </ProtectedRoute>
@@ -53,7 +55,9 @@ const routes: RouteObject[] = [
     path: ROUTES.PLAY(':gameId'),
     element: (
       <ProtectedRoute
-        allowedRoles={roleService.getAllowedRolesForRoute('/Play')}
+        allowedRoles={roleService.getAllowedRolesForRoute(
+          ROUTES.PLAY(':gameId')
+        )}
       >
         <GameSelector />
       </ProtectedRoute>

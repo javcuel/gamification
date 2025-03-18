@@ -1,4 +1,6 @@
-import '../../styles/LinkImage.css';
+import React from 'react';
+
+import '../styles/LinkImage.css';
 
 type LinkImageProps = {
   src: string;

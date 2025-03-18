@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { addUserService } from '../../api/userService';
+import { createUser } from '../../api/userService';
 
 interface AddUserPayload {
   name: string;
@@ -8,11 +8,6 @@ interface AddUserPayload {
   group: string;
 }
 
-/**
- * Custom Hook: useAddUser
- * Manages adding a new user.
- * @returns {object} Hook state and actions.
- */
 const useAddUser = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -23,7 +18,7 @@ const useAddUser = () => {
     setError(null);
     setSuccess(false);
     try {
-      await addUserService(payload);
+      await createUser(payload);
       setSuccess(true);
     } catch (err) {
       setError((err as Error).message || 'Failed to add user');

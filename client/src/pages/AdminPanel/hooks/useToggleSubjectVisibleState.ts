@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import { updateGameVisibleState } from '../api/GameService';
+import { updateSubjectVisibleState } from '../api/SubjectService';
 
-const useToggleGameVisibleState = (gameId: number, initialState: boolean) => {
+const useToggleSubjectVisibleState = (
+  subjectId: number,
+  initialState: boolean
+) => {
   const [isVisible, setIsVisible] = useState(initialState);
   const [loading, setLoading] = useState(false);
 
@@ -9,11 +12,11 @@ const useToggleGameVisibleState = (gameId: number, initialState: boolean) => {
     setLoading(true);
     try {
       const newState = !isVisible;
-      const payload = { gameId, isVisible: newState };
-      await updateGameVisibleState(payload);
+      const payload = { subjectId, isVisible: newState };
+      await updateSubjectVisibleState(payload);
       setIsVisible(newState);
     } catch (error) {
-      console.error('Error toggling game open state:', error);
+      console.error('Error toggling subject open state:', error);
     } finally {
       setLoading(false);
     }
@@ -22,4 +25,4 @@ const useToggleGameVisibleState = (gameId: number, initialState: boolean) => {
   return [isVisible, toggleVisibleState, loading] as const;
 };
 
-export default useToggleGameVisibleState;
+export default useToggleSubjectVisibleState;

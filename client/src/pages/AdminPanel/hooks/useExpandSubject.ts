@@ -1,14 +1,7 @@
 import { useState } from 'react';
-import { Game } from '../../../entities/game';
-import { fetchGamesByWorld } from '../api/worldGamesService';
+import { fetchGames, Game } from '../api/GameService';
 
-/**
- * Custom Hook: useExpandableWorld
- * Handles expansion logic and fetching games for a world.
- * @param worldId - The ID of the world to fetch games for.
- * @returns State and functions for managing expansion and games.
- */
-const useExpandWorld = (worldId: number) => {
+const useExpandWorld = (subjectId: number) => {
   const [games, setGames] = useState<Game[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -21,7 +14,7 @@ const useExpandWorld = (worldId: number) => {
       setLoading(true);
       setError(null);
       try {
-        const fetchedGames = await fetchGamesByWorld(worldId);
+        const fetchedGames = await fetchGames(subjectId);
         setGames(fetchedGames);
       } catch (err) {
         console.error(err);

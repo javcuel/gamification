@@ -1,6 +1,6 @@
-import { animated, useSpring } from 'react-spring';
-import '../../styles/FloatingText.css'; // O puedes agregar el estilo directamente en este archivo
 import React from 'react';
+import { animated, useSpring } from 'react-spring';
+import '../styles/FloatingText.css'; // O puedes agregar el estilo directamente en este archivo
 
 interface FloatingTexProps {
   text: string;

@@ -1,4 +1,3 @@
-// IconoEstrella.tsx
 import { SizeProp } from '@fortawesome/fontawesome-svg-core'; // Importar SizeProp
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
