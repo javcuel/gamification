@@ -3,6 +3,7 @@ import Button from '../../shared/ui/Button';
 import Input from '../../shared/ui/Input';
 import { ThemeContext } from '../../../context/ThemeContext';
 import ColorPicker from './ColorPicker';
+
 const AdminThemeTab: React.FC = () => {
   const themeContext = useContext(ThemeContext);
 

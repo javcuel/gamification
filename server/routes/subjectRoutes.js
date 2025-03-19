@@ -29,7 +29,7 @@ router.put("/:id/visible", updateSubjectVisibleState);
 
 // Add new Subject
 router.post(
-  "/add",
+  "/",
   upload.fields([{ name: "imgSubjectUrl" }, { name: "imgBackgroundUrl" }]),
   addSubject
 );

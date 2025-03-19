@@ -1,6 +1,6 @@
 import db from "../config/db.js";
 
-export const getSubjects = async (req, res) => {
+export const getSubjects = async (res) => {
   try {
     const [rows] = await db.query("SELECT * FROM Mundos ORDER BY Posicion ASC");
     res.json(rows);

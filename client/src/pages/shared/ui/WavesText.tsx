@@ -1,11 +1,27 @@
-import { motion } from 'framer-motion';
 import React from 'react';
+import { motion } from 'framer-motion';
+
 import '../styles/WavesText.css';
 
 interface WavesTextProps {
   text: string;
 }
 
+/**
+ * A component that animates text in a wave-like motion.
+ * Each character of the provided text will animate with a vertical movement
+ * to create a wave effect. The animation is achieved using the `framer-motion` library.
+ *
+ * @component
+ * @example
+ * // Example usage:
+ * <WavesText text="Waves Effect!" />
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {string} props.text - The text to display with the wave animation.
+ *
+ * @returns {JSX.Element} A div element containing animated text.
+ */
 const WavesText: React.FC<WavesTextProps> = ({ text }) => {
   return (
     <div className="waves-title">

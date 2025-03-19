@@ -3,8 +3,11 @@ import React, { useState } from 'react';
 import BoltIcon from '../../shared/ui/BoltIcon';
 import StarIcon from '../../shared/ui/StarIcon';
 import useRankings from '../hooks/useRankings';
-import '../styles/ranking.css';
+import Dropdown from '../../shared/ui/DropDown';
 import { RANKING_TYPES } from '../../../constants/rankingTypes';
+import '../styles/ranking.css';
+import { fetchGames } from '../../AdminPanel/api/GameService';
+
 const DEFAULT_RANKING = RANKING_TYPES.PLAYERS;
 const DEFAULT_GAME = 0;
 
@@ -13,6 +16,7 @@ const RankingTable: React.FC = () => {
   const [selectedGame, setSelectedGame] = useState<number>(DEFAULT_GAME);
 
   const { rankings, error } = useRankings(rankingType, selectedGame);
+  //const games = fetchGames();
 
   return (
     <div className="container mt-5">
@@ -36,7 +40,8 @@ const RankingTable: React.FC = () => {
           rankingType === RANKING_TYPES.GROUPS_BY_GAME) && (
           <div className="col-md-6">
             <label>Select game</label>
-            <select
+
+            {/*   <select
               className="form-control custom-dropdown"
               value={selectedGame || ''}
               onChange={(e) => setSelectedGame(Number(e.target.value))}
@@ -48,7 +53,7 @@ const RankingTable: React.FC = () => {
               <option value={129}>Estructura2</option>
               <option value={110}>Fiesta Recursiva</option>
               <option value={130}>Mars Miners</option>
-            </select>
+            </select> */}
           </div>
         )}
       </div>

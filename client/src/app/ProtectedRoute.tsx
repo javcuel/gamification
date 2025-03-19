@@ -9,13 +9,32 @@ interface ProtectedRouteProps {
   allowedRoles: string[];
 }
 
+/**
+ * ProtectedRoute component that handles authentication and authorization
+ * for rendering child components. It ensures that the user is authenticated
+ * and has one of the allowed roles before rendering the child components.
+ * If the user is not authenticated or their role is not allowed, they are redirected
+ * to the login page.
+ *
+ * @component
+ * @example
+ * // Example usage
+ * <ProtectedRoute allowedRoles={['admin', 'moderator']}>
+ *   <Dashboard />
+ * </ProtectedRoute>
+ *
+ * @param {Object} props - Component properties.
+ * @param {React.ReactNode} props.children - The child components to render if the route is accessible.
+ * @param {string[]} props.allowedRoles - An array of roles allowed to access the route.
+ *
+ * @returns {React.ReactNode} The child components if authenticated and authorized, or a redirect if not.
+ */
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   allowedRoles,
 }) => {
   const { isAuthenticated, isLoading, user } = useAuth();
-  console.log('uer type', user?.userType);
-  console.log(allowedRoles);
+
   // Authentication is loading
   if (isLoading) {
     return <div>Loading...</div>;

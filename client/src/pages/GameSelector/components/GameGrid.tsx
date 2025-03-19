@@ -1,9 +1,10 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import useGames from '../hooks/useGame';
-import GameItem from './GameItem';
 
-const SubjectGrid: React.FC = () => {
+import GameItem from './GameItem';
+import useGames from '../hooks/useGame';
+
+const GameGrid: React.FC = () => {
   const { subjectId } = useParams<{ subjectId: string }>();
   const { games, error } = useGames(Number(subjectId));
 
@@ -26,4 +27,4 @@ const SubjectGrid: React.FC = () => {
   );
 };
 
-export default SubjectGrid;
+export default GameGrid;

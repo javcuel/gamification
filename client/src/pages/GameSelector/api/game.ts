@@ -1,6 +1,7 @@
 import httpClient from '../../../api/httpClient';
 import { API_URLS } from '../../../constants/apiUrls';
 
+//TODO: CREAR LA CLASE GAME Y HACE LO MISMO QUE EN SUBJECT.TS
 export interface Game {
   id: number;
   idSubject: number;
@@ -54,7 +55,7 @@ export const fetchGames = async (subjectId: number): Promise<Game[]> => {
 
 export const fetchGameById = async (gameId: number): Promise<Game> => {
   try {
-    const data = await httpClient.get(API_URLS.GET_GAME_BY_ID(gameId));
+    const data = await httpClient.get(API_URLS.GET_GAME(gameId));
 
     return data.map((game: GameApiResponse) => ({
       id: game.IDMinijuego,

@@ -5,6 +5,18 @@ import LinkImage from '../shared/ui/LinkImage';
 import WavesText from '../shared/ui/WavesText';
 import LoginForm from './components/LoginForm';
 
+/**
+ * The Login component renders a login page with a space-themed background,
+ * a wave effect text ("Gamispace"), and links to various external resources.
+ * It includes a central login form for users to input their credentials.
+ *
+ * @component
+ * @example
+ * // Example usage:
+ * <Login />
+ *
+ * @returns {JSX.Element} The login page containing the background, text, links, and login form.
+ */
 const Login: React.FC = () => {
   return (
     <div className="container min-vh-100 custom-flex-center text-center">
@@ -42,7 +54,7 @@ const Login: React.FC = () => {
               src="images/greidi.jpg"
               alt="greidi_logo"
               url="https://www.greidi.infor.uva.es"
-              width={'10%'}
+              width={'8%'}
             />
           </div>
         </div>

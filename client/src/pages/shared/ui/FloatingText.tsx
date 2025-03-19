@@ -1,20 +1,35 @@
 import React from 'react';
 import { animated, useSpring } from 'react-spring';
-import '../styles/FloatingText.css'; // O puedes agregar el estilo directamente en este archivo
+
+import '../styles/FloatingText.css';
 
 interface FloatingTexProps {
   text: string;
 }
 
+/**
+ * A component that animates text with a floating effect.
+ * The text smoothly moves up and down using the `react-spring` library,
+ * creating a floating animation that repeats indefinitely.
+ *
+ * @component
+ * @example
+ * // Example usage:
+ * <FloatingText text="Floating Text!" />
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {string} props.text - The text to display with the floating animation.
+ *
+ * @returns {JSX.Element} A `h1` element displaying the animated floating text.
+ */
 const FloatingText: React.FC<FloatingTexProps> = ({ text }) => {
-  // Animación de flotación (movimiento sutil)
   const springStyles = useSpring({
-    from: { transform: 'translateY(0px)' }, // Posición inicial
-    to: { transform: 'translateY(-20px)' }, // Posición final (lo subimos un poco)
-    reset: true, // Reinicia la animación
-    reverse: true, // Invertir la animación después de completarse
-    config: { tension: 50, friction: 20 }, // Ajustamos la configuración para que sea más fluido
-    loop: { reverse: true }, // Bucle continuo con reversa
+    from: { transform: 'translateY(0px)' },
+    to: { transform: 'translateY(-20px)' },
+    reset: true,
+    reverse: true,
+    config: { tension: 50, friction: 20 },
+    loop: { reverse: true },
   });
 
   return (

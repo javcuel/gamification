@@ -1,7 +1,21 @@
 import React from 'react';
-import useSubject from '../hooks/useSubject';
-import SubjectItem from './SubjectItem';
 
+import SubjectItem from './SubjectItem';
+import useSubject from '../hooks/useSubject';
+
+/**
+ * The SubjectGrid component renders a grid of subjects by using the `SubjectItem` component
+ * for each visible subject. It retrieves the list of subjects through the custom hook `useSubject`,
+ * and handles any errors by displaying an alert message if an error occurs.
+ *
+ * @component
+ * @example
+ * // Example usage:
+ * <SubjectGrid />
+ *
+ * @returns {JSX.Element} A grid of subjects with visible subjects displayed as individual
+ * `SubjectItem` components. If an error occurs, an alert message is shown.
+ */
 const SubjectGrid: React.FC = () => {
   const { subjects, error } = useSubject();
 

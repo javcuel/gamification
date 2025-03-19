@@ -5,15 +5,8 @@ import {
   fetchRankingGroups,
   fetchRankingPlayersByGame,
   fetchRankingGroupsByGame,
-} from '../api/rankingService';
+} from '../api/ranking';
 import { RANKING_TYPES } from '../../../constants/rankingTypes';
-
-/* interface RankingEntry {
-  userName?: string;
-  userGroup?: string;
-  totalStars?: number;
-  totalScore?: number;
-} */
 
 const useRankings = (rankingType: string, selectedGame: number) => {
   const [rankings, setRankings] = useState<Ranking[]>([]);
@@ -32,7 +25,7 @@ const useRankings = (rankingType: string, selectedGame: number) => {
         } else if (RANKING_TYPES.GROUPS_BY_GAME) {
           data = await fetchRankingGroupsByGame(selectedGame);
         }
-        setRankings(data);
+        if (data) setRankings(data);
       } catch (error) {
         setError('Failed to load rankings');
         console.error(error);

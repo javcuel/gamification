@@ -14,6 +14,27 @@ import ProtectedRoute from './ProtectedRoute';
 
 void React;
 
+/**
+ * Array of route configurations for the application.
+ * This defines the paths, associated components, and any necessary
+ * authorization through the ProtectedRoute component.
+ * The routes are protected based on the roles retrieved from `roleService`.
+ *
+ * @constant
+ * @type {RouteObject[]}
+ *
+ * @example
+ * // Example usage:
+ * // A route that allows access to Home page only for users with allowed roles.
+ * {
+ *   path: ROUTES.HOME,
+ *   element: (
+ *     <ProtectedRoute allowedRoles={roleService.getAllowedRolesForRoute(ROUTES.HOME)}>
+ *       <Home />
+ *     </ProtectedRoute>
+ *   ),
+ * }
+ */
 const routes: RouteObject[] = [
   {
     path: ROUTES.LOGIN,

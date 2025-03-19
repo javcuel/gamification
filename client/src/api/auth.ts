@@ -7,10 +7,6 @@ export interface Auth {
   userPasswd: string;
 }
 
-/* interface AuthApiResponse {
-
-} */
-
 const AuthApi = {
   loginRequest: async ({
     userName,

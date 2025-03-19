@@ -13,6 +13,7 @@ const AdminAddUserTab: React.FC = () => {
   const { addUser, loading, error, success } = useAddUser();
 
   const handleSubmit = async () => {
+    //TODO: ESTO KLK QUE ESTA AQUI COMENTADO Y RISAS
     /*  e.preventDefault(); */
     await addUser({ name, passwd, type, group });
   };
