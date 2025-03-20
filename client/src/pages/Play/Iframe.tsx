@@ -1,5 +1,5 @@
 import React from 'react';
-import { Game } from '../GameSelector/api/game';
+import { Game } from '../../api/game';
 
 interface GameIframeProps {
   selectedGame: Game;

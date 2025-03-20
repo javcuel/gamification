@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import UserService from '../api/userService';
+import UserService from '../api/user';
 import StorageService from '../services/storageService';
 import TokenService from '../services/tokenService';
 

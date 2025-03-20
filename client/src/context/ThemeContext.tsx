@@ -1,11 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import httpClient from '../api/httpClient';
-
-interface Theme {
-  primary: string;
-  secondary: string;
-  text: string;
-}
+import { createTheme, fetchTheme, Theme } from '../api/theme';
 
 interface ThemeContextType {
   theme: Theme;
@@ -21,12 +15,14 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [theme, setTheme] = useState<Theme>({
+    id: 1,
     primary: '#ffffff',
     secondary: '#000000',
     text: '#333333',
+    pointsIcon: 'image/no_image.jpg',
+    completedSubjectsIcon: 'image/no_image.jpg',
   });
 
-  // Función para actualizar las variables CSS en el documento
   const applyTheme = (newTheme: Theme) => {
     document.documentElement.style.setProperty('--primary', newTheme.primary);
     document.documentElement.style.setProperty(
@@ -36,32 +32,21 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     document.documentElement.style.setProperty('--text', newTheme.text);
   };
 
-  // Obtener el tema desde el backend al iniciar la app
   useEffect(() => {
-    const fetchTheme = async () => {
-      try {
-        const data = await httpClient.get('/theme'); // Usa httpClient en lugar de fetch
-        if (data) {
-          const newTheme = {
-            primary: data.primary_color,
-            secondary: data.secondary_color,
-            text: data.text_color,
-          };
-          setTheme(newTheme);
-          applyTheme(newTheme);
-        }
-      } catch (error) {
-        console.error('Error al obtener el tema:', error);
+    const loadTheme = async () => {
+      const newTheme = await fetchTheme();
+      if (newTheme) {
+        setTheme(newTheme);
+        applyTheme(newTheme);
       }
     };
 
-    fetchTheme();
+    loadTheme();
   }, []);
 
-  // Función para actualizar el tema en el backend y aplicarlo en la app
-  const updateTheme = async (newTheme: Theme) => {
+  const handleUpdateTheme = async (newTheme: Theme) => {
     try {
-      await httpClient.post('/theme/update', newTheme);
+      await createTheme(newTheme);
       setTheme(newTheme);
       applyTheme(newTheme);
     } catch (error) {
@@ -70,7 +55,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, updateTheme }}>
+    <ThemeContext.Provider
+      value={{ theme, setTheme, updateTheme: handleUpdateTheme }}
+    >
       {children}
     </ThemeContext.Provider>
   );

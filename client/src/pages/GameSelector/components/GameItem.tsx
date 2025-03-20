@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Game } from '../api/game';
+import { Game } from '../../../api/game';
 import { ROUTES } from '../../../constants/routes';
 
 interface GameProps {

@@ -1,7 +1,6 @@
-import React from 'react';
-
-import BoltIcon from '../ui/BoltIcon';
-import StarIcon from '../ui/StarIcon';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../../../context/ThemeContext';
+import Icon from '../ui/Icon';
 
 interface NavUserInfoProps {
   name: string;
@@ -16,17 +15,21 @@ const UserInfoDisplay: React.FC<NavUserInfoProps> = ({
   totalScore,
   completedSubjects,
 }) => {
+  const themeContext = useContext(ThemeContext);
+
+  if (!themeContext) {
+    return null;
+  }
+
+  const { theme } = themeContext;
+
   return (
     <span className="ms-auto">
       {type} : {name}
-      <span className=" ms-3">
-        <BoltIcon className="me-1" />
-        {totalScore}
-      </span>
-      <span className=" ms-3 ">
-        <StarIcon className="me-1" />
-        {completedSubjects}
-      </span>
+      <span className="ms-3 me-3">{totalScore}</span>
+      <Icon img={theme.pointsIcon} />
+      <span className="ms-3 me-3">{completedSubjects}</span>
+      <Icon img={theme.completedSubjectsIcon} />
     </span>
   );
 };

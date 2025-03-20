@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Game, fetchGameById } from '../GameSelector/api/game';
+import { Game, fetchGameById } from '../../api/game';
 
 const usePlay = (gameId: number) => {
   const [game, setGame] = useState<Game>();

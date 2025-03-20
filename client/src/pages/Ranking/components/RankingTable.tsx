@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 
-import BoltIcon from '../../shared/ui/BoltIcon';
-import StarIcon from '../../shared/ui/StarIcon';
-import useRankings from '../hooks/useRankings';
-import Dropdown from '../../shared/ui/DropDown';
 import { RANKING_TYPES } from '../../../constants/rankingTypes';
+import useRankings from '../hooks/useRankings';
 import '../styles/ranking.css';
-import { fetchGames } from '../../AdminPanel/api/GameService';
 
 const DEFAULT_RANKING = RANKING_TYPES.PLAYERS;
 const DEFAULT_GAME = 0;
@@ -76,17 +72,11 @@ const RankingTable: React.FC = () => {
                   </>
                 )}
                 <th>
-                  <span>
-                    Completed Subjects
-                    <StarIcon className="ms-2" />
-                  </span>
+                  <span>Completed Subjects</span>
                 </th>
 
                 <th>
-                  <span>
-                    Points
-                    <BoltIcon className="ms-2" />
-                  </span>
+                  <span>Points</span>
                 </th>
               </tr>
             </thead>

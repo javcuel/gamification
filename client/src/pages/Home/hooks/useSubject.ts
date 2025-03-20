@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Subject, fetchSubjects } from '../api/subject';
+import { Subject, fetchSubjects } from '../../../api/subject';
 
 /**
  * Custom hook to fetch and manage the list of subjects.
