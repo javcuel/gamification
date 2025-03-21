@@ -1,5 +1,6 @@
 @import './normalize.css';
 
+/*TODO: AQUI EL FONT-SIZE NO SE PODRIA PONER EN BODY??*/
 :root {
   --primary: #2a2d3d;
   --secondary: #4f5be5;
