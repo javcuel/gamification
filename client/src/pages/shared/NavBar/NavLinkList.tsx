@@ -1,7 +1,7 @@
 import React from 'react';
 import { ROLES } from '../../../constants/roles';
 import { ROUTES } from '../../../constants/routes';
-import useLogout from '../../../hooks/useLogout';
+import { logout } from '../../../api/user';
 import NavLinkItem from './NavLinkItem';
 
 interface NavLinkProps {
@@ -14,8 +14,6 @@ const NAV_LINKS = [
 ];
 
 const NavLinkList: React.FC<NavLinkProps> = ({ userType }) => {
-  const logout = useLogout();
-
   return (
     <ul className="navbar-nav">
       {NAV_LINKS.map(({ to, label }) => (
@@ -30,7 +28,7 @@ const NavLinkList: React.FC<NavLinkProps> = ({ userType }) => {
         <NavLinkItem to={ROUTES.DEV_PANEL} label="Dev" />
       )}
 
-      <NavLinkItem label="Logout" onClick={logout} />
+      <NavLinkItem label="Logout" onClick={() => logout()} />
     </ul>
   );
 };

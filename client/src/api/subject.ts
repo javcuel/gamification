@@ -90,6 +90,7 @@ interface SubjectApiVisibleStatePayload {
  * @interface
  */
 interface SubjectApiPayload {
+  id: number;
   name: string;
   img: string;
   imgBackground: string;

@@ -1,6 +1,7 @@
 import httpClient from '../../../api/httpClient';
 import { API_URLS } from '../../../constants/apiUrls';
 
+//TODO: HACER AQUI LO DE CLASS
 export interface Ranking {
   userName: string;
   userGroup: string;

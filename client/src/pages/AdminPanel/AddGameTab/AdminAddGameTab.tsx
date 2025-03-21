@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Input from '../../shared/ui/Input';
 import Button from '../../shared/ui/Button';
-import Dropdown from '../../shared/ui/DropDown';
+import Dropdown from '../../shared/ui/Dropdown';
 import '../styles/AdminAddCard.css';
 
 const AdminAddGameTab: React.FC = () => {

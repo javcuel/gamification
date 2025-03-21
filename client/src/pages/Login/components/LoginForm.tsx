@@ -23,7 +23,7 @@ const LoginForm: React.FC = () => {
   const [user, setUser] = useState<string>('');
   const [passwd, setPasswd] = useState<string>('');
 
-  const { login, error } = useAuth();
+  const { loginRequest, error } = useAuth();
   const navigate = useNavigate();
 
   /**
@@ -50,8 +50,8 @@ const LoginForm: React.FC = () => {
    */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = await login(user, passwd);
-    if (result.success && result.userType) {
+    const result = await loginRequest(user, passwd);
+    if (result.success && result.role) {
       navigate(ROUTES.HOME);
     }
   };

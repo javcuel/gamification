@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Subject } from '../api/subject';
+import { Subject } from '../../../api/subject';
 import { ROUTES } from '../../../constants/routes';
 
 interface SubjectProps {

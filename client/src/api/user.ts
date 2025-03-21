@@ -1,9 +1,13 @@
+import { useNavigate } from 'react-router-dom';
+
 import { API_URLS } from '../constants/apiUrls';
 import { ROLES } from '../constants/roles';
+import { ROUTES } from '../constants/routes';
 import StorageService from '../services/storageService';
-import TokenService from '../services/tokenService';
-import { DecodedToken } from '../types/DecodedToken';
+import { Token, decodeToken } from '../services/token';
 import httpClient from './httpClient';
+
+const navigate = useNavigate();
 
 export class User implements IUser {
   constructor(
@@ -36,10 +40,16 @@ interface UserApiPayload {
   group: string;
 }
 
+interface UserApiLoginPayload {
+  name: string;
+  passwd: string;
+}
+
+/* 
 interface UserScoreResponse {
   score: number;
   stars: number;
-}
+} */
 
 export const fetchUsers = async (): Promise<User[]> => {
   try {
@@ -52,36 +62,6 @@ export const fetchUsers = async (): Promise<User[]> => {
   } catch (error) {
     console.error('Error fetching users:', error);
     throw new Error('Failed to fetch users');
-  }
-};
-
-export const getUserInfo = (): DecodedToken | null => {
-  const token = StorageService.getItem('token');
-  if (!token) {
-    console.error('No token found for decoding.');
-    return null;
-  }
-  return TokenService.decodeAndValidateToken(token);
-};
-
-export const fetchUserScore = async (): Promise<UserScoreResponse | null> => {
-  try {
-    const token = StorageService.getItem('token');
-    if (!token) {
-      console.error('No token available for authentication.');
-      return null;
-    }
-
-    const response = await httpClient.get<>('/score/totalScore', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    return response;
-  } catch (error) {
-    console.error('Error fetching user score:', error);
-    return null;
   }
 };
 
@@ -102,3 +82,67 @@ export const createUser = async (payload: UserApiPayload): Promise<void> => {
     throw new Error('Failed to add user');
   }
 };
+
+export const login = async (
+  payload: UserApiLoginPayload
+): Promise<{
+  success: boolean;
+  token?: string;
+  message?: string;
+}> => {
+  try {
+    //TODO: ESTO POR QUE ES UN POST, ANTES ERA UN POST HE PUESTO GET PERO NO SE
+    const data = await httpClient.get(API_URLS.LOGIN, {
+      name: payload.name,
+      passwd: payload.passwd,
+    });
+
+    if (data && data.token) {
+      StorageService.setItem('token', data.token);
+      return { success: true, token: data.token };
+    }
+
+    return {
+      success: false,
+      message: data.message || 'Login Error',
+    };
+  } catch (error) {
+    console.error('Login Request Error;', error);
+    return { success: false, message: 'Server Error' };
+  }
+};
+
+export const logout = (): void => {
+  StorageService.removeItem('token');
+  navigate(ROUTES.LOGIN);
+};
+
+export const getUserInfo = (): Token | null => {
+  const token = StorageService.getItem('token');
+  if (!token) {
+    console.error('No token found for decoding.');
+    return null;
+  }
+  return decodeToken(token);
+};
+
+/* export const fetchUserScore = async (): Promise<UserScoreResponse | null> => {
+  try {
+    const token = StorageService.getItem('token');
+    if (!token) {
+      console.error('No token available for authentication.');
+      return null;
+    }
+
+    const response = await httpClient.get<>('/score/totalScore', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
+  } catch (error) {
+    console.error('Error fetching user score:', error);
+    return null;
+  }
+}; */

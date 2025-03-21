@@ -1,11 +1,24 @@
 import { API_URLS } from '../constants/apiUrls';
 
+/**
+ * Interface representing the options of a HttpRequest.
+ *
+ * @interface
+ */
 interface HttpClientOptions {
   method: string;
   headers?: Record<string, string>;
-  body?: any;
+  body?: unknown;
 }
 
+/**
+ * Performs an HTTP request.
+ *
+ * @param {string} url - The endpoint URL (relative to the base API URL).
+ * @param {HttpClientOptions} options - The request options (method, headers, body).
+ * @returns {Promise<any>} A promise that resolves with the response data.
+ * @throws {Error} Throws an error if the request fails.
+ */
 const httpClient = {
   request: async (url: string, options: HttpClientOptions) => {
     try {
@@ -30,16 +43,46 @@ const httpClient = {
     }
   },
 
+  /**
+   * Sends a GET request.
+   *
+   * @param {string} url - The endpoint URL.
+   * @param {Record<string, string>} [headers={}] - Optional request headers.
+   * @returns {Promise<any>} A promise that resolves with the response data.
+   */
   get: (url: string, headers: Record<string, string> = {}) =>
     httpClient.request(url, { method: 'GET', headers }),
 
-  post: (url: string, body: any, headers: Record<string, string> = {}) =>
+  /**
+   * Sends a POST request.
+   *
+   * @param {string} url - The endpoint URL.
+   * @param {unknown} body - The request payload.
+   * @param {Record<string, string>} [headers={}] - Optional request headers.
+   * @returns {Promise<any>} A promise that resolves with the response data.
+   */
+  post: (url: string, body: unknown, headers: Record<string, string> = {}) =>
     httpClient.request(url, { method: 'POST', headers, body }),
 
+  /**
+   * Sends a DELETE request.
+   *
+   * @param {string} url - The endpoint URL.
+   * @param {Record<string, string>} [headers={}] - Optional request headers.
+   * @returns {Promise<any>} A promise that resolves when the deletion is successful.
+   */
   delete: (url: string, headers: Record<string, string> = {}) =>
     httpClient.request(url, { method: 'DELETE', headers }),
 
-  put: (url: string, body: any, headers: Record<string, string> = {}) =>
+  /**
+   * Sends a PUT request.
+   *
+   * @param {string} url - The endpoint URL.
+   * @param {unknown} body - The request payload.
+   * @param {Record<string, string>} [headers={}] - Optional request headers.
+   * @returns {Promise<any>} A promise that resolves with the updated response data.
+   */
+  put: (url: string, body: unknown, headers: Record<string, string> = {}) =>
     httpClient.request(url, { method: 'PUT', headers, body }),
 };
 

@@ -6,37 +6,34 @@ import React, {
   useState,
 } from 'react';
 
-import AuthApi from '../api/auth';
-import TokenService from '../services/tokenService';
+import { login, logout } from '../api/user';
+import { Token, decodeToken } from '../services/token';
 
-interface AuthContextType {
+interface IAuthContext {
   isAuthenticated: boolean;
-  user: { userName: string; userType: string } | null;
+  user: Token | null;
   error: string | null;
   isLoading: boolean;
-  login: (
-    userName: string,
-    userPasswd: string
-  ) => Promise<{ success: boolean; userType?: string; message?: string }>;
-  logout: () => void;
+  loginRequest: (
+    name: string,
+    passwd: string
+  ) => Promise<{ success: boolean; role?: string; message?: string }>;
+  logoutRequest: () => void;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<{
-    userName: string;
-    userType: string;
-  } | null>(null);
+  const [user, setUser] = useState<Token | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const decoded = token ? TokenService.decodeAndValidateToken(token) : null;
+    const decoded = token ? decodeToken(token) : null;
 
     if (decoded) {
       setIsAuthenticated(true);
@@ -48,24 +45,24 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setIsLoading(false);
   }, []);
 
-  const login = async (
-    userName: string,
-    userPasswd: string
-  ): Promise<{ success: boolean; userType?: string }> => {
-    const authData = { userName, userPasswd };
+  const loginRequest = async (
+    name: string,
+    passwd: string
+  ): Promise<{ success: boolean; role?: string }> => {
+    const authData = { name, passwd };
 
-    const result = await AuthApi.loginRequest(authData);
+    const result = await login(authData);
 
     if (result.success && result.token) {
       localStorage.setItem('token', result.token);
-      const decoded = TokenService.decodeAndValidateToken(result.token);
+      const decoded = decodeToken(result.token);
 
       console.log(decoded);
       if (decoded) {
         setIsAuthenticated(true);
         setError(null);
         setUser(decoded);
-        return { success: true, userType: decoded.userType };
+        return { success: true, role: decoded.role };
       }
     }
 
@@ -73,8 +70,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     return { success: false };
   };
 
-  const logout = () => {
-    AuthApi.logoutRequest();
+  const logoutRequest = () => {
+    logout();
     setIsAuthenticated(false);
     setUser(null);
     setError(null);
@@ -82,7 +79,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, error, isLoading, login, logout }}
+      value={{
+        isAuthenticated,
+        user,
+        error,
+        isLoading,
+        loginRequest,
+        logoutRequest,
+      }}
     >
       {children}
     </AuthContext.Provider>

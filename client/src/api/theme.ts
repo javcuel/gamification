@@ -61,6 +61,19 @@ interface ThemeApiResponse {
 }
 
 /**
+ * Interface representing payload for new Theme
+ *
+ * @interface
+ */
+interface ThemeApiPayload {
+  primary: string;
+  secondary: string;
+  text: string;
+  pointsIcon: string;
+  completedSubjectsIcon: string;
+}
+
+/**
  * Fetches the theme and maps it into `Theme` instances.
  *
  * This function performs an HTTP GET request to retrieve the theme and transforms the API response
@@ -124,9 +137,9 @@ export const fetchTheme = async (): Promise<Theme> => {
  *   .then(() => console.log("Theme created successfully"))
  *   .catch(error => console.error(error));
  */
-export const createTheme = async (newTheme: Theme): Promise<void> => {
+export const createTheme = async (payload: ThemeApiPayload): Promise<void> => {
   try {
-    await httpClient.post(API_URLS.CREATE_THEME, newTheme);
+    await httpClient.post(API_URLS.CREATE_THEME, payload);
   } catch (error) {
     console.error('Error creating theme:  ', error);
     throw new Error('Error to create new theme');
