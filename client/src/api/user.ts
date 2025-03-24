@@ -1,19 +1,16 @@
-import { useNavigate } from 'react-router-dom';
+import { NavigateFunction } from 'react-router-dom';
 
 import { API_URLS } from '../constants/apiUrls';
 import { ROLES } from '../constants/roles';
 import { ROUTES } from '../constants/routes';
 import StorageService from '../services/storageService';
-import { Token, decodeToken } from '../services/token';
 import httpClient from './httpClient';
-
-const navigate = useNavigate();
 
 export class User implements IUser {
   constructor(
     public id: number,
     public name: string,
-    public type: (typeof ROLES)[keyof typeof ROLES],
+    public role: (typeof ROLES)[keyof typeof ROLES],
     public totalScore: number,
     public completedSubjects: number
   ) {}
@@ -22,7 +19,7 @@ export class User implements IUser {
 interface IUser {
   id: number;
   name: string;
-  type: (typeof ROLES)[keyof typeof ROLES];
+  role: (typeof ROLES)[keyof typeof ROLES];
   totalScore: number;
   completedSubjects: number;
 }
@@ -31,12 +28,14 @@ interface UserApiResponse {
   IDUsuario: number;
   Nombre: string;
   TipoUsuario: (typeof ROLES)[keyof typeof ROLES];
+  Puntuacion: number;
+  Completado: number;
 }
 
 interface UserApiPayload {
   name: string;
   passwd: string;
-  type: (typeof ROLES)[keyof typeof ROLES];
+  role: (typeof ROLES)[keyof typeof ROLES];
   group: string;
 }
 
@@ -45,19 +44,41 @@ interface UserApiLoginPayload {
   passwd: string;
 }
 
-/* 
+interface UserScore {
+  totalScore: number;
+  completedSubjects: number;
+}
+
 interface UserScoreResponse {
-  score: number;
-  stars: number;
-} */
+  Puntacion: number;
+  Completado: number;
+}
 
 export const fetchUsers = async (): Promise<User[]> => {
   try {
     const data = await httpClient.get(API_URLS.GET_USERS);
-    return data.map((user: UserApiResponse) => ({
-      id: user.IDUsuario,
-      name: user.Nombre,
-      type: user.TipoUsuario,
+    return data.map(
+      (user: UserApiResponse) =>
+        new User(
+          user.IDUsuario,
+          user.Nombre,
+          user.TipoUsuario,
+          user.Puntuacion,
+          user.Completado
+        )
+    );
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    throw new Error('Failed to fetch users');
+  }
+};
+
+export const fetchUserScore = async (userId: number): Promise<UserScore> => {
+  try {
+    const data = await httpClient.get(API_URLS.GET_USER_SCORE(userId));
+    return data.map((user: UserScoreResponse) => ({
+      totalScore: user.Puntacion,
+      completedSubjects: user.Completado,
     }));
   } catch (error) {
     console.error('Error fetching users:', error);
@@ -112,37 +133,8 @@ export const login = async (
   }
 };
 
-export const logout = (): void => {
+// ✅ La función logout debe recibir navigate como parámetro
+export const logout = (navigate: NavigateFunction): void => {
   StorageService.removeItem('token');
   navigate(ROUTES.LOGIN);
 };
-
-export const getUserInfo = (): Token | null => {
-  const token = StorageService.getItem('token');
-  if (!token) {
-    console.error('No token found for decoding.');
-    return null;
-  }
-  return decodeToken(token);
-};
-
-/* export const fetchUserScore = async (): Promise<UserScoreResponse | null> => {
-  try {
-    const token = StorageService.getItem('token');
-    if (!token) {
-      console.error('No token available for authentication.');
-      return null;
-    }
-
-    const response = await httpClient.get<>('/score/totalScore', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    return response;
-  } catch (error) {
-    console.error('Error fetching user score:', error);
-    return null;
-  }
-}; */

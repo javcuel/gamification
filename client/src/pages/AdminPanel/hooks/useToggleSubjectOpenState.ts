@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { updateSubjectOpenState } from '../api/SubjectService';
+import { updateSubjectOpenState } from '../../../api/subject';
 
 const useToggleSubjectOpenState = (
   subjectId: number,

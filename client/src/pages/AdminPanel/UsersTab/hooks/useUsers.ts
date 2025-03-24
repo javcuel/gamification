@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { User } from '../../../../entities/user';
 import {
   deleteUser as deleteUserService,
   fetchUsers,
-} from '../../api/userService';
+  User,
+} from '../../../../api/user';
 /** TODO: Esto igual separarlo en dos hooks, uno que haga el fetch de los usuarios y otro que haga el delete */
 
 /**

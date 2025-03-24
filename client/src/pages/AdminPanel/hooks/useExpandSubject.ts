@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { fetchGames, Game } from '../api/GameService';
+import { fetchGames, Game } from '../../../api/game';
 
 const useExpandWorld = (subjectId: number) => {
   const [games, setGames] = useState<Game[]>([]);

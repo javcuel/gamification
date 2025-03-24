@@ -1,44 +1,38 @@
 import { useEffect, useState } from 'react';
+import { User, fetchUserScore } from '../api/user';
+import Storage from '../services/storageService'; // Renombrado según el TODO
+import { decodeToken } from '../services/token';
 
-import UserService from '../api/user';
-import StorageService from '../services/storageService';
-import TokenService from '../services/token';
-
-interface UserInfo {
-  name: string;
-  type: string;
-  totalScore: number;
-  completedSubjects: number;
-}
-
-const useUserInfo = () => {
-  const [userInfo, setUserInfo] = useState<UserInfo>({
+export const useUserInfo = () => {
+  const [userInfo, setUserInfo] = useState<User>({
+    id: 1,
     name: 'UserName',
-    type: 'User',
+    role: 'User',
     totalScore: 0,
     completedSubjects: 0,
   });
 
   useEffect(() => {
     const loadUserInfo = async () => {
-      const token = StorageService.getItem('token');
+      const token = Storage.getItem('token');
 
       if (token) {
-        const decoded = TokenService.decodeAndValidateToken(token);
+        const decoded = decodeToken(token);
 
         if (decoded) {
           setUserInfo((prev) => ({
             ...prev,
-            name: decoded.userName,
-            type: decoded.userType,
+            id: decoded.id,
+            name: decoded.name,
+            role: decoded.role,
           }));
 
-          const scoreData = await UserService.fetchUserScore();
+          const scoreData = await fetchUserScore(decoded.id);
           if (scoreData) {
             setUserInfo((prev) => ({
               ...prev,
-              totalScore: scoreData.score,
-              completedSubjects: scoreData.stars,
+              totalScore: scoreData.totalScore,
+              completedSubjects: scoreData.completedSubjects,
             }));
           }
         }
@@ -50,5 +44,3 @@ const useUserInfo = () => {
 
   return userInfo;
 };
-
-export default useUserInfo;

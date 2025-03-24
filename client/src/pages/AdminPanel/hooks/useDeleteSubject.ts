@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { deleteSubject } from '../api/SubjectService';
+import { deleteSubject } from '../../../api/subject';
 
 const useDeleteSubject = (onDeleteSuccess: (subjectId: number) => void) => {
   const [loading, setLoading] = useState(false);

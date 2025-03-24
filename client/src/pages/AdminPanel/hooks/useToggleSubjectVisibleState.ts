@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { updateSubjectVisibleState } from '../api/SubjectService';
+import { updateSubjectVisibleState } from '../../../api/subject';
 
 const useToggleSubjectVisibleState = (
   subjectId: number,

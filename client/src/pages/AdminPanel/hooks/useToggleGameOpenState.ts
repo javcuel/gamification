@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { updateGameOpenState } from '../api/GameService';
+import { updateGameOpenState } from '../../../api/game';
 
 const useToggleGameOpenState = (gameId: number, initialState: boolean) => {
   const [isOpen, setIsOpen] = useState(initialState);

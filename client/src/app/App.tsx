@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter, useRoutes } from 'react-router-dom';
+import { AuthProvider } from '../context/AuthContext';
+import { ThemeProvider } from '../context/ThemeContext';
 import routes from './Routes';
 
 const AppRoutes = () => {
@@ -31,7 +33,11 @@ const AppRoutes = () => {
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <AppRoutes />
+      <AuthProvider>
+        <ThemeProvider>
+          <AppRoutes />
+        </ThemeProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 };

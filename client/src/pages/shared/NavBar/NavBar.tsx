@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import useUserInfo from '../../../hooks/useUserInfo';
+import { useUserInfo } from '../../../hooks/useUserInfo';
 import '../styles/NavBar.css';
 import NavLinksList from './NavLinkList';
 import NavUserInfo from './NavUserInfo';
@@ -10,7 +10,7 @@ interface NavBarProps {
 }
 
 const NavBar: React.FC<NavBarProps> = ({ webName = 'Gamispace' }) => {
-  const { name, type, totalScore, completedSubjects } = useUserInfo();
+  const { name, role, totalScore, completedSubjects } = useUserInfo();
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -35,10 +35,10 @@ const NavBar: React.FC<NavBarProps> = ({ webName = 'Gamispace' }) => {
           id="navbarNav"
           onTransitionEnd={() => setIsExpanded(false)}
         >
-          <NavLinksList userType={type} />
+          <NavLinksList userType={role} />
           <NavUserInfo
             name={name}
-            type={type}
+            type={role}
             totalScore={totalScore}
             completedSubjects={completedSubjects}
           />

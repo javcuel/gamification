@@ -6,8 +6,9 @@ import React, {
   useState,
 } from 'react';
 
+import { useNavigate } from 'react-router-dom';
 import { login, logout } from '../api/user';
-import { Token, decodeToken } from '../services/token';
+import { decodeToken, Token } from '../services/token';
 
 interface IAuthContext {
   isAuthenticated: boolean;
@@ -26,6 +27,8 @@ const AuthContext = createContext<IAuthContext | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const navigate = useNavigate(); // ✅ Ahora está dentro del componente y es legal
+
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<Token | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -39,25 +42,23 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       setIsAuthenticated(true);
       setUser(decoded);
     } else {
-      logout();
+      logout(navigate); // ✅ Ahora es legal
     }
 
     setIsLoading(false);
-  }, []);
+  }, [navigate]); // ✅ Agregado al array de dependencias
 
   const loginRequest = async (
     name: string,
     passwd: string
   ): Promise<{ success: boolean; role?: string }> => {
     const authData = { name, passwd };
-
     const result = await login(authData);
 
     if (result.success && result.token) {
       localStorage.setItem('token', result.token);
       const decoded = decodeToken(result.token);
 
-      console.log(decoded);
       if (decoded) {
         setIsAuthenticated(true);
         setError(null);
@@ -71,7 +72,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const logoutRequest = () => {
-    logout();
+    logout(navigate); // ✅ Ahora es legal
     setIsAuthenticated(false);
     setUser(null);
     setError(null);

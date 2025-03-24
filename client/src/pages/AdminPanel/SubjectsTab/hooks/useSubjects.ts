@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchSubjects, Subject } from '../../api/SubjectService';
+import { fetchSubjects, Subject } from '../../../../api/subject';
 
 const useSubjects = () => {
   const [subjects, setSubjects] = useState<Subject[]>([]);

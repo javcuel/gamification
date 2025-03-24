@@ -2,8 +2,6 @@ import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import App from './App';
-import { AuthProvider } from '../context/AuthContext';
-import { ThemeProvider } from '../context/ThemeContext';
 
 import '../styles/index.css';
 
@@ -34,11 +32,7 @@ if (rootElement) {
    */
   createRoot(rootElement).render(
     <StrictMode>
-      <AuthProvider>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
-      </AuthProvider>
+      <App />
     </StrictMode>
   );
 }

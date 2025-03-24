@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { updateGameVisibleState } from '../api/GameService';
+import { updateGameVisibleState } from '../../../api/game';
 
 const useToggleGameVisibleState = (gameId: number, initialState: boolean) => {
   const [isVisible, setIsVisible] = useState(initialState);
