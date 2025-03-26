@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import useAddUser from './hooks/useAddUser';
-import Input from '../../shared/ui/Input';
 import Button from '../../shared/ui/Button';
 import Dropdown from '../../shared/ui/DropDown';
+import Input from '../../shared/ui/Input';
 import '../styles/AdminAddCard.css';
+import useAddUser from './hooks/useAddUser';
 
 const AdminAddUserTab: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [passwd, setPasswd] = useState<string>('');
-  const [type, setType] = useState('U');
+  const [role, setRole] = useState('U');
   const [group, setGroup] = useState<string>('');
   const { addUser, loading, error, success } = useAddUser();
 
   const handleSubmit = async () => {
     //TODO: ESTO KLK QUE ESTA AQUI COMENTADO Y RISAS
     /*  e.preventDefault(); */
-    await addUser({ name, passwd, type, group });
+    await addUser({ name, passwd, role, group });
   };
 
   return (
@@ -46,9 +46,9 @@ const AdminAddUserTab: React.FC = () => {
           />
           <Dropdown
             options={['Option 1', 'Option 2', 'Option 3']}
-            selected={type || undefined}
-            onSelect={(option) => setType(option)}
-            placeholder="User Type"
+            selected={role || undefined}
+            onSelect={(option) => setRole(option)}
+            placeholder="User Role"
           />
           <Input
             placeholder="Upload CSV"

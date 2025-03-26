@@ -279,7 +279,7 @@ export const API_URLS = {
    * interface IUser {
    * id: number;
    * name: string;
-   * type: (typeof ROLES)[keyof typeof ROLES];
+   * role: (typeof ROLES)[keyof typeof ROLES];
    * totalScore: number;
    * completedSubjects: number;
    * }
@@ -296,7 +296,7 @@ export const API_URLS = {
    * interface UserApiPayload {
    * name: string;
    * passwd: string;
-   * type: (typeof ROLES)[keyof typeof ROLES];
+   * role: (typeof ROLES)[keyof typeof ROLES];
    * group: string;
    * }
    */
@@ -311,7 +311,7 @@ export const API_URLS = {
    * interface UserApiPayload {
    * name: string;
    * passwd: string;
-   * type: (typeof ROLES)[keyof typeof ROLES];
+   * role: (typeof ROLES)[keyof typeof ROLES];
    * group: string;
    */
   UPDATE_USER: (userId: number) => `/users/${userId}`,

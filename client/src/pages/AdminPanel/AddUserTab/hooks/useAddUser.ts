@@ -1,10 +1,11 @@
 import { useState } from 'react';
+
 import { createUser } from '../../../../api/user';
 
 interface AddUserPayload {
   name: string;
   passwd: string;
-  type: string;
+  role: string;
   group: string;
 }
 

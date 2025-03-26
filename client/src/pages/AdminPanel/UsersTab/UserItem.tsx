@@ -1,7 +1,7 @@
 import { faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { User } from '../../../entities/user';
+import { User } from '../../../api/user';
 import './styles/user-item.css';
 
 interface UserItemProps {
@@ -17,7 +17,7 @@ const UserItem: React.FC<UserItemProps> = ({ user, onDelete }) => {
   return (
     <li className="user-item">
       <div>
-        <strong>{user.name}</strong> - {user.type}
+        <strong>{user.name}</strong> - {user.role}
       </div>
       <div className="d-flex gap-2">
         <button className="btn custom-button">

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import SpaceBackground from '../shared/ui/SpaceBackground';
 import LinkImage from '../shared/ui/LinkImage';
+import SpaceBackground from '../shared/ui/SpaceBackground';
 import WavesText from '../shared/ui/WavesText';
 import LoginForm from './components/LoginForm';
 
@@ -51,10 +51,10 @@ const Login: React.FC = () => {
         <div className="row mt-5">
           <div className="col">
             <LinkImage
-              src="images/greidi.jpg"
+              src="images/greidiLogo500.png"
               alt="greidi_logo"
               url="https://www.greidi.infor.uva.es"
-              width={'8%'}
+              width={'15%'}
             />
           </div>
         </div>

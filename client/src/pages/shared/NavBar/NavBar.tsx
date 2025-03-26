@@ -35,7 +35,7 @@ const NavBar: React.FC<NavBarProps> = ({ webName = 'Gamispace' }) => {
           id="navbarNav"
           onTransitionEnd={() => setIsExpanded(false)}
         >
-          <NavLinksList userType={role} />
+          <NavLinksList role={role} />
           <NavUserInfo
             name={name}
             type={role}

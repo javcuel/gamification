@@ -46,7 +46,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   }
 
   // Current user rol not allowed
-  if (!user || !allowedRoles.includes(user.userType!)) {
+  if (!user || !allowedRoles.includes(user.role!)) {
     return <Navigate to={ROUTES.LOGIN} />;
   }
 
