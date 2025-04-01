@@ -27,7 +27,7 @@ const AuthContext = createContext<IAuthContext | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const navigate = useNavigate(); // ✅ Ahora está dentro del componente y es legal
+  const navigate = useNavigate();
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<Token | null>(null);
@@ -42,11 +42,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       setIsAuthenticated(true);
       setUser(decoded);
     } else {
-      logout(navigate); // ✅ Ahora es legal
+      logout(navigate);
     }
 
     setIsLoading(false);
-  }, [navigate]); // ✅ Agregado al array de dependencias
+  }, [navigate]);
 
   const loginRequest = async (
     name: string,
@@ -72,7 +72,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const logoutRequest = () => {
-    logout(navigate); // ✅ Ahora es legal
+    logout(navigate);
     setIsAuthenticated(false);
     setUser(null);
     setError(null);

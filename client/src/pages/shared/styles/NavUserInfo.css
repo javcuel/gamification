@@ -1,17 +1,17 @@
 .nav-container {
   display: flex;
   align-items: center;
-  justify-content: flex-end; /* Empuja todo a la derecha */
-  gap: 16px; /* Similar a ms-3 en Bootstrap */
+  justify-content: flex-end;
+  gap: 16px;
 }
 
 .icon-container {
   display: flex;
   align-items: center;
-  gap: 4px; /* Similar a me-1 en Bootstrap */
+  gap: 4px;
 }
 
 .icon {
-  width: 16px; /* Tamaño del icono */
+  width: 16px;
   height: 16px;
 }

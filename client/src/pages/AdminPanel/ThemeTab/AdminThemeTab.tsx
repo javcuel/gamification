@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
+import { ThemeContext } from '../../../context/ThemeContext';
 import Button from '../../shared/ui/Button';
 import Input from '../../shared/ui/Input';
-import { ThemeContext } from '../../../context/ThemeContext';
 import ColorPicker from './ColorPicker';
 
 const AdminThemeTab: React.FC = () => {
@@ -27,9 +27,9 @@ const AdminThemeTab: React.FC = () => {
         secondary: colors.secondary,
         text: colors.text,
       });
-      console.log('Colores guardados y aplicados');
+      console.log('Theme saved');
     } catch (error) {
-      console.error('Error al guardar los colores:', error);
+      console.error('Failed to save theme:', error);
     }
   };
 
@@ -96,7 +96,7 @@ const AdminThemeTab: React.FC = () => {
           </div>
         </div>
 
-        {/* Vista previa */}
+        {/* Vista previa TODO: QUIZA SACARLO A UN COMPONENTE EXTERNO?*/}
         <div className="col-12 col-md-6 d-flex flex-column align-items-center mt-4">
           <h2>Preview</h2>
           <div
@@ -109,9 +109,15 @@ const AdminThemeTab: React.FC = () => {
             }}
           >
             <p className="mb-2">Gamispace</p>
+
             <button
-              className="px-4 py-2 rounded border-0"
-              style={{ backgroundColor: colors.secondary, color: colors.text }}
+              className="px-4 py-2 "
+              style={{
+                backgroundColor: colors.secondary,
+                color: colors.text,
+                border: `2px solid ${colors.text}`,
+                borderRadius: '15px',
+              }}
             >
               Button
             </button>
@@ -122,7 +128,7 @@ const AdminThemeTab: React.FC = () => {
       {/* Botón Guardar */}
       <div className="row d-flex justify-content-center mt-4">
         <div className="col-auto">
-          <Button text="Guardar" onClick={handleSave} />
+          <Button text="Save" onClick={handleSave} />
         </div>
       </div>
     </div>

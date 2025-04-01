@@ -112,8 +112,7 @@ export const login = async (
   message?: string;
 }> => {
   try {
-    //TODO: ESTO POR QUE ES UN POST, ANTES ERA UN POST HE PUESTO GET PERO NO SE
-    const data = await httpClient.get(API_URLS.LOGIN, {
+    const data = await httpClient.post(API_URLS.LOGIN, {
       name: payload.name,
       passwd: payload.passwd,
     });
@@ -133,7 +132,6 @@ export const login = async (
   }
 };
 
-// ✅ La función logout debe recibir navigate como parámetro
 export const logout = (navigate: NavigateFunction): void => {
   StorageService.removeItem('token');
   navigate(ROUTES.LOGIN);

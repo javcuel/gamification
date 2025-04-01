@@ -8,12 +8,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { Subject } from '../api/SubjectService';
+import { Subject } from '../../../api/subject';
 import useDeleteSubject from '../hooks/useDeleteSubject';
 import useExpandSubject from '../hooks/useExpandSubject';
 import useToggleSubjectOpenState from '../hooks/useToggleSubjectOpenState';
 import useToggleSubjectVisibleState from '../hooks/useToggleSubjectVisibleState';
-import '../styles/admin-panel.css';
+
 import GameItem from './GameItem';
 
 interface SubjectiItemProps {

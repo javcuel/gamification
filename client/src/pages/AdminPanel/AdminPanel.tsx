@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import NavBar from '../shared/NavBar/NavBar';
-import SpaceBackground from '../shared/ui/SpaceBackground';
 import AdminAddGameTab from './AddGameTab/AdminAddGameTab';
 import AdminAddSubjectTab from './AddSubjectTab/AddAddSubjectTab';
 import AdminAddUserTab from './AddUserTab/AdminAddUserTab';
-import AdminManageUsersTab from './UsersTab/AdminManageUsersTab';
-import AdminThemeTab from './ThemeTab/AdminThemeTab';
 import AdminWorldsGamesTab from './SubjectsTab/AdminWorldsGamesTab';
+import AdminThemeTab from './ThemeTab/AdminThemeTab';
+import AdminManageUsersTab from './UsersTab/AdminManageUsersTab';
+import './styles/AdminPanel.css';
 
 const AdminPanel: React.FC = () => {
   const [activeTab, setActiveTab] = useState('tab1');
@@ -34,89 +33,34 @@ const AdminPanel: React.FC = () => {
     }
   };
 
+  const tabs = [
+    { id: 'tab1', label: 'Subjects' },
+    { id: 'tab2', label: 'Users' },
+    { id: 'tab3', label: 'Add Subjects' },
+    { id: 'tab4', label: 'Add Game' },
+    { id: 'tab5', label: 'Add User' },
+    { id: 'tab6', label: 'Add Theme' },
+  ];
+
   return (
-    <div className="container-fluid" style={{ height: '100vh' }}>
-      <SpaceBackground />
-      <div
-        className="container-fluid d-flex flex-column"
-        style={{ height: '100vh' }}
-      >
-        <div style={{ height: '15vh' }}>
-          <NavBar webName="Gamispace" />
+    <div className="admin-container">
+      <div className="sidebar">
+        <div className="sidebar-nav">
+          {tabs.map(({ id, label }) => (
+            <li key={id}>
+              <button
+                className={`sidebar-nav-link ${activeTab === id ? 'active' : ''}`}
+                onClick={() => handleTabChange(id)}
+              >
+                {label}
+              </button>
+            </li>
+          ))}
         </div>
+      </div>
 
-        {/* Tabs + Contenido */}
-        <div>
-          {/* Tabs */}
-          <div>
-            <ul className="nav nav-tabs d-flex justify-content-center gap-5 fs-5">
-              {' '}
-              {/* Centrar los tabs y aumentar el tamaño del texto */}
-              <li className="nav-item">
-                <a
-                  className={`nav-link ${activeTab === 'tab1' ? 'active' : ''}`}
-                  href="#"
-                  onClick={() => handleTabChange('tab1')}
-                >
-                  Subjects
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className={`nav-link ${activeTab === 'tab2' ? 'active' : ''}`}
-                  href="#"
-                  onClick={() => handleTabChange('tab2')}
-                >
-                  Users
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className={`nav-link ${activeTab === 'tab3' ? 'active' : ''}`}
-                  href="#"
-                  onClick={() => handleTabChange('tab3')}
-                >
-                  Add Subjects
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className={`nav-link ${activeTab === 'tab4' ? 'active' : ''}`}
-                  href="#"
-                  onClick={() => handleTabChange('tab4')}
-                >
-                  Add Game
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className={`nav-link ${activeTab === 'tab5' ? 'active' : ''}`}
-                  href="#"
-                  onClick={() => handleTabChange('tab5')}
-                >
-                  Add User
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className={`nav-link ${activeTab === 'tab6' ? 'active' : ''}`}
-                  href="#"
-                  onClick={() => handleTabChange('tab6')}
-                >
-                  Add Theme
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contenido dinámico */}
-          <div
-            className="d-flex justify-content-center align-items-center flex-grow-1 overflow-auto"
-            style={{ minHeight: '80vh' }}
-          >
-            {renderComponent()}
-          </div>
-        </div>
+      <div className="panel">
+        <div className="panel-content">{renderComponent()}</div>
       </div>
     </div>
   );

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import SpaceBackground from '../shared/ui/SpaceBackground';
-import FloatingText from '../shared/ui/FloatingText';
 import WavesText from '../shared/ui/WavesText';
 
 /**
@@ -22,10 +21,10 @@ const NotFound: React.FC = () => {
       <SpaceBackground />
       <div className="container">
         <div className="row">
-          <WavesText text="Not-Found" />
+          <WavesText text="404 - Not Found" />
         </div>
         <div className="row">
-          <FloatingText text="This page doesn't exist" />
+          <WavesText text="This page doesn't exist" />
         </div>
       </div>
     </div>

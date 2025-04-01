@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Button from '../../shared/ui/Button';
-import Input from '../../shared/ui/Input';
-import { useAuth } from '../../../context/AuthContext';
 import { ROUTES } from '../../../constants/routes';
+import { useAuth } from '../../../context/AuthContext';
+import Button from '../../shared/ui/Button';
+import ErrorMsg from '../../shared/ui/ErrorMsg';
+import Input from '../../shared/ui/Input';
 
 /**
  * A login form component that allows users to input their username and password.
@@ -67,7 +68,6 @@ const LoginForm: React.FC = () => {
             onChange={handleUserChange}
           />
         </div>
-
         <div className="mb-3">
           <Input
             placeholder="Password"
@@ -76,8 +76,10 @@ const LoginForm: React.FC = () => {
             onChange={handlePasswdChange}
           />
         </div>
-        {error && <div className="alert custom-alert">{error}</div>}
-        <Button text="Login" />
+        <div className="mb-3">
+          <Button text="Login" />
+        </div>
+        {error && <ErrorMsg message={error}></ErrorMsg>}
       </div>
     </form>
   );

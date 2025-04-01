@@ -1,32 +1,33 @@
 .navbar {
+  height: 10%;
+  margin: 12px 0px;
   padding: 10px 20px;
-  margin: 10px 10px;
-  background-color: 'transparent';
+  position: relative;
+  z-index: 9999;
 
+  background-color: 'transparent';
+  color: var(--text);
   border: solid 2px var(--text);
   border-radius: 15px;
-  color: var(--text);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: calc(100% - 20px);
-  z-index: 9999;
+
+  transition: background-color 2s ease;
 }
 
 .navbar-toggler {
-  border: none;
-
   color: var(--text);
+  border: none;
 }
 
 .navbar-brand {
-  font-size: 1.5rem;
   color: var(--text);
+
+  font-size: 1.5rem;
 }
 
 .navbar-brand:hover {
-  text-decoration: none;
   color: var(--text);
+
+  text-decoration: none;
 }
 
 @media (max-width: 991px) {

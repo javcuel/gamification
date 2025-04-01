@@ -1,11 +1,13 @@
 .nav-link {
   color: var(--text);
+
   transition: all 0.5s ease;
 }
 
 .nav-link:hover {
-  filter: brightness(1.5);
   color: inherit;
+
+  filter: brightness(1.5);
 }
 
 .nav-link:focus {

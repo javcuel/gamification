@@ -1,5 +1,5 @@
-import React from 'react';
 import { motion } from 'framer-motion';
+import React from 'react';
 
 import '../styles/WavesText.css';
 
@@ -29,15 +29,19 @@ const WavesText: React.FC<WavesTextProps> = ({ text }) => {
         <motion.span
           key={index}
           initial={{ y: 0 }}
-          animate={{ y: [-5, 5, -5] }}
-          transition={{
-            duration: 1.8,
-            repeat: Infinity,
-            repeatType: 'reverse',
-            ease: 'easeInOut',
-            delay: index * 0.1,
-          }}
-          style={{ display: 'inline-block' }}
+          animate={char !== ' ' ? { y: [-5, 5, -5] } : {}} // No anima los espacios
+          transition={
+            char !== ' '
+              ? {
+                  duration: 1.8,
+                  repeat: Infinity,
+                  repeatType: 'reverse',
+                  ease: 'easeInOut',
+                  delay: index * 0.1,
+                }
+              : {}
+          }
+          style={{ display: 'inline-block', whiteSpace: 'pre' }} // Mantiene los espacios
         >
           {char}
         </motion.span>

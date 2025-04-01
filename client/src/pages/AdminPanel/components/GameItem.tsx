@@ -8,10 +8,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { Game } from '../../../entities/game';
+import { Game } from '../../../api/game';
 import useToggleGameOpenState from '../hooks/useToggleGameOpenState';
 import useToggleGameVisibleState from '../hooks/useToggleGameVisibleState';
-import '../styles/admin-panel.css';
 
 interface GameItemProps {
   game: Game;

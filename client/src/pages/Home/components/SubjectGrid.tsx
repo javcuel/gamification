@@ -1,7 +1,8 @@
 import React from 'react';
 
-import SubjectItem from './SubjectItem';
+import ErrorMsg from '../../shared/ui/ErrorMsg';
 import useSubject from '../hooks/useSubject';
+import SubjectItem from './SubjectItem';
 
 /**
  * The SubjectGrid component renders a grid of subjects by using the `SubjectItem` component
@@ -21,11 +22,11 @@ const SubjectGrid: React.FC = () => {
 
   return (
     <div className="container">
-      <div className="row">
-        {error && <div className="alert custom-alert">{error}</div>}
-      </div>
-
       <div className="row custom-flex-center text-center">
+        <div style={{ width: '30%' }}>
+          {error && <ErrorMsg message={error} />}
+        </div>
+
         {subjects
           .filter((subject) => subject.isVisible)
           .map((subject, index) => (
