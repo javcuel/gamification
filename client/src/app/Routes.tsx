@@ -43,11 +43,11 @@ const routes: RouteObject[] = [
   {
     path: ROUTES.HOME,
     element: (
-      /*     <ProtectedRoute
+      <ProtectedRoute
         allowedRoles={roleService.getAllowedRolesForRoute(ROUTES.HOME)}
-      > */
-      <Home />
-      /*  </ProtectedRoute> */
+      >
+        <Home />
+      </ProtectedRoute>
     ),
   },
   {

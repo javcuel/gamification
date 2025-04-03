@@ -1,2 +1,3 @@
 client/src/juegos/ 
 client/node_modules/
+*storybook.log

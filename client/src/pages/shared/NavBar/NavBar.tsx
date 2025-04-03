@@ -38,7 +38,7 @@ const NavBar: React.FC<NavBarProps> = ({ webName = 'Gamispace' }) => {
           <NavLinksList role={role} />
           <NavUserInfo
             name={name}
-            type={role}
+            role={role}
             totalScore={totalScore}
             completedSubjects={completedSubjects}
           />

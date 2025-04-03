@@ -4,14 +4,14 @@ import Icon from '../ui/Icon';
 
 interface NavUserInfoProps {
   name: string;
-  type: string;
+  role: string;
   totalScore: number;
   completedSubjects: number;
 }
 
 const UserInfoDisplay: React.FC<NavUserInfoProps> = ({
   name,
-  type,
+  role,
   totalScore,
   completedSubjects,
 }) => {
@@ -25,7 +25,7 @@ const UserInfoDisplay: React.FC<NavUserInfoProps> = ({
 
   return (
     <span className="ms-auto">
-      {type} : {name}
+      {role} : {name}
       <span className="ms-3 me-3">{totalScore}</span>
       <Icon img={theme.pointsIcon} />
       <span className="ms-3 me-3">{completedSubjects}</span>
