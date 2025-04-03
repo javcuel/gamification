@@ -58,29 +58,25 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="custom-flex-center">
-      <div className="d-flex flex-column align-items-center">
-        <div className="mb-3">
-          <Input
-            placeholder="User"
-            type="text"
-            value={user}
-            onChange={handleUserChange}
-          />
-        </div>
-        <div className="mb-3">
-          <Input
-            placeholder="Password"
-            type="password"
-            value={passwd}
-            onChange={handlePasswdChange}
-          />
-        </div>
-        <div className="mb-3">
-          <Button text="Login" />
-        </div>
-        {error && <ErrorMsg message={error}></ErrorMsg>}
-      </div>
+    <form
+      onSubmit={handleSubmit}
+      className="d-flex flex-column align-items-center justify-content-center gap-3 mx-auto"
+      style={{ width: '60%' }}
+    >
+      <Input
+        placeholder="User"
+        type="text"
+        value={user}
+        onChange={handleUserChange}
+      />
+      <Input
+        placeholder="Password"
+        type="password"
+        value={passwd}
+        onChange={handlePasswdChange}
+      />
+      <Button text="Login" />
+      {error && <ErrorMsg message={error}></ErrorMsg>}
     </form>
   );
 };

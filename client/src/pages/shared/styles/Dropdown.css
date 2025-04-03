@@ -1,35 +1,51 @@
-.dropdown {
-  background-color: var(--primary);
-  color: var(--text);
-  transition:
-    background-color 0.5s ease,
-    filter 0.5s ease;
-  border: 2px solid var(--text);
-  border-radius: 15px;
-  padding: 15px 15px;
-  letter-spacing: 1px;
+/* Contenedor del dropdown */
+.custom-dropdown {
   width: 100%;
-  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+}
+
+/* Estilo del botón */
+.custom-dropdown-btn {
+  padding: 10px 20px;
+  background-color: var(--secondary);
+  color: var(--text);
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  width: 100%;
   display: block;
 }
 
-.dropdown:hover {
-  filter: brightness(1.2);
+/* Estilo del menú dropdown */
+.custom-dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 5px 0 0;
+  padding: 0;
+  list-style-type: none;
+  border-radius: 4px;
+  z-index: 1000;
 }
 
-.dropdown-list-item {
-  padding: 10px 15px;
+/* Estilo de cada ítem dentro del dropdown */
+.custom-dropdown-item {
+  padding: 10px 20px;
   cursor: pointer;
-  border-radius: 15px;
-  background-color: var(--secondary);
-  transition:
-    background-color 0.5s ease,
-    filter 0.5s ease;
-  list-style: none;
-  margin: 10px 0px;
+  transition: background-color 0.2s;
 }
 
-.dropdown-list-item:hover {
-  filter: brightness(1.2);
-  background-color: var(--secondary);
+.custom-dropdown-item:hover {
+  background-color: #f1f1f1;
+}
+
+/* Estilo cuando el dropdown está cerrado */
+.custom-dropdown-btn:focus {
+  outline: none;
 }

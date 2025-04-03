@@ -20,7 +20,7 @@ const RankingTable: React.FC = () => {
         <div className="col-md-6">
           <label>Select ranking</label>
           <select
-            className="form-control custom-dropdown"
+            className="form-control "
             value={rankingType}
             onChange={(e) => setRankingType(e.target.value)}
           >
@@ -38,7 +38,7 @@ const RankingTable: React.FC = () => {
             <label>Select game</label>
 
             {/*   <select
-              className="form-control custom-dropdown"
+              className="form-control"
               value={selectedGame || ''}
               onChange={(e) => setSelectedGame(Number(e.target.value))}
             >

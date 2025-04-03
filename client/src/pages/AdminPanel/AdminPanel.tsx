@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AdminAddGameTab from './AddGameTab/AdminAddGameTab';
 import AdminAddSubjectTab from './AddSubjectTab/AddAddSubjectTab';
 import AdminAddUserTab from './AddUserTab/AdminAddUserTab';
@@ -9,28 +9,23 @@ import './styles/AdminPanel.css';
 
 const AdminPanel: React.FC = () => {
   const [activeTab, setActiveTab] = useState('tab1');
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      if (window.innerWidth >= 768) {
+        setMenuOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
-  };
-
-  const renderComponent = () => {
-    switch (activeTab) {
-      case 'tab1':
-        return <AdminWorldsGamesTab />;
-      case 'tab2':
-        return <AdminManageUsersTab />;
-      case 'tab3':
-        return <AdminAddSubjectTab />;
-      case 'tab4':
-        return <AdminAddGameTab />;
-      case 'tab5':
-        return <AdminAddUserTab />;
-      case 'tab6':
-        return <AdminThemeTab />;
-      default:
-        return <AdminWorldsGamesTab />;
-    }
+    setMenuOpen(false);
   };
 
   const tabs = [
@@ -44,7 +39,19 @@ const AdminPanel: React.FC = () => {
 
   return (
     <div className="admin-container">
-      <div className="sidebar">
+      {isMobile && (
+        <button
+          className="mobile-menu-button"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          ☰
+        </button>
+      )}
+
+      {/* Barra lateral */}
+      <div
+        className={`sidebar ${isMobile ? (menuOpen ? 'open' : 'collapsed') : ''}`}
+      >
         <div className="sidebar-nav">
           {tabs.map(({ id, label }) => (
             <li key={id}>
@@ -59,8 +66,16 @@ const AdminPanel: React.FC = () => {
         </div>
       </div>
 
+      {/* Panel de contenido */}
       <div className="panel">
-        <div className="panel-content">{renderComponent()}</div>
+        <div className="panel-content">
+          {activeTab === 'tab1' && <AdminWorldsGamesTab />}
+          {activeTab === 'tab2' && <AdminManageUsersTab />}
+          {activeTab === 'tab3' && <AdminAddSubjectTab />}
+          {activeTab === 'tab4' && <AdminAddGameTab />}
+          {activeTab === 'tab5' && <AdminAddUserTab />}
+          {activeTab === 'tab6' && <AdminThemeTab />}
+        </div>
       </div>
     </div>
   );

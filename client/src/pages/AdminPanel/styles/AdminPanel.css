@@ -1,27 +1,31 @@
+/* 📌 Contenedor principal */
 .admin-container {
   width: 100%;
   height: 90%;
   display: flex;
 }
 
+/* 📌 Barra lateral */
 .sidebar {
-  width: 20%;
-  padding: 20px;
+  width: 15%;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-
   background-color: var(--secondary);
   color: var(--text);
   border-radius: 15px;
+  transition:
+    transform 0.3s ease-in-out,
+    width 0.3s ease-in-out;
 }
 
+/* 📌 Navegación en la barra lateral */
 .sidebar-nav {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   list-style: none;
 }
 
@@ -30,13 +34,11 @@
   padding: 10px;
   margin-bottom: 15px;
   text-align: center;
-
   background: none;
   color: var(--text);
   border: none;
   border-radius: 15px;
   cursor: pointer;
-
   transition:
     background 0.5s ease,
     filter 0.5s ease;
@@ -45,22 +47,57 @@
 .sidebar-nav-link:hover,
 .sidebar-nav-link.active {
   filter: brightness(1.2);
-  background-color: var(--secondary);
-  border-radius: 15px;
+  background-color: var(--primary);
 }
 
+/* 📌 Panel de contenido */
 .panel {
-  width: 80%;
+  width: 85%;
   padding: 20px 0px;
   display: flex;
   align-items: center;
   justify-content: center;
-
+  background-color: var(--primary);
   border-radius: 15px;
+  transition: width 0.3s ease-in-out;
 }
 
-.panel-content {
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
+/* 📌 Estilos para pantallas pequeñas */
+@media (max-width: 768px) {
+  /* 📌 El panel ocupa toda la pantalla */
+  .panel {
+    width: 100%;
+  }
+
+  /* 📌 Botón de menú flotante */
+  .mobile-menu-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: var(--primary);
+    color: var(--text);
+    border: none;
+    padding: 10px 15px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  /* 📌 La barra lateral se colapsa por defecto */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 100%;
+    transform: translateX(-100%);
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+  }
+
+  /* 📌 Mostrar barra lateral cuando el menú está abierto */
+  .sidebar.open {
+    transform: translateX(0);
+  }
 }

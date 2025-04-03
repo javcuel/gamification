@@ -38,37 +38,3 @@
     0.9
   ); /* Color más oscuro cuando el cursor pasa por encima */
 }
-.custom-dropdown {
-  background-color: var(--secondary);
-  color: var(--text);
-  border-radius: 15px;
-  margin-top: 5px;
-  border: none;
-  transition:
-    background-color 0.5s ease-in-out,
-    filter 0.5s ease-in-out;
-  cursor: pointer;
-  border: 2px solid var(--text);
-}
-
-.custom-dropdown:hover {
-  filter: brightness(0.8);
-}
-
-.custom-dropdown:focus {
-  background-color: var(--alert-purple);
-  color: var(--text);
-  border: none;
-  outline: none;
-  box-shadow: none;
-}
-
-.custom-dropdown option {
-  border-radius: 15px;
-  background-color: var(--secondary);
-  color: var(--text);
-}
-
-.custom-dropdown option:hover {
-  background-color: var(--alert-purple);
-}

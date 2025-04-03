@@ -1,17 +1,14 @@
 .input {
-  background-color: var(--primary);
-  transition: filter 0.3s ease;
-  color: var(--text);
-
-  border: 2px solid var(--text);
-
-  border-radius: 15px;
-
+  width: 100%;
   padding: 15px 15px;
   letter-spacing: 1px;
 
-  width: 100%;
-  /*  margin: 0 auto; */ /* Centra el input dentro del contenedor */
+  background-color: var(--primary);
+  color: var(--text);
+  border: 2px solid var(--text);
+  border-radius: 15px;
+
+  transition: filter 0.3s ease;
 }
 
 .input:focus {

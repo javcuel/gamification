@@ -20,7 +20,7 @@ const AddGameTab: React.FC = () => {
       className="d-flex justify-content-center align-items-center"
       style={{ minHeight: '70vh' }}
     >
-      <div className="card input-card" style={{ width: '400px' }}>
+      <div>
         <h3 className="text-center mb-4">Add Game</h3>
         <form onSubmit={handleSubmit} className="d-flex flex-column gap-3">
           <Input
