@@ -5,7 +5,7 @@ import '../styles/Input.css';
 type InputProps = {
   placeholder: string;
   type: 'text' | 'password';
-  value: string;
+  value: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 

@@ -1,15 +1,7 @@
 import { useEffect, useState } from 'react';
-import {
-  deleteUser as deleteUserService,
-  fetchUsers,
-  User,
-} from '../../../../api/user';
+import { User, UserApi } from '../../../../api/user';
 /** TODO: Esto igual separarlo en dos hooks, uno que haga el fetch de los usuarios y otro que haga el delete */
 
-/**
- * Custom Hook: useUsers
- * Fetches and manages the state of users.
- */
 const useUsers = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -17,11 +9,14 @@ const useUsers = () => {
   useEffect(() => {
     const loadUsers = async () => {
       try {
-        const fetchedUsers = await fetchUsers();
+        const fetchedUsers = await UserApi.getAll();
         setUsers(fetchedUsers);
-      } catch (err) {
-        console.error(err);
-        setError('Failed to fetch users');
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError('An unknown error occurred');
+        }
       }
     };
 
@@ -30,11 +25,14 @@ const useUsers = () => {
 
   const deleteUser = async (userId: number) => {
     try {
-      await deleteUserService(userId);
+      await UserApi.delete(userId);
       setUsers((prev) => prev.filter((user) => user.id !== userId));
-    } catch (err) {
-      console.error(err);
-      setError('Failed to delete user');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('An unknown error occurred');
+      }
     }
   };
 

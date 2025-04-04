@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { deleteSubject } from '../../../api/subject';
+import { SubjectApi } from '../../../api/subject';
 
 const useDeleteSubject = (onDeleteSuccess: (subjectId: number) => void) => {
   const [loading, setLoading] = useState(false);
@@ -10,13 +10,14 @@ const useDeleteSubject = (onDeleteSuccess: (subjectId: number) => void) => {
     setError(null);
 
     try {
-      await deleteSubject(subjectId);
+      await SubjectApi.delete(subjectId);
       onDeleteSuccess(subjectId);
-    } catch (err: any) {
-      console.error(`Error deleting subject (ID: ${subjectId}):`, err);
-      setError(err.message || 'Failed to delete the subject.');
-    } finally {
-      setLoading(false);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('An unknown error occurred');
+      }
     }
   };
 

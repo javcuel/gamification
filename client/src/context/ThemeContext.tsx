@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { createTheme, fetchTheme, Theme } from '../api/theme';
+import { Theme, ThemeApi } from '../api/theme';
 
 interface ThemeContextType {
   theme: Theme;
@@ -34,7 +34,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const loadTheme = async () => {
-      const newTheme = await fetchTheme();
+      const newTheme = await ThemeApi.get();
       if (newTheme) {
         setTheme(newTheme);
         applyTheme(newTheme);
@@ -46,7 +46,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const handleUpdateTheme = async (newTheme: Theme) => {
     try {
-      await createTheme(newTheme);
+      await ThemeApi.create(newTheme);
       setTheme(newTheme);
       applyTheme(newTheme);
     } catch (error) {

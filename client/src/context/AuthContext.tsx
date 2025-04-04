@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import { login, logout } from '../api/user';
+import { UserApi } from '../api/user';
 import { decodeToken, Token } from '../services/token';
 
 interface IAuthContext {
@@ -42,7 +42,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       setIsAuthenticated(true);
       setUser(decoded);
     } else {
-      logout(navigate);
+      UserApi.logout(navigate);
     }
 
     setIsLoading(false);
@@ -53,7 +53,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     passwd: string
   ): Promise<{ success: boolean; role?: string }> => {
     const authData = { name, passwd };
-    const result = await login(authData);
+    const result = await UserApi.login(authData);
 
     if (result.success && result.token) {
       localStorage.setItem('token', result.token);
@@ -72,7 +72,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const logoutRequest = () => {
-    logout(navigate);
+    UserApi.logout(navigate);
     setIsAuthenticated(false);
     setUser(null);
     setError(null);

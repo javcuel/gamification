@@ -1,17 +1,14 @@
 import React from 'react';
 import useUsers from './hooks/useUsers';
 import UserItem from './UserItem';
+import ErrorMsg from '../../shared/ui/ErrorMsg';
 
-/**
- * ManageUsersTab Component
- * Displays a list of users with options to modify or delete.
- */
-const AdminManageUsersTab: React.FC = () => {
+const UsersTab: React.FC = () => {
   const { users, error, deleteUser } = useUsers();
 
   return (
     <div>
-      {error && <div className="text-danger">{error}</div>}
+      {error && <ErrorMsg message={error}></ErrorMsg>}
 
       <div className="row m-auto">
         {users.map((user) => (
@@ -24,4 +21,4 @@ const AdminManageUsersTab: React.FC = () => {
   );
 };
 
-export default AdminManageUsersTab;
+export default UsersTab;

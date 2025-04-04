@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { User, fetchUserScore } from '../api/user';
+import { User, UserApi } from '../api/user';
 import Storage from '../services/storageService'; // Renombrado según el TODO
 import { decodeToken } from '../services/token';
 
@@ -27,7 +27,7 @@ export const useUserInfo = () => {
             role: decoded.role,
           }));
 
-          const scoreData = await fetchUserScore(decoded.id);
+          const scoreData = await UserApi.getScore(decoded.id);
           if (scoreData) {
             setUserInfo((prev) => ({
               ...prev,

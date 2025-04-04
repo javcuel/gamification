@@ -1,26 +1,29 @@
 import { useState } from 'react';
-import { updateGameOpenState } from '../../../api/game';
+import { GameApi } from '../../../api/game';
 
 const useToggleGameOpenState = (gameId: number, initialState: boolean) => {
   const [isOpen, setIsOpen] = useState(initialState);
-  const [loading, setLoading] = useState(false);
 
+  const [error, setError] = useState<string | null>(null);
+
+  //TODO: SI SE USA PAYLOAD PARA LOS ESTAODS DE OPEN Y VISIBLE, TIPARLO CON APIOPENSTATEPAYLOADS.
   const toggleOpenState = async () => {
-    setLoading(true);
     try {
       const newState = !isOpen;
       const payload = { gameId, isOpen: newState };
 
-      await updateGameOpenState(payload);
+      await GameApi.updateOpenState(payload);
       setIsOpen(newState);
-    } catch (error) {
-      console.error('Error toggling game open state:', error);
-    } finally {
-      setLoading(false);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('An unknown error occurred');
+      }
     }
   };
 
-  return [isOpen, toggleOpenState, loading] as const;
+  return { isOpen, error, toggleOpenState };
 };
 
 export default useToggleGameOpenState;

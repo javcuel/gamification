@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchSubjects, Subject } from '../../../../api/subject';
+import { Subject, SubjectApi } from '../../../../api/subject';
 
 const useSubjects = () => {
   const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -8,11 +8,14 @@ const useSubjects = () => {
   useEffect(() => {
     const loadSubjects = async () => {
       try {
-        const data = await fetchSubjects();
+        const data = await SubjectApi.getAll();
         setSubjects(data);
-      } catch (err) {
-        console.error(err);
-        setError('Failed to load subjects and games');
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError('An unknown error occurred');
+        }
       }
     };
 

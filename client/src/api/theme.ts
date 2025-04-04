@@ -72,76 +72,34 @@ interface ThemeApiPayload {
   pointsIcon: string;
   completedSubjectsIcon: string;
 }
+export const ThemeApi = {
+  get: async (): Promise<Theme> => {
+    try {
+      const data = await httpClient.get(API_URLS.GET_THEME);
 
-/**
- * Fetches the theme and maps it into `Theme` instances.
- *
- * This function performs an HTTP GET request to retrieve the theme and transforms the API response
- * into a Theme object that can be used throughout the application.
- *
- * @async
- * @function
- * @returns {Promise<Theme>} A promise that resolves to a "Theme" object.
- * @throws {Error} If an error occurs while fetching the theme, an error is thrown.
- *
- * @example
- * const theme = await fetchTheme();
- */
-export const fetchTheme = async (): Promise<Theme> => {
-  try {
-    const data = await httpClient.get(API_URLS.GET_THEME);
+      return data.map(
+        (theme: ThemeApiResponse) =>
+          new Theme(
+            theme.id,
+            theme.primary,
+            theme.secondary,
+            theme.text,
+            theme.pointsIcon,
+            theme.completedSubjectsIcon
+          )
+      );
+    } catch (error) {
+      console.error('Error fetching theme', error);
+      throw new Error('Error to fetch theme');
+    }
+  },
 
-    return data.map(
-      (theme: ThemeApiResponse) =>
-        new Theme(
-          theme.id,
-          theme.primary,
-          theme.secondary,
-          theme.text,
-          theme.pointsIcon,
-          theme.completedSubjectsIcon
-        )
-    );
-  } catch (error) {
-    console.error('Error fetching theme', error);
-    throw new Error('Error to fetch theme');
-  }
-};
-
-/**
- * Creates a new theme by sending a POST request to the API.
- *
- * @async
- * @function
- * @param {Theme} newTheme - The theme object to be created, which contains the following properties:
- *   - `id` (number): The unique identifier for the theme.
- *   - `primary` (string): The primary color of the app.
- *   - `secondary` (string): The secondary color of the app.
- *   - `text` (string): The text color of the app.
- *   - `pointsIcon` (string): The URL of the theme's points icon image.
- *   - `completedSubjectsIcon` (string): The URL of the theme's completed subjects icon image.
- * @returns {Promise<void>} A promise that resolves when the theme is successfully created.
- * @throws {Error} Throws an error if the theme creation fails.
- *
- * @example
- * const newTheme: Theme = new Theme(
- *   1,
- *   "#FF5733",   // Primary color
- *   "#33FF57",   // Secondary color
- *   "#FFFFFF",   // Text color
- *   "https://example.com/points-icon.png", // Points icon URL
- *   "https://example.com/completed-icon.png" // Completed subjects icon URL
- * );
- *
- * createTheme(newTheme)
- *   .then(() => console.log("Theme created successfully"))
- *   .catch(error => console.error(error));
- */
-export const createTheme = async (payload: ThemeApiPayload): Promise<void> => {
-  try {
-    await httpClient.post(API_URLS.CREATE_THEME, payload);
-  } catch (error) {
-    console.error('Error creating theme:  ', error);
-    throw new Error('Error to create new theme');
-  }
+  create: async (payload: ThemeApiPayload): Promise<void> => {
+    try {
+      await httpClient.post(API_URLS.CREATE_THEME, payload);
+    } catch (error) {
+      console.error('Error creating new theme:  ', error);
+      throw new Error('Error to create new theme');
+    }
+  },
 };

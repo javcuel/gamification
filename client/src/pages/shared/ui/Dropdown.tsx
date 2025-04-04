@@ -28,19 +28,18 @@ const Dropdown: React.FC<DropdownProps> = ({ options, placeholder }) => {
       >
         {selectedOption || placeholder}
       </button>
-      {isOpen && (
-        <ul className="custom-dropdown-list">
-          {options.map((option, index) => (
-            <li
-              key={index}
-              className="custom-dropdown-item"
-              onClick={() => handleOptionClick(option)}
-            >
-              {option}
-            </li>
-          ))}
-        </ul>
-      )}
+
+      <ul className={`custom-dropdown-list ${isOpen ? 'open' : ''}`}>
+        {options.map((option, index) => (
+          <li
+            key={index}
+            className="custom-dropdown-item"
+            onClick={() => handleOptionClick(option)}
+          >
+            {option}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

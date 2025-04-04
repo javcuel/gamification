@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import AdminAddGameTab from './AddGameTab/AdminAddGameTab';
 import AdminAddSubjectTab from './AddSubjectTab/AddAddSubjectTab';
 import AdminAddUserTab from './AddUserTab/AdminAddUserTab';
-import AdminWorldsGamesTab from './SubjectsTab/AdminWorldsGamesTab';
+import AdminWorldsGamesTab from './SubjectsTab/SubjectsTab';
 import AdminThemeTab from './ThemeTab/AdminThemeTab';
-import AdminManageUsersTab from './UsersTab/AdminManageUsersTab';
+import AdminManageUsersTab from './UsersTab/UsersTab';
 import './styles/AdminPanel.css';
 
 const AdminPanel: React.FC = () => {

@@ -1,28 +1,31 @@
 import { useState } from 'react';
-import { updateSubjectOpenState } from '../../../api/subject';
+import { SubjectApi } from '../../../api/subject';
 
 const useToggleSubjectOpenState = (
   subjectId: number,
   initialState: boolean
 ) => {
   const [isOpen, setIsOpen] = useState(initialState);
-  const [loading, setLoading] = useState(false);
+
+  const [error, setError] = useState<string | null>(null);
 
   const toggleOpenState = async () => {
-    setLoading(true);
     try {
       const newState = !isOpen;
       const payload = { subjectId, isOpen: newState };
-      await updateSubjectOpenState(payload);
+
+      await SubjectApi.updateOpenState(payload);
       setIsOpen(newState);
-    } catch (error) {
-      console.error('Error toggling subject open state:', error);
-    } finally {
-      setLoading(false);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('An unknown error occurred');
+      }
     }
   };
 
-  return [isOpen, toggleOpenState, loading] as const;
+  return { isOpen, error, toggleOpenState };
 };
 
 export default useToggleSubjectOpenState;

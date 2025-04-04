@@ -1,25 +1,28 @@
 import { useState } from 'react';
-import { updateGameVisibleState } from '../../../api/game';
+import { GameApi } from '../../../api/game';
 
 const useToggleGameVisibleState = (gameId: number, initialState: boolean) => {
   const [isVisible, setIsVisible] = useState(initialState);
-  const [loading, setLoading] = useState(false);
+
+  const [error, setError] = useState<string | null>(null);
 
   const toggleVisibleState = async () => {
-    setLoading(true);
     try {
       const newState = !isVisible;
       const payload = { gameId, isVisible: newState };
-      await updateGameVisibleState(payload);
+
+      await GameApi.updateVisibleState(payload);
       setIsVisible(newState);
-    } catch (error) {
-      console.error('Error toggling game open state:', error);
-    } finally {
-      setLoading(false);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('An unknown error occurred');
+      }
     }
   };
 
-  return [isVisible, toggleVisibleState, loading] as const;
+  return { isVisible, error, toggleVisibleState };
 };
 
 export default useToggleGameVisibleState;

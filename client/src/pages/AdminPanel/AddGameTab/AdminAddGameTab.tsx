@@ -2,15 +2,36 @@ import React, { useState } from 'react';
 import Button from '../../shared/ui/Button';
 import Dropdown from '../../shared/ui/Dropdown';
 import Input from '../../shared/ui/Input';
+import ErrorMsg from '../../shared/ui/ErrorMsg';
+import SuccessMsg from '../../shared/ui/SuccessMsg';
+import useAddGame from './hooks/useAddGame';
+
 import '../styles/AdminAddCard.css';
 
 const AdminAddGameTab: React.FC = () => {
+  const [idSubject, setIdSubject] = useState<number>(0);
   const [name, setName] = useState<string>('');
-  const [passwd, setPasswd] = useState<string>('');
-  const [group, setGroup] = useState<string>('');
+  const [img, setImg] = useState<string>('');
+  const [maxScore, setMaxScore] = useState<number>(0);
 
-  const handleSubmit = async () => {
-    /*  e.preventDefault(); */
+  const { addGame, error, success } = useAddGame();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const payload = {
+      idSubject,
+      name,
+      img,
+      maxScore,
+    };
+
+    await addGame(payload);
+
+    setIdSubject(0);
+    setName('');
+    setImg('');
+    setMaxScore(0);
   };
 
   return (
@@ -29,14 +50,14 @@ const AdminAddGameTab: React.FC = () => {
       <Input
         placeholder="Game Img"
         type="password"
-        value={passwd}
-        onChange={(e) => setPasswd(e.target.value)}
+        value={img}
+        onChange={(e) => setImg(e.target.value)}
       />
       <Input
         placeholder="Max Score"
         type="text"
-        value={group}
-        onChange={(e) => setGroup(e.target.value)}
+        value={maxScore}
+        onChange={(e) => setMaxScore(e.target.value)}
       />
       <Dropdown
         options={[
@@ -60,11 +81,9 @@ const AdminAddGameTab: React.FC = () => {
         ]}
         placeholder="1"
       />
-      <Button text="Add Game" onClick={handleSubmit} />
-      {/* {error && <div className="text-danger mt-3">{error}</div>}
-        {success && (
-          <div className="text-success mt-3">Game added successfully!</div>
-        )} */}
+      <Button text="Add Game" />
+      {error && <ErrorMsg message={error}></ErrorMsg>}
+      {success && <SuccessMsg message={'Game created'}></SuccessMsg>}
     </form>
   );
 };

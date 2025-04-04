@@ -1,51 +1,85 @@
-/* Contenedor del dropdown */
 .custom-dropdown {
   width: 100%;
   position: relative;
-  display: inline-block;
+  /* display: inline-block; */
 }
 
-/* Estilo del botón */
 .custom-dropdown-btn {
+  width: 100%;
   padding: 10px 20px;
+  text-align: center;
+  /*   display: block; */
+
   background-color: var(--secondary);
   color: var(--text);
   border: none;
   border-radius: 15px;
-  cursor: pointer;
-  font-size: 16px;
-  text-align: center;
-  width: 100%;
-  display: block;
 }
 
-/* Estilo del menú dropdown */
 .custom-dropdown-list {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  background-color: white;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+  max-height: 200px;
+  overflow-y: auto;
+
+  background-color: var(--secondary);
   margin: 5px 0 0;
   padding: 0;
   list-style-type: none;
-  border-radius: 4px;
-  z-index: 1000;
+  border-radius: 15px;
+  z-index: 9999;
+
+  opacity: 0;
+  transform: translateY(-40px);
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    transform 0.5s ease;
 }
 
-/* Estilo de cada ítem dentro del dropdown */
+.custom-dropdown-list.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
 .custom-dropdown-item {
   padding: 10px 20px;
   cursor: pointer;
-  transition: background-color 0.2s;
+
+  background-color: var(--secondary);
+  transition:
+    background-color 0.3s ease,
+    filter 0.3s ease;
+  border-radius: 15px;
 }
 
 .custom-dropdown-item:hover {
-  background-color: #f1f1f1;
+  filter: brightness(1.2);
 }
 
-/* Estilo cuando el dropdown está cerrado */
 .custom-dropdown-btn:focus {
   outline: none;
+}
+
+/* Scrollbar general */
+.custom-dropdown-list::-webkit-scrollbar {
+  width: 8px; /* ancho de la scrollbar */
+  height: 8px;
+}
+
+/* El track (la zona de fondo de la barra) */
+.custom-dropdown-list::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 15px;
+}
+
+/* El thumb (la parte que se arrastra) */
+.custom-dropdown-list::-webkit-scrollbar-thumb {
+  background-color: var(--text); /* puedes usar otro color si quieres */
+  border-radius: 15px;
+  border: 2px solid var(--secondary); /* para que parezca que flota */
 }

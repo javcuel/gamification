@@ -1,11 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  Ranking,
-  fetchRankingPlayers,
-  fetchRankingGroups,
-  fetchRankingPlayersByGame,
-  fetchRankingGroupsByGame,
-} from '../api/ranking';
+import { Ranking, RankingApi } from '../../../api/ranking';
 import { RANKING_TYPES } from '../../../constants/rankingTypes';
 
 const useRankings = (rankingType: string, selectedGame: number) => {
@@ -17,18 +11,21 @@ const useRankings = (rankingType: string, selectedGame: number) => {
       try {
         let data;
         if (rankingType === RANKING_TYPES.PLAYERS) {
-          data = await fetchRankingPlayers();
+          data = await RankingApi.getPlayers();
         } else if (RANKING_TYPES.GROUPS) {
-          data = await fetchRankingGroups();
+          data = await RankingApi.getGroups();
         } else if (RANKING_TYPES.PLAYERS_BY_GAME) {
-          data = await fetchRankingPlayersByGame(selectedGame);
+          data = await RankingApi.getPlayersByGame(selectedGame);
         } else if (RANKING_TYPES.GROUPS_BY_GAME) {
-          data = await fetchRankingGroupsByGame(selectedGame);
+          data = await RankingApi.getGroupsByGame(selectedGame);
         }
         if (data) setRankings(data);
-      } catch (error) {
-        setError('Failed to load rankings');
-        console.error(error);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError('An unknown error occurred');
+        }
       }
     };
 

@@ -32,7 +32,7 @@ interface UserApiResponse {
   Completado: number;
 }
 
-interface UserApiPayload {
+export interface UserApiPayload {
   name: string;
   passwd: string;
   role: (typeof ROLES)[keyof typeof ROLES];
@@ -54,85 +54,88 @@ interface UserScoreResponse {
   Completado: number;
 }
 
-export const fetchUsers = async (): Promise<User[]> => {
-  try {
-    const data = await httpClient.get(API_URLS.GET_USERS);
-    return data.map(
-      (user: UserApiResponse) =>
-        new User(
-          user.IDUsuario,
-          user.Nombre,
-          user.TipoUsuario,
-          user.Puntuacion,
-          user.Completado
-        )
-    );
-  } catch (error) {
-    console.error('Error fetching users:', error);
-    throw new Error('Failed to fetch users');
-  }
-};
-
-export const fetchUserScore = async (userId: number): Promise<UserScore> => {
-  try {
-    const data = await httpClient.get(API_URLS.GET_USER_SCORE(userId));
-    return data.map((user: UserScoreResponse) => ({
-      totalScore: user.Puntacion,
-      completedSubjects: user.Completado,
-    }));
-  } catch (error) {
-    console.error('Error fetching users:', error);
-    throw new Error('Failed to fetch users');
-  }
-};
-
-export const deleteUser = async (userId: number): Promise<void> => {
-  try {
-    await httpClient.delete(API_URLS.DELETE_USER(userId));
-  } catch (error) {
-    console.error(`Error deleting user (ID: ${userId}):`, error);
-    throw new Error('Failed to delete user');
-  }
-};
-
-export const createUser = async (payload: UserApiPayload): Promise<void> => {
-  try {
-    await httpClient.post(API_URLS.CREATE_USER, payload);
-  } catch (error) {
-    console.error('Error adding user:', error);
-    throw new Error('Failed to add user');
-  }
-};
-
-export const login = async (
-  payload: UserApiLoginPayload
-): Promise<{
-  success: boolean;
-  token?: string;
-  message?: string;
-}> => {
-  try {
-    const data = await httpClient.post(API_URLS.LOGIN, {
-      name: payload.name,
-      passwd: payload.passwd,
-    });
-
-    if (data && data.token) {
-      StorageService.setItem('token', data.token);
-      return { success: true, token: data.token };
+export const UserApi = {
+  getAll: async (): Promise<User[]> => {
+    try {
+      const data = await httpClient.get(API_URLS.GET_USERS);
+      return data.map(
+        (user: UserApiResponse) =>
+          new User(
+            user.IDUsuario,
+            user.Nombre,
+            user.TipoUsuario,
+            user.Puntuacion,
+            user.Completado
+          )
+      );
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      throw new Error('Failed to fetch users');
     }
+  },
+  getScore: async (userId: number): Promise<UserScore> => {
+    try {
+      const data = await httpClient.get(API_URLS.GET_USER_SCORE(userId));
+      return data.map((user: UserScoreResponse) => ({
+        totalScore: user.Puntacion,
+        completedSubjects: user.Completado,
+      }));
+    } catch (error) {
+      console.error(`Error fetching user (ID: ${userId}) score:`, error);
+      throw new Error('Failed to fetch user score');
+    }
+  },
 
-    return {
-      success: false,
-      message: data.message || 'Login Error',
-    };
-  } catch (error) {
-    console.error('Login Request Error;', error);
-    return { success: false, message: 'Server Error' };
-  }
-};
+  /*TODO: UPDATE USER AQUI*/
 
-export const logout = (navigate: NavigateFunction): void => {
-  StorageService.removeItem('token');
-  navigate(ROUTES.LOGIN);
+  delete: async (userId: number): Promise<void> => {
+    try {
+      await httpClient.delete(API_URLS.DELETE_USER(userId));
+    } catch (error) {
+      console.error(`Error deleting user (ID: ${userId}):`, error);
+      throw new Error('Failed to delete user');
+    }
+  },
+
+  create: async (payload: UserApiPayload): Promise<void> => {
+    try {
+      await httpClient.post(API_URLS.CREATE_USER, payload);
+    } catch (error) {
+      console.error('Error creating new user:', error);
+      throw new Error('Failed to create new user');
+    }
+  },
+
+  login: async (
+    payload: UserApiLoginPayload
+  ): Promise<{
+    success: boolean;
+    token?: string;
+    message?: string;
+  }> => {
+    try {
+      const data = await httpClient.post(API_URLS.LOGIN, {
+        name: payload.name,
+        passwd: payload.passwd,
+      });
+
+      if (data && data.token) {
+        StorageService.setItem('token', data.token);
+        return { success: true, token: data.token };
+      }
+
+      return {
+        success: false,
+        message: data.message || 'Login Error',
+      };
+    } catch (error) {
+      console.error('Login Request Error;', error);
+      return { success: false, message: 'Server Error' };
+    }
+  },
+
+  logout: (navigate: NavigateFunction): void => {
+    StorageService.removeItem('token');
+    navigate(ROUTES.LOGIN);
+  },
 };

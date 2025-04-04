@@ -1,17 +1,16 @@
 import { useState } from 'react';
+import { SubjectApi, SubjectApiPayload } from '../../../../api/subject';
 
-import { UserApi, UserApiPayload } from '../../../../api/user';
-
-const useAddUser = () => {
+const useAddSubject = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  const addUser = async (payload: UserApiPayload) => {
+  const addSubject = async (payload: SubjectApiPayload) => {
     setError(null);
     setSuccess(false);
 
     try {
-      await UserApi.create(payload);
+      await SubjectApi.create(payload);
       setSuccess(true);
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -22,7 +21,7 @@ const useAddUser = () => {
     }
   };
 
-  return { addUser, error, success };
+  return { addSubject, error, success };
 };
 
-export default useAddUser;
+export default useAddSubject;

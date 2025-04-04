@@ -85,7 +85,7 @@ interface GameApiResponse {
  *
  * @interface
  */
-interface GameApiOpenStatePayload {
+export interface GameApiOpenStatePayload {
   gameId: number;
   isOpen: boolean;
 }
@@ -95,7 +95,7 @@ interface GameApiOpenStatePayload {
  *
  * @interface
  */
-interface GameApiVisibleStatePayload {
+export interface GameApiVisibleStatePayload {
   gameId: number;
   isVisible: boolean;
 }
@@ -105,191 +105,111 @@ interface GameApiVisibleStatePayload {
  *
  * @interface
  */
-interface GameApiPayload {
+export interface GameApiPayload {
   idSubject: number;
   name: string;
   img: string;
   maxScore: number;
 }
 
-/**
- * Fetches the list of games associated with a specific subject.
- *
- * This function performs an HTTP GET request to retrieve the games and transforms the API response
- * into a list of `Game` objects that can be used throughout the application.
- *
- * @async
- * @function
- * @param {number} subjectId - The ID of the subject for which games are being fetched.
- * @returns {Promise<Game[]>} A promise that resolves to an array of `Game` objects.
- * @throws {Error} Throws an error if fetching the games fails.
- *
- * @example
- * fetchGames(1)
- *   .then(games => console.log(games))
- *   .catch(error => console.error(error));
- */
-export const fetchGames = async (subjectId: number): Promise<Game[]> => {
-  try {
-    const data = await httpClient.get(API_URLS.GET_GAMES(subjectId));
+export const GameApi = {
+  getAll: async (subjectId: number): Promise<Game[]> => {
+    try {
+      const data = await httpClient.get(API_URLS.GET_GAMES(subjectId));
 
-    return data.map(
-      (game: GameApiResponse) =>
-        new Game(
-          game.IDMinijuego,
-          game.IDMundo,
-          game.UrlImagen,
-          game.Nombre,
-          game.PuntuacionMaxima,
-          game.Abierto,
-          game.Visible,
-          game.Posicion,
-          game.IDUsuario,
-          game.Nuevo,
-          game.Subido
-        )
-    );
-  } catch (error) {
-    console.error(`Error fetching games for subject ID: ${subjectId}`, error);
-    throw new Error('Failed to fetch games');
-  }
-};
+      return data.map(
+        (game: GameApiResponse) =>
+          new Game(
+            game.IDMinijuego,
+            game.IDMundo,
+            game.UrlImagen,
+            game.Nombre,
+            game.PuntuacionMaxima,
+            game.Abierto,
+            game.Visible,
+            game.Posicion,
+            game.IDUsuario,
+            game.Nuevo,
+            game.Subido
+          )
+      );
+    } catch (error) {
+      console.error(`Error fetching games for subject ID: ${subjectId}`, error);
+      throw new Error('Failed to fetch games');
+    }
+  },
 
-/**
- * Fetches a single game by its ID.
- *
- * This function performs an HTTP GET request to retrieve the game and transforms the API response
- * into a `Game` object that can be used throughout the application.
- *
- * @async
- * @function
- * @param {number} gameId - The ID of the game to fetch.
- * @returns {Promise<Game>} A promise that resolves to a `Game` object.
- * @throws {Error} Throws an error if fetching the game fails.
- *
- * @example
- * fetchGameById(10)
- *   .then(game => console.log(game))
- *   .catch(error => console.error(error));
- */
-export const fetchGameById = async (gameId: number): Promise<Game> => {
-  try {
-    const data = await httpClient.get(API_URLS.GET_GAME(gameId));
+  getById: async (gameId: number): Promise<Game> => {
+    try {
+      const data = await httpClient.get(API_URLS.GET_GAME(gameId));
 
-    return data.map(
-      (game: GameApiResponse) =>
-        new Game(
-          game.IDMinijuego,
-          game.IDMundo,
-          game.UrlImagen,
-          game.Nombre,
-          game.PuntuacionMaxima,
-          game.Abierto,
-          game.Visible,
-          game.Posicion,
-          game.IDUsuario,
-          game.Nuevo,
-          game.Subido
-        )
-    );
-  } catch (error) {
-    console.error(`Error fetching game for game ID: ${gameId}`, error);
-    throw new Error('Failed to fetch game');
-  }
-};
+      return data.map(
+        (game: GameApiResponse) =>
+          new Game(
+            game.IDMinijuego,
+            game.IDMundo,
+            game.UrlImagen,
+            game.Nombre,
+            game.PuntuacionMaxima,
+            game.Abierto,
+            game.Visible,
+            game.Posicion,
+            game.IDUsuario,
+            game.Nuevo,
+            game.Subido
+          )
+      );
+    } catch (error) {
+      console.error(`Error fetching game for game ID: ${gameId}`, error);
+      throw new Error('Failed to fetch game');
+    }
+  },
 
-/**
- * Updates the open state of a game.
- *
- * This function performs an HTTP PUT request to update de open/closed state of a game.
- *
- * @async
- * @function
- * @param {GameApiOpenStatePayload} payload - The payload object containing:
- *   - `gameId` (number): The unique identifier of the game to be updated.
- *   - `isOpen` (boolean): The new open state of the game.
- * @returns {Promise<void>} A promise that resolves when the game open state is successfully updated.
- * @throws {Error} Throws an error if the open state update fails.
- *
- * @example
- * const payload: GameApiOpenStatePayload = {
- *   gameId: 123,
- *   isOpen: true
- * };
- *
- * updateGameOpenState(payload)
- *   .then(() => console.log("Game open state updated"))
- *   .catch(error => console.error(error));
- */
-export const updateGameOpenState = async (
-  payload: GameApiOpenStatePayload
-): Promise<void> => {
-  try {
-    await httpClient.put(API_URLS.UPDATE_GAME_OPEN(payload.gameId), {
-      isOpen: payload.isOpen,
-    });
-  } catch (error) {
-    console.error(
-      `Error updating open state for game (ID: ${payload.gameId}):`,
-      error
-    );
-    throw new Error('Failed to update the game open state.');
-  }
-};
+  updateOpenState: async (payload: GameApiOpenStatePayload): Promise<void> => {
+    try {
+      await httpClient.put(API_URLS.UPDATE_GAME_OPEN(payload.gameId), {
+        isOpen: payload.isOpen,
+      });
+    } catch (error) {
+      console.error(
+        `Error updating open state for game (ID: ${payload.gameId}):`,
+        error
+      );
+      throw new Error('Failed to update the game open state');
+    }
+  },
 
-/**
- * Updates the visible state of a game.
- *
- * This function performs an HTTP PUT request to update de visible/hidden state of a game.
- *
- * @async
- * @function
- * @param {GameApiVisibleStatePayload} payload - The payload object containing:
- *   - `gameId` (number): The unique identifier of the game to be updated.
- *   - `isVisible` (boolean): The new visible state of the game.
- * @returns {Promise<void>} A promise that resolves when the game visible state is successfully updated.
- * @throws {Error} Throws an error if the visible state update fails.
- *
- * @example
- * const payload: GameApiVisibleStatePayload = {
- *   gameId: 123,
- *   isVisible: true
- * };
- *
- * updateGameVisibleState(payload)
- *   .then(() => console.log("Game visible state updated"))
- *   .catch(error => console.error(error));
- */
-export const updateGameVisibleState = async (
-  payload: GameApiVisibleStatePayload
-): Promise<void> => {
-  try {
-    await httpClient.put(API_URLS.UPDATE_GAME_VISIBLE(payload.gameId), {
-      isVisible: payload.isVisible,
-    });
-  } catch (error) {
-    console.error(
-      `Error updating visible state for game (ID: ${payload.gameId}):`,
-      error
-    );
-    throw new Error('Failed to update the game visible state.');
-  }
-};
+  updateVisibleState: async (
+    payload: GameApiVisibleStatePayload
+  ): Promise<void> => {
+    try {
+      await httpClient.put(API_URLS.UPDATE_GAME_VISIBLE(payload.gameId), {
+        isVisible: payload.isVisible,
+      });
+    } catch (error) {
+      console.error(
+        `Error updating visible state for game (ID: ${payload.gameId}):`,
+        error
+      );
+      throw new Error('Failed to update the game visible state');
+    }
+  },
 
-export const createGame = async (payload: GameApiPayload): Promise<void> => {
-  try {
-    await httpClient.post(API_URLS.CREATE_GAME, payload);
-  } catch (error) {
-    console.error('Error creating new game:', error);
-    throw new Error('Failed to create new game.');
-  }
-};
+  delete: async (gameId: number): Promise<void> => {
+    try {
+      await httpClient.delete(API_URLS.DELETE_GAME(gameId));
+    } catch (error) {
+      console.error(`Error deleting game (ID: ${gameId}):`, error);
+      throw new Error('Failed to delete game');
+    }
+  },
 
-export const deleteGame = async (gameId: number): Promise<void> => {
-  try {
-    await httpClient.delete(API_URLS.DELETE_GAME(gameId));
-  } catch (error) {
-    console.error(`Error deleting game (ID: ${gameId}):`, error);
-    throw new Error('Failed to delete game.');
-  }
+  create: async (payload: GameApiPayload): Promise<void> => {
+    try {
+      await httpClient.post(API_URLS.CREATE_GAME, payload);
+    } catch (error) {
+      console.error('Error creating new game:', error);
+      throw new Error('Failed to create new game');
+    }
+  },
 };

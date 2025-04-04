@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { fetchGames, Game } from '../../../api/game';
+import { Game, GameApi } from '../../../api/game';
 
-const useExpandWorld = (subjectId: number) => {
+const useExpandSubject = (subjectId: number) => {
   const [games, setGames] = useState<Game[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -14,13 +14,14 @@ const useExpandWorld = (subjectId: number) => {
       setLoading(true);
       setError(null);
       try {
-        const fetchedGames = await fetchGames(subjectId);
-        setGames(fetchedGames);
-      } catch (err) {
-        console.error(err);
-        setError('Failed to load games');
-      } finally {
-        setLoading(false);
+        const data = await GameApi.getAll(subjectId);
+        setGames(data);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError('An unknown error occurred');
+        }
       }
     }
   };
@@ -28,4 +29,4 @@ const useExpandWorld = (subjectId: number) => {
   return { games, isExpanded, loading, error, toggleExpand };
 };
 
-export default useExpandWorld;
+export default useExpandSubject;

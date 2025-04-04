@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchGames, Game } from '../../../api/game';
+import { Game, GameApi } from '../../../api/game';
 
 const useGame = (subjectId: number) => {
   const [games, setGames] = useState<Game[]>([]);
@@ -7,10 +7,16 @@ const useGame = (subjectId: number) => {
 
   useEffect(() => {
     const loadGames = async () => {
-      const data = await fetchGames(subjectId).catch(() => {
-        setError('Failed to load Games');
-      });
-      if (data) setGames(data);
+      try {
+        const data = await GameApi.getAll(subjectId);
+        setGames(data);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError('An unknown error occurred');
+        }
+      }
     };
 
     loadGames();

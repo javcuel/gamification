@@ -1,17 +1,18 @@
 import React from 'react';
 import SubjectItem from '../components/SubjectItem';
 import useSubjects from './hooks/useSubjects';
+import ErrorMsg from '../../shared/ui/ErrorMsg';
 
-const AdminSubjectGamesTab: React.FC = () => {
+const SubjectsTab: React.FC = () => {
   const { subjects, setSubjects, error } = useSubjects();
 
-  const handleSubjectDeleted = (worldId: number) => {
-    setSubjects((prev) => prev.filter((world) => world.id !== worldId));
+  const handleSubjectDeleted = (subjectId: number) => {
+    setSubjects((prev) => prev.filter((subject) => subject.id !== subjectId));
   };
 
   return (
     <div>
-      {error && <div className="text-danger">{error}</div>}
+      {error && <ErrorMsg message={error}></ErrorMsg>}
       {subjects.map((subject) => (
         <SubjectItem
           key={subject.id}
@@ -23,4 +24,4 @@ const AdminSubjectGamesTab: React.FC = () => {
   );
 };
 
-export default AdminSubjectGamesTab;
+export default SubjectsTab;
