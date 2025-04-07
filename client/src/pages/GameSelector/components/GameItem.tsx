@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { Game } from '../../../api/game';
 import { ROUTES } from '../../../constants/routes';
 
@@ -8,9 +9,7 @@ interface GameProps {
 }
 
 const GameItem: React.FC<GameProps> = ({ game }) => {
-  if (!game.isVisible) {
-    return null;
-  }
+  if (!game.isVisible) return null;
 
   const navigate = useNavigate();
 
@@ -26,11 +25,11 @@ const GameItem: React.FC<GameProps> = ({ game }) => {
     <div className={gameClassName} onClick={() => handleClick()}>
       <img
         className="button-img"
-        src={game.img || 'images/no_image.jpg'}
+        src={game.img || '/images/no_image.jpg'}
         alt={game.name}
       ></img>
       <div className="image-overlay">
-        <p>{game.name}</p>
+        <p>{game.isOpen ? game.name : '🔒'}</p>
       </div>
     </div>
   );

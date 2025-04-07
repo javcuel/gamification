@@ -5,19 +5,10 @@ import GameGrid from './components/GameGrid';
 
 const GameSelector: React.FC = () => {
   return (
-    <div className="container-fluid" style={{ height: '100vh' }}>
+    <div className="container-fluid min-vh-100 d-flex flex-column">
       <SpaceBackground />
-      <div
-        className="container-fluid d-flex flex-column"
-        style={{ height: '100vh' }}
-      >
-        <div style={{ height: '5vh' }}>
-          <NavBar webName="Gamispace" />
-        </div>
-        <div className="d-flex flex-grow-1 justify-content-center align-items-center">
-          <GameGrid />
-        </div>
-      </div>
+      <NavBar webName="Gamispace" />
+      <GameGrid />
     </div>
   );
 };

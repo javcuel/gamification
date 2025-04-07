@@ -23,9 +23,7 @@ const SubjectGrid: React.FC = () => {
   return (
     <div className="container">
       <div className="row custom-flex-center text-center">
-        <div style={{ width: '30%' }}>
-          {error && <ErrorMsg message={error} />}
-        </div>
+        {error && <ErrorMsg message={error} />}
 
         {subjects
           .filter((subject) => subject.isVisible)

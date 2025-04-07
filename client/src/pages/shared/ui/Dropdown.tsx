@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
 import '../styles/Dropdown.css';
 
+// 👇 Añadir prop onChange
 interface DropdownProps {
   options: string[];
   placeholder: string;
+  onChange: (value: string) => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ options, placeholder }) => {
+const Dropdown: React.FC<DropdownProps> = ({
+  options,
+  placeholder,
+  onChange,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleDropdown = () => setIsOpen(!isOpen);
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
-    setIsOpen(false); // Cerrar el dropdown después de seleccionar una opción
+    onChange(option);
+    setIsOpen(false);
   };
 
   return (
@@ -26,7 +31,7 @@ const Dropdown: React.FC<DropdownProps> = ({ options, placeholder }) => {
         className="custom-dropdown-btn"
         onClick={toggleDropdown}
       >
-        {selectedOption || placeholder}
+        {selectedOption || `${placeholder} ▼`}
       </button>
 
       <ul className={`custom-dropdown-list ${isOpen ? 'open' : ''}`}>

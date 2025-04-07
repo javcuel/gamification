@@ -41,11 +41,11 @@ const SubjectItem: React.FC<SubjectProps> = ({ subject }) => {
     <div className={subjectClassName} onClick={() => handleClick()}>
       <img
         className="button-img"
-        src={subject.img || 'images/no_image.jpg'}
+        src={subject.img || '/images/no_image.jpg'}
         alt={subject.name}
       ></img>
       <div className="image-overlay">
-        <p>{subject.name}</p>
+        <p>{subject.isOpen ? subject.name : '🔒'}</p>
       </div>
     </div>
   );

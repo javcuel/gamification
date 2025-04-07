@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Button from '../../shared/ui/Button';
 import Dropdown from '../../shared/ui/Dropdown';
-import Input from '../../shared/ui/Input';
 import ErrorMsg from '../../shared/ui/ErrorMsg';
+import Input from '../../shared/ui/Input';
 import SuccessMsg from '../../shared/ui/SuccessMsg';
 import useAddGame from './hooks/useAddGame';
 
@@ -37,7 +37,7 @@ const AdminAddGameTab: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="d-flex flex-column align-items-center justify-content-center gap-3 mx-auto"
+      className="d-flex flex-column align-items-center gap-3"
       style={{ width: '100%' }}
     >
       <h3 className="text-center mb-4">Add Game</h3>
@@ -79,7 +79,7 @@ const AdminAddGameTab: React.FC = () => {
           'sadaksjdkajsdkajsdkajslkdjaskldjklasjdlkas',
           'd',
         ]}
-        placeholder="1"
+        placeholder="Subject"
       />
       <Button text="Add Game" />
       {error && <ErrorMsg message={error}></ErrorMsg>}

@@ -66,7 +66,6 @@ const AdminPanel: React.FC = () => {
         </div>
       </div>
 
-      {/* Panel de contenido */}
       <div className="panel">
         <div className="panel-content">
           {activeTab === 'tab1' && <AdminWorldsGamesTab />}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-
 import { RANKING_TYPES } from '../../../constants/rankingTypes';
+import Dropdown from '../../shared/ui/Dropdown'; // Importamos el componente Dropdown
+import ErrorMsg from '../../shared/ui/ErrorMsg';
 import useRankings from '../hooks/useRankings';
 import '../styles/ranking.css';
 
@@ -12,49 +13,49 @@ const RankingTable: React.FC = () => {
   const [selectedGame, setSelectedGame] = useState<number>(DEFAULT_GAME);
 
   const { rankings, error } = useRankings(rankingType, selectedGame);
-  //const games = fetchGames();
+
+  // Opciones de juegos disponibles (esto lo adaptas a tu backend o fuente de datos)
+  const gameOptions = [
+    { id: 120, name: 'Apilas' },
+    { id: 94, name: 'Apuntados' },
+    { id: 127, name: 'Cafetería' },
+    { id: 109, name: 'Caída de Datos' },
+    { id: 129, name: 'Estructura2' },
+    { id: 110, name: 'Fiesta Recursiva' },
+    { id: 130, name: 'Mars Miners' },
+  ];
 
   return (
     <div className="container mt-5">
       <div className="row mb-3">
         <div className="col-md-6">
           <label>Select ranking</label>
-          <select
-            className="form-control "
-            value={rankingType}
-            onChange={(e) => setRankingType(e.target.value)}
-          >
-            <option value={RANKING_TYPES.PLAYERS}>General - User</option>
-            <option value={RANKING_TYPES.GROUPS}>General - Group</option>
-            <option value={RANKING_TYPES.PLAYERS_BY_GAME}>Game - User</option>
-            <option value={RANKING_TYPES.GROUPS_BY_GAME}>Game- Group</option>
-          </select>
+          <Dropdown
+            options={Object.values(RANKING_TYPES)}
+            placeholder="Select ranking"
+            onChange={setRankingType}
+            value={rankingType} // Aquí pasamos el valor seleccionado
+          />
         </div>
 
-        {/* Dropdown for selecting specific game, enabled only for JJ and GJ */}
         {(rankingType === RANKING_TYPES.PLAYERS_BY_GAME ||
           rankingType === RANKING_TYPES.GROUPS_BY_GAME) && (
           <div className="col-md-6">
             <label>Select game</label>
-
-            {/*   <select
-              className="form-control"
-              value={selectedGame || ''}
-              onChange={(e) => setSelectedGame(Number(e.target.value))}
-            >
-              <option value={120}>Apilas</option>
-              <option value={94}>Apuntados</option>
-              <option value={127}>Cafetería</option>
-              <option value={109}>Caída de Datos</option>
-              <option value={129}>Estructura2</option>
-              <option value={110}>Fiesta Recursiva</option>
-              <option value={130}>Mars Miners</option>
-            </select> */}
+            <Dropdown
+              options={gameOptions.map((g) => g.name)}
+              placeholder="Select game"
+              onChange={(gameName) => {
+                const selected = gameOptions.find((g) => g.name === gameName);
+                if (selected) setSelectedGame(selected.id); // Establecemos el ID del juego
+              }}
+              value={gameOptions.find((g) => g.id === selectedGame)?.name || ''} // Mostramos el nombre del juego seleccionado
+            />
           </div>
         )}
       </div>
 
-      {error && <div className="alert alert-danger">{error}</div>}
+      {error && <ErrorMsg message={error} />}
 
       <div className="row">
         <div className="col">

@@ -62,6 +62,10 @@
   transition: width 0.3s ease-in-out;
 }
 
+.panel-content {
+  display: block;
+}
+
 /* 📌 Estilos para pantallas pequeñas */
 @media (max-width: 768px) {
   /* 📌 El panel ocupa toda la pantalla */

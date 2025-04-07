@@ -8,6 +8,7 @@ import GameSelector from '../pages/GameSelector/GameSelector';
 import Home from '../pages/Home/Home';
 import Login from '../pages/Login/Login';
 import NotFound from '../pages/NotFound/NotFound';
+import Play from '../pages/Play/Play';
 import Ranking from '../pages/Ranking/Ranking';
 import roleService from '../services/roleService';
 import ProtectedRoute from './ProtectedRoute';
@@ -39,7 +40,7 @@ const routes: RouteObject[] = [
   {
     path: ROUTES.LOGIN,
     /*  element: <Login />, */
-    element: <AdminPrueba />,
+    element: <Login />,
   },
   {
     path: ROUTES.HOME,
@@ -81,7 +82,7 @@ const routes: RouteObject[] = [
           ROUTES.PLAY(':gameId')
         )}
       >
-        <GameSelector />
+        <Play />
       </ProtectedRoute>
     ),
   },
