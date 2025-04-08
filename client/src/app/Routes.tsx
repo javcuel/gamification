@@ -39,7 +39,7 @@ void React;
 const routes: RouteObject[] = [
   {
     path: ROUTES.LOGIN,
-    /*  element: <Login />, */
+
     element: <Login />,
   },
   {
