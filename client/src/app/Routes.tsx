@@ -39,8 +39,7 @@ void React;
 const routes: RouteObject[] = [
   {
     path: ROUTES.LOGIN,
-    /*  element: <Login />, */
-    element: <Login />,
+    element: <AdminPrueba />,
   },
   {
     path: ROUTES.HOME,

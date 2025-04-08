@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/Dropdown.css';
 
-// 👇 Añadir prop onChange
 interface DropdownProps {
   options: string[];
   placeholder: string;

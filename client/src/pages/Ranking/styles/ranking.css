@@ -1,40 +1,104 @@
-/* Sobrescribir los estilos de Bootstrap */
+.table-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table-responsive-wrapper::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.table-responsive-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 15px;
+}
+
+.table-responsive-wrapper::-webkit-scrollbar-thumb {
+  background-color: var(--text);
+  border-radius: 15px;
+  border: 2px solid var(--secondary);
+}
+
 .table {
-  background-color: rgba(255, 255, 255, 0) !important; /* Fondo translúcido */
-  border-radius: 10px;
+  min-width: 600px;
+
+  border: solid 3px var(--text);
+  border-radius: 15px !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
   overflow: hidden;
 }
 
 .table th,
 .table td {
-  background-color: rgba(13, 15, 25, 0.6) !important;
-  border: 2px solid var(--text) !important;
+  background-color: color-mix(in srgb, var(--primary) 80%, transparent);
+  color: var(--text);
+  border: 2px solid var(--text);
+  transition:
+    background-color,
+    filter 0.3s ease-in-out;
 }
 
-/*TODO: CAMBIAR TAMAÑO FUENTE A REM*/
-.table th {
-  color: var(--text) !important;
-  font-size: 18px;
+.table-row {
+  transition:
+    background-color,
+    filter 0.3s ease;
 }
 
-.table td {
-  color: var(--text) !important;
+.table-row:hover {
+  filter: brightness(0.7);
 }
 
-.custom-table-row {
-  background-color: rgba(13, 15, 25, 0.2);
+.podium1 {
+  position: relative;
 }
 
-.table tbody tr {
-  transition: background-color 0.5s ease; /* Transición suave al pasar el cursor */
+.podium1::before {
+  content: '🥇';
+  position: absolute;
+
+  font-size: 1rem;
+  color: var(--secondary);
+  animation: podium 2.5s infinite ease-in-out;
 }
 
-/* Efecto hover para hacer el fondo más oscuro */
-.custom-table-row:hover {
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.9
-  ); /* Color más oscuro cuando el cursor pasa por encima */
+.podium2 {
+  position: relative;
+}
+
+.podium2::before {
+  content: '🥈';
+  position: absolute;
+
+  font-size: 1rem;
+  color: var(--secondary);
+  animation: podium 2.5s infinite ease-in-out;
+}
+
+.podium3 {
+  position: relative;
+}
+
+.podium3::before {
+  content: '🥉';
+  position: absolute;
+
+  font-size: 1rem;
+  color: var(--secondary);
+  animation: podium 2.5s infinite ease-in-out;
+}
+
+@keyframes podium {
+  0% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(2);
+  }
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
 }

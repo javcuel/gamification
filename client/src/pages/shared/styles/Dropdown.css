@@ -1,14 +1,12 @@
 .custom-dropdown {
   width: 100%;
   position: relative;
-  /* display: inline-block; */
 }
 
 .custom-dropdown-btn {
   width: 100%;
   padding: 10px 20px;
   text-align: center;
-  /*   display: block; */
 
   background-color: var(--secondary);
   color: var(--text);
@@ -18,23 +16,22 @@
 
 .custom-dropdown-list {
   position: absolute;
+  margin: 5px 0 0;
+  padding: 0;
   top: 100%;
   left: 0;
   right: 0;
-
+  z-index: 9999;
   max-height: 200px;
   overflow-y: auto;
 
   background-color: var(--secondary);
-  margin: 5px 0 0;
-  padding: 0;
-  list-style-type: none;
   border-radius: 15px;
-  z-index: 9999;
-
   opacity: 0;
-  transform: translateY(-40px);
+  list-style-type: none;
+
   pointer-events: none;
+  transform: translateY(-40px);
   transition:
     opacity 0.3s ease,
     transform 0.5s ease;
@@ -42,19 +39,21 @@
 
 .custom-dropdown-list.open {
   opacity: 1;
+
   transform: translateY(0);
   pointer-events: auto;
 }
 
 .custom-dropdown-item {
   padding: 10px 20px;
-  cursor: pointer;
 
   background-color: var(--secondary);
+  border-radius: 15px;
+  cursor: pointer;
+
   transition:
     background-color 0.3s ease,
     filter 0.3s ease;
-  border-radius: 15px;
 }
 
 .custom-dropdown-item:hover {
@@ -65,21 +64,18 @@
   outline: none;
 }
 
-/* Scrollbar general */
 .custom-dropdown-list::-webkit-scrollbar {
-  width: 8px; /* ancho de la scrollbar */
+  width: 8px;
   height: 8px;
 }
 
-/* El track (la zona de fondo de la barra) */
 .custom-dropdown-list::-webkit-scrollbar-track {
   background: transparent;
   border-radius: 15px;
 }
 
-/* El thumb (la parte que se arrastra) */
 .custom-dropdown-list::-webkit-scrollbar-thumb {
-  background-color: var(--text); /* puedes usar otro color si quieres */
+  background-color: var(--text);
+  border: 2px solid var(--secondary);
   border-radius: 15px;
-  border: 2px solid var(--secondary); /* para que parezca que flota */
 }

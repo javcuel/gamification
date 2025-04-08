@@ -1,18 +1,20 @@
 .input {
   width: 100%;
   padding: 15px 15px;
-  letter-spacing: 1px;
 
   background-color: var(--primary);
   color: var(--text);
   border: 2px solid var(--text);
   border-radius: 15px;
 
+  letter-spacing: 1px;
+
   transition: filter 0.3s ease;
 }
 
 .input:focus {
   outline: none;
+
   filter: brightness(1.2);
 }
 
