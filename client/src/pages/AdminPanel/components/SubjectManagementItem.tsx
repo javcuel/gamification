@@ -21,19 +21,27 @@ interface SubjectiItemProps {
   onSubjectDeleted: (subjectId: number) => void;
 }
 
-const SubjectItem: React.FC<SubjectiItemProps> = ({
+const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
   subject,
   onSubjectDeleted,
 }) => {
-  const { games, isExpanded, loading, error, toggleExpand } = useExpandSubject(
-    subject.id
-  );
-  const [isOpen, toggleOpenState, openLoading] = useToggleSubjectOpenState(
-    subject.id,
-    subject.isOpen
-  );
-  const [isVisible, toggleVisibleState, visibleLoading] =
-    useToggleSubjectVisibleState(subject.id, subject.isVisible);
+  const {
+    games,
+    isExpanded,
+    error: ExpandError,
+    loading,
+    toggleExpand,
+  } = useExpandSubject(subject.id);
+  const {
+    isOpen,
+    error: openError,
+    toggleOpenState,
+  } = useToggleSubjectOpenState(subject.id, subject.isOpen);
+  const {
+    isVisible,
+    error: visibleError,
+    toggleVisibleState,
+  } = useToggleSubjectVisibleState(subject.id, subject.isVisible);
   const {
     handleDeleteSubject,
     loading: deleteLoading,
@@ -60,18 +68,13 @@ const SubjectItem: React.FC<SubjectiItemProps> = ({
           <strong>{subject.name}</strong>
         </div>
         <div>
-          <button
-            className={'btn custom-button m-1'}
-            onClick={toggleOpenState}
-            disabled={openLoading}
-          >
+          <button className={'btn custom-button m-1'} onClick={toggleOpenState}>
             <FontAwesomeIcon icon={isOpen ? faUnlock : faLock} />
           </button>
 
           <button
             className={'btn custom-button m-1'}
             onClick={toggleVisibleState}
-            disabled={visibleLoading}
           >
             <FontAwesomeIcon icon={isVisible ? faEye : faEyeSlash} />
           </button>
@@ -90,8 +93,11 @@ const SubjectItem: React.FC<SubjectiItemProps> = ({
         </div>
       </div>
 
-      {error && <div className="text-danger">{error}</div>}
+      {visibleError && <div className="text-danger">{visibleError}</div>}
+      {openError && <div className="text-danger">{openError}</div>}
       {deleteError && <div className="text-danger">{deleteError}</div>}
+
+      {ExpandError && <div className="text-danger">{ExpandError}</div>}
 
       {loading && <div>Loading games...</div>}
 
@@ -101,4 +107,4 @@ const SubjectItem: React.FC<SubjectiItemProps> = ({
   );
 };
 
-export default SubjectItem;
+export default SubjectManagementItem;

@@ -17,13 +17,17 @@ interface GameItemProps {
 }
 
 const GameItem: React.FC<GameItemProps> = ({ game }) => {
-  const [isOpen, toggleOpenState, openLoading] = useToggleGameOpenState(
-    game.id,
-    game.isOpen
-  );
+  const {
+    isOpen,
+    error: openError,
+    toggleOpenState,
+  } = useToggleGameOpenState(game.id, game.isOpen);
 
-  const [isVisible, toggleVisibleState, visibleLoading] =
-    useToggleGameVisibleState(game.id, game.isOpen);
+  const {
+    isVisible,
+    error: visibleError,
+    toggleVisibleState,
+  } = useToggleGameVisibleState(game.id, game.isOpen);
 
   return (
     <div className="custom-admin-panel-game-item custom-flex-center">
@@ -38,18 +42,13 @@ const GameItem: React.FC<GameItemProps> = ({ game }) => {
         <strong>{game.name}</strong> - Max Score: {game.maxScore}
       </div>
       <div>
-        <button
-          className={'btn custom-button m-1'}
-          onClick={toggleOpenState}
-          disabled={openLoading}
-        >
+        <button className={'btn custom-button m-1'} onClick={toggleOpenState}>
           <FontAwesomeIcon icon={isOpen ? faUnlock : faLock} />
         </button>
 
         <button
           className={'btn custom-button m-1'}
           onClick={toggleVisibleState}
-          disabled={visibleLoading}
         >
           <FontAwesomeIcon icon={isVisible ? faEye : faEyeSlash} />
         </button>
@@ -62,6 +61,8 @@ const GameItem: React.FC<GameItemProps> = ({ game }) => {
           <FontAwesomeIcon icon={faTimes} />
         </button>
       </div>
+      {visibleError && <div className="text-danger">{visibleError}</div>}
+      {openError && <div className="text-danger">{openError}</div>}
     </div>
   );
 };

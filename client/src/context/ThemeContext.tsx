@@ -1,10 +1,10 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { Theme, ThemeApi } from '../api/theme';
+import { Theme, ThemeApi, ThemeApiPayload } from '../api/theme';
 
 interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
-  updateTheme: (newTheme: Theme) => Promise<void>;
+  updateTheme: (newTheme: ThemeApiPayload) => Promise<void>;
 }
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(
@@ -19,9 +19,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     primary: '#ffffff',
     secondary: '#000000',
     text: '#333333',
-    pointsIcon: 'image/no_image.jpg',
-    completedSubjectsIcon: 'image/no_image.jpg',
+    pointsIcon: '/image/no_image.jpg',
+    completedSubjectsIcon: '/image/no_image.jpg',
   });
+
+  const [error, setError] = useState<string | null>(null);
 
   const applyTheme = (newTheme: Theme) => {
     document.documentElement.style.setProperty('--primary', newTheme.primary);
@@ -34,10 +36,17 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const loadTheme = async () => {
-      const newTheme = await ThemeApi.get();
-      if (newTheme) {
+      try {
+        const newTheme = await ThemeApi.get();
+
         setTheme(newTheme);
         applyTheme(newTheme);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError('An unknown error occurred');
+        }
       }
     };
 

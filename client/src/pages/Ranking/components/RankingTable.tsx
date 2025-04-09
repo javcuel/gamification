@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { RANKING_TYPES } from '../../../constants/rankingTypes';
-import Dropdown from '../../shared/ui/Dropdown'; // Importamos el componente Dropdown
+import Dropdown from '../../shared/ui/Dropdown';
 import ErrorMsg from '../../shared/ui/ErrorMsg';
 import useRankings from '../hooks/useRankings';
 import '../styles/ranking.css';
@@ -14,7 +14,7 @@ const RankingTable: React.FC = () => {
 
   const { rankings, error } = useRankings(rankingType, selectedGame);
 
-  // Opciones de juegos disponibles (esto lo adaptas a tu backend o fuente de datos)
+  // TODO: Opciones de juegos disponibles (esto lo adaptas a tu backend o fuente de datos)
   const gameOptions = [
     { id: 120, name: 'Apilas' },
     { id: 94, name: 'Apuntados' },
@@ -26,7 +26,7 @@ const RankingTable: React.FC = () => {
   ];
 
   return (
-    <div className="container mt-5">
+    <div className="container">
       <div className="row mb-3">
         <div className="col-md-6">
           <label>Select ranking</label>
@@ -34,7 +34,6 @@ const RankingTable: React.FC = () => {
             options={Object.values(RANKING_TYPES)}
             placeholder="Select ranking"
             onChange={setRankingType}
-            value={rankingType} // Aquí pasamos el valor seleccionado
           />
         </div>
 
@@ -47,9 +46,8 @@ const RankingTable: React.FC = () => {
               placeholder="Select game"
               onChange={(gameName) => {
                 const selected = gameOptions.find((g) => g.name === gameName);
-                if (selected) setSelectedGame(selected.id); // Establecemos el ID del juego
+                if (selected) setSelectedGame(selected.id);
               }}
-              value={gameOptions.find((g) => g.id === selectedGame)?.name || ''} // Mostramos el nombre del juego seleccionado
             />
           </div>
         )}
@@ -59,47 +57,61 @@ const RankingTable: React.FC = () => {
 
       <div className="row">
         <div className="col">
-          <table className="table table-striped table-bordered table-hover">
-            <thead>
-              <tr>
-                <th>Position</th>
-                {rankingType === RANKING_TYPES.GROUPS ||
-                rankingType === RANKING_TYPES.GROUPS_BY_GAME ? (
-                  <th>Group</th>
-                ) : (
-                  <>
-                    <th>Name</th>
-                    <th>Group</th>
-                  </>
-                )}
-                <th>
-                  <span>Completed Subjects</span>
-                </th>
-
-                <th>
-                  <span>Points</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {rankings.slice(0, 10).map((entry, index) => (
-                <tr key={index} className="custom-table-row">
-                  <td>{index + 1}</td>
+          <div className="table-responsive-wrapper">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Position</th>
                   {rankingType === RANKING_TYPES.GROUPS ||
                   rankingType === RANKING_TYPES.GROUPS_BY_GAME ? (
-                    <td>{entry.userGroup || 'N/A'}</td>
+                    <th>Group</th>
                   ) : (
                     <>
-                      <td>{entry.userName || 'N/A'}</td>
-                      <td>{entry.userGroup || 'N/A'}</td>
+                      <th>Name</th>
+                      <th>Group</th>
                     </>
                   )}
-                  <td>{entry.userCompletedSubjects || 0}</td>
-                  <td>{entry.userTotalScore || 0}</td>
+                  <th>
+                    <span>Completed Subjects</span>
+                  </th>
+
+                  <th>
+                    <span>Points</span>
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {rankings.slice(0, 10).map((entry, index) => (
+                  <tr key={index} className="table-row">
+                    <td
+                      className={
+                        index === 0
+                          ? 'podium1'
+                          : index === 1
+                            ? 'podium2'
+                            : index === 2
+                              ? 'podium3'
+                              : ''
+                      }
+                    >
+                      {index < 3 ? '' : index + 1}
+                    </td>
+                    {rankingType === RANKING_TYPES.GROUPS ||
+                    rankingType === RANKING_TYPES.GROUPS_BY_GAME ? (
+                      <td>{entry.userGroup || 'N/A'}</td>
+                    ) : (
+                      <>
+                        <td>{entry.userName || 'N/A'}</td>
+                        <td>{entry.userGroup || 'N/A'}</td>
+                      </>
+                    )}
+                    <td>{entry.userCompletedSubjects || 0}</td>
+                    <td>{entry.userTotalScore || 0}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

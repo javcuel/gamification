@@ -1,7 +1,8 @@
 .success-msg {
-  color: var(--text);
   padding: 12px 16px;
+  display: inline-block;
+
+  color: var(--text);
   border: 2px solid var(--text);
   border-radius: 15px;
-  display: inline-block;
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Subject } from '../../../api/subject';
+import { Subject, SubjectApi } from '../../../api/subject';
 
 const useSubject = () => {
   const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -9,9 +9,9 @@ const useSubject = () => {
   useEffect(() => {
     const loadSubjects = async () => {
       try {
-        /*  const data = await SubjectApi.getAll(); */
+        const data = await SubjectApi.getAll();
 
-        const data = [
+        /*  const data = [
           {
             id: 1,
             name: 'Matemáticas',
@@ -345,7 +345,7 @@ const useSubject = () => {
             isOpen: true,
             isVisible: true,
           },
-        ];
+        ]; */
         setSubjects(data);
       } catch (error: unknown) {
         if (error instanceof Error) {

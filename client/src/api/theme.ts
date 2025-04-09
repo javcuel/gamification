@@ -65,7 +65,7 @@ interface ThemeApiResponse {
  *
  * @interface
  */
-interface ThemeApiPayload {
+export interface ThemeApiPayload {
   primary: string;
   secondary: string;
   text: string;

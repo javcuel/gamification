@@ -1,7 +1,7 @@
 import React from 'react';
-import SubjectItem from '../components/SubjectItem';
-import useSubjects from './hooks/useSubjects';
 import ErrorMsg from '../../shared/ui/ErrorMsg';
+import SubjectItem from '../components/SubjectManagementItem';
+import useSubjects from './hooks/useSubjects';
 
 const SubjectsTab: React.FC = () => {
   const { subjects, setSubjects, error } = useSubjects();

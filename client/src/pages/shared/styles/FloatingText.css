@@ -1,21 +1,18 @@
 .floating-title {
-  font-size: 4vw; /* Ajusta el tamaño del texto */
-
   color: var(--text);
 
+  font-size: 4vw;
   letter-spacing: 5px;
 
   transition: all 0.2s ease-in-out;
 }
 
-/* Media Query para pantallas pequeñas */
 @media (max-width: 768px) {
   .floating-title {
     font-size: 8vw;
   }
 }
 
-/* Media Query para pantallas extra pequeñas */
 @media (max-width: 480px) {
   .floating-title {
     font-size: 12vw;

@@ -7,6 +7,6 @@ const router = express.Router();
 router.get("/", getTheme);
 
 // Ruta para actualizar el theme
-router.post("/update", updateTheme);
+router.post("/", updateTheme);
 
 export default router;

@@ -3,7 +3,7 @@ import db from "../config/db.js";
 export const getTheme = async (req, res) => {
   try {
     const [rows] = await db.execute(
-      "SELECT primary_color, secondary_color, text_color FROM themes ORDER BY created_at DESC LIMIT 1"
+      "SELECT primary_color, secondary_color, text_color, points_icon, completed_subjects_icon FROM theme ORDER BY created_at DESC LIMIT 1"
     );
 
     if (rows.length === 0) {
@@ -19,7 +19,8 @@ export const getTheme = async (req, res) => {
 
 export const updateTheme = async (req, res) => {
   try {
-    const { primary, secondary, text } = req.body;
+    const { primary, secondary, text, pointsIcon, completedSubjectsIcon } =
+      req.body;
 
     if (!primary || !secondary || !text) {
       return res
@@ -28,8 +29,8 @@ export const updateTheme = async (req, res) => {
     }
 
     await db.execute(
-      "INSERT INTO themes (primary_color, secondary_color, text_color) VALUES (?, ?, ?)",
-      [primary, secondary, text]
+      "INSERT INTO theme (primary_color, secondary_color, text_color, points_icon, completed_subjects_icon) VALUES (?, ?, ?, ?, ?)",
+      [primary, secondary, text, pointsIcon, completedSubjectsIcon]
     );
 
     res.json({ message: "Tema actualizado correctamente" });
