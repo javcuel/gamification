@@ -17,7 +17,7 @@ const DevPanel: React.FC = () => {
       case 'tab2':
         return <AddGameTab />;
       default:
-        return <p>Subjects</p>;
+        return <p>Games</p>;
     }
   };
 

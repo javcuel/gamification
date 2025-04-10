@@ -1,27 +1,17 @@
 import express from "express";
 
 import {
+  getRankingP,
+  getRankingG,
+  getRankingPG,
   getRankingGG,
-  getRankingGJ,
-  getRankingJG,
-  getRankingJJ,
 } from "../controllers/rankingController.js";
 
 const router = express.Router();
 
-/* router.get("/jg", authenticateToken, getRankingJG);
-router.get("/gg", authenticateToken, getRankingGG);
-router.get("/jj", authenticateToken, (req, res) =>
-  getRankingJJ(req, res, req.query.gameId)
-);
-router.get("/gj", authenticateToken, (req, res) =>
-  getRankingGJ(req, res, req.query.gameId)
-);
- */
-
-router.get("/jg", getRankingJG);
-router.get("/gg", getRankingGG);
-router.get("/jj/:gameId", getRankingJJ);
-router.get("/gj/:gameId", getRankingGJ);
+router.get("/p", getRankingP);
+router.get("/g", getRankingG);
+router.get("/pg/:gameId", getRankingPG);
+router.get("/gg/:gameId", getRankingGG);
 
 export default router;

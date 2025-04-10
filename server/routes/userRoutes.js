@@ -11,7 +11,7 @@ const router = express.Router();
 router.get("/", getUsers);
 
 // Add a new user
-router.post("/add", addUser);
+router.post("/", addUser);
 
 // Delete a specific user
 router.delete("/:id", deleteUser);

@@ -19,7 +19,7 @@ router.get("/", getSubjects);
 router.put("/:id", updateSubject);
 
 // Delete a specific Subject
-router.delete("/:id/delete", deleteSubject);
+router.delete("/:id", deleteSubject);
 
 // Toggle open/closed Subject state
 router.put("/:id/open", updateSubjectOpenState);

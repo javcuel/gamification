@@ -1,11 +1,5 @@
 import db from "../config/db.js";
 
-/**
- * Fetch all users.
- * @function getUsers
- * @param {Request} req - Express request object.
- * @param {Response} res - Express response object.
- */
 export const getUsers = async (req, res) => {
   try {
     const [rows] = await db.query(
@@ -18,12 +12,6 @@ export const getUsers = async (req, res) => {
   }
 };
 
-/**
- * Add a new user.
- * @function addUser
- * @param {Request} req - Express request object.
- * @param {Response} res - Express response object.
- */
 export const addUser = async (req, res) => {
   const { name, password, role, group } = req.body;
 
@@ -43,12 +31,6 @@ export const addUser = async (req, res) => {
   }
 };
 
-/**
- * Delete a user.
- * @function deleteUser
- * @param {Request} req - Express request object.
- * @param {Response} res - Express response object.
- */
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
 
