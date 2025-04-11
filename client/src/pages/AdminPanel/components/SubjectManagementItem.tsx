@@ -14,7 +14,10 @@ import useExpandSubject from '../hooks/useExpandSubject';
 import useToggleSubjectOpenState from '../hooks/useToggleSubjectOpenState';
 import useToggleSubjectVisibleState from '../hooks/useToggleSubjectVisibleState';
 
-import GameItem from './GameItem';
+import ErrorMsg from '../../../pages/shared/ui/ErrorMsg';
+import GameManagementItem from './GameManagementItem';
+
+import '../styles/SubjectManagementItem.css';
 
 interface SubjectiItemProps {
   subject: Subject;
@@ -28,20 +31,23 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
   const {
     games,
     isExpanded,
-    error: ExpandError,
+    error: expandError,
     loading,
     toggleExpand,
   } = useExpandSubject(subject.id);
+
   const {
     isOpen,
     error: openError,
     toggleOpenState,
   } = useToggleSubjectOpenState(subject.id, subject.isOpen);
+
   const {
     isVisible,
     error: visibleError,
     toggleVisibleState,
   } = useToggleSubjectVisibleState(subject.id, subject.isVisible);
+
   const {
     handleDeleteSubject,
     loading: deleteLoading,
@@ -55,36 +61,39 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
   };
 
   return (
-    <div className="custom-admin-panel-subject-item">
+    <div className="subject-management-item">
       <div className="d-flex justify-content-between align-items-center">
-        <div onClick={toggleExpand} style={{ cursor: 'pointer' }}>
+        <div onClick={toggleExpand}>
           {/* TODO: Replace with actual subject.imgsubjectUrl */}
           <img
-            src={'src/assets/images/imagesPlanets/purple_planet.png'}
+            src={'images/no_image.jpg'}
             alt={subject.name}
-            width="60"
-            className="me-3"
+            width="15%"
+            className="subject-management-item-image me-3"
           />
-          <strong>{subject.name}</strong>
+          {subject.name}
         </div>
         <div>
-          <button className={'btn custom-button m-1'} onClick={toggleOpenState}>
+          <button
+            className="subject-management-item-button"
+            onClick={toggleOpenState}
+          >
             <FontAwesomeIcon icon={isOpen ? faUnlock : faLock} />
           </button>
 
           <button
-            className={'btn custom-button m-1'}
+            className="subject-management-item-button"
             onClick={toggleVisibleState}
           >
             <FontAwesomeIcon icon={isVisible ? faEye : faEyeSlash} />
           </button>
 
-          <button className="btn custom-button m-1">
+          <button className="subject-management-item-button">
             <FontAwesomeIcon icon={faPencilAlt} />
           </button>
 
           <button
-            className="btn custom-button m-1"
+            className="subject-management-item-button"
             onClick={handleDeleteClick}
             disabled={deleteLoading}
           >
@@ -93,16 +102,14 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
         </div>
       </div>
 
-      {visibleError && <div className="text-danger">{visibleError}</div>}
-      {openError && <div className="text-danger">{openError}</div>}
-      {deleteError && <div className="text-danger">{deleteError}</div>}
-
-      {ExpandError && <div className="text-danger">{ExpandError}</div>}
-
+      {visibleError && <ErrorMsg message={visibleError} />}
+      {openError && <ErrorMsg message={openError} />}
+      {deleteError && <ErrorMsg message={deleteError} />}
+      {expandError && <ErrorMsg message={expandError} />}
       {loading && <div>Loading games...</div>}
 
       {isExpanded &&
-        games.map((game) => <GameItem key={game.id} game={game} />)}
+        games.map((game) => <GameManagementItem key={game.id} game={game} />)}
     </div>
   );
 };

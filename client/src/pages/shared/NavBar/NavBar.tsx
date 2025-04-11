@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useUserInfo } from '../../../hooks/useUserInfo';
 import '../styles/NavBar.css';
@@ -12,9 +12,22 @@ interface NavBarProps {
 const NavBar: React.FC<NavBarProps> = ({ webName = 'Gamispace' }) => {
   const { name, role, totalScore, completedSubjects } = useUserInfo();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 10;
+      setHasScrolled(isScrolled);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <nav className={`navbar navbar-expand-lg ${isExpanded ? 'expanded' : ''}`}>
+    <nav
+      className={`navbar navbar-expand-lg ${hasScrolled ? 'navbar-scrolled' : ''}`}
+    >
       <div className="container-fluid">
         <a className="navbar-brand">{webName}</a>
         <button

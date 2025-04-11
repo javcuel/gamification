@@ -1,7 +1,6 @@
 import React from 'react';
 
 import LinkImage from '../shared/ui/LinkImage';
-import SpaceBackground from '../shared/ui/SpaceBackground';
 import WavesText from '../shared/ui/WavesText';
 import LoginForm from './components/LoginForm';
 
@@ -20,7 +19,6 @@ import LoginForm from './components/LoginForm';
 const Login: React.FC = () => {
   return (
     <div className="container min-vh-100 custom-flex-center text-center">
-      <SpaceBackground />
       <div className="container">
         <div className="row">
           <div className="col mb-5">

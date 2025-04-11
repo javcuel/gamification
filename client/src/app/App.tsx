@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, useRoutes } from 'react-router-dom';
 import { AuthProvider } from '../context/AuthContext';
 import { ThemeProvider } from '../context/ThemeContext';
+import SpaceBackground from '../pages/shared/ui/SpaceBackground';
 import routes from './Routes';
 
 const AppRoutes = () => {
@@ -64,6 +65,7 @@ const AppRoutes = () => {
 //TODO: EN LA PARTE DE ADMIN PANEL TAMBIEN SE ESTÁ REPITIENDO EL CODIGO DE LOS SERVICIOS API DE SUBJECT Y GAME
 //TODO: COMPROBAR QUE NO HAYA NADA EN ESPAÑOL EN EL CODIGO
 //TODO: HACER UN COMPONENTE BASE PARA LOS MENSAJES DE ERROR Y PROBARLO EN TODAS LAS PAGINAS.
+//TODO: AÑADIR LOADING EN TODOS LOS HOOKS QUE LO NECESITEN.
 //      FALLO DE LOGIN -> CREDENCIALES INCORRECTAS
 //      FALLO DE LOGIN -> SERVER ERROR
 //      FALLO DE CARGA ASIGNATURAS -> SERVER ERROR
@@ -75,6 +77,7 @@ const App: React.FC = () => {
     <BrowserRouter>
       <AuthProvider>
         <ThemeProvider>
+          <SpaceBackground />
           <AppRoutes />
         </ThemeProvider>
       </AuthProvider>

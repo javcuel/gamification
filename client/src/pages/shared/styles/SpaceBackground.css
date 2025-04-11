@@ -92,3 +92,37 @@
     transform: translate(-500px, -500px);
   }
 }
+
+.ufo {
+  width: 40px;
+  height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: radial-gradient(
+    circle at center,
+    var(--text) 10%,
+    var(--secondary) 20%
+  );
+  border-radius: 50% 50% 30% 30%;
+  box-shadow:
+    0 0 10px 5px var(--secondary),
+    0 0 20px 10px var(--secondary),
+    0 0 40px 20px var(--secondary);
+  z-index: 0;
+  animation: ufo-float 3s ease-in-out infinite;
+  transition:
+    top 6s ease,
+    left 6s ease;
+  pointer-events: none;
+}
+
+@keyframes ufo-float {
+  0%,
+  100% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.05) translateY(-5px);
+  }
+}

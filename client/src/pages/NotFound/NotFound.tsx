@@ -1,6 +1,5 @@
 import React from 'react';
 
-import SpaceBackground from '../shared/ui/SpaceBackground';
 import WavesText from '../shared/ui/WavesText';
 
 /**
@@ -18,7 +17,6 @@ import WavesText from '../shared/ui/WavesText';
 const NotFound: React.FC = () => {
   return (
     <div className="container min-vh-100 custom-flex-center text-center">
-      <SpaceBackground />
       <div className="container">
         <div className="row">
           <WavesText text="404 - Not Found" />

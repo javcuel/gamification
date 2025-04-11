@@ -16,6 +16,7 @@ const useExpandSubject = (subjectId: number) => {
       try {
         const data = await GameApi.getAll(subjectId);
         setGames(data);
+        setLoading(false);
       } catch (error: unknown) {
         if (error instanceof Error) {
           setError(error.message);

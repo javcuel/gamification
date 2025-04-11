@@ -1,7 +1,7 @@
 import React from 'react';
-import useUsers from './hooks/useUsers';
-import UserItem from './UserItem';
 import ErrorMsg from '../../shared/ui/ErrorMsg';
+import useUsers from './hooks/useUsers';
+import UserManagementItem from './UserManagementItem';
 
 const UsersTab: React.FC = () => {
   const { users, error, deleteUser } = useUsers();
@@ -13,7 +13,7 @@ const UsersTab: React.FC = () => {
       <div className="row m-auto">
         {users.map((user) => (
           <div key={user.id} className="col-md-4 mt-3">
-            <UserItem user={user} onDelete={deleteUser} />
+            <UserManagementItem user={user} onDelete={deleteUser} />
           </div>
         ))}
       </div>

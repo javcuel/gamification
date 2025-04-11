@@ -1,6 +1,6 @@
 import React from 'react';
 import ErrorMsg from '../../shared/ui/ErrorMsg';
-import SubjectItem from '../components/SubjectManagementItem';
+import SubjectManagementItem from '../components/SubjectManagementItem';
 import useSubjects from './hooks/useSubjects';
 
 const SubjectsTab: React.FC = () => {
@@ -14,7 +14,7 @@ const SubjectsTab: React.FC = () => {
     <div>
       {error && <ErrorMsg message={error}></ErrorMsg>}
       {subjects.map((subject) => (
-        <SubjectItem
+        <SubjectManagementItem
           key={subject.id}
           subject={subject}
           onSubjectDeleted={handleSubjectDeleted}

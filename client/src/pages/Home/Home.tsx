@@ -1,7 +1,6 @@
 import React from 'react';
 
 import NavBar from '../shared/NavBar/NavBar';
-import SpaceBackground from '../shared/ui/SpaceBackground';
 import SubjectGrid from './components/SubjectGrid';
 
 /**
@@ -20,9 +19,10 @@ import SubjectGrid from './components/SubjectGrid';
 const Home: React.FC = () => {
   return (
     <div className="container-fluid min-vh-100 d-flex flex-column">
-      <SpaceBackground />
       <NavBar webName="Gamispace" />
-      <SubjectGrid />
+      <div className="flex-grow-1 d-flex align-items-center justify-content-center">
+        <SubjectGrid />
+      </div>
     </div>
   );
 };
