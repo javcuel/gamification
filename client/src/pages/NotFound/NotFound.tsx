@@ -4,15 +4,14 @@ import WavesText from '../shared/ui/WavesText';
 
 /**
  * The NotFound component renders a page indicating that the requested resource
- * could not be found. It displays a "Not-Found" wave-effect text, a floating
- * "This page doesn't exist" message, and a space-themed background.
+ * could not be found. It displays a "Not-Found This page doesn't exists" message, and a space-themed background.
  *
  * @component
  * @example
  * // Example usage:
  * <NotFound />
  *
- * @returns {JSX.Element} A 404 error page with space background, wave-effect text, and a floating message.
+ * @returns {JSX.Element} A 404 error page.
  */
 const NotFound: React.FC = () => {
   return (

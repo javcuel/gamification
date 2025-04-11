@@ -62,13 +62,12 @@ export const addSubject = async (req, res) => {
 };
 
 export const updateSubjectOpenState = async (req, res) => {
-  const { id } = req.params; // Extract world ID from the request parameters
-  const { isOpen } = req.body; // Extract the new "open" state from the request body
+  const { id } = req.params;
+  const { isOpen } = req.body;
 
   try {
-    // Update the "Abierto" field in the database based on the provided state
     await db.query("UPDATE Mundos SET Abierto = ? WHERE IDMundo = ?", [
-      isOpen ? 1 : 0, // Convert boolean to integer (1 for true, 0 for false)
+      isOpen ? 1 : 0,
       id,
     ]);
     res.json({ message: "World open state updated successfully" });
@@ -79,13 +78,12 @@ export const updateSubjectOpenState = async (req, res) => {
 };
 
 export const updateSubjectVisibleState = async (req, res) => {
-  const { id } = req.params; // Extract world ID from the request parameters
-  const { isVisible } = req.body; // Extract the new "open" state from the request body
+  const { id } = req.params;
+  const { isVisible } = req.body;
 
   try {
-    // Update the "Abierto" field in the database based on the provided state
     await db.query("UPDATE Mundos SET Visible = ? WHERE IDMundo = ?", [
-      isVisible ? 1 : 0, // Convert boolean to integer (1 for true, 0 for false)
+      isVisible ? 1 : 0,
       id,
     ]);
     res.json({ message: "World Visible state updated successfully" });

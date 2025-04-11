@@ -1,7 +1,17 @@
 import db from "../config/db.js";
 
-// Ranking Jugador - General
-export const getRankingJG = async (req, res) => {
+/**
+ * Ranking types:
+ *
+ * P : General Players ranking
+ * G: General Groups ranking
+ * PG: Players by game ranking
+ * GG: Groups by game ranking
+ *
+ */
+
+// Ranking Players
+export const getRankingP = async (req, res) => {
   try {
     const [rows] = await db.query(
       "SELECT u.Nombre, u.Grupo, SUM(un.Completado) AS TotalEstrellas, SUM(un.Puntuacion) AS TotalPuntos FROM usuarios u JOIN usuariominijuego un ON u.IDUsuario = un.IDUsuario WHERE u.TipoUsuario = 'U' GROUP BY u.IDUsuario, u.Nombre, u.Grupo ORDER BY TotalPuntos DESC"
@@ -13,8 +23,8 @@ export const getRankingJG = async (req, res) => {
   }
 };
 
-// Ranking Grupo - General
-export const getRankingGG = async (req, res) => {
+// Ranking Groups
+export const getRankingG = async (req, res) => {
   try {
     const [rows] = await db.query(
       "SELECT u.Grupo, SUM(un.Completado) AS TotalEstrellas, SUM(un.Puntuacion) AS TotalPuntos FROM usuarios u JOIN usuariominijuego un ON u.IDUsuario = un.IDUsuario WHERE u.TipoUsuario = 'U'GROUP BY u.Grupo ORDER BY TotalPuntos DESC"
@@ -26,8 +36,8 @@ export const getRankingGG = async (req, res) => {
   }
 };
 
-// Ranking Jugador - Juego
-export const getRankingJJ = async (req, res) => {
+// Ranking Players by Game
+export const getRankingPG = async (req, res) => {
   const { gameId } = req.params;
 
   try {
@@ -42,8 +52,8 @@ export const getRankingJJ = async (req, res) => {
   }
 };
 
-// Ranking Grupo - Juego
-export const getRankingGJ = async (req, res) => {
+// Ranking Groups by Game
+export const getRankingGG = async (req, res) => {
   const { gameId } = req.params;
 
   try {

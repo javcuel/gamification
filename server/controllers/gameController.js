@@ -1,5 +1,6 @@
 import db from "../config/db.js";
 
+// Get all games by the Subject ID
 export const getGamesBySubject = async (req, res) => {
   const { subjectId } = req.params;
 
@@ -15,6 +16,7 @@ export const getGamesBySubject = async (req, res) => {
   }
 };
 
+// Update game data
 export const updateGame = async (req, res) => {
   const { id } = req.params;
   const { name, maxScore, subjectId, imgUrl } = req.body;
@@ -31,6 +33,7 @@ export const updateGame = async (req, res) => {
   }
 };
 
+// Delete game
 export const deleteGame = async (req, res) => {
   const { id } = req.params;
 
@@ -43,20 +46,14 @@ export const deleteGame = async (req, res) => {
   }
 };
 
-/**
- * Toggle open/closed state of a Game.
- * @function updateGameOpenState
- * @param {Request} req - Express request object.
- * @param {Response} res - Express response object.
- */
+// Toggle open/closed game state
 export const updateGameOpenState = async (req, res) => {
-  const { id } = req.params; // Extract Game ID from the request parameters
-  const { isOpen } = req.body; // Extract the new "open" state from the request body
+  const { id } = req.params;
+  const { isOpen } = req.body;
 
   try {
-    // Update the "Abierto" field in the database based on the provided state
     await db.query("UPDATE Minijuegos SET Abierto = ? WHERE IDMinijuego = ?", [
-      isOpen ? 1 : 0, // Convert boolean to integer (1 for true, 0 for false)
+      isOpen ? 1 : 0,
       id,
     ]);
     res.json({ message: "Game open state updated successfully" });
@@ -66,20 +63,14 @@ export const updateGameOpenState = async (req, res) => {
   }
 };
 
-/**
- * Toggle visible/invisible state of a Game.
- * @function updateGameVisibleState
- * @param {Request} req - Express request object.
- * @param {Response} res - Express response object.
- */
+// Toggle visible/hidden game state
 export const updateGameVisibleState = async (req, res) => {
-  const { id } = req.params; // Extract Game ID from the request parameters
-  const { isVisible } = req.body; // Extract the new "open" state from the request body
+  const { id } = req.params;
+  const { isVisible } = req.body;
 
   try {
-    // Update the "Abierto" field in the database based on the provided state
     await db.query("UPDATE Minijuegos SET Visible = ? WHERE IDMinijuego = ?", [
-      isVisible ? 1 : 0, // Convert boolean to integer (1 for true, 0 for false)
+      isVisible ? 1 : 0,
       id,
     ]);
     res.json({ message: "Game Visible state updated successfully" });
