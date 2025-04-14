@@ -16,33 +16,42 @@ export const getGamesBySubject = async (req, res) => {
   }
 };
 
+// Creates a new subject
+export const createGame = async (req, res) => {
+  const { idSubject, name, img, maxScore } = req.body;
+
+  if ((!idSubject, !name || !img || !maxScore)) {
+    return res.status(400).json({ message: "Missing required fields" });
+  }
+
+  try {
+    const [result] = await db.query(
+      "INSERT INTO Minijuegos (IDMundo, Nombre, imgUrl, Puntuacion, Abierto, Visible) VALUES (?, ?, ?, ?, ?, ?)",
+      [idSubject, name, img, maxScore, 0, 0] // Defaults: position = 0, open = false, visible = false
+    );
+    res
+      .status(201)
+      .json({ message: "Game created successfully", id: result.insertId });
+  } catch (error) {
+    console.error("Error creating game:", error);
+    res.status(500).json({ message: "Error creating game" });
+  }
+};
+
 // Update game data
 export const updateGame = async (req, res) => {
   const { id } = req.params;
-  const { name, maxScore, subjectId, imgUrl } = req.body;
+  const { idSubject, name, img, maxScore } = req.body;
 
   try {
     await db.query(
       "UPDATE Minijuegos SET Nombre = ?, PuntuacionMaxima = ?, IDMundo = ?, UrlImagen = ? WHERE IDMinijuego = ?",
-      [name, maxScore, subjectId, imgUrl, id]
+      [name, maxScore, idSubject, img, id]
     );
     res.json({ message: "Game updated successfully" });
   } catch (error) {
     console.error("Error updating game:", error);
     res.status(500).json({ message: "Error updating game" });
-  }
-};
-
-// Delete game
-export const deleteGame = async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    await db.query("DELETE FROM Minijuegos WHERE IDMinijuego = ?", [id]);
-    res.json({ message: "Game deleted successfully" });
-  } catch (error) {
-    console.error("Error deleting game:", error);
-    res.status(500).json({ message: "Error deleting game" });
   }
 };
 
@@ -77,5 +86,18 @@ export const updateGameVisibleState = async (req, res) => {
   } catch (error) {
     console.error("Error updating Game Visible state:", error);
     res.status(500).json({ message: "Error updating Game Visible state" });
+  }
+};
+
+// Delete game
+export const deleteGame = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await db.query("DELETE FROM Minijuegos WHERE IDMinijuego = ?", [id]);
+    res.json({ message: "Game deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting game:", error);
+    res.status(500).json({ message: "Error deleting game" });
   }
 };

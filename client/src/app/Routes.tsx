@@ -2,7 +2,7 @@ import React from 'react';
 import { RouteObject } from 'react-router-dom';
 
 import { ROUTES } from '../constants/routes';
-import AdminPrueba from '../pages/AdminPanel/AdminPrueba';
+import AdminPage from '../pages/AdminPanel/AdminPage';
 import DevPanel from '../pages/DevPanel/DevPanel';
 import GameSelector from '../pages/GameSelector/GameSelector';
 import Home from '../pages/Home/Home';
@@ -40,7 +40,7 @@ const routes: RouteObject[] = [
   {
     path: ROUTES.LOGIN,
 
-    element: <Login />,
+    element: <AdminPage />,
   },
   {
     path: ROUTES.HOME,
@@ -92,7 +92,7 @@ const routes: RouteObject[] = [
       <ProtectedRoute
         allowedRoles={roleService.getAllowedRolesForRoute(ROUTES.ADMIN_PANEL)}
       >
-        <AdminPrueba />
+        <AdminPage />
       </ProtectedRoute>
     ),
   },

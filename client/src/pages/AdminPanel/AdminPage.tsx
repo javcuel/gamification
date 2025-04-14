@@ -2,7 +2,7 @@ import React from 'react';
 import NavBar from '../shared/NavBar/NavBar';
 import AdminPanel from './AdminPanel';
 
-const AdminPrueba: React.FC = () => {
+const AdminPage: React.FC = () => {
   return (
     <div className="container-fluid min-vh-100 d-flex flex-column">
       <NavBar webName="Gamispace" />
@@ -13,4 +13,4 @@ const AdminPrueba: React.FC = () => {
   );
 };
 
-export default AdminPrueba;
+export default AdminPage;

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import AdminAddGameTab from './AddGameTab/AdminAddGameTab';
-import AdminAddSubjectTab from './AddSubjectTab/AddAddSubjectTab';
-import AdminAddUserTab from './AddUserTab/AdminAddUserTab';
-import AdminWorldsGamesTab from './SubjectsTab/SubjectsTab';
-import AdminThemeTab from './ThemeTab/AdminThemeTab';
-import AdminManageUsersTab from './UsersTab/UsersTab';
+import AddGameTab from '../shared/AddGameTab/AddGameTab';
+import AddSubjectTab from './AddSubjectTab/AddAddSubjectTab';
+import AddUserTab from './AddUserTab/AdminAddUserTab';
+import SubjectsTab from './SubjectsTab/SubjectsTab';
+import ThemeTab from './ThemeTab/AdminThemeTab';
+import UsersTab from './UsersTab/UsersTab';
 import './styles/AdminPanel.css';
 
 const AdminPanel: React.FC = () => {
@@ -31,7 +31,7 @@ const AdminPanel: React.FC = () => {
   const tabs = [
     { id: 'tab1', label: 'Subjects' },
     { id: 'tab2', label: 'Users' },
-    { id: 'tab3', label: 'Add Subjects' },
+    { id: 'tab3', label: 'Add Subject' },
     { id: 'tab4', label: 'Add Game' },
     { id: 'tab5', label: 'Add User' },
     { id: 'tab6', label: 'Add Theme' },
@@ -41,7 +41,7 @@ const AdminPanel: React.FC = () => {
     <div className="admin-container">
       {isMobile && (
         <button
-          className="mobile-menu-button"
+          className="sidebar-button"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           ☰
@@ -68,12 +68,12 @@ const AdminPanel: React.FC = () => {
 
       <div className="panel">
         <div className="panel-content">
-          {activeTab === 'tab1' && <AdminWorldsGamesTab />}
-          {activeTab === 'tab2' && <AdminManageUsersTab />}
-          {activeTab === 'tab3' && <AdminAddSubjectTab />}
-          {activeTab === 'tab4' && <AdminAddGameTab />}
-          {activeTab === 'tab5' && <AdminAddUserTab />}
-          {activeTab === 'tab6' && <AdminThemeTab />}
+          {activeTab === 'tab1' && <SubjectsTab />}
+          {activeTab === 'tab2' && <UsersTab />}
+          {activeTab === 'tab3' && <AddSubjectTab />}
+          {activeTab === 'tab4' && <AddGameTab />}
+          {activeTab === 'tab5' && <AddUserTab />}
+          {activeTab === 'tab6' && <ThemeTab />}
         </div>
       </div>
     </div>

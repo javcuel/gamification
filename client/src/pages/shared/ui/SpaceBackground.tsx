@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+/* import React, { useEffect, useRef } from 'react'; */
+import React from 'react';
 import '../styles/SpaceBackground.css';
 
 const SpaceBackground: React.FC = () => {
-  const ufoRef = useRef<HTMLDivElement>(null);
+  /*  const ufoRef = useRef<HTMLDivElement>(null); */
 
-  useEffect(() => {
+  /*  useEffect(() => {
     const moveUFO = () => {
       const ufo = ufoRef.current;
       if (!ufo) return;
@@ -28,7 +29,7 @@ const SpaceBackground: React.FC = () => {
     startRandomMovement(); // inicia el bucle
 
     return () => clearTimeout(timeoutId); // cleanup
-  }, []);
+  }, []); */
 
   return (
     <div className="universe-background">
@@ -37,7 +38,7 @@ const SpaceBackground: React.FC = () => {
       <div className="fast-stars"></div>
 
       {/* UFO */}
-      <div ref={ufoRef} className="ufo"></div>
+      {/*  <div ref={ufoRef} className="ufo"></div> */}
     </div>
   );
 };

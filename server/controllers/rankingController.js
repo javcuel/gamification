@@ -10,7 +10,7 @@ import db from "../config/db.js";
  *
  */
 
-// Ranking Players
+// Get Ranking Players
 export const getRankingP = async (req, res) => {
   try {
     const [rows] = await db.query(
@@ -23,7 +23,7 @@ export const getRankingP = async (req, res) => {
   }
 };
 
-// Ranking Groups
+// Get Ranking Groups
 export const getRankingG = async (req, res) => {
   try {
     const [rows] = await db.query(
@@ -36,7 +36,7 @@ export const getRankingG = async (req, res) => {
   }
 };
 
-// Ranking Players by Game
+// Get Ranking Players by Game
 export const getRankingPG = async (req, res) => {
   const { gameId } = req.params;
 
@@ -52,7 +52,7 @@ export const getRankingPG = async (req, res) => {
   }
 };
 
-// Ranking Groups by Game
+// Get Ranking Groups by Game
 export const getRankingGG = async (req, res) => {
   const { gameId } = req.params;
 

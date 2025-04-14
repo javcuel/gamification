@@ -40,7 +40,7 @@ const NavBar: React.FC<NavBarProps> = ({ webName = 'Gamispace' }) => {
           aria-label="Toggle navigation"
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          <span className="navbar-toggler-icon"></span>
+          <span className="navbar-button"> ☰ </span>
         </button>
 
         <div

@@ -1,66 +1,68 @@
-import React, { useState } from 'react';
-import NavBar from '../shared/NavBar/NavBar';
-import SpaceBackground from '../shared/ui/SpaceBackground';
-import AddGameTab from '../shared/AddGameTab';
+import React, { useState, useEffect } from 'react';
+import AddGameTab from '../shared/AddGameTab/AddGameTab';
 
 const DevPanel: React.FC = () => {
   const [activeTab, setActiveTab] = useState('tab1');
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      if (window.innerWidth >= 768) {
+        setMenuOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
+    setMenuOpen(false);
   };
 
-  const renderComponent = () => {
-    switch (activeTab) {
-      case 'tab1':
-        return <p>Subjects</p>;
-      case 'tab2':
-        return <AddGameTab />;
-      default:
-        return <p>Games</p>;
-    }
-  };
+  const tabs = [
+    { id: 'tab1', label: 'Subjects' },
+    { id: 'tab2', label: 'Users' },
+    { id: 'tab3', label: 'Add Subjects' },
+    { id: 'tab4', label: 'Add Game' },
+    { id: 'tab5', label: 'Add User' },
+    { id: 'tab6', label: 'Add Theme' },
+  ];
 
   return (
-    <div className="container-fluid" style={{ height: '100vh' }}>
-      <SpaceBackground />
-      <div
-        className="container-fluid d-flex flex-column"
-        style={{ height: '100vh' }}
-      >
-        <div style={{ height: '15vh' }}>
-          <NavBar webName="Gamispace" />
-        </div>
-        <div>
-          <div>
-            <ul className="nav nav-tabs d-flex justify-content-center gap-5 fs-5">
-              <li className="nav-item">
-                <a
-                  className={`nav-link ${activeTab === 'tab1' ? 'active' : ''}`}
-                  href="#"
-                  onClick={() => handleTabChange('tab1')}
-                >
-                  Subjects
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className={`nav-link ${activeTab === 'tab2' ? 'active' : ''}`}
-                  href="#"
-                  onClick={() => handleTabChange('tab2')}
-                >
-                  Add Game
-                </a>
-              </li>
-            </ul>
-          </div>
+    <div className="admin-container">
+      {isMobile && (
+        <button
+          className="mobile-menu-button"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          ☰
+        </button>
+      )}
 
-          <div
-            className="d-flex justify-content-center align-items-center flex-grow-1 overflow-auto"
-            style={{ minHeight: '80vh' }}
-          >
-            {renderComponent()}
-          </div>
+      {/* Barra lateral */}
+      <div
+        className={`sidebar ${isMobile ? (menuOpen ? 'open' : 'collapsed') : ''}`}
+      >
+        <div className="sidebar-nav">
+          {tabs.map(({ id, label }) => (
+            <li key={id}>
+              <button
+                className={`sidebar-nav-link ${activeTab === id ? 'active' : ''}`}
+                onClick={() => handleTabChange(id)}
+              >
+                {label}
+              </button>
+            </li>
+          ))}
+        </div>
+      </div>
+
+      <div className="panel">
+        <div className="panel-content">
+          {activeTab === 'tab1' && <AddGameTab />}
         </div>
       </div>
     </div>

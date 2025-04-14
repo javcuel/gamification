@@ -58,7 +58,11 @@ const AdminAddUserTab: React.FC = () => {
         value={group}
         onChange={(e) => setGroup(e.target.value)}
       />
-      <Dropdown options={Object.keys(ROLES)} placeholder="User Role" />
+      <Dropdown
+        options={Object.keys(ROLES)}
+        placeholder="User Role"
+        onChange={(value) => setRole(value)}
+      />
       <Input
         placeholder="Upload CSV"
         type="text"

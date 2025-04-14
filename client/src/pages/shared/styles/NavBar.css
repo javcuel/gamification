@@ -11,11 +11,14 @@
   border: solid 2px var(--text);
   border-radius: 15px;
 
-  transition: background-color 2s ease;
+  transition: background-color 1s ease;
+}
+.navbar-button {
+  color: var(--text);
 }
 
 .navbar-scrolled {
-  background-color: color-mix(in srgb, var(--secondary) 90%, transparent);
+  background-color: var(--primary);
 }
 .navbar-toggler {
   color: var(--text);

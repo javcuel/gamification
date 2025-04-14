@@ -1,66 +1,60 @@
 import db from "../config/db.js";
 
+// Get all subjects
 export const getSubjects = async (req, res) => {
   try {
     const [rows] = await db.query("SELECT * FROM Mundos ORDER BY Posicion ASC");
     res.json(rows);
   } catch (error) {
-    console.error("Error fetching worlds:", error);
-    res.status(500).json({ message: "Error fetching worlds" });
+    console.error("Error fetching subjects:", error);
+    res.status(500).json({ message: "Error fetching subjects" });
   }
 };
 
-export const updateSubject = async (req, res) => {
-  const { id } = req.params;
-  const { name, imgWorldUrl, imgBackgroundUrl } = req.body;
+// Creates a new subject
+export const createSubject = async (req, res) => {
+  const { name, img, imgBackground } = req.body;
 
-  try {
-    await db.query(
-      "UPDATE Mundos SET Nombre = ?, UrlImgMundo = ?, UrlImgDentro = ? WHERE IDMundo = ?",
-      [name, imgWorldUrl, imgBackgroundUrl, id]
-    );
-    res.json({ message: "World updated successfully" });
-  } catch (error) {
-    console.error("Error updating world:", error);
-    res.status(500).json({ message: "Error updating world" });
-  }
-};
-
-export const deleteSubject = async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    await db.query("DELETE FROM Mundos WHERE IDMundo = ?", [id]);
-    res.json({ message: "World deleted successfully" });
-  } catch (error) {
-    console.error("Error deleting world:", error);
-    res.status(500).json({ message: "Error deleting world" });
-  }
-};
-
-export const addSubject = async (req, res) => {
-  const { name } = req.body;
-  const worldImage = req.files["worldImage"]?.[0]?.filename;
-  const backgroundImage = req.files["backgroundImage"]?.[0]?.filename;
-
-  if (!name || !worldImage || !backgroundImage) {
+  if (!name || !img || !imgBackground) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
   try {
     const [result] = await db.query(
       "INSERT INTO Mundos (Nombre, UrlImgMundo, UrlImgDentro, Posicion, Abierto, Visible) VALUES (?, ?, ?, ?, ?, ?)",
-      [name, worldImage, backgroundImage, 0, 0, 0] // Defaults: position = 0, open = false, visible = false
+      [name, img, imgBackground, 0, 0, 0] // Defaults: position = 0, open = false, visible = false
     );
     res
       .status(201)
-      .json({ message: "World added successfully", id: result.insertId });
+      .json({ message: "Subject created successfully", id: result.insertId });
   } catch (error) {
-    console.error("Error adding world:", error);
-    res.status(500).json({ message: "Error adding world" });
+    console.error("Error creating subject:", error);
+    res.status(500).json({ message: "Error creating subject" });
   }
 };
 
+// Update subject data
+export const updateSubject = async (req, res) => {
+  const { id } = req.params;
+  const { name, img, imgBackground } = req.body;
+
+  if (!name || !img || !imgBackground) {
+    return res.status(400).json({ message: "Missing required fields" });
+  }
+
+  try {
+    await db.query(
+      "UPDATE Mundos SET Nombre = ?, UrlImgMundo = ?, UrlImgDentro = ? WHERE IDMundo = ?",
+      [name, img, imgBackground, id]
+    );
+    res.json({ message: "Subject updated successfully" });
+  } catch (error) {
+    console.error("Error updating subject:", error);
+    res.status(500).json({ message: "Error updating subject" });
+  }
+};
+
+// Toggle open/closed subject state
 export const updateSubjectOpenState = async (req, res) => {
   const { id } = req.params;
   const { isOpen } = req.body;
@@ -70,13 +64,14 @@ export const updateSubjectOpenState = async (req, res) => {
       isOpen ? 1 : 0,
       id,
     ]);
-    res.json({ message: "World open state updated successfully" });
+    res.json({ message: "Subject open state updated successfully" });
   } catch (error) {
-    console.error("Error updating world open state:", error);
-    res.status(500).json({ message: "Error updating world open state" });
+    console.error("Error updating subject open state:", error);
+    res.status(500).json({ message: "Error updating subject open state" });
   }
 };
 
+// Toggle visible/hidden subject state
 export const updateSubjectVisibleState = async (req, res) => {
   const { id } = req.params;
   const { isVisible } = req.body;
@@ -86,9 +81,22 @@ export const updateSubjectVisibleState = async (req, res) => {
       isVisible ? 1 : 0,
       id,
     ]);
-    res.json({ message: "World Visible state updated successfully" });
+    res.json({ message: "Subject Visible state updated successfully" });
   } catch (error) {
-    console.error("Error updating world Visible state:", error);
-    res.status(500).json({ message: "Error updating world Visible state" });
+    console.error("Error updating subject Visible state:", error);
+    res.status(500).json({ message: "Error updating subject Visible state" });
+  }
+};
+
+// Delete subject
+export const deleteSubject = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await db.query("DELETE FROM Mundos WHERE IDMundo = ?", [id]);
+    res.json({ message: "Subject deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting subject:", error);
+    res.status(500).json({ message: "Error deleting subject" });
   }
 };

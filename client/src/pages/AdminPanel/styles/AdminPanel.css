@@ -6,19 +6,33 @@
   display: flex;
 }
 
+.admin-container.mobile {
+  flex-direction: column;
+  align-items: center;
+}
+
+.mobile-dropdown-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 /* 📌 Barra lateral */
 .sidebar {
   width: 15%;
   padding: 10px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: color-mix(in srgb, var(--secondary) 50%, transparent);
+  /*  background-color: color-mix(in srgb, var(--secondary) 50%, transparent); */
+  background-color: var(--secondary);
   color: var(--text);
   border-radius: 15px;
   transition:
     transform 0.3s ease-in-out,
     width 0.3s ease-in-out;
+  z-index: 999;
 }
 
 /* 📌 Navegación en la barra lateral */
@@ -67,42 +81,25 @@
   display: block;
 }
 
-/* 📌 Estilos para pantallas pequeñas */
 @media (max-width: 768px) {
-  /* 📌 El panel ocupa toda la pantalla */
-  .panel {
-    width: 100%;
-  }
-
-  /* 📌 Botón de menú flotante */
-  .mobile-menu-button {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: var(--primary);
+  .sidebar-button {
+    background-color: var(--secondary);
     color: var(--text);
     border: none;
-    padding: 10px 15px;
-    font-size: 18px;
-    border-radius: 5px;
-    cursor: pointer;
-    z-index: 1000;
+    border-radius: 15px;
+    width: 15%;
   }
 
-  /* 📌 La barra lateral se colapsa por defecto */
-  /*   .sidebar {
+  .sidebar.collapsed {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 60%;
-    height: 100%;
-    transform: translateX(-100%);
 
+    transform: translateX(-200%);
     z-index: 999;
   }
- */
-  /* 📌 Mostrar barra lateral cuando el menú está abierto */
+
   .sidebar.open {
+    position: fixed;
+    width: 30%;
     transform: translateX(0);
   }
 }

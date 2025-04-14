@@ -1,7 +1,6 @@
 import express from "express";
-import multer from "multer";
 import {
-  addSubject,
+  createSubject,
   deleteSubject,
   getSubjects,
   updateSubject,
@@ -10,28 +9,23 @@ import {
 } from "../controllers/subjectController.js";
 
 const router = express.Router();
-const upload = multer({ dest: "uploads/" }); // Almacena temporalmente las imágenes
 
-// Fetch all worlds
+// Fetch all subjects
 router.get("/", getSubjects);
 
-// Update a specific Subject
+// Creates new subject
+router.post("/", createSubject);
+
+// Update a specific subject
 router.put("/:id", updateSubject);
 
-// Delete a specific Subject
-router.delete("/:id", deleteSubject);
-
-// Toggle open/closed Subject state
+// Toggle open/closed subject state
 router.put("/:id/open", updateSubjectOpenState);
 
-// Toggle visible/invisible Subject state
+// Toggle visible/invisible subject state
 router.put("/:id/visible", updateSubjectVisibleState);
 
-// Add new Subject
-router.post(
-  "/",
-  upload.fields([{ name: "imgSubjectUrl" }, { name: "imgBackgroundUrl" }]),
-  addSubject
-);
+// Delete a specific subject
+router.delete("/:id", deleteSubject);
 
 export default router;

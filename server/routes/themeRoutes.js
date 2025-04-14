@@ -1,12 +1,12 @@
 import express from "express";
-import { getTheme, updateTheme } from "../controllers/themeController.js";
+import { getTheme, createTheme } from "../controllers/themeController.js";
 
 const router = express.Router();
 
-// Ruta para obtener el theme
+// Fetch theme
 router.get("/", getTheme);
 
-// Ruta para actualizar el theme
-router.post("/", updateTheme);
+// Creates new theme
+router.post("/", createTheme);
 
 export default router;
