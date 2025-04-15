@@ -18,13 +18,9 @@ export const createTheme = async (req, res) => {
   const { primary, secondary, text, pointsIcon, completedSubjectsIcon } =
     req.body;
 
-  if (
-    !primary ||
-    !secondary ||
-    !text ||
-    !pointsIcon ||
-    !completedSubjectsIcon
-  ) {
+  //TODO: Añadir  !pointsIcon || !completedSubjectsIcon;
+
+  if (!primary || !secondary || !text) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 

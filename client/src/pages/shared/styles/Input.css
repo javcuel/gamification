@@ -2,6 +2,31 @@
   width: 100%;
   padding: 15px 15px;
 
+  background-color: color-mix(in srgb, var(--primary) 0%, transparent);
+  color: var(--text);
+  border: solid 2px;
+  border-color: var(--text);
+  border-radius: 15px;
+
+  letter-spacing: 1px;
+
+  transition: background-color 0.3s ease;
+}
+
+.input:focus {
+  outline: none;
+  background-color: color-mix(in srgb, var(--primary) 50%, transparent);
+}
+
+.input::placeholder {
+  color: var(--text);
+  opacity: 0.4;
+}
+
+/* .input {
+  width: 100%;
+  padding: 15px 15px;
+
   background-color: var(--primary);
   color: var(--text);
   border: none;
@@ -21,4 +46,4 @@
 .input::placeholder {
   color: var(--text);
   opacity: 0.4;
-}
+} */

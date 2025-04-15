@@ -1,4 +1,4 @@
-/* import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import db from "../config/db.js";
 
 export const login = async (req, res) => {
@@ -32,4 +32,3 @@ export const login = async (req, res) => {
       .json({ message: "Error en la consulta a la base de datos" });
   }
 };
- */

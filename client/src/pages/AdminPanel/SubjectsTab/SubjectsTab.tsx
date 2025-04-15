@@ -1,10 +1,10 @@
 import React from 'react';
 import ErrorMsg from '../../shared/ui/ErrorMsg';
-import SubjectManagementItem from '../components/SubjectManagementItem';
-import useSubjects from './hooks/useSubjects';
+import SubjectManagementItem from './components/SubjectManagementItem';
+import useSubjectsTab from './hooks/useSubjectsTab';
 
 const SubjectsTab: React.FC = () => {
-  const { subjects, setSubjects, error } = useSubjects();
+  const { subjects, setSubjects, error } = useSubjectsTab();
 
   const handleSubjectDeleted = (subjectId: number) => {
     setSubjects((prev) => prev.filter((subject) => subject.id !== subjectId));

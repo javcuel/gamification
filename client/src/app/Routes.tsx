@@ -40,7 +40,7 @@ const routes: RouteObject[] = [
   {
     path: ROUTES.LOGIN,
 
-    element: <AdminPage />,
+    element: <Login />,
   },
   {
     path: ROUTES.HOME,

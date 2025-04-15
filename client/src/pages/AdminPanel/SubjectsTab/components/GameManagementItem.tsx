@@ -8,11 +8,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { Game } from '../../../api/game';
-import useToggleGameOpenState from '../hooks/useToggleGameOpenState';
-import useToggleGameVisibleState from '../hooks/useToggleGameVisibleState';
+import { Game } from '../../../../api/game';
+import useToggleGameOpenState from '../../hooks/useToggleGameOpenState';
+import useToggleGameVisibleState from '../../hooks/useToggleGameVisibleState';
 
-import '../styles/GameManagementItem.css';
+import '../../styles/GameManagementItem.css';
 
 interface GameManagementItemProps {
   game: Game;

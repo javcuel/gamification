@@ -82,12 +82,15 @@
 }
 
 @media (max-width: 768px) {
+  .panel {
+    width: 95%;
+  }
   .sidebar-button {
     background-color: var(--secondary);
     color: var(--text);
     border: none;
     border-radius: 15px;
-    width: 15%;
+    width: 5%;
   }
 
   .sidebar.collapsed {

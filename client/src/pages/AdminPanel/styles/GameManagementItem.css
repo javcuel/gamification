@@ -10,18 +10,18 @@
 
 .game-management-item-image {
   border-radius: 10%;
-  opacity: 0.4;
-
-  transition:
-    opacity 0.8s ease,
-    transform 0.8s ease;
-}
-
-.game-management-item-image:hover {
   opacity: 1;
 
-  transform: scale(4);
+  /*   transition:
+    opacity 0.8s ease,
+    transform 0.8s ease; */
 }
+
+/* .game-management-item-image:hover {
+  opacity: 1;
+
+  transform: scale(1.2);
+} */
 
 .game-management-item-button {
   padding: 15px 15px;

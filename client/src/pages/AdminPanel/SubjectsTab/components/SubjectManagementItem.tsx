@@ -7,17 +7,19 @@ import {
   faUnlock,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import { Subject } from '../../../api/subject';
-import useDeleteSubject from '../hooks/useDeleteSubject';
-import useExpandSubject from '../hooks/useExpandSubject';
-import useToggleSubjectOpenState from '../hooks/useToggleSubjectOpenState';
-import useToggleSubjectVisibleState from '../hooks/useToggleSubjectVisibleState';
+import React, { useState } from 'react';
+import { Subject } from '../../../../api/subject';
+import useDeleteSubject from '../../hooks/useDeleteSubject';
+import useExpandSubject from '../../hooks/useExpandSubject';
+import useToggleSubjectOpenState from '../../hooks/useToggleSubjectOpenState';
+import useToggleSubjectVisibleState from '../../hooks/useToggleSubjectVisibleState';
+import useUpdateSubject from '../hooks/useEditSubject';
 
-import ErrorMsg from '../../../pages/shared/ui/ErrorMsg';
+import ErrorMsg from '../../../shared/ui/ErrorMsg';
 import GameManagementItem from './GameManagementItem';
+import SubjectEditModal from './SubjectEditModal';
 
-import '../styles/SubjectManagementItem.css';
+import '../../styles/SubjectManagementItem.css';
 
 interface SubjectiItemProps {
   subject: Subject;
@@ -28,6 +30,8 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
   subject,
   onSubjectDeleted,
 }) => {
+  const [isEditing, setIsEditing] = useState(false);
+
   const {
     games,
     isExpanded,
@@ -49,15 +53,35 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
   } = useToggleSubjectVisibleState(subject.id, subject.isVisible);
 
   const {
-    handleDeleteSubject,
+    updateSubject,
+    loading: updateLoading,
+    error: updateError,
+  } = useUpdateSubject(() => {
+    setIsEditing(false); // o también podrías refetchear la lista
+  });
+
+  const {
+    deleteSubject,
     loading: deleteLoading,
     error: deleteError,
   } = useDeleteSubject(onSubjectDeleted);
 
   const handleDeleteClick = () => {
     if (window.confirm('Are you sure you want to delete this subject?')) {
-      handleDeleteSubject(subject.id);
+      deleteSubject(subject.id);
     }
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveSubject = (updatedData: {
+    name: string;
+    img: string;
+    imgBackground: string;
+  }) => {
+    updateSubject(subject.id, updatedData);
   };
 
   return (
@@ -88,7 +112,10 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
             <FontAwesomeIcon icon={isVisible ? faEye : faEyeSlash} />
           </button>
 
-          <button className="subject-management-item-button">
+          <button
+            className="subject-management-item-button"
+            onClick={handleEditClick}
+          >
             <FontAwesomeIcon icon={faPencilAlt} />
           </button>
 
@@ -104,12 +131,31 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 
       {visibleError && <ErrorMsg message={visibleError} />}
       {openError && <ErrorMsg message={openError} />}
+      {updateError && <ErrorMsg message={updateError} />}
       {deleteError && <ErrorMsg message={deleteError} />}
       {expandError && <ErrorMsg message={expandError} />}
-      {loading && <div>Loading games...</div>}
 
-      {isExpanded &&
-        games.map((game) => <GameManagementItem key={game.id} game={game} />)}
+      {loading && <div>Loading games...</div>}
+      {updateLoading && <div>Loading update...</div>}
+
+      <div
+        className={`subject-expand-container ${isExpanded ? 'expanded' : ''}`}
+      >
+        {games.map((game) => (
+          <GameManagementItem key={game.id} game={game} />
+        ))}
+      </div>
+      {isEditing && (
+        <SubjectEditModal
+          data={{
+            name: subject.name,
+            img: subject.img,
+            imgBackground: subject.imgBackground,
+          }}
+          onClose={() => setIsEditing(false)}
+          onSave={handleSaveSubject}
+        />
+      )}
     </div>
   );
 };

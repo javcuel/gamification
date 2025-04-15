@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Subject, SubjectApi } from '../../../../api/subject';
 
-const useSubjects = () => {
+const useSubjectsTab = () => {
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,4 +25,4 @@ const useSubjects = () => {
   return { subjects, setSubjects, error };
 };
 
-export default useSubjects;
+export default useSubjectsTab;

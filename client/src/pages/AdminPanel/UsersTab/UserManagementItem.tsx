@@ -9,6 +9,30 @@ interface UserManagementItemProps {
   onDelete: (userId: number) => void;
 }
 
+/*  {
+
+const [showEdit, setShowEdit] = useState(false);
+
+
+   showEdit && (
+     <UserEditModal
+       data={{
+         name: 'John Doe',
+         passwd: 'xsdasd',
+         role: 'TEACHER',
+         group: 'A1',
+       }}
+       onClose={() => setShowEdit(false)}
+       onSave={(data) => {
+         console.log('Saved user:', data);
+         setShowEdit(false);
+       }}
+     />
+   );
+ } 
+    <Button text="Editar" onClick={() => setShowEdit(true)} />  
+ */
+
 /**
  * UserManagementItem Component
  * Represents a single user in the list.

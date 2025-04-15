@@ -70,7 +70,7 @@ interface SubjectApiResponse {
  * @interface
  */
 interface SubjectApiOpenStatePayload {
-  subjectId: number;
+  id: number;
   isOpen: boolean;
 }
 
@@ -80,7 +80,7 @@ interface SubjectApiOpenStatePayload {
  * @interface
  */
 interface SubjectApiVisibleStatePayload {
-  subjectId: number;
+  id: number;
   isVisible: boolean;
 }
 
@@ -118,16 +118,25 @@ export const SubjectApi = {
     }
   },
 
+  update: async (id: number, payload: SubjectApiPayload): Promise<void> => {
+    try {
+      await httpClient.put(API_URLS.UPDATE_SUBJECT(id), payload);
+    } catch (error) {
+      console.error(`Error updating subject (ID: ${id}):`, error);
+      throw new Error('Failed to update subject');
+    }
+  },
+
   updateOpenState: async (
     payload: SubjectApiOpenStatePayload
   ): Promise<void> => {
     try {
-      await httpClient.put(API_URLS.UPDATE_SUBJECT_OPEN(payload.subjectId), {
+      await httpClient.put(API_URLS.UPDATE_SUBJECT_OPEN(payload.id), {
         isOpen: payload.isOpen,
       });
     } catch (error) {
       console.error(
-        `Error updating open state for subject (ID: ${payload.subjectId}):`,
+        `Error updating open state for subject (ID: ${payload.id}):`,
         error
       );
       throw new Error('Failed to update the subject open state');
@@ -138,12 +147,12 @@ export const SubjectApi = {
     payload: SubjectApiVisibleStatePayload
   ): Promise<void> => {
     try {
-      await httpClient.put(API_URLS.UPDATE_SUBJECT_VISIBLE(payload.subjectId), {
+      await httpClient.put(API_URLS.UPDATE_SUBJECT_VISIBLE(payload.id), {
         isVisible: payload.isVisible,
       });
     } catch (error) {
       console.error(
-        `Error updating visible state for subject (ID: ${payload.subjectId}):`,
+        `Error updating visible state for subject (ID: ${payload.id}):`,
         error
       );
       throw new Error('Failed to update the subject visible state');

@@ -6,25 +6,30 @@
   z-index: 9999;
   position: sticky;
 
-  background-color: 'transparent';
+  background-color: transparent;
   color: var(--text);
   border: solid 2px var(--text);
   border-radius: 15px;
 
-  transition: background-color 1s ease;
-}
-.navbar-button {
-  color: var(--text);
+  transition:
+    background-color 1s ease,
+    border-color 1s ease;
 }
 
 .navbar-scrolled {
-  background-color: var(--primary);
+  border-color: color-mix(in srgb, var(--secondary) 70%, rgba(0, 0, 0, 1));
+
+  background-color: color-mix(in srgb, var(--secondary) 70%, rgba(0, 0, 0, 1));
 }
+
 .navbar-toggler {
   color: var(--text);
   border: none;
 }
 
+.navbar-button {
+  color: var(--text);
+}
 .navbar-brand {
   color: var(--text);
 

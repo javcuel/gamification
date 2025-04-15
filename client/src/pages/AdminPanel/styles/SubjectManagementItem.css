@@ -10,18 +10,18 @@
 
 .subject-management-item-image {
   border-radius: 10%;
-  opacity: 0.4;
-
+  opacity: 1;
+  /* 
   transition:
     opacity 0.8s ease,
-    transform 0.8s ease;
+    transform 0.8s ease; */
 }
 
-.subject-management-item-image:hover {
+/* .subject-management-item-image:hover {
   opacity: 1;
 
-  transform: scale(4);
-}
+  transform: scale(2);
+} */
 
 .subject-management-item-button {
   padding: 15px 15px;
@@ -39,4 +39,14 @@
 
 .subject-management-item-button:hover {
   filter: brightness(1.2);
+}
+
+.subject-expand-container {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.subject-expand-container.expanded {
+  max-height: 1000px;
 }

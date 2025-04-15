@@ -7,7 +7,6 @@ import express from "express"; // Framework para crear APIs en Node.js
 import authRoutes from "./routes/authRoutes.js"; // Importa las rutas de autenticación
 import gameRoutes from "./routes/gameRoutes.js";
 import rankingRoutes from "./routes/rankingRoutes.js"; // Importa las rutas de ranking
-import scoreRoutes from "./routes/scoreRoutes.js"; // Importa las rutas de puntuaciones
 import subjectRoutes from "./routes/subjectRoutes.js";
 import themeRoutes from "./routes/themeRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
@@ -26,7 +25,7 @@ app.use(cors(corsOptions)); // Usar las opciones de CORS
 app.use(express.json()); // Para parsear el JSON en las solicitudes
 
 // Rutas
-app.use("/api/score", scoreRoutes);
+
 app.use("/api/auth", authRoutes);
 app.use("/api/ranking", rankingRoutes);
 app.use("/api/subjects", subjectRoutes);
