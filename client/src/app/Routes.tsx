@@ -2,16 +2,16 @@ import React from 'react';
 import { RouteObject } from 'react-router-dom';
 
 import { ROUTES } from '../constants/routes';
-import AdminPage from '../pages/AdminPanel/AdminPage';
-import DevPanel from '../pages/DevPanel/DevPanel';
-import GameSelector from '../pages/GameSelector/GameSelector';
-import Home from '../pages/Home/Home';
-import Login from '../pages/Login/Login';
-import NotFound from '../pages/NotFound/NotFound';
-import Play from '../pages/Play/Play';
-import Ranking from '../pages/Ranking/Ranking';
+import AdminPage from '../modules/admin-panel/admin-page';
+import DevPanel from '../modules/dev-panel/DevPanel';
+import GameSelector from '../modules/game-selector/GameSelector';
+import Home from '../modules/home/Home';
+import Login from '../modules/login/Login';
+import NotFound from '../modules/not-found/NotFound';
+import Play from '../modules/play/play';
+import Ranking from '../modules/ranking/Ranking';
 import roleService from '../services/roleService';
-import ProtectedRoute from './ProtectedRoute';
+import ProtectedRoute from './protected-route';
 
 void React;
 
