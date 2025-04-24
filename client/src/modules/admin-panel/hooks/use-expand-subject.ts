@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Game, GameApi } from '../../../api/game';
+import { Game } from '../../shared/api/domain/game';
+import { gameRepository } from '../../shared/api/repository/game.repository';
 
 const useExpandSubject = (subjectId: number) => {
   const [games, setGames] = useState<Game[]>([]);
@@ -14,7 +15,7 @@ const useExpandSubject = (subjectId: number) => {
       setLoading(true);
       setError(null);
       try {
-        const data = await GameApi.getAll(subjectId);
+        const data = await gameRepository.getAll(subjectId);
         setGames(data);
         setLoading(false);
       } catch (error: unknown) {

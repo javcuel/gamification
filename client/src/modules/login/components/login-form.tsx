@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '../../../constants/routes';
 import { useAuth } from '../../../context/auth-context';
-import Button from '../../shared/components/ui/Button';
-import ErrorMsg from '../../shared/components/ui/ErrorMsg';
-import Input from '../../shared/components/ui/Input';
+import Button from '../../shared/components/ui/button';
+import ErrorMsg from '../../shared/components/ui/error-msg';
+import Input from '../../shared/components/ui/input';
 
 /**
  * A login form component that allows users to input their username and password.

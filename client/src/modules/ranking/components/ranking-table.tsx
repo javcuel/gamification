@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { RANKING_TYPES } from '../../../constants/ranking-types';
-import Dropdown from '../../shared/components/ui/Dropdown';
-import ErrorMsg from '../../shared/components/ui/ErrorMsg';
-import LoadingMsg from '../../shared/components/ui/LoadingMsg';
-import useRankings from '../hooks/useRankings';
+import Dropdown from '../../shared/components/ui/dropdown';
+import ErrorMsg from '../../shared/components/ui/error-msg';
+import LoadingMsg from '../../shared/components/ui/loading-msg';
+import useRankings from '../hooks/use-ranking';
 import '../styles/ranking.css';
 
 const DEFAULT_RANKING = RANKING_TYPES.PLAYERS;

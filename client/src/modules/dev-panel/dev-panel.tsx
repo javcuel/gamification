@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import AddGameTab from '../shared/components/AddGameTab/AddGameTab';
+import AddGameTab from '../shared/components/AddGameTab/add-game-tab';
 
 const DevPanel: React.FC = () => {
   const [activeTab, setActiveTab] = useState('tab1');

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from '../../../../context/theme-context';
-import Icon from '../ui/Icon';
+import Icon from '../ui/icon';
 
 interface NavUserInfoProps {
   name: string;

@@ -3,14 +3,14 @@ import { RouteObject } from 'react-router-dom';
 
 import { ROUTES } from '../constants/routes';
 import AdminPage from '../modules/admin-panel/admin-page';
-import DevPanel from '../modules/dev-panel/DevPanel';
-import GameSelector from '../modules/game-selector/GameSelector';
-import Home from '../modules/home/Home';
-import Login from '../modules/login/Login';
-import NotFound from '../modules/not-found/NotFound';
+import DevPanel from '../modules/dev-panel/dev-panel';
+import GameSelector from '../modules/game-selector/game-selector';
+import Home from '../modules/home/home';
+import Login from '../modules/login/login';
+import NotFound from '../modules/not-found/not-found';
 import Play from '../modules/play/play';
-import Ranking from '../modules/ranking/Ranking';
-import roleService from '../services/roleService';
+import Ranking from '../modules/ranking/ranking';
+import roleService from '../services/role-service';
 import ProtectedRoute from './protected-route';
 
 void React;

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import ErrorMsg from '../../shared/components/ui/ErrorMsg';
-import LoadingMsg from '../../shared/components/ui/LoadingMsg';
-import useSubject from '../hooks/useSubject';
-import SubjectItem from './SubjectItem';
+import ErrorMsg from '../../shared/components/ui/error-msg';
+import LoadingMsg from '../../shared/components/ui/loading-msg';
+import useSubject from '../hooks/use-home';
+import SubjectItem from './subject-item';
 
 /**
  * The SubjectGrid component renders a grid of subjects by using the `SubjectItem` component

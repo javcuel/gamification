@@ -1,6 +1,10 @@
 import { Subject } from '../domain/subject';
 
-import { SubjectDTO, SubjectRequestDTO } from '../dto/subject.dto';
+import {
+  SubjectDTO,
+  SubjectCreateDTO,
+  SubjectUpdateDTO,
+} from '../dto/subject.dto';
 
 export class SubjectMapper {
   static toDomain(dto: SubjectDTO): Subject {
@@ -27,8 +31,17 @@ export class SubjectMapper {
     };
   }
 
-  static toRequestDTO(subject: Subject): SubjectRequestDTO {
+  static toCreateDTO(subject: Subject): SubjectCreateDTO {
     return {
+      Nombre: subject.name,
+      UrlImgMundo: subject.img,
+      UrlImgDentro: subject.imgBackground,
+    };
+  }
+
+  static toUpdateDTO(subject: Subject): SubjectUpdateDTO {
+    return {
+      IDMundo: subject.id,
       Nombre: subject.name,
       UrlImgMundo: subject.img,
       UrlImgDentro: subject.imgBackground,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import '../styles/NavLinkItem.css';
+import '../styles/nav-link-item.css';
 
 interface NavLinkItemProps {
   to?: string;

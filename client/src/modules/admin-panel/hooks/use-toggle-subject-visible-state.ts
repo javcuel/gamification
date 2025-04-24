@@ -1,20 +1,21 @@
 import { useState } from 'react';
 import { SubjectApi } from '../../../basura/subject';
+import { Subject } from '../../shared/api/domain/subject';
 
-const useToggleSubjectVisibleState = (
-  subjectId: number,
-  initialState: boolean
-) => {
-  const [isVisible, setIsVisible] = useState(initialState);
-
+const useToggleSubjectVisibleState = (subject: Subject) => {
+  const [isVisible, setIsVisible] = useState(subject.isVisible);
   const [error, setError] = useState<string | null>(null);
 
   const toggleVisibleState = async () => {
     try {
       const newState = !isVisible;
-      const payload = { subjectId, isVisible: newState };
 
-      await SubjectApi.updateVisibleState(payload);
+      const payload: Subject = {
+        ...subject,
+        isVisible: newState,
+      };
+
+      await SubjectApi.update(subject.id, payload);
       setIsVisible(newState);
     } catch (error: unknown) {
       if (error instanceof Error) {

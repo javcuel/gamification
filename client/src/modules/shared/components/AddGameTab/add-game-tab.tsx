@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import Button from '../ui/Button';
-import Dropdown from '../ui/Dropdown';
-import Input from '../ui/Input';
-import useAddGame from './hooks/useAddGame';
-import ErrorMsg from '../ui/ErrorMsg';
-import SuccessMsg from '../ui/SuccessMsg';
+import Button from '../ui/button';
+import Dropdown from '../ui/dropdown';
+import Input from '../ui/input';
+import useAddGame from './hooks/use-add-game';
+import ErrorMsg from '../ui/error-msg';
+import SuccessMsg from '../ui/success-msg';
 
 const AddGameTab: React.FC = () => {
   const [name, setName] = useState<string>('');

@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, useRoutes } from 'react-router-dom';
 import { AuthProvider } from '../context/auth-context';
 import { ThemeProvider } from '../context/theme-context';
-import SpaceBackground from '../modules/shared/components/ui/SpaceBackground';
+import SpaceBackground from '../modules/shared/components/ui/space-background';
 import routes from './routes';
 
 const AppRoutes = () => {
@@ -32,6 +32,7 @@ const AppRoutes = () => {
 /*   transition: background-color 0.3s ease;
 } */
 
+//TODO vOLVER A PONER LOS COMENTARIOS QUE BORRÉ EN LOS ATRIBUTOS DE LAS CLASES EN DOMAIN, XDD
 //TODO el CSS DE USER MANAGEMENT ITEM ESTA DUPLICADO
 //TODO: PONER TODOS LOS HOOKS EN KEBAB-CASE
 //TODO: Poner mensajes de required en los formularios.

@@ -1,10 +1,10 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import ErrorMsg from '../../shared/components/ui/ErrorMsg';
-import LoadingMsg from '../../shared/components/ui/LoadingMsg';
-import useGames from '../hooks/useGame';
-import GameItem from './GameItem';
+import ErrorMsg from '../../shared/components/ui/error-msg';
+import LoadingMsg from '../../shared/components/ui/loading-msg';
+import useGames from '../hooks/use-game-selector';
+import GameItem from './game-item';
 
 /**
  * The GameGrid component renders a grid of games by using the `GameItem` component

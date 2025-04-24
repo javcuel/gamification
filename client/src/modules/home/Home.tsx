@@ -1,7 +1,7 @@
 import React from 'react';
 
-import NavBar from '../shared/components/NavBar/NavBar';
-import SubjectGrid from './components/SubjectGrid';
+import NavBar from '../shared/components/navbar/navbar';
+import SubjectGrid from './components/subject-grid';
 
 /**
  * The Home component renders the main page of the application.

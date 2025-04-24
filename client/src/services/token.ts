@@ -1,5 +1,5 @@
 import { jwtDecode } from 'jwt-decode';
-import roleService from './roleService';
+import roleService from './role-service';
 
 export interface Token {
   id: number;

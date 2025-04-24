@@ -18,28 +18,20 @@ export interface SubjectDTO {
  *
  * @interface
  */
-export interface SubjectRequestDTO {
+export interface SubjectCreateDTO {
   Nombre: string;
   UrlImgMundo: string;
   UrlImgDentro: string;
 }
 
 /**
- * Interface representing payload for updating the open state of a subject.
+ * Interface representing payload for updating a new subject.
  *
  * @interface
  */
-export interface SubjectOpenStateRequestDTO {
+export interface SubjectUpdateDTO {
   IDMundo: number;
-  Abierto: boolean;
-}
-
-/**
- * Interface representing payload for updating the visible state of a subject.
- *
- * @interface
- */
-export interface SubjectVisibleStateRequestDTO {
-  IDMundo: number;
-  Visible: boolean;
+  Nombre: string;
+  UrlImgMundo: string;
+  UrlImgDentro: string;
 }

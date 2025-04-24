@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { User, UserApi } from '../api/user';
-import Storage from '../services/storageService'; // Renombrado según el TODO
+import Storage from '../services/storage-service'; // Renombrado según el TODO
 import { decodeToken } from '../services/token';
 
 export const useUserInfo = () => {

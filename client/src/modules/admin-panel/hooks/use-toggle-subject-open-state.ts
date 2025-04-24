@@ -1,20 +1,21 @@
 import { useState } from 'react';
-import { SubjectApi } from '../../../basura/subject';
+import { subjectRepository } from '../../shared/api/repository/subject.repository';
+import { Subject } from '../../shared/api/domain/subject';
 
-const useToggleSubjectOpenState = (
-  subjectId: number,
-  initialState: boolean
-) => {
-  const [isOpen, setIsOpen] = useState(initialState);
-
+const useToggleSubjectOpenState = (subject: Subject) => {
+  const [isOpen, setIsOpen] = useState(subject.isOpen);
   const [error, setError] = useState<string | null>(null);
 
   const toggleOpenState = async () => {
     try {
       const newState = !isOpen;
-      const payload = { subjectId, isOpen: newState };
 
-      await SubjectApi.updateOpenState(payload);
+      const payload: Subject = {
+        ...subject,
+        isOpen: newState,
+      };
+
+      await subjectRepository.update(subject.id, payload);
       setIsOpen(newState);
     } catch (error: unknown) {
       if (error instanceof Error) {

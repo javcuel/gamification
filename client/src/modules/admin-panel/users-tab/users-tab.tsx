@@ -1,5 +1,5 @@
 import React from 'react';
-import ErrorMsg from '../../shared/components/ui/ErrorMsg';
+import ErrorMsg from '../../shared/components/ui/error-msg';
 import useUsers from './hooks/use-users-tab';
 import UserManagementItem from './user-management-item';
 

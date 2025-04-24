@@ -1,6 +1,6 @@
 import React from 'react';
 
-import WavesText from '../shared/components/ui/WavesText';
+import WavesText from '../shared/components/ui/waves-text';
 
 /**
  * The NotFound component renders a page indicating that the requested resource

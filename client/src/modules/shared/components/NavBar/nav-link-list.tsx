@@ -2,7 +2,7 @@ import React from 'react';
 import { ROLES } from '../../../../constants/roles';
 import { ROUTES } from '../../../../constants/routes';
 import { useAuth } from '../../../../context/auth-context';
-import NavLinkItem from './NavLinkItem';
+import NavLinkItem from './nav-link-item';
 
 interface NavLinkProps {
   role: string;

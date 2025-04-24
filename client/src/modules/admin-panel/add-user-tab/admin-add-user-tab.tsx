@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import Button from '../../shared/components/ui/Button';
-import Dropdown from '../../shared/components/ui/Dropdown';
-import Input from '../../shared/components/ui/Input';
+import Button from '../../shared/components/ui/button';
+import Dropdown from '../../shared/components/ui/dropdown';
+import Input from '../../shared/components/ui/input';
 import '../styles/AdminAddCard.css';
 import useAddUser from './hooks/use-add-user';
-import ErrorMsg from '../../shared/components/ui/ErrorMsg';
-import SuccessMsg from '../../shared/components/ui/SuccessMsg';
+import ErrorMsg from '../../shared/components/ui/error-msg';
+import SuccessMsg from '../../shared/components/ui/success-msg';
 import { ROLES } from '../../../constants/roles';
 
 const AdminAddUserTab: React.FC = () => {

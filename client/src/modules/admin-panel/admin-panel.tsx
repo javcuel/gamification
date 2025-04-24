@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import AddGameTab from '../shared/components/AddGameTab/AddGameTab';
+import AddGameTab from '../shared/components/AddGameTab/add-game-tab';
 import AddSubjectTab from './add-subject-tab/AddAddSubjectTab';
 import AddUserTab from './add-user-tab/admin-add-user-tab';
 import SubjectsTab from './subjects-tab/subjects-tab';

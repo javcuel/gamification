@@ -17,7 +17,7 @@ export class SubjectRepository implements ISubjectRepository {
   }
 
   async create(data: Subject): Promise<void> {
-    const requestDTO = SubjectMapper.toRequestDTO(data);
+    const requestDTO = SubjectMapper.toCreateDTO(data);
 
     try {
       await httpClient.post(API_URLS.CREATE_SUBJECT, requestDTO);
@@ -28,7 +28,7 @@ export class SubjectRepository implements ISubjectRepository {
   }
 
   async update(id: number, data: Subject): Promise<void> {
-    const requestDTO = SubjectMapper.toRequestDTO(data);
+    const requestDTO = SubjectMapper.toUpdateDTO(data);
 
     try {
       await httpClient.put(API_URLS.UPDATE_SUBJECT(id), requestDTO);

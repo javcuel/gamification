@@ -15,7 +15,7 @@ import useToggleSubjectOpenState from '../../hooks/use-toggle-subject-open-state
 import useToggleSubjectVisibleState from '../../hooks/use-toggle-subject-visible-state';
 import useUpdateSubject from '../hooks/use-edit-subject';
 
-import ErrorMsg from '../../../shared/components/ui/ErrorMsg';
+import ErrorMsg from '../../../shared/components/ui/error-msg';
 import GameManagementItem from './game-management-item';
 import SubjectEditModal from './subject-edit-modal';
 
@@ -44,13 +44,13 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
     isOpen,
     error: openError,
     toggleOpenState,
-  } = useToggleSubjectOpenState(subject.id, subject.isOpen);
+  } = useToggleSubjectOpenState(subject);
 
   const {
     isVisible,
     error: visibleError,
     toggleVisibleState,
-  } = useToggleSubjectVisibleState(subject.id, subject.isVisible);
+  } = useToggleSubjectVisibleState(subject);
 
   const {
     updateSubject,

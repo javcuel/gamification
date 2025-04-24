@@ -1,8 +1,8 @@
 import React from 'react';
 
-import LinkImage from '../shared/components/ui/LinkImage';
-import WavesText from '../shared/components/ui/WavesText';
-import LoginForm from './components/LoginForm';
+import LinkImage from '../shared/components/ui/link-image';
+import WavesText from '../shared/components/ui/waves-text';
+import LoginForm from './components/login-form';
 
 /**
  * The Login component renders a login page with a space-themed background,

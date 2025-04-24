@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Input from '../../shared/components/ui/Input';
-import Button from '../../shared/components/ui/Button';
-import ErrorMsg from '../../shared/components/ui/ErrorMsg';
-import SuccessMsg from '../../shared/components/ui/SuccessMsg';
+import Input from '../../shared/components/ui/input';
+import Button from '../../shared/components/ui/button';
+import ErrorMsg from '../../shared/components/ui/error-msg';
+import SuccessMsg from '../../shared/components/ui/success-msg';
 import useAddSubject from './hooks/use-add-subject';
 
 import '../styles/AdminAddCard.css';

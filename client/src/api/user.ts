@@ -3,7 +3,7 @@ import { NavigateFunction } from 'react-router-dom';
 import { API_URLS } from '../constants/apiUrls';
 import { ROLES } from '../constants/roles';
 import { ROUTES } from '../constants/routes';
-import StorageService from '../services/storageService';
+import StorageService from '../services/storage-service';
 import httpClient from './httpClient';
 
 export class User implements IUser {

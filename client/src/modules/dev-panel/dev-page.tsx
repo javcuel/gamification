@@ -1,6 +1,6 @@
 import React from 'react';
-import NavBar from '../shared/components/NavBar/NavBar';
-import DevPanel from './DevPanel';
+import NavBar from '../shared/components/navbar/navbar';
+import DevPanel from './dev-panel';
 
 const DevPage: React.FC = () => {
   return (

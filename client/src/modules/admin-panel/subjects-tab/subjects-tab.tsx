@@ -1,5 +1,5 @@
 import React from 'react';
-import ErrorMsg from '../../shared/components/ui/ErrorMsg';
+import ErrorMsg from '../../shared/components/ui/error-msg';
 import SubjectManagementItem from './components/subject-management-item';
 import useSubjectsTab from './hooks/use-subjects-tab';
 

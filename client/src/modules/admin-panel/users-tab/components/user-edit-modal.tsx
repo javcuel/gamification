@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { UserApiPayload } from '../../../../api/user';
 import { ROLES } from '../../../../constants/roles';
-import Button from '../../../shared/components/ui/Button';
-import Dropdown from '../../../shared/components/ui/Dropdown';
-import Input from '../../../shared/components/ui/Input';
+import Button from '../../../shared/components/ui/button';
+import Dropdown from '../../../shared/components/ui/dropdown';
+import Input from '../../../shared/components/ui/input';
 import '../styles/EditModal.css';
 
 interface UserEditModalProps {

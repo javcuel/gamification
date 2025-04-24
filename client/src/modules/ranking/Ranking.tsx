@@ -1,7 +1,7 @@
 import React from 'react';
 
-import NavBar from '../shared/components/NavBar/NavBar';
-import RankingTable from './components/RankingTable';
+import NavBar from '../shared/components/navbar/navbar';
+import RankingTable from './components/ranking-table';
 
 const Ranking: React.FC = () => {
   return (

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { ThemeContext } from '../../../context/theme-context';
-import Button from '../../shared/components/ui/Button';
-import Input from '../../shared/components/ui/Input';
+import Button from '../../shared/components/ui/button';
+import Input from '../../shared/components/ui/input';
 import ColorPicker from './components/color-picker';
 
 const AdminThemeTab: React.FC = () => {
