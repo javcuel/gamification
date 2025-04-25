@@ -1,17 +1,17 @@
 import { useState } from 'react';
-import { Subject } from '../../../shared/api/domain/subject';
-import { subjectRepository } from '../../../shared/api/repository/subject.repository';
+import { Game } from '../../../shared/api/domain/game';
+import { gameRepository } from '../../../shared/api/repository/game.repository';
 
-const useAddSubject = () => {
+const useAddGame = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  const addSubject = async (payload: Subject) => {
+  const addGame = async (payload: Game) => {
     setError(null);
     setSuccess(false);
 
     try {
-      await subjectRepository.create(payload);
+      await gameRepository.create(payload);
       setSuccess(true);
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -22,7 +22,7 @@ const useAddSubject = () => {
     }
   };
 
-  return { addSubject, error, success };
+  return { addGame, error, success };
 };
 
-export default useAddSubject;
+export default useAddGame;

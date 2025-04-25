@@ -1,17 +1,21 @@
 import { useState } from 'react';
-import { GameApi } from '../../../api/game';
+import { Game } from '../../../shared/api/domain/game';
+import { gameRepository } from '../../../shared/api/repository/game.repository';
 
-const useToggleGameVisibleState = (gameId: number, initialState: boolean) => {
-  const [isVisible, setIsVisible] = useState(initialState);
-
+const useToggleGameVisibleState = (game: Game) => {
+  const [isVisible, setIsVisible] = useState(game.isVisible);
   const [error, setError] = useState<string | null>(null);
 
   const toggleVisibleState = async () => {
     try {
       const newState = !isVisible;
-      const payload = { gameId, isVisible: newState };
 
-      await GameApi.updateVisibleState(payload);
+      const payload: Game = {
+        ...game,
+        isVisible: newState,
+      };
+
+      await gameRepository.update(game.id, payload);
       setIsVisible(newState);
     } catch (error: unknown) {
       if (error instanceof Error) {

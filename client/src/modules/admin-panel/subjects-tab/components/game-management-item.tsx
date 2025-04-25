@@ -9,10 +9,10 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Game } from '../../../shared/api/domain/game';
-import useToggleGameOpenState from '../../hooks/use-toggle-game-open-state';
-import useToggleGameVisibleState from '../../hooks/use-toggle-game-visible-state';
+import useToggleGameOpenState from '../hooks/use-toggle-game-open-state';
+import useToggleGameVisibleState from '../hooks/use-toggle-game-visible-state';
 
-import '../../styles/GameManagementItem.css';
+import '../../styles/game-management-item.css';
 
 interface GameManagementItemProps {
   game: Game;
@@ -23,13 +23,13 @@ const GameManagementItem: React.FC<GameManagementItemProps> = ({ game }) => {
     isOpen,
     error: openError,
     toggleOpenState,
-  } = useToggleGameOpenState(game.id, game.isOpen);
+  } = useToggleGameOpenState(game);
 
   const {
     isVisible,
     error: visibleError,
     toggleVisibleState,
-  } = useToggleGameVisibleState(game.id, game.isOpen);
+  } = useToggleGameVisibleState(game);
 
   return (
     <div className="game-management-item">

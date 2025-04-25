@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Game } from '../../shared/api/domain/game';
-import { gameRepository } from '../../shared/api/repository/game.repository';
+import { Game } from '../../../shared/api/domain/game';
+import { gameRepository } from '../../../shared/api/repository/game.repository';
 
 const useExpandSubject = (subjectId: number) => {
   const [games, setGames] = useState<Game[]>([]);

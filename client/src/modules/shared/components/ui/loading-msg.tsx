@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 
-import '../styles/LoadingMsg.css';
+import '../../styles/loading-msg.css';
 
 interface LoadingMessageProps {
   message?: string;

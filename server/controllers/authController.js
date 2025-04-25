@@ -2,19 +2,20 @@ import jwt from "jsonwebtoken";
 import db from "../config/db.js";
 
 export const login = async (req, res) => {
-  const { name, passwd } = req.body;
+  const { Nombre, Contrasena } = req.body;
+  console.log("hola", Nombre);
   try {
     const [results] = await db.query(
       "SELECT * FROM usuarios WHERE Nombre = ? AND Contrasena = ?",
-      [name, passwd]
+      [Nombre, Contrasena]
     );
-
+    console.log(results);
     // JWT data
     if (results.length > 0) {
       const token = jwt.sign(
         {
           id: results[0].IDUsuario,
-          name: results[0].Nombre,
+          nombre: results[0].Nombre,
           role: results[0].TipoUsuario,
         },
         process.env.JWT_SECRET,

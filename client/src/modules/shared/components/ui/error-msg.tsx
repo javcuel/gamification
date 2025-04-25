@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 
-import '../styles/error-msg.css';
+import '../../styles/error-msg.css';
 
 interface ErrorMessageProps {
   message: string;

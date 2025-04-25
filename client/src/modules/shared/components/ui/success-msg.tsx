@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 
-import '../styles/success-msg.css';
+import '../../styles/success-msg.css';
 
 interface SuccessMessageProps {
   message: string;

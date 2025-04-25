@@ -1,6 +1,6 @@
 /* import React, { useEffect, useRef } from 'react'; */
 import React from 'react';
-import '../styles/space-background.css';
+import '../../styles/space-background.css';
 
 const SpaceBackground: React.FC = () => {
   /*  const ufoRef = useRef<HTMLDivElement>(null); */

@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Theme } from '../../../api/domain/theme';
 import { ThemeContext } from '../../../context/theme-context';
 import Button from '../../shared/components/ui/button';
 import Input from '../../shared/components/ui/input';
@@ -13,7 +14,7 @@ const AdminThemeTab: React.FC = () => {
     );
   }
 
-  const { updateTheme } = themeContext;
+  const { createTheme } = themeContext;
   const [colors, setColors] = useState({
     primary: '#2a2d3d',
     secondary: '#4f5be5',
@@ -22,13 +23,15 @@ const AdminThemeTab: React.FC = () => {
 
   const handleSave = async () => {
     try {
-      await updateTheme({
-        primary: colors.primary,
-        secondary: colors.secondary,
-        text: colors.text,
-        pointsIcon: '',
-        completedSubjectsIcon: '',
-      });
+      const newTheme = new Theme(
+        0,
+        colors.primary,
+        colors.secondary,
+        colors.text,
+        '',
+        ''
+      );
+      await createTheme(newTheme);
     } catch (error) {
       console.error('Failed to save theme:', error);
     }

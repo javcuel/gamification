@@ -9,17 +9,17 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { Subject } from '../../../../basura/subject';
-import useDeleteSubject from '../../hooks/use-delete-subject';
-import useExpandSubject from '../../hooks/use-expand-subject';
-import useToggleSubjectOpenState from '../../hooks/use-toggle-subject-open-state';
-import useToggleSubjectVisibleState from '../../hooks/use-toggle-subject-visible-state';
+import useDeleteSubject from '../hooks/use-delete-subject';
 import useUpdateSubject from '../hooks/use-edit-subject';
+import useExpandSubject from '../hooks/use-expand-subject';
+import useToggleSubjectOpenState from '../hooks/use-toggle-subject-open-state';
+import useToggleSubjectVisibleState from '../hooks/use-toggle-subject-visible-state';
 
 import ErrorMsg from '../../../shared/components/ui/error-msg';
 import GameManagementItem from './game-management-item';
 import SubjectEditModal from './subject-edit-modal';
 
-import '../../styles/SubjectManagementItem.css';
+import '../../styles/subject-management-item.css';
 
 interface SubjectiItemProps {
   subject: Subject;

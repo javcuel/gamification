@@ -1,10 +1,11 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { Theme, ThemeApi, ThemeApiPayload } from '../api/theme';
+import { Theme } from '../api/domain/theme';
+import { themeRepository } from '../api/repository/theme.repository';
 
 interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
-  updateTheme: (newTheme: ThemeApiPayload) => Promise<void>;
+  createTheme: (newTheme: Theme) => Promise<void>;
 }
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(
@@ -14,15 +15,7 @@ export const ThemeContext = createContext<ThemeContextType | undefined>(
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [theme, setTheme] = useState<Theme>({
-    id: 1,
-    primary: '#ffffff',
-    secondary: '#000000',
-    text: '#333333',
-    pointsIcon: '/image/no_image.jpg',
-    completedSubjectsIcon: '/image/no_image.jpg',
-  });
-
+  const [theme, setTheme] = useState<Theme | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const applyTheme = (newTheme: Theme) => {
@@ -37,8 +30,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     const loadTheme = async () => {
       try {
-        const newTheme = await ThemeApi.get();
-
+        const newTheme = await themeRepository.get();
         setTheme(newTheme);
         applyTheme(newTheme);
       } catch (error: unknown) {
@@ -53,19 +45,21 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     loadTheme();
   }, []);
 
-  const handleUpdateTheme = async (newTheme: Theme) => {
+  const handleCreateTheme = async (newTheme: Theme) => {
     try {
-      await ThemeApi.create(newTheme);
+      await themeRepository.create(newTheme);
       setTheme(newTheme);
       applyTheme(newTheme);
     } catch (error) {
-      console.error('Error al actualizar el tema:', error);
+      console.error('Error creating theme:', error);
     }
   };
 
+  if (!theme) return null; //TODO: meter un loader aqui
+
   return (
     <ThemeContext.Provider
-      value={{ theme, setTheme, updateTheme: handleUpdateTheme }}
+      value={{ theme, setTheme, createTheme: handleCreateTheme }}
     >
       {children}
     </ThemeContext.Provider>

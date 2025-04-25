@@ -4,7 +4,7 @@ import db from "../config/db.js";
 export const getTheme = async (req, res) => {
   try {
     const [rows] = await db.query(
-      "SELECT primary_color, secondary_color, text_color, points_icon, completed_subjects_icon FROM theme ORDER BY created_at DESC LIMIT 1"
+      "SELECT primary_color, secondary_color, text_color, points_icon, completed_subjects_icon FROM theme ORDER BY created_at DESC LIMIT 1;"
     );
     res.json(rows[0]);
   } catch (error) {
@@ -15,19 +15,30 @@ export const getTheme = async (req, res) => {
 
 // Creates a new theme
 export const createTheme = async (req, res) => {
-  const { primary, secondary, text, pointsIcon, completedSubjectsIcon } =
-    req.body;
+  const {
+    primary_color,
+    secondary_color,
+    text_color,
+    points_icon,
+    completed_subjects_icon,
+  } = req.body;
 
-  //TODO: Añadir  !pointsIcon || !completedSubjectsIcon;
+  //TODO: Añadir  !points_icon || !completed_subjects_icon;
 
-  if (!primary || !secondary || !text) {
+  if (!primary_color || !secondary_color || !text_color) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
   try {
     const [result] = await db.execute(
       "INSERT INTO theme (primary_color, secondary_color, text_color, points_icon, completed_subjects_icon) VALUES (?, ?, ?, ?, ?)",
-      [primary, secondary, text, pointsIcon, completedSubjectsIcon]
+      [
+        primary_color,
+        secondary_color,
+        text_color,
+        points_icon,
+        completed_subjects_icon,
+      ]
     );
     res
       .status(201)

@@ -1,7 +1,9 @@
 import { User } from '../domain/user';
 
+import { NavigateFunction } from 'react-router/dist';
 import httpClient from '../../../../api/httpClient';
 import { API_URLS } from '../../../../constants/apiUrls';
+import { ROUTES } from '../../../../constants/routes';
 import { IUserRepository } from '../interface/user-repository.interface';
 import { UserMapper } from '../mapper/user.mapper';
 
@@ -47,15 +49,26 @@ export class UserRepository implements IUserRepository {
     }
   }
 
-  async login(data: User): Promise<void> {
+  async login(
+    data: User
+  ): Promise<{ success: boolean; token?: string; message?: string }> {
     const requestLoginDTO = UserMapper.toRequestLoginDTO(data);
 
     try {
-      await httpClient.post(API_URLS.LOGIN, requestLoginDTO);
+      const response = await httpClient.post(API_URLS.LOGIN, requestLoginDTO);
+      return { success: true, token: response.token };
     } catch (error) {
-      console.error('Error loggin in:', error);
-      throw new Error('Failed to log in');
+      console.error('Error logging in:', error);
+      return {
+        success: false,
+        message: 'Failed to log in',
+      };
     }
+  }
+
+  logout(navigate: NavigateFunction): void {
+    localStorage.removeItem('token');
+    navigate(ROUTES.LOGIN);
   }
 }
 

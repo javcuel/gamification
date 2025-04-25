@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import Input from '../../shared/components/ui/input';
+import { Subject } from '../../shared/api/domain/subject';
 import Button from '../../shared/components/ui/button';
 import ErrorMsg from '../../shared/components/ui/error-msg';
+import Input from '../../shared/components/ui/input';
 import SuccessMsg from '../../shared/components/ui/success-msg';
 import useAddSubject from './hooks/use-add-subject';
 
-import '../styles/AdminAddCard.css';
+import '../styles/admin-add-card.css';
 
 const AdminAddSubjectTab: React.FC = () => {
   const [name, setName] = useState<string>('');
@@ -17,13 +18,9 @@ const AdminAddSubjectTab: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const payload = {
-      name,
-      img,
-      imgBackground,
-    };
+    const newSubject = new Subject(0, name, img, imgBackground, 0, true, true);
 
-    await addSubject(payload);
+    await addSubject(newSubject);
 
     setName('');
     setImg('');

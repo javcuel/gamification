@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SubjectApi } from '../../../basura/subject';
+import { subjectRepository } from '../../../shared/api/repository/subject.repository';
 
 const useDeleteSubject = (onDeleteSuccess: (id: number) => void) => {
   const [loading, setLoading] = useState(false);
@@ -10,7 +10,7 @@ const useDeleteSubject = (onDeleteSuccess: (id: number) => void) => {
     setError(null);
 
     try {
-      await SubjectApi.delete(id);
+      await subjectRepository.delete(id);
       onDeleteSuccess(id);
     } catch (error: unknown) {
       if (error instanceof Error) {

@@ -1,21 +1,21 @@
 import { useState } from 'react';
-import { subjectRepository } from '../../shared/api/repository/subject.repository';
-import { Subject } from '../../shared/api/domain/subject';
+import { Game } from '../../../shared/api/domain/game';
+import { gameRepository } from '../../../shared/api/repository/game.repository';
 
-const useToggleSubjectOpenState = (subject: Subject) => {
-  const [isOpen, setIsOpen] = useState(subject.isOpen);
+const useToggleGameOpenState = (game: Game) => {
+  const [isOpen, setIsOpen] = useState(game.isOpen);
   const [error, setError] = useState<string | null>(null);
 
   const toggleOpenState = async () => {
     try {
       const newState = !isOpen;
 
-      const payload: Subject = {
-        ...subject,
+      const payload: Game = {
+        ...game,
         isOpen: newState,
       };
 
-      await subjectRepository.update(subject.id, payload);
+      await gameRepository.update(game.id, payload);
       setIsOpen(newState);
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -29,4 +29,4 @@ const useToggleSubjectOpenState = (subject: Subject) => {
   return { isOpen, error, toggleOpenState };
 };
 
-export default useToggleSubjectOpenState;
+export default useToggleGameOpenState;

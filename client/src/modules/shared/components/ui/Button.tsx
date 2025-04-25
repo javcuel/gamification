@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../styles/button.css';
+import '../../styles/button.css';
 
 void React;
 

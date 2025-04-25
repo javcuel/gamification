@@ -25,7 +25,7 @@ export interface SubjectCreateDTO {
 }
 
 /**
- * Interface representing payload for updating a new subject.
+ * Interface representing payload for updating a subject.
  *
  * @interface
  */

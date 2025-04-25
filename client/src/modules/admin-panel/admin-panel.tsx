@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import AddGameTab from '../shared/components/AddGameTab/add-game-tab';
-import AddSubjectTab from './add-subject-tab/AddAddSubjectTab';
+import AddGameTab from './add-game-tab/add-game-tab';
+import AddSubjectTab from './add-subject-tab/add-subject.tab';
 import AddUserTab from './add-user-tab/admin-add-user-tab';
+import './styles/admin-panel.css';
 import SubjectsTab from './subjects-tab/subjects-tab';
 import ThemeTab from './theme-tab/admin-theme-tab';
 import UsersTab from './users-tab/users-tab';
-import './styles/AdminPanel.css';
 
 const AdminPanel: React.FC = () => {
   const [activeTab, setActiveTab] = useState('tab1');
