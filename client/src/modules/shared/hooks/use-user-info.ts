@@ -27,14 +27,15 @@ export const useUserInfo = () => {
             role: decoded.role,
           }));
 
-          const scoreData = await userRepository.getScore(decoded.id);
-          if (scoreData) {
+          const data = await userRepository.getScore(decoded.id);
+
+          if (data) {
             setUserInfo((prev) => ({
               ...prev,
               name: decoded.name,
               role: decoded.role,
-              totalScore: scoreData.totalScore,
-              completedSubjects: scoreData.completedSubjects,
+              totalScore: data.totalScore,
+              completedSubjects: data.completedSubjects,
             }));
           }
         }

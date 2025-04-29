@@ -4,6 +4,7 @@ import {
   deleteUser,
   getScore,
   getUsers,
+  loginUser,
   updateUser,
 } from "../controllers/userController.js";
 
@@ -12,8 +13,11 @@ const router = express.Router();
 // Fetch all users
 router.get("/", getUsers);
 
-// Fetch user
+// Fetch user score
 router.get("/:id", getScore);
+
+// Login user
+router.post("/login", loginUser);
 
 // Creates new user
 router.post("/", createUser);

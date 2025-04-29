@@ -1,4 +1,4 @@
-import { User, UserScore } from '../domain/user';
+import { User, UserLogin, UserScore } from '../domain/user';
 
 import {
   UserCreateDTO,
@@ -48,7 +48,7 @@ export class UserMapper {
     };
   }
 
-  static toLoginDTO(user: User): UserLoginDTO {
+  static toLoginDTO(user: UserLogin): UserLoginDTO {
     return {
       Nombre: user.name,
       Contrasena: user.passwd,

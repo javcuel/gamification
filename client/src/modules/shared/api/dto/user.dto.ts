@@ -47,11 +47,21 @@ export interface UserLoginDTO {
 }
 
 /**
- * Interface representing the user data in the backend.
+ * Interface representing the user score data in the backend.
  *
  * @interface
  */
 export interface UserScoreDTO {
   Puntuacion: number;
   Completado: number;
+}
+
+/**
+ * Interface representing the user login data in the backend
+ *
+ * @interface
+ */
+export interface UserLoginDTO {
+  Nombre: string;
+  Contrasena: string;
 }

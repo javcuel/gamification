@@ -1,5 +1,5 @@
 export const ROLES = {
-  PLAYER: 'U',
+  PLAYER: 'P',
   TEACHER: 'T',
   GUEST: 'G',
   DEV: 'D',

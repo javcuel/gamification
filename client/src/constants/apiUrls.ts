@@ -19,15 +19,6 @@ export const API_URLS = {
   BASE_URL: 'http://localhost:5000/api',
 
   //----------LOGIN----------
-  /**
-   * NOTA--
-   * Aqui hay que mirar cosas, por que en el ejemplo que yo hice, esto no devuelve el usuario, lo que hace elbackend
-   * en mi ejemplo es buscar el usuario con nombre y contraseña para comprobar que existe y luego devuelve un JWT token.
-   *
-   * Get user via username and passwd (Method GET)
-   * "SELECT * FROM usuarios WHERE Nombre = ? AND Contrasena = ?",
-   */
-  LOGIN: '/auth/login',
 
   //----------SUBJECTS----------
   /**
@@ -285,6 +276,16 @@ export const API_URLS = {
    * }
    */
   GET_USERS: '/users',
+
+  /**
+   * NOTA--
+   * Aqui hay que mirar cosas, por que en el ejemplo que yo hice, esto no devuelve el usuario, lo que hace elbackend
+   * en mi ejemplo es buscar el usuario con nombre y contraseña para comprobar que existe y luego devuelve un JWT token.
+   *
+   * Get user via username and passwd (Method GET)
+   * "SELECT * FROM usuarios WHERE Nombre = ? AND Contrasena = ?",
+   */
+  LOGIN: '/users/login',
 
   GET_USER_SCORE: (userId: number) => `/users/${userId}`,
 

@@ -1,4 +1,4 @@
-import { User, UserScore } from '../domain/user';
+import { User, UserLogin, UserScore } from '../domain/user';
 
 import { NavigateFunction } from 'react-router/dist';
 import HttpClient from '../../../../api/http-client';
@@ -21,7 +21,12 @@ class UserRepository implements IUserRepository {
   async getScore(id: number): Promise<UserScore> {
     try {
       const data = await HttpClient.get(API_URLS.GET_USER_SCORE(id));
-      return UserMapper.toScoreDomain(data);
+      const dto = Array.isArray(data) ? data[0] : data;
+
+      dto.totalScore = Number(dto.totalScore);
+      dto.completedSubjects = Number(dto.completedSubjects);
+
+      return UserMapper.toScoreDomain(dto);
     } catch (error) {
       console.error('Error fetching user score', error);
       throw new Error('Failed to fetch user score');
@@ -60,7 +65,7 @@ class UserRepository implements IUserRepository {
   }
 
   async login(
-    data: User
+    data: UserLogin
   ): Promise<{ success: boolean; token?: string; message?: string }> {
     const requestLoginDTO = UserMapper.toLoginDTO(data);
 

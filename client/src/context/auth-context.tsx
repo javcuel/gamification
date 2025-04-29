@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import { User } from '../modules/shared/api/domain/user';
+import { UserLogin } from '../modules/shared/api/domain/user';
 import { userRepository } from '../modules/shared/api/repository/user.repository';
 import { decodeToken, Token } from '../services/token';
 
@@ -53,14 +53,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     name: string,
     passwd: string
   ): Promise<{ success: boolean; role?: string }> => {
-    const user = new User(0, name, passwd, 'Usuario', 0, 0);
+    const user = new UserLogin(name, passwd);
 
     const result = await userRepository.login(user);
 
     if (result.success && result.token) {
       localStorage.setItem('token', result.token);
       const decoded = decodeToken(result.token);
-
+      console.log(decoded);
       if (decoded) {
         setIsAuthenticated(true);
         setError(null);

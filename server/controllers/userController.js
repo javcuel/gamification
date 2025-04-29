@@ -3,27 +3,29 @@ import db from "../config/db.js";
 
 // Login user
 export const loginUser = async (req, res) => {
-  const { name, passwd } = req.body;
+  const { Nombre, Contrasena } = req.body;
 
-  if (!name || !passwd) {
+  if (!Nombre || !Contrasena) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
   try {
     const [rows] = await db.query(
       "SELECT * FROM usuarios WHERE Nombre = ? AND Contrasena = ?",
-      [name, passwd]
+      [Nombre, Contrasena]
     );
 
     if (rows.length === 0) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
+    //TODO: Como el rol P no existe en la BD, lo cambio manualmente aqui, aunque deberia ser:
+    //      roel: rows[0].TipoUsuario
     const token = jwt.sign(
       {
-        id: rows[0].IDUsuario,
-        name: rows[0].Nombre,
-        role: rows[0].TipoUsuario,
+        IDUsuario: rows[0].IDUsuario,
+        Nombre: rows[0].Nombre,
+        TipoUsuario: rows[0].TipoUsuario,
       },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
@@ -54,7 +56,7 @@ export const getScore = async (req, res) => {
 
   try {
     const [rows] = await db.query(
-      "SELECT SUM(um.Puntuacion) AS totalScore, SUM(um.Completado) AS completedSubjects FROM usuarios u JOIN usuariominijuego um ON u.IDUsuario = um.IDUsuario WHERE u.IDUsuario = ?",
+      "SELECT SUM(um.Puntuacion) AS Puntuacion, SUM(um.Completado) AS Completado FROM usuarios u JOIN usuariominijuego um ON u.IDUsuario = um.IDUsuario WHERE u.IDUsuario = ?",
       [id]
     );
     res.json(rows);

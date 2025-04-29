@@ -9,7 +9,7 @@ interface NavUserInfoProps {
   completedSubjects: number;
 }
 
-const UserInfoDisplay: React.FC<NavUserInfoProps> = ({
+const NavUserInfo: React.FC<NavUserInfoProps> = ({
   name,
   role,
   totalScore,
@@ -34,4 +34,4 @@ const UserInfoDisplay: React.FC<NavUserInfoProps> = ({
   );
 };
 
-export default UserInfoDisplay;
+export default NavUserInfo;

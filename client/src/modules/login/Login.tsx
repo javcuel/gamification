@@ -49,10 +49,10 @@ const Login: React.FC = () => {
         <div className="row mt-5">
           <div className="col">
             <LinkImage
-              src="images/greidiLogo500.png"
+              src="images/Greidi1.png"
               alt="greidi_logo"
               url="https://www.greidi.infor.uva.es"
-              width={'10%'}
+              width={'15%'}
             />
           </div>
         </div>
