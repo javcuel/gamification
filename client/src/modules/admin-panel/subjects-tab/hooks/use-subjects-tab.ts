@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Subject, SubjectApi } from '../../../../basura/subject';
+import { Subject } from '../../../shared/api/domain/subject';
+import { subjectRepository } from '../../../shared/api/repository/subject.repository';
 
 const useSubjectsTab = () => {
   const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -8,7 +9,7 @@ const useSubjectsTab = () => {
   useEffect(() => {
     const loadSubjects = async () => {
       try {
-        const data = await SubjectApi.getAll();
+        const data = await subjectRepository.getAll();
         setSubjects(data);
       } catch (error: unknown) {
         if (error instanceof Error) {

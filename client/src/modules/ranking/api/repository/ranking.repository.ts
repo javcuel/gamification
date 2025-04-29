@@ -5,7 +5,7 @@ import { API_URLS } from '../../../../constants/apiUrls';
 import { IRankingRepository } from '../interface/ranking-repository.interface';
 import { RankingMapper } from '../mapper/ranking.mapper';
 
-export class RankingRepository implements IRankingRepository {
+class RankingRepository implements IRankingRepository {
   async getPlayers(): Promise<Ranking[]> {
     try {
       const data = await HttpClient.get(API_URLS.GET_P_RANKING);

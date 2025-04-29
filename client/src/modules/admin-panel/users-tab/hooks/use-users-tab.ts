@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import { User, UserApi } from '../../../../api/user';
-/** TODO: Esto igual separarlo en dos hooks, uno que haga el fetch de los usuarios y otro que haga el delete */
+import { User } from '../../../shared/api/domain/user';
+import { userRepository } from '../../../shared/api/repository/user.repository';
 
-const useUsers = () => {
+const useUsersTab = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadUsers = async () => {
       try {
-        const fetchedUsers = await UserApi.getAll();
-        setUsers(fetchedUsers);
+        const data = await userRepository.getAll();
+        setUsers(data);
       } catch (error: unknown) {
         if (error instanceof Error) {
           setError(error.message);
@@ -23,20 +23,7 @@ const useUsers = () => {
     loadUsers();
   }, []);
 
-  const deleteUser = async (userId: number) => {
-    try {
-      await UserApi.delete(userId);
-      setUsers((prev) => prev.filter((user) => user.id !== userId));
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError('An unknown error occurred');
-      }
-    }
-  };
-
-  return { users, error, deleteUser };
+  return { users, setUsers, error };
 };
 
-export default useUsers;
+export default useUsersTab;

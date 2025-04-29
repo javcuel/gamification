@@ -17,9 +17,26 @@ export class User {
    */
   constructor(
     public id: number,
-    public name: string,
-    public passwd: string,
+    public group: string,
     public role: (typeof ROLES)[keyof typeof ROLES],
+    public name: string,
+    public passwd: string
+  ) {}
+}
+
+/**
+ * Class representing a User inside the App.
+ *
+ * @class
+ */
+export class UserScore {
+  /**
+   * Creates a new User instance.
+   *
+   * @param {string} totalScore - User total score
+   * @param {number} completedSubjects - User completed subjects
+   */
+  constructor(
     public totalScore: number,
     public completedSubjects: number
   ) {}

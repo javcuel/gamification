@@ -1,19 +1,17 @@
 import { useState } from 'react';
-
-import { User } from '../../../shared/api/domain/user';
 import { userRepository } from '../../../shared/api/repository/user.repository';
 
-const useAddUser = () => {
+const useDeleteUser = (onDeleteSuccess: (id: number) => void) => {
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
 
-  const addUser = async (payload: User) => {
+  const deleteUser = async (id: number) => {
+    setLoading(true);
     setError(null);
-    setSuccess(false);
 
     try {
-      await userRepository.create(payload);
-      setSuccess(true);
+      await userRepository.delete(id);
+      onDeleteSuccess(id);
     } catch (error: unknown) {
       if (error instanceof Error) {
         setError(error.message);
@@ -23,7 +21,7 @@ const useAddUser = () => {
     }
   };
 
-  return { addUser, error, success };
+  return { deleteUser, loading, error };
 };
 
-export default useAddUser;
+export default useDeleteUser;

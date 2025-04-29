@@ -5,11 +5,10 @@
  */
 export interface UserDTO {
   IDUsuario: number;
+  Grupo: string;
+  TipoUsuario: string;
   Nombre: string;
   Contrasena: string;
-  TipoUsuario: string;
-  Puntuacion: number;
-  Completado: number;
 }
 
 /**
@@ -19,8 +18,9 @@ export interface UserDTO {
  */
 export interface UserCreateDTO {
   Nombre: string;
-  Contrasena: string;
+  Grupo: string;
   TipoUsuario: string;
+  Contrasena: string;
 }
 
 /**
@@ -30,9 +30,10 @@ export interface UserCreateDTO {
  */
 export interface UserUpdateDTO {
   IDUsuario: number;
+  Grupo: string;
+  TipoUsuario: string;
   Nombre: string;
   Contrasena: string;
-  TipoUsuario: string;
 }
 
 /**
@@ -43,4 +44,14 @@ export interface UserUpdateDTO {
 export interface UserLoginDTO {
   Nombre: string;
   Contrasena: string;
+}
+
+/**
+ * Interface representing the user data in the backend.
+ *
+ * @interface
+ */
+export interface UserScoreDTO {
+  Puntuacion: number;
+  Completado: number;
 }

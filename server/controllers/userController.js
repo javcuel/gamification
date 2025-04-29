@@ -49,13 +49,13 @@ export const getUsers = async (req, res) => {
 };
 
 // Get user total score
-export const getTotalScore = async (req, res) => {
-  const { userName } = req.user;
+export const getScore = async (req, res) => {
+  const { id } = req.params;
 
   try {
     const [rows] = await db.query(
-      "SELECT SUM(um.Puntuacion) AS totalScore, SUM(um.Completado) AS completedSubjects FROM usuarios u JOIN usuariominijuego um ON u.IDUsuario = um.IDUsuario WHERE u.Nombre = ?",
-      [userName]
+      "SELECT SUM(um.Puntuacion) AS totalScore, SUM(um.Completado) AS completedSubjects FROM usuarios u JOIN usuariominijuego um ON u.IDUsuario = um.IDUsuario WHERE u.IDUsuario = ?",
+      [id]
     );
     res.json(rows);
   } catch (error) {

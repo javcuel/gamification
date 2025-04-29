@@ -5,7 +5,7 @@ import { API_URLS } from '../../../../constants/apiUrls';
 import { IGameRepository } from '../interface/game-repository.interface';
 import { GameMapper } from '../mapper/game.mapper';
 
-export class GameRepository implements IGameRepository {
+class GameRepository implements IGameRepository {
   async getAll(idSubject: number): Promise<Game[]> {
     try {
       const data = await HttpClient.get(API_URLS.GET_GAMES(idSubject));

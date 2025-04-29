@@ -1,16 +1,17 @@
 import { useState } from 'react';
-import { SubjectApi, SubjectApiPayload } from '../../../../basura/subject';
+import { Subject } from '../../../shared/api/domain/subject';
+import { subjectRepository } from '../../../shared/api/repository/subject.repository';
 
 const useUpdateSubject = (onUpdateSuccess?: () => void) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const updateSubject = async (id: number, data: SubjectApiPayload) => {
+  const updateSubject = async (id: number, data: Subject) => {
     setLoading(true);
     setError(null);
 
     try {
-      await SubjectApi.update(id, data);
+      await subjectRepository.update(id, data);
       if (onUpdateSuccess) onUpdateSuccess();
     } catch (err: unknown) {
       if (err instanceof Error) {

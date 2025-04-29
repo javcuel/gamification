@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { UserApiPayload } from '../../../../api/user';
 import { ROLES } from '../../../../constants/roles';
+import { User } from '../../../shared/api/domain/user';
 import Button from '../../../shared/components/ui/button';
 import Dropdown from '../../../shared/components/ui/dropdown';
 import Input from '../../../shared/components/ui/input';
 import '../styles/EditModal.css';
 
 interface UserEditModalProps {
-  data: UserApiPayload;
+  data: User;
   onClose: () => void;
   onSave: (data: {
     name: string;

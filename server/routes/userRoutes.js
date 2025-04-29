@@ -1,10 +1,10 @@
 import express from "express";
 import {
   createUser,
-  updateUser,
   deleteUser,
-  getTotalScore,
+  getScore,
   getUsers,
+  updateUser,
 } from "../controllers/userController.js";
 
 const router = express.Router();
@@ -12,8 +12,8 @@ const router = express.Router();
 // Fetch all users
 router.get("/", getUsers);
 
-// Fetch user score
-router.get("/:id/totalScore", getTotalScore);
+// Fetch user
+router.get("/:id", getScore);
 
 // Creates new user
 router.post("/", createUser);

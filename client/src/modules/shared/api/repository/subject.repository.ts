@@ -5,7 +5,7 @@ import { API_URLS } from '../../../../constants/apiUrls';
 import { ISubjectRepository } from '../interface/subject-repository.interface';
 import { SubjectMapper } from '../mapper/subject.mapper';
 
-export class SubjectRepository implements ISubjectRepository {
+class SubjectRepository implements ISubjectRepository {
   async getAll(): Promise<Subject[]> {
     try {
       const data = await HttpClient.get(API_URLS.GET_SUBJECTS);

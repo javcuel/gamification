@@ -286,7 +286,8 @@ export const API_URLS = {
    */
   GET_USERS: '/users',
 
-  GET_USER_SCORE: (userId: number) => `/users/${userId}/score`,
+  GET_USER_SCORE: (userId: number) => `/users/${userId}`,
+
   /**
    * Create new user (Method POST):
    * "INSERT INTO Usuarios (Nombre, Contrasena, TipoUsuario, Grupo) VALUES (?, ?, ?, ?)"

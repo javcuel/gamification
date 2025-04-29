@@ -1,22 +1,24 @@
 import { jwtDecode } from 'jwt-decode';
 import roleService from './role-service';
 
-export interface Token {
-  id: number;
-  name: string;
-  role: string;
+export class Token {
+  constructor(
+    public id: number,
+    public name: string,
+    public role: string
+  ) {}
+}
+export interface TokenDTO {
+  IDUsuario: number;
+  Nombre: string;
+  TipoUsuario: string;
 }
 
-//TODO AQUI SE EL ESTA PASANDO UN STRING Y NO UN TOKEN NO SE SI ESTO ES ASI
 export const decodeToken = (token: string): Token | null => {
   try {
-    const decoded: Token = jwtDecode(token);
-    if (roleService.isValidRole(decoded.role)) {
-      return {
-        id: decoded.id,
-        name: decoded.name,
-        role: decoded.role,
-      };
+    const decoded: TokenDTO = jwtDecode(token);
+    if (roleService.isValidRole(decoded.TipoUsuario)) {
+      return new Token(decoded.IDUsuario, decoded.Nombre, decoded.TipoUsuario);
     }
     return null;
   } catch (error) {

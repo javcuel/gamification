@@ -1,5 +1,10 @@
 import { User } from '../domain/user';
 
+export type UserScore = {
+  totalScore: number;
+  completedSubjects: number;
+};
+
 export interface IUserRepository {
   getAll(): Promise<User[]>;
   create(data: User): Promise<void>;

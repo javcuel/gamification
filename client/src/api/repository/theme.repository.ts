@@ -5,7 +5,7 @@ import HttpClient from '../http-client';
 import { IThemeRepository } from '../interface/theme-repository.interface';
 import { ThemeMapper } from '../mapper/theme.mapper';
 
-export class ThemeRepository implements IThemeRepository {
+class ThemeRepository implements IThemeRepository {
   async get(): Promise<Theme> {
     try {
       const data = await HttpClient.get(API_URLS.GET_THEME);

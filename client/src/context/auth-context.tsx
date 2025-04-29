@@ -53,7 +53,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     name: string,
     passwd: string
   ): Promise<{ success: boolean; role?: string }> => {
-    const user = new User(0, name, passwd, 'Usuario', 0, 0); // 'Usuario' por defecto (no importa en login)
+    const user = new User(0, name, passwd, 'Usuario', 0, 0);
 
     const result = await userRepository.login(user);
 
