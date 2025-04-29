@@ -22,7 +22,7 @@ export interface GameDTO {
  *
  * @interface
  */
-export interface GameRequestDTO {
+export interface GameCreateDTO {
   IDMundo: number;
   Nombre: string;
   UrlImagen: string;
@@ -30,21 +30,14 @@ export interface GameRequestDTO {
 }
 
 /**
- * Interface representing payload for updating the open state of a game.
+ * Interface representing payload for updating a game.
  *
  * @interface
  */
-export interface GameApiOpenStateRequestDTO {
+export interface GameUpdateDTO {
   IDMinijuego: number;
-  Abierto: boolean;
-}
-
-/**
- * Interface representing payload for updating the visible state of a game.
- *
- * @interface
- */
-export interface GameApiVisibleStateRequestDTO {
-  IDMinijuego: number;
-  Visible: boolean;
+  IDMundo: number;
+  Nombre: string;
+  UrlImagen: string;
+  PuntuacionMaxima: number;
 }

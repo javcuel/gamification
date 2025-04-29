@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { SubjectApiPayload } from '../../../../basura/subject';
 import Button from '../../../shared/components/ui/button';
 import Input from '../../../shared/components/ui/input';
 import '../../styles/edit-modal.css';
+import { Subject } from '../../../shared/api/domain/subject';
 
 interface SubjectEditModalProps {
-  data: SubjectApiPayload;
+  data: Subject;
   onClose: () => void;
   onSave: (data: { name: string; img: string; imgBackground: string }) => void;
 }

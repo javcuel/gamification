@@ -19,7 +19,7 @@ interface HttpClientOptions {
  * @returns {Promise<any>} A promise that resolves with the response data.
  * @throws {Error} Throws an error if the request fails.
  */
-const httpClient = {
+const HttpClient = {
   request: async (url: string, options: HttpClientOptions) => {
     try {
       const response = await fetch(`${API_URLS.BASE_URL}${url}`, {
@@ -51,7 +51,7 @@ const httpClient = {
    * @returns {Promise<any>} A promise that resolves with the response data.
    */
   get: (url: string, headers: Record<string, string> = {}) =>
-    httpClient.request(url, { method: 'GET', headers }),
+    HttpClient.request(url, { method: 'GET', headers }),
 
   /**
    * Sends a POST request.
@@ -62,7 +62,7 @@ const httpClient = {
    * @returns {Promise<any>} A promise that resolves with the response data.
    */
   post: (url: string, body: unknown, headers: Record<string, string> = {}) =>
-    httpClient.request(url, { method: 'POST', headers, body }),
+    HttpClient.request(url, { method: 'POST', headers, body }),
 
   /**
    * Sends a DELETE request.
@@ -72,7 +72,7 @@ const httpClient = {
    * @returns {Promise<any>} A promise that resolves when the deletion is successful.
    */
   delete: (url: string, headers: Record<string, string> = {}) =>
-    httpClient.request(url, { method: 'DELETE', headers }),
+    HttpClient.request(url, { method: 'DELETE', headers }),
 
   /**
    * Sends a PUT request.
@@ -83,7 +83,7 @@ const httpClient = {
    * @returns {Promise<any>} A promise that resolves with the updated response data.
    */
   put: (url: string, body: unknown, headers: Record<string, string> = {}) =>
-    httpClient.request(url, { method: 'PUT', headers, body }),
+    HttpClient.request(url, { method: 'PUT', headers, body }),
 };
 
-export default httpClient;
+export default HttpClient;

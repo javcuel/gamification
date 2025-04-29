@@ -1,7 +1,7 @@
 import { User } from '../domain/user';
 
 import { NavigateFunction } from 'react-router/dist';
-import httpClient from '../../../../api/httpClient';
+import HttpClient from '../../../../api/http-client';
 import { API_URLS } from '../../../../constants/apiUrls';
 import { ROUTES } from '../../../../constants/routes';
 import { IUserRepository } from '../interface/user-repository.interface';
@@ -10,7 +10,7 @@ import { UserMapper } from '../mapper/user.mapper';
 export class UserRepository implements IUserRepository {
   async getAll(): Promise<User[]> {
     try {
-      const data = await httpClient.get(API_URLS.GET_USERS);
+      const data = await HttpClient.get(API_URLS.GET_USERS);
       return data.map(UserMapper.toDomain);
     } catch (error) {
       console.error('Error fetching users', error);
@@ -19,10 +19,10 @@ export class UserRepository implements IUserRepository {
   }
 
   async create(data: User): Promise<void> {
-    const requestDTO = UserMapper.toRequestDTO(data);
+    const requestDTO = UserMapper.toCreateDTO(data);
 
     try {
-      await httpClient.post(API_URLS.CREATE_USER, requestDTO);
+      await HttpClient.post(API_URLS.CREATE_USER, requestDTO);
     } catch (error) {
       console.error('Error creating new user:', error);
       throw new Error('Failed to create new user');
@@ -30,10 +30,10 @@ export class UserRepository implements IUserRepository {
   }
 
   async update(id: number, data: User): Promise<void> {
-    const requestDTO = UserMapper.toRequestDTO(data);
+    const requestDTO = UserMapper.toUpdateDTO(data);
 
     try {
-      await httpClient.put(API_URLS.UPDATE_USER(id), requestDTO);
+      await HttpClient.put(API_URLS.UPDATE_USER(id), requestDTO);
     } catch (error) {
       console.error(`Error updating user (ID: ${id}):`, error);
       throw new Error('Failed to update user');
@@ -42,7 +42,7 @@ export class UserRepository implements IUserRepository {
 
   async delete(id: number): Promise<void> {
     try {
-      await httpClient.delete(API_URLS.DELETE_USER(id));
+      await HttpClient.delete(API_URLS.DELETE_USER(id));
     } catch (error) {
       console.error(`Error deleting user (ID: ${id}):`, error);
       throw new Error('Failed to delete user');
@@ -55,7 +55,7 @@ export class UserRepository implements IUserRepository {
     const requestLoginDTO = UserMapper.toRequestLoginDTO(data);
 
     try {
-      const response = await httpClient.post(API_URLS.LOGIN, requestLoginDTO);
+      const response = await HttpClient.post(API_URLS.LOGIN, requestLoginDTO);
       return { success: true, token: response.token };
     } catch (error) {
       console.error('Error logging in:', error);

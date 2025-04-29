@@ -1,6 +1,6 @@
 import { Game } from '../domain/game';
 
-import { GameDTO, GameRequestDTO } from '../dto/game.dto';
+import { GameDTO, GameCreateDTO, GameUpdateDTO } from '../dto/game.dto';
 
 export class GameMapper {
   static toDomain(dto: GameDTO): Game {
@@ -35,8 +35,18 @@ export class GameMapper {
     };
   }
 
-  static toRequestDTO(game: Game): GameRequestDTO {
+  static toCreateDTO(game: Game): GameCreateDTO {
     return {
+      IDMundo: game.idSubject,
+      Nombre: game.name,
+      UrlImagen: game.img,
+      PuntuacionMaxima: game.maxScore,
+    };
+  }
+
+  static toUpdateDTO(game: Game): GameUpdateDTO {
+    return {
+      IDMinijuego: game.id,
       IDMundo: game.idSubject,
       Nombre: game.name,
       UrlImagen: game.img,

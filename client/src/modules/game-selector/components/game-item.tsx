@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Game } from '../../shared/api/domain/game';
 import { ROUTES } from '../../../constants/routes';
 
+import '../../shared/styles/game-item.css';
+
 interface GameProps {
   game: Game;
 }
@@ -29,18 +31,16 @@ const GameItem: React.FC<GameProps> = ({ game }) => {
     navigate(ROUTES.PLAY(game.id));
   };
 
-  const gameClassName = game.isOpen
-    ? 'image-container'
-    : 'image-container-disabled';
+  const gameClassName = game.isOpen ? 'game-item' : 'game-item-disabled';
 
   return (
     <div className={gameClassName} onClick={() => handleClick()}>
       <img
-        className="button-img"
+        className="game-item-img"
         src={game.img || '/images/no_image.jpg'}
         alt={game.name}
       ></img>
-      <div className="image-overlay">
+      <div className="game-item-img-overlay">
         <p>{game.isOpen ? game.name : '🔒'}</p>
       </div>
     </div>

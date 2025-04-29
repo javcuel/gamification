@@ -17,7 +17,19 @@ export interface UserDTO {
  *
  * @interface
  */
-export interface UserRequestDTO {
+export interface UserCreateDTO {
+  Nombre: string;
+  Contrasena: string;
+  TipoUsuario: string;
+}
+
+/**
+ * Interface representing payload for updating a user.
+ *
+ * @interface
+ */
+export interface UserUpdateDTO {
+  IDUsuario: number;
   Nombre: string;
   Contrasena: string;
   TipoUsuario: string;
@@ -28,7 +40,7 @@ export interface UserRequestDTO {
  *
  * @interface
  */
-export interface UserRequestLoginDTO {
+export interface UserLoginDTO {
   Nombre: string;
   Contrasena: string;
 }

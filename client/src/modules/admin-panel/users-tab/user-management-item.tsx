@@ -1,7 +1,7 @@
 import { faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { User } from '../../../api/user';
+import { User } from '../../shared/api/domain/user';
 import './styles/user-management-item.css';
 
 interface UserManagementItemProps {

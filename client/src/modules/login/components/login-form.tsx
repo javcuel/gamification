@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { z } from 'zod';
 
 import { ROUTES } from '../../../constants/routes';
 import { useAuth } from '../../../context/auth-context';
@@ -23,9 +24,16 @@ import Input from '../../shared/components/ui/input';
 const LoginForm: React.FC = () => {
   const [user, setUser] = useState<string>('');
   const [passwd, setPasswd] = useState<string>('');
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   const { loginRequest, error } = useAuth();
   const navigate = useNavigate();
+
+  // Forma validation schema
+  const loginSchema = z.object({
+    user: z.string().min(1, 'User is required'),
+    passwd: z.string().min(1, 'Password is required'),
+  });
 
   /**
    * Handles changes to the username input field.
@@ -51,6 +59,18 @@ const LoginForm: React.FC = () => {
    */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    setValidationError(null);
+
+    const validationResult = loginSchema.safeParse({ user, passwd });
+
+    if (!validationResult.success) {
+      const firstError =
+        validationResult.error.errors[0]?.message || 'Unknown error';
+      setValidationError(firstError);
+      return;
+    }
+
     const result = await loginRequest(user, passwd);
     if (result.success && result.role) {
       navigate(ROUTES.HOME);
@@ -77,6 +97,7 @@ const LoginForm: React.FC = () => {
       />
       <Button text="Login" />
       {error && <ErrorMsg message={error}></ErrorMsg>}
+      {validationError && <ErrorMsg message={validationError}></ErrorMsg>}
     </form>
   );
 };

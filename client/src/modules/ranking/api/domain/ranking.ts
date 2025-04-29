@@ -7,10 +7,10 @@ export class Ranking {
   /**
    * Creates a new Ranking instance.
    *
-   * @param {number} userName
-   * @param {string} userGroup
-   * @param {string} userCompletedSubjects
-   * @param {string} userTotalScore
+   * @param {string} userName - User Name
+   * @param {string} userGroup - User group name
+   * @param {string} userCompletedSubjects - Completed subjects of the user
+   * @param {string} userTotalScore - Total score of the user
    */
   constructor(
     public userName: string,

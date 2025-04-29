@@ -1,6 +1,11 @@
 import { User } from '../domain/user';
 
-import { UserDTO, UserRequestDTO, UserRequestLoginDTO } from '../dto/user.dto';
+import {
+  UserDTO,
+  UserCreateDTO,
+  UserUpdateDTO,
+  UserLoginDTO,
+} from '../dto/user.dto';
 
 export class UserMapper {
   static toDomain(dto: UserDTO): User {
@@ -25,7 +30,7 @@ export class UserMapper {
     };
   }
 
-  static toRequestDTO(user: User): UserRequestDTO {
+  static toCreateDTO(user: User): UserCreateDTO {
     return {
       Nombre: user.name,
       Contrasena: user.passwd,
@@ -33,7 +38,16 @@ export class UserMapper {
     };
   }
 
-  static toRequestLoginDTO(user: User): UserRequestLoginDTO {
+  static toUpdateDTO(user: User): UserUpdateDTO {
+    return {
+      IDUsuario: user.id,
+      Nombre: user.name,
+      Contrasena: user.passwd,
+      TipoUsuario: user.role,
+    };
+  }
+
+  static toLoginDTO(user: User): UserLoginDTO {
     return {
       Nombre: user.name,
       Contrasena: user.passwd,

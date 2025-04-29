@@ -8,7 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
-import { Subject } from '../../../../basura/subject';
+import { Subject } from '../../../shared/api/domain/subject';
 import useDeleteSubject from '../hooks/use-delete-subject';
 import useUpdateSubject from '../hooks/use-edit-subject';
 import useExpandSubject from '../hooks/use-expand-subject';
@@ -57,7 +57,7 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
     loading: updateLoading,
     error: updateError,
   } = useUpdateSubject(() => {
-    setIsEditing(false); // o también podrías refetchear la lista
+    setIsEditing(false);
   });
 
   const {

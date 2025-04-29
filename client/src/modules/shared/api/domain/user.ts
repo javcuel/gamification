@@ -9,11 +9,11 @@ export class User {
   /**
    * Creates a new User instance.
    *
-   * @param {number} id
-   * @param {string} name
-   * @param {string} role
-   * @param {string} totalScore
-   * @param {number} completedSubjects
+   * @param {number} id - User identifier
+   * @param {string} name - User name
+   * @param {string} role - User role
+   * @param {string} totalScore - User total score
+   * @param {number} completedSubjects - User completed subjects
    */
   constructor(
     public id: number,

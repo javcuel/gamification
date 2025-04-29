@@ -1,8 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Subject } from '../../../basura/subject';
+import { Subject } from '../../shared/api/domain/subject';
 import { ROUTES } from '../../../constants/routes';
+
+import '../../shared/styles/subject-item.css';
 
 interface SubjectProps {
   subject: Subject;
@@ -30,17 +32,17 @@ const SubjectItem: React.FC<SubjectProps> = ({ subject }) => {
   };
 
   const subjectClassName = subject.isOpen
-    ? 'image-container'
-    : 'image-container-disabled';
+    ? 'subject-item'
+    : 'subject-item-disabled';
 
   return (
     <div className={subjectClassName} onClick={() => handleClick()}>
       <img
-        className="button-img"
+        className="subject-item-img"
         src={subject.img || '/images/no_image.jpg'}
         alt={subject.name}
       ></img>
-      <div className="image-overlay">
+      <div className="subject-item-img-overlay">
         <p>{subject.isOpen ? subject.name : '🔒'}</p>
       </div>
     </div>
