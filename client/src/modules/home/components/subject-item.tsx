@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Subject } from '../../shared/api/domain/subject';
 import { ROUTES } from '../../../constants/routes';
+import { Subject } from '../../shared/api/domain/subject';
 
-import '../../shared/styles/subject-item.css';
+import '../styles/subject-item.css';
 
 interface SubjectProps {
   subject: Subject;

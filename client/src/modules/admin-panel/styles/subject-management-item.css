@@ -11,17 +11,17 @@
 .subject-management-item-image {
   border-radius: 10%;
   opacity: 1;
-  /* 
+
   transition:
     opacity 0.8s ease,
-    transform 0.8s ease; */
+    transform 0.8s ease;
 }
 
-/* .subject-management-item-image:hover {
+.subject-management-item-image:hover {
   opacity: 1;
 
   transform: scale(2);
-} */
+}
 
 .subject-management-item-button {
   padding: 15px 15px;

@@ -38,6 +38,28 @@ class GameRepository implements IGameRepository {
     }
   }
 
+  async updateOpen(id: number, newState: boolean): Promise<void> {
+    const requestDTO = GameMapper.toUpdateOpenDTO(newState);
+
+    try {
+      await HttpClient.put(API_URLS.UPDATE_SUBJECT_OPEN(id), requestDTO);
+    } catch (error) {
+      console.error(`Error updating game (ID: ${id}):`, error);
+      throw new Error('Failed to update open state.');
+    }
+  }
+
+  async updateVisible(id: number, newState: boolean): Promise<void> {
+    const requestDTO = GameMapper.toUpdateVisibleDTO(newState);
+
+    try {
+      await HttpClient.put(API_URLS.UPDATE_SUBJECT_VISIBLE(id), requestDTO);
+    } catch (error) {
+      console.error(`Error updating game (ID: ${id}):`, error);
+      throw new Error('Failed to update visible state.');
+    }
+  }
+
   async delete(id: number): Promise<void> {
     try {
       await HttpClient.delete(API_URLS.DELETE_GAME(id));

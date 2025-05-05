@@ -1,17 +1,17 @@
 import { useState } from 'react';
-import { Subject } from '../../../shared/api/domain/subject';
-import { subjectRepository } from '../../../shared/api/repository/subject.repository';
+import { Game } from '../../../shared/api/domain/game';
+import { gameRepository } from '../../../shared/api/repository/game.repository';
 
-const useUpdateSubject = (onSuccess?: () => void) => {
+const useUpdateGame = (onSuccess?: () => void) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const updateSubject = async (subject: Subject, data) => {
+  const updateGame = async (game: Game) => {
     try {
       setLoading(true);
       setError(null);
 
-      await subjectRepository.update(subject.id, data);
+      await gameRepository.update(game.id, game);
 
       onSuccess?.();
     } catch (err) {
@@ -26,10 +26,10 @@ const useUpdateSubject = (onSuccess?: () => void) => {
   };
 
   return {
-    updateSubject,
+    updateGame,
     loading,
     error,
   };
 };
 
-export default useUpdateSubject;
+export default useUpdateGame;

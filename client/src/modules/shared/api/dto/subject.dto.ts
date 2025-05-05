@@ -35,3 +35,21 @@ export interface SubjectUpdateDTO {
   UrlImgMundo: string;
   UrlImgDentro: string;
 }
+
+/**
+ * Interface representing payload for updating a subject open state.
+ *
+ * @interface
+ */
+export interface SubjectUpdateOpenDTO {
+  Abierto: boolean;
+}
+
+/**
+ * Interface representing payload for updating a subject visible state.
+ *
+ * @interface
+ */
+export interface SubjectUpdateVisibleDTO {
+  Visible: boolean;
+}

@@ -1,33 +1,56 @@
+import {
+  faEye,
+  faEyeSlash,
+  faLock,
+  faPencilAlt,
+  faTimes,
+  faUnlock,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 
 import '../../styles/button.css';
 
-void React;
-
 interface ButtonProps {
-  text: string;
+  text?: string;
   onClick?: () => void;
+  type?: 'edit' | 'delete' | 'lock' | 'unlock' | 'visible' | 'hidden';
+  disabled?: boolean;
 }
 
 /**
- * A simple button component that accepts a `text` prop to display the button's label
- * and an optional `onClick` handler to define the button's click behavior.
+ * A flexible button component that can render either text or an icon based on the `type` prop.
  *
  * @component
  * @example
- * // Example usage
- * <Button text="Click me" onClick={() => console.log('Button clicked')} />
- *
- * @param {Object} props - The properties passed to the component.
- * @param {string} props.text - The label of the button.
- * @param {Function} [props.onClick] - Optional function that is called when the button is clicked.
- *
- * @returns {JSX.Element} A button element with the specified text and click handler.
+ * <Button type="edit" onClick={handleEdit} />
+ * <Button text="Click me" onClick={handleClick} />
  */
-const Button: React.FC<ButtonProps> = ({ text, onClick }) => {
+const Button: React.FC<ButtonProps> = ({ text, onClick, type, disabled }) => {
+  const getIcon = () => {
+    switch (type) {
+      case 'edit':
+        return faPencilAlt;
+      case 'delete':
+        return faTimes;
+      case 'lock':
+        return faLock;
+      case 'unlock':
+        return faUnlock;
+      case 'visible':
+        return faEye;
+      case 'hidden':
+        return faEyeSlash;
+      default:
+        return null;
+    }
+  };
+
+  const icon = getIcon();
+
   return (
-    <button className="button" onClick={onClick}>
-      {text}
+    <button className="button" onClick={onClick} disabled={disabled}>
+      {icon ? <FontAwesomeIcon icon={icon} /> : text}
     </button>
   );
 };

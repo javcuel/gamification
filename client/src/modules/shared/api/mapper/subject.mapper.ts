@@ -1,9 +1,11 @@
 import { Subject } from '../domain/subject';
 
 import {
-  SubjectDTO,
   SubjectCreateDTO,
+  SubjectDTO,
   SubjectUpdateDTO,
+  SubjectUpdateOpenDTO,
+  SubjectUpdateVisibleDTO,
 } from '../dto/subject.dto';
 
 export class SubjectMapper {
@@ -45,6 +47,17 @@ export class SubjectMapper {
       Nombre: subject.name,
       UrlImgMundo: subject.img,
       UrlImgDentro: subject.imgBackground,
+    };
+  }
+
+  static toUpdateOpenDTO(newState: boolean): SubjectUpdateOpenDTO {
+    return {
+      Abierto: newState,
+    };
+  }
+  static toUpdateVisibleDTO(newState: boolean): SubjectUpdateVisibleDTO {
+    return {
+      Visible: newState,
     };
   }
 }

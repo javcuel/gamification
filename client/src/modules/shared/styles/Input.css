@@ -10,12 +10,15 @@
 
   letter-spacing: 1px;
 
-  transition: background-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .input:focus {
   outline: none;
-  background-color: color-mix(in srgb, var(--primary) 50%, transparent);
+  background-color: color-mix(in srgb, var(--secondary) 20%, transparent);
+  box-shadow: 0 0 0 1px var(--text);
 }
 
 .input::placeholder {
@@ -29,7 +32,7 @@
 
   background-color: var(--primary);
   color: var(--text);
-  border: none;
+  border: solid 2px var(--text);
   border-radius: 15px;
 
   letter-spacing: 1px;
@@ -46,4 +49,5 @@
 .input::placeholder {
   color: var(--text);
   opacity: 0.4;
-} */
+}
+ */

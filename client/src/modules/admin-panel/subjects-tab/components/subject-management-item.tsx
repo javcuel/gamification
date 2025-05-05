@@ -1,14 +1,6 @@
-import {
-  faEye,
-  faEyeSlash,
-  faLock,
-  faPencilAlt,
-  faTimes,
-  faUnlock,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { Subject } from '../../../shared/api/domain/subject';
+import Button from '../../../shared/components/ui/button';
 import useDeleteSubject from '../hooks/use-delete-subject';
 import useUpdateSubject from '../hooks/use-edit-subject';
 import useExpandSubject from '../hooks/use-expand-subject';
@@ -97,35 +89,18 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
           />
           {subject.name}
         </div>
-        <div>
-          <button
-            className="subject-management-item-button"
-            onClick={toggleOpenState}
-          >
-            <FontAwesomeIcon icon={isOpen ? faUnlock : faLock} />
-          </button>
-
-          <button
-            className="subject-management-item-button"
+        <div className="d-flex flex-wrap gap-1">
+          <Button type={isOpen ? 'unlock' : 'lock'} onClick={toggleOpenState} />
+          <Button
+            type={isVisible ? 'visible' : 'hidden'}
             onClick={toggleVisibleState}
-          >
-            <FontAwesomeIcon icon={isVisible ? faEye : faEyeSlash} />
-          </button>
-
-          <button
-            className="subject-management-item-button"
-            onClick={handleEditClick}
-          >
-            <FontAwesomeIcon icon={faPencilAlt} />
-          </button>
-
-          <button
-            className="subject-management-item-button"
+          />
+          <Button type="edit" onClick={handleEditClick} />
+          <Button
+            type="delete"
             onClick={handleDeleteClick}
             disabled={deleteLoading}
-          >
-            <FontAwesomeIcon icon={faTimes} />
-          </button>
+          />
         </div>
       </div>
 

@@ -41,3 +41,21 @@ export interface GameUpdateDTO {
   UrlImagen: string;
   PuntuacionMaxima: number;
 }
+
+/**
+ * Interface representing payload for updating a game open state.
+ *
+ * @interface
+ */
+export interface GameUpdateOpenDTO {
+  Abierto: boolean;
+}
+
+/**
+ * Interface representing payload for updating a game visible state.
+ *
+ * @interface
+ */
+export interface GameUpdateVisibleDTO {
+  Visible: boolean;
+}

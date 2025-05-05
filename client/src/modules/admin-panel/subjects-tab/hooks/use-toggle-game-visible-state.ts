@@ -10,12 +10,7 @@ const useToggleGameVisibleState = (game: Game) => {
     try {
       const newState = !isVisible;
 
-      const payload: Game = {
-        ...game,
-        isVisible: newState,
-      };
-
-      await gameRepository.update(game.id, payload);
+      await gameRepository.updateVisible(game.id, newState);
       setIsVisible(newState);
     } catch (error: unknown) {
       if (error instanceof Error) {

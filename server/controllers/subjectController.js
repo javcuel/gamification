@@ -13,16 +13,16 @@ export const getSubjects = async (req, res) => {
 
 // Creates a new subject
 export const createSubject = async (req, res) => {
-  const { name, img, imgBackground } = req.body;
+  const { Nombre, UrlImgMundo, UrlImgDentro } = req.body;
 
-  if (!name || !img || !imgBackground) {
+  if (!Nombre || !UrlImgMundo || !UrlImgDentro) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
   try {
     const [result] = await db.query(
       "INSERT INTO Mundos (Nombre, UrlImgMundo, UrlImgDentro, Posicion, Abierto, Visible) VALUES (?, ?, ?, ?, ?, ?)",
-      [name, img, imgBackground, 0, 0, 0] // Defaults: position = 0, open = false, visible = false
+      [Nombre, UrlImgMundo, UrlImgDentro, 0, 0, 0] // Defaults: position = 0, open = false, visible = false
     );
     res
       .status(201)
@@ -36,16 +36,16 @@ export const createSubject = async (req, res) => {
 // Update subject data
 export const updateSubject = async (req, res) => {
   const { id } = req.params;
-  const { name, img, imgBackground } = req.body;
+  const { Nombre, UrlImgMundo, UrlImgDentro } = req.body;
 
-  if (!name || !img || !imgBackground) {
+  if (!Nombre || !UrlImgMundo || !UrlImgDentro) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
   try {
     await db.query(
       "UPDATE Mundos SET Nombre = ?, UrlImgMundo = ?, UrlImgDentro = ? WHERE IDMundo = ?",
-      [name, img, imgBackground, id]
+      [Nombre, UrlImgMundo, UrlImgDentro, id]
     );
     res.json({ message: "Subject updated successfully" });
   } catch (error) {
@@ -57,11 +57,11 @@ export const updateSubject = async (req, res) => {
 // Toggle open/closed subject state
 export const updateSubjectOpenState = async (req, res) => {
   const { id } = req.params;
-  const { isOpen } = req.body;
+  const { Abierto } = req.body;
 
   try {
     await db.query("UPDATE Mundos SET Abierto = ? WHERE IDMundo = ?", [
-      isOpen ? 1 : 0,
+      Abierto ? 1 : 0,
       id,
     ]);
     res.json({ message: "Subject open state updated successfully" });
@@ -74,11 +74,11 @@ export const updateSubjectOpenState = async (req, res) => {
 // Toggle visible/hidden subject state
 export const updateSubjectVisibleState = async (req, res) => {
   const { id } = req.params;
-  const { isVisible } = req.body;
+  const { Visible } = req.body;
 
   try {
     await db.query("UPDATE Mundos SET Visible = ? WHERE IDMundo = ?", [
-      isVisible ? 1 : 0,
+      Visible ? 1 : 0,
       id,
     ]);
     res.json({ message: "Subject Visible state updated successfully" });

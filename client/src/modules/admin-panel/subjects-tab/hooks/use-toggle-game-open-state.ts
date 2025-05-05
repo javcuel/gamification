@@ -10,12 +10,7 @@ const useToggleGameOpenState = (game: Game) => {
     try {
       const newState = !isOpen;
 
-      const payload: Game = {
-        ...game,
-        isOpen: newState,
-      };
-
-      await gameRepository.update(game.id, payload);
+      await gameRepository.updateOpen(game.id, newState);
       setIsOpen(newState);
     } catch (error: unknown) {
       if (error instanceof Error) {

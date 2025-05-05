@@ -3,16 +3,17 @@
 
   background-color: var(--secondary);
   color: var(--text);
-  border: none;
+  border: 2px solid transparent;
   border-radius: 15px;
 
   letter-spacing: 1px;
 
   transition:
     background-color 0.3s ease,
-    filter 0.3s ease;
+    border-color 0.3s ease;
 }
 
 .button:hover {
-  filter: brightness(1.2);
+  border-color: var(--text);
+  background-color: color-mix(in srgb, var(--secondary) 40%, transparent);
 }

@@ -76,7 +76,7 @@ class UserRepository implements IUserRepository {
       console.error('Error logging in:', error);
       return {
         success: false,
-        message: 'Failed to log in',
+        message: ' Wrong Credentials',
       };
     }
   }

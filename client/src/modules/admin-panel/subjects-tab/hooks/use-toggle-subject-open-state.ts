@@ -10,12 +10,7 @@ const useToggleSubjectOpenState = (subject: Subject) => {
     try {
       const newState = !isOpen;
 
-      const payload: Subject = {
-        ...subject,
-        isOpen: newState,
-      };
-
-      await subjectRepository.update(subject.id, payload);
+      await subjectRepository.updateOpen(subject.id, newState);
       setIsOpen(newState);
     } catch (error: unknown) {
       if (error instanceof Error) {

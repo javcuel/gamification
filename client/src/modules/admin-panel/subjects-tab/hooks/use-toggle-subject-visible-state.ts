@@ -10,12 +10,7 @@ const useToggleSubjectVisibleState = (subject: Subject) => {
     try {
       const newState = !isVisible;
 
-      const payload: Subject = {
-        ...subject,
-        isVisible: newState,
-      };
-
-      await subjectRepository.update(subject.id, payload);
+      await subjectRepository.updateVisible(subject.id, newState);
       setIsVisible(newState);
     } catch (error: unknown) {
       if (error instanceof Error) {

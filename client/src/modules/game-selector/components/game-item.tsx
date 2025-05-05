@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Game } from '../../shared/api/domain/game';
 import { ROUTES } from '../../../constants/routes';
+import { Game } from '../../shared/api/domain/game';
 
-import '../../shared/styles/game-item.css';
+import '../styles/game-item.css';
 
 interface GameProps {
   game: Game;
