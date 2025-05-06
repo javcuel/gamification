@@ -6,26 +6,23 @@ import ErrorMsg from '../../shared/components/ui/error-msg';
 import Input from '../../shared/components/ui/input';
 import SuccessMsg from '../../shared/components/ui/success-msg';
 import '../styles/admin-add-card.css';
-import useAddUser from './hooks/use-add-user';
+import useCreateUser from './hooks/use-create-user';
+import { User } from '../../shared/api/domain/user';
+import LoadingMsg from '../../shared/components/ui/loading-msg';
 
-const AdminAddUserTab: React.FC = () => {
+const CreateUserTab: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [passwd, setPasswd] = useState<string>('');
   const [role, setRole] = useState(ROLES.PLAYER);
   const [group, setGroup] = useState<string>('');
-  const { addUser, error, success } = useAddUser();
+  const { createUser, error, success, loading } = useCreateUser();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const payload = {
-      name,
-      passwd,
-      role,
-      group,
-    };
+    const newUser = new User(0, group, role, name, passwd);
 
-    await addUser(payload);
+    await createUser(newUser);
 
     setName('');
     setPasswd('');
@@ -39,7 +36,7 @@ const AdminAddUserTab: React.FC = () => {
       className="d-flex flex-column align-items-center justify-content-center gap-3 mx-auto"
       style={{ width: '100%' }}
     >
-      <h3 className="text-center mb-4">Add User</h3>
+      <h3 className="text-center mb-4">Create User</h3>
       <Input
         placeholder="New User"
         type="text"
@@ -69,12 +66,13 @@ const AdminAddUserTab: React.FC = () => {
         value={group}
         onChange={(e) => setGroup(e.target.value)}
       />
-      <Button text="Add User" />
+      <Button text="Create" />
 
       {error && <ErrorMsg message={error}></ErrorMsg>}
       {success && <SuccessMsg message={'User created'}></SuccessMsg>}
+      {loading && <LoadingMsg message="Creating new user..."></LoadingMsg>}
     </form>
   );
 };
 
-export default AdminAddUserTab;
+export default CreateUserTab;

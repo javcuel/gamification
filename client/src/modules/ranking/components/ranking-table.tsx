@@ -15,7 +15,6 @@ const RankingTable: React.FC = () => {
 
   const { rankings, error, loading } = useRankings(rankingType, selectedGame);
 
-  // TODO: Opciones de juegos disponibles (esto lo adaptas a tu backend o fuente de datos)
   const gameOptions = [
     { id: 120, name: 'Apilas' },
     { id: 94, name: 'Apuntados' },

@@ -2,16 +2,17 @@ import { useState } from 'react';
 import { Subject } from '../../../shared/api/domain/subject';
 import { subjectRepository } from '../../../shared/api/repository/subject.repository';
 
-const useAddSubject = () => {
+const useCreateSubject = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const addSubject = async (payload: Subject) => {
+  const createSubject = async (data: Subject) => {
     setError(null);
     setSuccess(false);
 
     try {
-      await subjectRepository.create(payload);
+      await subjectRepository.create(data);
       setSuccess(true);
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -19,10 +20,12 @@ const useAddSubject = () => {
       } else {
         setError('An unknown error occurred');
       }
+    } finally {
+      setLoading(false);
     }
   };
 
-  return { addSubject, error, success };
+  return { createSubject, error, success, loading };
 };
 
-export default useAddSubject;
+export default useCreateSubject;

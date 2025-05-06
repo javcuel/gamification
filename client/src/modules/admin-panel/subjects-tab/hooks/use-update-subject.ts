@@ -2,19 +2,18 @@ import { useState } from 'react';
 import { Subject } from '../../../shared/api/domain/subject';
 import { subjectRepository } from '../../../shared/api/repository/subject.repository';
 
-const useUpdateSubject = (onSuccess?: () => void) => {
+const useUpdateSubject = (onUpdateSuccess?: () => void) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const updateSubject = async (subject: Subject, data) => {
+  const updateSubject = async (id: number, data: Subject) => {
+    setLoading(true);
+    setError(null);
+
     try {
-      setLoading(true);
-      setError(null);
-
-      await subjectRepository.update(subject.id, data);
-
-      onSuccess?.();
-    } catch (err) {
+      await subjectRepository.update(id, data);
+      if (onUpdateSuccess) onUpdateSuccess();
+    } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
       } else {
@@ -25,11 +24,7 @@ const useUpdateSubject = (onSuccess?: () => void) => {
     }
   };
 
-  return {
-    updateSubject,
-    loading,
-    error,
-  };
+  return { updateSubject, loading, error };
 };
 
 export default useUpdateSubject;

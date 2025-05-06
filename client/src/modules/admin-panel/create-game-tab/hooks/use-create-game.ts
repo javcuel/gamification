@@ -2,16 +2,17 @@ import { useState } from 'react';
 import { Game } from '../../../shared/api/domain/game';
 import { gameRepository } from '../../../shared/api/repository/game.repository';
 
-const useAddGame = () => {
+const useCreateGame = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const addGame = async (payload: Game) => {
+  const createGame = async (data: Game) => {
     setError(null);
     setSuccess(false);
 
     try {
-      await gameRepository.create(payload);
+      await gameRepository.create(data);
       setSuccess(true);
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -19,10 +20,12 @@ const useAddGame = () => {
       } else {
         setError('An unknown error occurred');
       }
+    } finally {
+      setLoading(false);
     }
   };
 
-  return { addGame, error, success };
+  return { createGame, error, success, loading };
 };
 
-export default useAddGame;
+export default useCreateGame;

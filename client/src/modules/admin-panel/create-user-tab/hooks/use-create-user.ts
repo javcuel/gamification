@@ -1,18 +1,18 @@
 import { useState } from 'react';
-
 import { User } from '../../../shared/api/domain/user';
 import { userRepository } from '../../../shared/api/repository/user.repository';
 
-const useAddUser = () => {
+const useCreateUser = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const addUser = async (payload: User) => {
+  const createUser = async (data: User) => {
     setError(null);
     setSuccess(false);
 
     try {
-      await userRepository.create(payload);
+      await userRepository.create(data);
       setSuccess(true);
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -20,10 +20,12 @@ const useAddUser = () => {
       } else {
         setError('An unknown error occurred');
       }
+    } finally {
+      setLoading(false);
     }
   };
 
-  return { addUser, error, success };
+  return { createUser, error, success, loading };
 };
 
-export default useAddUser;
+export default useCreateUser;

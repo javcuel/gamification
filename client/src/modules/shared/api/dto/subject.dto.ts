@@ -30,7 +30,6 @@ export interface SubjectCreateDTO {
  * @interface
  */
 export interface SubjectUpdateDTO {
-  IDMundo: number;
   Nombre: string;
   UrlImgMundo: string;
   UrlImgDentro: string;

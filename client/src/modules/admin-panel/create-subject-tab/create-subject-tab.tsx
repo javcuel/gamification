@@ -4,23 +4,32 @@ import Button from '../../shared/components/ui/button';
 import ErrorMsg from '../../shared/components/ui/error-msg';
 import Input from '../../shared/components/ui/input';
 import SuccessMsg from '../../shared/components/ui/success-msg';
-import useAddSubject from './hooks/use-add-subject';
+import useCreateSubject from './hooks/use-create-subject';
 
 import '../styles/admin-add-card.css';
+import LoadingMsg from '../../shared/components/ui/loading-msg';
 
-const AdminAddSubjectTab: React.FC = () => {
+const CreateSubjectTab: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [img, setImg] = useState<string>('');
   const [imgBackground, setImgBackground] = useState<string>('');
 
-  const { addSubject, error, success } = useAddSubject();
+  const { createSubject, error, success, loading } = useCreateSubject();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newSubject = new Subject(0, name, img, imgBackground, 0, true, true);
+    const newSubject = new Subject(
+      0,
+      name,
+      img,
+      imgBackground,
+      0,
+      false,
+      false
+    );
 
-    await addSubject(newSubject);
+    await createSubject(newSubject);
 
     setName('');
     setImg('');
@@ -33,7 +42,7 @@ const AdminAddSubjectTab: React.FC = () => {
       className="d-flex flex-column align-items-center justify-content-center gap-3 mx-auto"
       style={{ width: '100%' }}
     >
-      <h3 className="text-center mb-4"> Add Subject</h3>
+      <h3 className="text-center mb-4">Create Subject</h3>
       <Input
         placeholder="Subject Name"
         type="text"
@@ -53,12 +62,13 @@ const AdminAddSubjectTab: React.FC = () => {
         onChange={(e) => setName(e.target.value)}
       />
 
-      <Button text="Add Subject" />
+      <Button text="Create" />
 
       {error && <ErrorMsg message={error}></ErrorMsg>}
-      {success && <SuccessMsg message={'Subject created'}></SuccessMsg>}
+      {success && <SuccessMsg message={'Subject created!'}></SuccessMsg>}
+      {loading && <LoadingMsg message="Creating new subject..."></LoadingMsg>}
     </form>
   );
 };
 
-export default AdminAddSubjectTab;
+export default CreateSubjectTab;

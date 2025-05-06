@@ -1,8 +1,8 @@
 import { Subject } from '../domain/subject';
 
 import {
-  SubjectCreateDTO,
   SubjectDTO,
+  SubjectCreateDTO,
   SubjectUpdateDTO,
   SubjectUpdateOpenDTO,
   SubjectUpdateVisibleDTO,
@@ -43,7 +43,6 @@ export class SubjectMapper {
 
   static toUpdateDTO(subject: Subject): SubjectUpdateDTO {
     return {
-      IDMundo: subject.id,
       Nombre: subject.name,
       UrlImgMundo: subject.img,
       UrlImgDentro: subject.imgBackground,

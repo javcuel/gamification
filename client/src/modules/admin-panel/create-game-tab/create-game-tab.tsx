@@ -5,15 +5,16 @@ import Dropdown from '../../shared/components/ui/dropdown';
 import ErrorMsg from '../../shared/components/ui/error-msg';
 import Input from '../../shared/components/ui/input';
 import SuccessMsg from '../../shared/components/ui/success-msg';
-import useAddGame from './hooks/use-add-game';
+import useCreateGame from './hooks/use-create-game';
+import LoadingMsg from '../../shared/components/ui/loading-msg';
 
-const AddGameTab: React.FC = () => {
+const CreateGameTab: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [idSubject, setIdSubject] = useState<string>('');
   const [img, setImg] = useState<string>('');
   const [maxScore, setMaxScore] = useState<string>('');
 
-  const { addGame, error, success } = useAddGame();
+  const { createGame, error, success, loading } = useCreateGame();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +33,7 @@ const AddGameTab: React.FC = () => {
       true
     );
 
-    await addGame(newGame);
+    await createGame(newGame);
 
     setName('');
     setIdSubject('');
@@ -46,7 +47,7 @@ const AddGameTab: React.FC = () => {
       className="d-flex flex-column align-items-center justify-content-center gap-3 mx-auto"
       style={{ width: '100%' }}
     >
-      <h3 className="text-center mb-4">Add Game</h3>
+      <h3 className="text-center mb-4">Create Game</h3>
 
       <Input
         placeholder="New Game"
@@ -71,12 +72,13 @@ const AddGameTab: React.FC = () => {
         placeholder="Subject"
         onChange={(value) => setIdSubject(value)}
       />
-      <Button text="Add Game" />
+      <Button text="Create" />
 
       {error && <ErrorMsg message={error}></ErrorMsg>}
       {success && <SuccessMsg message={'Subject created'}></SuccessMsg>}
+      {loading && <LoadingMsg message="Creating new game..."></LoadingMsg>}
     </form>
   );
 };
 
-export default AddGameTab;
+export default CreateGameTab;

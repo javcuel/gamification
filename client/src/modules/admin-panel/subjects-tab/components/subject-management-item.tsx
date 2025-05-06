@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import { Subject } from '../../../shared/api/domain/subject';
 import Button from '../../../shared/components/ui/button';
 import useDeleteSubject from '../hooks/use-delete-subject';
-import useUpdateSubject from '../hooks/use-edit-subject';
+import useUpdateSubject from '../hooks/use-update-subject';
 import useExpandSubject from '../hooks/use-expand-subject';
 import useToggleSubjectOpenState from '../hooks/use-toggle-subject-open-state';
 import useToggleSubjectVisibleState from '../hooks/use-toggle-subject-visible-state';
-
 import ErrorMsg from '../../../shared/components/ui/error-msg';
 import GameManagementItem from './game-management-item';
 import SubjectEditModal from './subject-edit-modal';
-
 import '../../styles/subject-management-item.css';
 
 interface SubjectiItemProps {
@@ -24,6 +22,7 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
 
+  // Expand Subject and show games.
   const {
     games,
     isExpanded,
@@ -32,18 +31,7 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
     toggleExpand,
   } = useExpandSubject(subject.id);
 
-  const {
-    isOpen,
-    error: openError,
-    toggleOpenState,
-  } = useToggleSubjectOpenState(subject);
-
-  const {
-    isVisible,
-    error: visibleError,
-    toggleVisibleState,
-  } = useToggleSubjectVisibleState(subject);
-
+  // Update Subject data.
   const {
     updateSubject,
     loading: updateLoading,
@@ -52,28 +40,42 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
     setIsEditing(false);
   });
 
+  // Update Open Subject State.
+  const {
+    isOpen,
+    error: openError,
+    toggleOpenState,
+  } = useToggleSubjectOpenState(subject);
+
+  // Update Visible Subject State.
+  const {
+    isVisible,
+    error: visibleError,
+    toggleVisibleState,
+  } = useToggleSubjectVisibleState(subject);
+
+  // Delete subject.
   const {
     deleteSubject,
     loading: deleteLoading,
     error: deleteError,
   } = useDeleteSubject(onSubjectDeleted);
 
-  const handleDeleteClick = () => {
-    if (window.confirm('Are you sure you want to delete this subject?')) {
-      deleteSubject(subject.id);
-    }
+  // Handles update subject
+  const handleSaveSubject = (updatedData: Subject) => {
+    updateSubject(subject.id, updatedData);
   };
 
+  // Handles edit modal
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
-  const handleSaveSubject = (updatedData: {
-    name: string;
-    img: string;
-    imgBackground: string;
-  }) => {
-    updateSubject(subject.id, updatedData);
+  // Handles subject deletion
+  const handleDeleteClick = () => {
+    if (window.confirm('Are you sure you want to delete this subject?')) {
+      deleteSubject(subject.id);
+    }
   };
 
   return (
@@ -123,9 +125,13 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
       {isEditing && (
         <SubjectEditModal
           data={{
+            id: subject.id,
             name: subject.name,
             img: subject.img,
             imgBackground: subject.imgBackground,
+            position: subject.position,
+            isOpen: subject.isOpen,
+            isVisible: subject.isVisible,
           }}
           onClose={() => setIsEditing(false)}
           onSave={handleSaveSubject}

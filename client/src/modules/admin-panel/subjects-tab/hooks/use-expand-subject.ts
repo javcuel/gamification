@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Game } from '../../../shared/api/domain/game';
 import { gameRepository } from '../../../shared/api/repository/game.repository';
 
-const useExpandSubject = (subjectId: number) => {
+const useExpandSubject = (subjectID: number) => {
   const [games, setGames] = useState<Game[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,7 @@ const useExpandSubject = (subjectId: number) => {
       setLoading(true);
       setError(null);
       try {
-        const data = await gameRepository.getAll(subjectId);
+        const data = await gameRepository.getAll(subjectID);
         setGames(data);
         setLoading(false);
       } catch (error: unknown) {

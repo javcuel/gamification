@@ -16,21 +16,6 @@ const useRankings = (rankingType: string, gameId: number) => {
 
         switch (rankingType) {
           case RANKING_TYPES.PLAYERS:
-            /*        data = [
-              {
-                userName: 'Juan',
-                userGroup: 'x1',
-                userCompletedSubjects: 4,
-                userTotalScore: 600,
-              },
-              {
-                userName: 'Mario',
-                userGroup: 'x3',
-                userCompletedSubjects: 1,
-                userTotalScore: 6002,
-              },
-            ]; */
-
             data = await rankingRepository.getPlayers();
             break;
           case RANKING_TYPES.GROUPS:

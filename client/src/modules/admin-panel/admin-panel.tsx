@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import AddGameTab from './add-game-tab/add-game-tab';
-import AddSubjectTab from './add-subject-tab/add-subject.tab';
-import AddUserTab from './add-user-tab/admin-add-user-tab';
+import AddGameTab from './create-game-tab/create-game-tab';
+import AddSubjectTab from './create-subject-tab/create-subject-tab';
+import AddUserTab from './create-user-tab/create-user-tab';
 import './styles/admin-panel.css';
 import SubjectsTab from './subjects-tab/subjects-tab';
 import ThemeTab from './theme-tab/admin-theme-tab';
