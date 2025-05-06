@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Subject } from '../../../shared/api/domain/subject';
+import { SubjectUpdate } from '../../../shared/api/domain/subject';
 import { subjectRepository } from '../../../shared/api/repository/subject.repository';
 
 const useUpdateSubject = (onUpdateSuccess?: () => void) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const updateSubject = async (id: number, data: Subject) => {
+  const updateSubject = async (id: number, data: SubjectUpdate) => {
     setLoading(true);
     setError(null);
 

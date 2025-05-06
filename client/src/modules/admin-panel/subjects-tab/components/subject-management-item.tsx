@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Subject } from '../../../shared/api/domain/subject';
+import { Subject, SubjectUpdate } from '../../../shared/api/domain/subject';
 import Button from '../../../shared/components/ui/button';
 import useDeleteSubject from '../hooks/use-delete-subject';
 import useUpdateSubject from '../hooks/use-update-subject';
@@ -62,8 +62,13 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
   } = useDeleteSubject(onSubjectDeleted);
 
   // Handles update subject
-  const handleSaveSubject = (updatedData: Subject) => {
-    updateSubject(subject.id, updatedData);
+  const handleSaveSubject = (updatedData: SubjectUpdate) => {
+    const updatedSubject = new SubjectUpdate(
+      updatedData.name,
+      updatedData.img,
+      updatedData.imgBackground
+    );
+    updateSubject(subject.id, updatedSubject);
   };
 
   // Handles edit modal
@@ -125,13 +130,9 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
       {isEditing && (
         <SubjectEditModal
           data={{
-            id: subject.id,
             name: subject.name,
             img: subject.img,
             imgBackground: subject.imgBackground,
-            position: subject.position,
-            isOpen: subject.isOpen,
-            isVisible: subject.isVisible,
           }}
           onClose={() => setIsEditing(false)}
           onSave={handleSaveSubject}
