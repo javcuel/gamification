@@ -1,4 +1,4 @@
-import { Game } from '../domain/game';
+import { Game, GameCreate, GameUpdate } from '../domain/game';
 
 import {
   GameCreateDTO,
@@ -41,22 +41,21 @@ export class GameMapper {
     };
   }
 
-  static toCreateDTO(game: Game): GameCreateDTO {
+  static toCreateDTO(gameCreate: GameCreate): GameCreateDTO {
     return {
-      IDMundo: game.idSubject,
-      Nombre: game.name,
-      UrlImagen: game.img,
-      PuntuacionMaxima: game.maxScore,
+      IDMundo: gameCreate.idSubject,
+      Nombre: gameCreate.name,
+      UrlImagen: gameCreate.img,
+      PuntuacionMaxima: gameCreate.maxScore,
     };
   }
 
-  static toUpdateDTO(game: Game): GameUpdateDTO {
+  static toUpdateDTO(gameUpdate: GameUpdate): GameUpdateDTO {
     return {
-      IDMinijuego: game.id,
-      IDMundo: game.idSubject,
-      Nombre: game.name,
-      UrlImagen: game.img,
-      PuntuacionMaxima: game.maxScore,
+      IDMundo: gameUpdate.idSubject,
+      Nombre: gameUpdate.name,
+      UrlImagen: gameUpdate.img,
+      PuntuacionMaxima: gameUpdate.maxScore,
     };
   }
 

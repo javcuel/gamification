@@ -1,4 +1,4 @@
-import { Subject } from '../domain/subject';
+import { Subject, SubjectCreate, SubjectUpdate } from '../domain/subject';
 
 import HttpClient from '../../../../api/http-client';
 import { API_URLS } from '../../../../constants/apiUrls';
@@ -16,7 +16,7 @@ class SubjectRepository implements ISubjectRepository {
     }
   }
 
-  async create(data: Subject): Promise<void> {
+  async create(data: SubjectCreate): Promise<void> {
     const requestDTO = SubjectMapper.toCreateDTO(data);
 
     try {
@@ -27,7 +27,7 @@ class SubjectRepository implements ISubjectRepository {
     }
   }
 
-  async update(id: number, data: Subject): Promise<void> {
+  async update(id: number, data: SubjectUpdate): Promise<void> {
     const requestDTO = SubjectMapper.toUpdateDTO(data);
 
     try {

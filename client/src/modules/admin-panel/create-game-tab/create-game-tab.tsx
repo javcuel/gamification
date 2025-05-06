@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Game } from '../../shared/api/domain/game';
+import { GameCreate } from '../../shared/api/domain/game';
 import Button from '../../shared/components/ui/button';
 import Dropdown from '../../shared/components/ui/dropdown';
 import ErrorMsg from '../../shared/components/ui/error-msg';
@@ -19,18 +19,11 @@ const CreateGameTab: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newGame = new Game(
-      0,
+    const newGame = new GameCreate(
       Number(idSubject),
       img,
       name,
-      Number(maxScore),
-      true,
-      true,
-      0,
-      0,
-      true,
-      true
+      Number(maxScore)
     );
 
     await createGame(newGame);

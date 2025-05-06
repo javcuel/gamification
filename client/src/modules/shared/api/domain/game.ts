@@ -10,6 +10,7 @@ export class Game {
    * @param {number} id - Game identifier
    * @param {number} idSubject - Identifier of the subject to which the game belongs
    * @param {string} img - Game image
+   * @param {string} name - Game name
    * @param {number} maxScore - Max Score obtainable in the game
    * @param {boolean} isOpen - Open state of the game
    * @param {boolean} isVisible - Visible state of the game
@@ -30,5 +31,49 @@ export class Game {
     public idUser: number,
     public isNew: boolean,
     public uploaded: boolean
+  ) {}
+}
+
+/**
+ * Class representing a Game creation payload inside the App.
+ *
+ * @class
+ */
+export class GameCreate {
+  /**
+   * Creates a new GameCreate instance.
+   *
+   * @param {number} idSubject - Identifier of the subject to which the game belongs
+   * @param {string} img - Game image
+   * @param {string} name - Game name
+   * @param {number} maxScore - Max Score obtainable in the game
+   */
+  constructor(
+    public idSubject: number,
+    public name: string,
+    public img: string,
+    public maxScore: number
+  ) {}
+}
+
+/**
+ * Class representing a Game update payload inside the App.
+ *
+ * @class
+ */
+export class GameUpdate {
+  /**
+   * Creates a new GameUpdate instance.
+   *
+   * @param {number} idSubject - Identifier of the subject to which the game belongs
+   * @param {string} img - Game image
+   * @param {string} name - Game name
+   * @param {number} maxScore - Max Score obtainable in the game
+   */
+  constructor(
+    public idSubject: number,
+    public name: string,
+    public img: string,
+    public maxScore: number
   ) {}
 }

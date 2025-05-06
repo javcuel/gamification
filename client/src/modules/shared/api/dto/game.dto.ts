@@ -35,7 +35,6 @@ export interface GameCreateDTO {
  * @interface
  */
 export interface GameUpdateDTO {
-  IDMinijuego: number;
   IDMundo: number;
   Nombre: string;
   UrlImagen: string;

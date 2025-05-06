@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Subject } from '../../../shared/api/domain/subject';
+import { SubjectCreate } from '../../../shared/api/domain/subject';
 import { subjectRepository } from '../../../shared/api/repository/subject.repository';
 
 const useCreateSubject = () => {
@@ -7,7 +7,7 @@ const useCreateSubject = () => {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const createSubject = async (data: Subject) => {
+  const createSubject = async (data: SubjectCreate) => {
     setError(null);
     setSuccess(false);
 

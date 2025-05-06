@@ -25,3 +25,43 @@ export class Subject {
     public isVisible: boolean
   ) {}
 }
+
+/**
+ * Class representing a Subject creation paylaod inside the App.
+ *
+ * @class
+ */
+export class SubjectCreate {
+  /**
+   * Creates a new SubjectCreate instance.
+   *
+   * @param {string} name - Subject name
+   * @param {string} img - Subject image
+   * @param {string} imgBackground - Subject background image
+   */
+  constructor(
+    public name: string,
+    public img: string,
+    public imgBackground: string
+  ) {}
+}
+
+/**
+ * Class representing a Subject update paylaod inside the App.
+ *
+ * @class
+ */
+export class SubjectUpdate {
+  /**
+   * Creates a new SubjectUpdate instance.
+   *
+   * @param {string} name - Subject name
+   * @param {string} img - Subject image
+   * @param {string} imgBackground - Subject background image
+   */
+  constructor(
+    public name: string,
+    public img: string,
+    public imgBackground: string
+  ) {}
+}

@@ -1,4 +1,4 @@
-import { Subject } from '../domain/subject';
+import { Subject, SubjectCreate, SubjectUpdate } from '../domain/subject';
 
 import {
   SubjectDTO,
@@ -33,19 +33,19 @@ export class SubjectMapper {
     };
   }
 
-  static toCreateDTO(subject: Subject): SubjectCreateDTO {
+  static toCreateDTO(subjectCreate: SubjectCreate): SubjectCreateDTO {
     return {
-      Nombre: subject.name,
-      UrlImgMundo: subject.img,
-      UrlImgDentro: subject.imgBackground,
+      Nombre: subjectCreate.name,
+      UrlImgMundo: subjectCreate.img,
+      UrlImgDentro: subjectCreate.imgBackground,
     };
   }
 
-  static toUpdateDTO(subject: Subject): SubjectUpdateDTO {
+  static toUpdateDTO(subjectUpdate: SubjectUpdate): SubjectUpdateDTO {
     return {
-      Nombre: subject.name,
-      UrlImgMundo: subject.img,
-      UrlImgDentro: subject.imgBackground,
+      Nombre: subjectUpdate.name,
+      UrlImgMundo: subjectUpdate.img,
+      UrlImgDentro: subjectUpdate.imgBackground,
     };
   }
 

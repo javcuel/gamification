@@ -1,4 +1,4 @@
-import { Game } from '../domain/game';
+import { Game, GameCreate, GameUpdate } from '../domain/game';
 
 import HttpClient from '../../../../api/http-client';
 import { API_URLS } from '../../../../constants/apiUrls';
@@ -16,7 +16,7 @@ class GameRepository implements IGameRepository {
     }
   }
 
-  async create(data: Game): Promise<void> {
+  async create(data: GameCreate): Promise<void> {
     const requestDTO = GameMapper.toCreateDTO(data);
 
     try {
@@ -27,7 +27,7 @@ class GameRepository implements IGameRepository {
     }
   }
 
-  async update(id: number, data: Game): Promise<void> {
+  async update(id: number, data: GameUpdate): Promise<void> {
     const requestDTO = GameMapper.toUpdateDTO(data);
 
     try {

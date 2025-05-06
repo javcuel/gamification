@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Game } from '../../../shared/api/domain/game';
+import { GameCreate } from '../../../shared/api/domain/game';
 import { gameRepository } from '../../../shared/api/repository/game.repository';
 
 const useCreateGame = () => {
@@ -7,7 +7,7 @@ const useCreateGame = () => {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const createGame = async (data: Game) => {
+  const createGame = async (data: GameCreate) => {
     setError(null);
     setSuccess(false);
 

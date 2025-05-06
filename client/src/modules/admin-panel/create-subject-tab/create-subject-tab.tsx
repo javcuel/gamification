@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Subject } from '../../shared/api/domain/subject';
+import { SubjectCreate } from '../../shared/api/domain/subject';
 import Button from '../../shared/components/ui/button';
 import ErrorMsg from '../../shared/components/ui/error-msg';
 import Input from '../../shared/components/ui/input';
@@ -19,15 +19,7 @@ const CreateSubjectTab: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newSubject = new Subject(
-      0,
-      name,
-      img,
-      imgBackground,
-      0,
-      false,
-      false
-    );
+    const newSubject = new SubjectCreate(name, img, imgBackground);
 
     await createSubject(newSubject);
 
