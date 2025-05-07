@@ -1,19 +1,19 @@
 import { useState } from 'react';
-import { Game } from '../../../shared/api/domain/game';
+import { GameUpdate } from '../../../shared/api/domain/game';
 import { gameRepository } from '../../../shared/api/repository/game.repository';
 
-const useUpdateGame = (onSuccess?: () => void) => {
+const useUpdateGame = (onUpdateSuccess?: () => void) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const updateGame = async (game: Game) => {
+  const updateGame = async (id: number, data: GameUpdate) => {
     try {
       setLoading(true);
       setError(null);
 
-      await gameRepository.update(game.id, game);
+      await gameRepository.update(id, data);
 
-      onSuccess?.();
+      if (onUpdateSuccess) onUpdateSuccess();
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);

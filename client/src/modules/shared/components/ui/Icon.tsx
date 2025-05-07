@@ -10,7 +10,16 @@ interface IconProps {
 
 const Icon: React.FC<IconProps> = ({ img, alt = '', size = 24 }) => {
   return (
-    <img src={img} alt={alt} width={size} height={size} className="icon" />
+    <img
+      className="icon"
+      src={img}
+      onError={(e) => {
+        e.currentTarget.src = '/images/default_icon_image.png';
+      }}
+      alt={alt}
+      width={size}
+      height={size}
+    />
   );
 };
 

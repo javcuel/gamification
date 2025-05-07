@@ -1,74 +1,127 @@
-import {
-  faEye,
-  faEyeSlash,
-  faLock,
-  faPencilAlt,
-  faTimes,
-  faUnlock,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import { Game } from '../../../shared/api/domain/game';
+import React, { useState } from 'react';
+import { Game, GameUpdate } from '../../../shared/api/domain/game';
 import useToggleGameOpenState from '../hooks/use-toggle-game-open-state';
 import useToggleGameVisibleState from '../hooks/use-toggle-game-visible-state';
 
-import '../../styles/game-management-item.css';
+import Button from '../../../shared/components/ui/button';
+import ErrorMsg from '../../../shared/components/ui/error-msg';
+import useDeleteGame from '../hooks/use-delete-game';
+import useUpdateGame from '../hooks/use-update-game';
+import '../styles/game-management-item.css';
+import GameEditModal from './game-edit-modal';
 
 interface GameManagementItemProps {
   game: Game;
+  onGameDeleted: (gameId: number) => void;
 }
 
-const GameManagementItem: React.FC<GameManagementItemProps> = ({ game }) => {
+const GameManagementItem: React.FC<GameManagementItemProps> = ({
+  game,
+  onGameDeleted,
+}) => {
+  const [isEditing, setIsEditing] = useState(false);
+
+  //Update Game Data.
+  const {
+    updateGame,
+    loading: updateLoading,
+    error: updateError,
+  } = useUpdateGame(() => {
+    setIsEditing(false);
+  });
+
+  // Update Open Game State.
   const {
     isOpen,
     error: openError,
     toggleOpenState,
   } = useToggleGameOpenState(game);
 
+  // Update Visible Game State.
   const {
     isVisible,
     error: visibleError,
     toggleVisibleState,
   } = useToggleGameVisibleState(game);
 
+  // Delete Game
+  const {
+    deleteGame,
+    loading: deleteLoading,
+    error: deleteError,
+  } = useDeleteGame(onGameDeleted);
+
+  // Handles update Game
+  const handleSaveGame = (updatedData: GameUpdate) => {
+    const updatedGame = new GameUpdate(
+      updatedData.idSubject,
+      updatedData.name,
+      updatedData.img,
+      updatedData.maxScore
+    );
+    updateGame(game.id, updatedGame);
+  };
+
+  // Handles edit modal
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  // Handles game deletion
+  const handleDeleteClick = () => {
+    if (window.confirm('Are you sure you want to delete this game?')) {
+      deleteGame(game.id);
+    }
+  };
+
   return (
     <div className="game-management-item">
       <div className="d-flex justify-content-between align-items-center">
         <img
-          src={'images/no_image.jpg'}
+          src={game.img}
+          onError={(e) => {
+            e.currentTarget.src = '/images/default_game_image.png';
+          }}
           alt={game.name}
           width="5%"
           className="game-management-item-image me-3"
         />
         <div className="flex-grow-1">
-          {game.name}- Max Score: {game.maxScore}
+          {game.name} - Max Score: {game.maxScore}
         </div>
-        <div>
-          <button
-            className="game-management-item-button"
-            onClick={toggleOpenState}
-          >
-            <FontAwesomeIcon icon={isOpen ? faUnlock : faLock} />
-          </button>
-
-          <button
-            className="game-management-item-button"
+        <div className="game-item-buttons">
+          <Button type={isOpen ? 'unlock' : 'lock'} onClick={toggleOpenState} />
+          <Button
+            type={isVisible ? 'visible' : 'hidden'}
             onClick={toggleVisibleState}
-          >
-            <FontAwesomeIcon icon={isVisible ? faEye : faEyeSlash} />
-          </button>
-
-          <button className="game-management-item-button">
-            <FontAwesomeIcon icon={faPencilAlt} />
-          </button>
-
-          <button className="game-management-item-button">
-            <FontAwesomeIcon icon={faTimes} />
-          </button>
+          />
+          <Button type="edit" onClick={handleEditClick} />
+          <Button
+            type="delete"
+            onClick={handleDeleteClick}
+            disabled={deleteLoading}
+          />
         </div>
       </div>
-      {visibleError && <div className="text-danger">{visibleError}</div>}
-      {openError && <div className="text-danger">{openError}</div>}
+
+      {/*  //TODO: meter el loadingmsg en vez de esto */}
+      {visibleError && <ErrorMsg message={visibleError} />}
+      {openError && <ErrorMsg message={openError} />}
+      {updateError && <ErrorMsg message={updateError} />}
+      {deleteError && <ErrorMsg message={deleteError} />}
+      {updateLoading && <div>Loading update...</div>}
+      {isEditing && (
+        <GameEditModal
+          data={{
+            idSubject: game.idSubject,
+            name: game.name,
+            img: game.img,
+            maxScore: game.maxScore,
+          }}
+          onClose={() => setIsEditing(false)}
+          onSave={handleSaveGame}
+        />
+      )}
     </div>
   );
 };

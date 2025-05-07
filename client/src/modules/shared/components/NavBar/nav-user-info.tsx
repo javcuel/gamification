@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { ROLES } from '../../../../constants/roles';
 import { ThemeContext } from '../../../../context/theme-context';
 import Icon from '../ui/icon';
 
@@ -23,9 +24,19 @@ const NavUserInfo: React.FC<NavUserInfoProps> = ({
 
   const { theme } = themeContext;
 
+  const roleLabels: Record<string, string> = {
+    [ROLES.TEACHER]: 'Teacher',
+    [ROLES.ADMIN]: 'Admin',
+    [ROLES.DEV]: 'Dev',
+    [ROLES.PLAYER]: 'Player',
+    [ROLES.GUEST]: 'Guest',
+  };
+
+  const displayRole = roleLabels[role] || role;
+
   return (
     <span className="ms-auto">
-      {role} : {name}
+      {displayRole} : {name}
       <span className="ms-3 me-3">{totalScore}</span>
       <Icon img={theme.pointsIcon} />
       <span className="ms-3 me-3">{completedSubjects}</span>

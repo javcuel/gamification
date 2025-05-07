@@ -28,7 +28,7 @@ const SubjectItem: React.FC<SubjectProps> = ({ subject }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(ROUTES.GAME_SELECTOR(subject.id));
+    if (subject.isOpen) navigate(ROUTES.GAME_SELECTOR(subject.id));
   };
 
   const subjectClassName = subject.isOpen
@@ -39,11 +39,14 @@ const SubjectItem: React.FC<SubjectProps> = ({ subject }) => {
     <div className={subjectClassName} onClick={() => handleClick()}>
       <img
         className="subject-item-img"
-        src={subject.img || '/images/no_image.jpg'}
+        src={subject.img}
+        onError={(e) => {
+          e.currentTarget.src = '/images/default_subject_image.png';
+        }}
         alt={subject.name}
       ></img>
       <div className="subject-item-img-overlay">
-        <p>{subject.isOpen ? subject.name : '🔒'}</p>
+        <p>{subject.isOpen ? subject.name : '🔒Closed!'}</p>
       </div>
     </div>
   );

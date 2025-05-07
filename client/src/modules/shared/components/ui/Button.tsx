@@ -49,7 +49,11 @@ const Button: React.FC<ButtonProps> = ({ text, onClick, type, disabled }) => {
   const icon = getIcon();
 
   return (
-    <button className="button" onClick={onClick} disabled={disabled}>
+    <button
+      className={`button ${icon ? 'button-icon' : ''}`}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {icon ? <FontAwesomeIcon icon={icon} /> : text}
     </button>
   );

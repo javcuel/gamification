@@ -1,77 +1,73 @@
 .game-item {
   position: relative;
   display: inline-block;
-
   cursor: pointer;
   overflow: hidden;
+  width: 200px;
+  height: 200px;
 }
 
 .game-item-disabled {
+  width: 200px;
+  height: 200px;
   position: relative;
   display: inline-block;
-
   cursor: pointer;
   overflow: hidden;
-
   filter: brightness(0.4);
 }
 
 .game-item-img {
-  width: 200px;
-  height: auto;
+  width: 90%;
+  height: 90%;
   margin: 10px 10px;
-
   border-radius: 15px;
   opacity: 0.8;
-
   transition:
     opacity 0.5s ease,
     transform 0.5s ease;
 }
 
-.game-item:hover .game-item-img {
-  opacity: 1;
-
-  transform: scale(1.1);
-}
-
+.game-item:hover .game-item-img,
 .game-item-disabled:hover .game-item-img {
+  opacity: 1;
   transform: scale(1.1);
 }
 
 .game-item-img-overlay {
   top: 50%;
   left: 50%;
+  width: 80%;
   padding: 10px 20px;
   position: absolute;
 
   background-color: var(--secondary);
   color: var(--text);
   border: none;
-  border-radius: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 6px 5px rgba(0, 0, 0, 0.6);
+
   opacity: 0;
-
-  transform: translate(-50%, -50%);
-  transition: opacity 0.5s ease;
+  transform: translate(-50%, 15%);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
 }
 
-.game-item:hover .game-item-img-overlay {
-  opacity: 1;
-}
-
+.game-item:hover .game-item-img-overlay,
 .game-item-disabled:hover .game-item-img-overlay {
   opacity: 1;
+  transform: translate(-50%, -50%);
 }
 
 .game-item-img-overlay p {
   margin: 0;
   text-align: center;
-
-  font-size: 1.2 rem;
 }
 
 @media (max-width: 768px) {
   .game-item-img-overlay {
     opacity: 1;
+    transform: translate(-50%, -50%);
   }
 }

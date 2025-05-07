@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Subject, SubjectUpdate } from '../../../shared/api/domain/subject';
 import Button from '../../../shared/components/ui/button';
+import ErrorMsg from '../../../shared/components/ui/error-msg';
 import useDeleteSubject from '../hooks/use-delete-subject';
-import useUpdateSubject from '../hooks/use-update-subject';
 import useExpandSubject from '../hooks/use-expand-subject';
 import useToggleSubjectOpenState from '../hooks/use-toggle-subject-open-state';
 import useToggleSubjectVisibleState from '../hooks/use-toggle-subject-visible-state';
-import ErrorMsg from '../../../shared/components/ui/error-msg';
+import useUpdateSubject from '../hooks/use-update-subject';
+import '../styles/subject-management-item.css';
 import GameManagementItem from './game-management-item';
 import SubjectEditModal from './subject-edit-modal';
-import '../../styles/subject-management-item.css';
 
 interface SubjectiItemProps {
   subject: Subject;
@@ -85,18 +85,22 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 
   return (
     <div className="subject-management-item">
-      <div className="d-flex justify-content-between align-items-center">
-        <div onClick={toggleExpand}>
-          {/* TODO: Replace with actual subject.imgsubjectUrl */}
+      <div className="subject-item-header d-flex justify-content-between align-items-center">
+        <div
+          className="subject-item-left d-flex align-items-center"
+          onClick={toggleExpand}
+        >
           <img
-            src={'images/no_image.jpg'}
+            src={subject.img}
+            onError={(e) => {
+              e.currentTarget.src = '/images/default_subject_image.png';
+            }}
             alt={subject.name}
-            width="15%"
             className="subject-management-item-image me-3"
           />
-          {subject.name}
+          <span>{subject.name}</span>
         </div>
-        <div className="d-flex flex-wrap gap-1">
+        <div className="subject-item-buttons">
           <Button type={isOpen ? 'unlock' : 'lock'} onClick={toggleOpenState} />
           <Button
             type={isVisible ? 'visible' : 'hidden'}

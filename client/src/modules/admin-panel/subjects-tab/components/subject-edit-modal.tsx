@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
+import { SubjectUpdate } from '../../../shared/api/domain/subject';
 import Button from '../../../shared/components/ui/button';
 import Input from '../../../shared/components/ui/input';
 import '../../styles/edit-modal.css';
-import { SubjectUpdate } from '../../../shared/api/domain/subject';
 
 interface SubjectEditModalProps {
   data: SubjectUpdate;
   onClose: () => void;
-  onSave: (data: { name: string; img: string; imgBackground: string }) => void;
+  onSave: (data: SubjectUpdate) => void;
 }
 
 const SubjectEditModal: React.FC<SubjectEditModalProps> = ({

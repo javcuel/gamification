@@ -28,7 +28,7 @@ const GameItem: React.FC<GameProps> = ({ game }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(ROUTES.PLAY(game.id));
+    if (game.isOpen) navigate(ROUTES.PLAY(game.id));
   };
 
   const gameClassName = game.isOpen ? 'game-item' : 'game-item-disabled';
@@ -37,11 +37,14 @@ const GameItem: React.FC<GameProps> = ({ game }) => {
     <div className={gameClassName} onClick={() => handleClick()}>
       <img
         className="game-item-img"
-        src={game.img || '/images/no_image.jpg'}
+        src={game.img}
+        onError={(e) => {
+          e.currentTarget.src = '/images/default_game_image.png';
+        }}
         alt={game.name}
       ></img>
       <div className="game-item-img-overlay">
-        <p>{game.isOpen ? game.name : '🔒'}</p>
+        <p>{game.isOpen ? game.name : '🔒Closed!'}</p>
       </div>
     </div>
   );
