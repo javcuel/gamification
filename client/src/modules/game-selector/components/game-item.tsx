@@ -6,21 +6,17 @@ import { Game } from '../../shared/api/domain/game';
 
 import '../styles/game-item.css';
 
+/**
+ * @property {Game} game - The game to display.
+ */
 interface GameProps {
   game: Game;
 }
 
 /**
- * The GameItem component renders an individual game item, which includes an image
+ * GameItem is a functional component that renders an individual game item, which includes an image
  * and its name. If the game is visible and open, the item is clickable, and navigating
  * to the `PLAY` route for the given game ID occurs upon click.
- *
- * @component
- *
- * @param {GameProps} props - The properties for the GameItem component.
- * @param {Game} props.game - The game to be displayed.
- *
- * @returns {JSX.Element|null} A clickable game item if visible, otherwise null.
  */
 const GameItem: React.FC<GameProps> = ({ game }) => {
   if (!game.isVisible) return null;
@@ -44,7 +40,17 @@ const GameItem: React.FC<GameProps> = ({ game }) => {
         alt={game.name}
       ></img>
       <div className="game-item-img-overlay">
-        <p>{game.isOpen ? game.name : '🔒Closed!'}</p>
+        <p>
+          {game.isOpen ? (
+            <>
+              {game.name}
+              <hr />
+              Max Score: {game.maxScore}
+            </>
+          ) : (
+            '🔒Closed!'
+          )}
+        </p>
       </div>
     </div>
   );

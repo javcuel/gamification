@@ -4,6 +4,8 @@ import React from 'react';
 import '../../styles/error-msg.css';
 
 /**
+ * Props for the Error Message component.
+ *
  * @property {string} message - Message to display.
  */
 interface ErrorMessageProps {

@@ -45,7 +45,7 @@ export interface ButtonProps {
 }
 
 /**
- * It can display text or an icon depending on the type.
+ * Button is a funtional component that can display text or an icon depending on the type.
  * Uses icons from FontAwesome.
  */
 const Button: React.FC<ButtonProps> = ({ text, onClick, type, disabled }) => {

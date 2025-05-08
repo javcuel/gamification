@@ -4,6 +4,8 @@ import React from 'react';
 import '../../styles/success-msg.css';
 
 /**
+ * Props for the Success Message component.
+ *
  * @property {string} message - Message to display.
  */
 interface SuccessMessageProps {

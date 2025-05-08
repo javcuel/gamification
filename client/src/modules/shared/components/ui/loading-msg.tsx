@@ -4,6 +4,8 @@ import React from 'react';
 import '../../styles/loading-msg.css';
 
 /**
+ * Props for the Loading Message component.
+ *
  * @property {string} message - Loading message to display.
  */
 interface LoadingMessageProps {

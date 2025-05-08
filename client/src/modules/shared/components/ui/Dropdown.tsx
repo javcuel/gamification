@@ -15,7 +15,7 @@ interface DropdownProps {
 }
 
 /**
- * Dropdown is a custom select component that allows the user to choose one option from a list.
+ * Dropdown is a functional component that allows the user to choose one option from a list.
  * It displays a button showing the selected value or a placeholder when no value is selected.
  * When the user clicks the button, a dropdown list of options appears.
  */

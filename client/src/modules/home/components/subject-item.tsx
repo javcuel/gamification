@@ -6,21 +6,17 @@ import { Subject } from '../../shared/api/domain/subject';
 
 import '../styles/subject-item.css';
 
+/**
+ * @property {Subject} subject - The subject to display.
+ */
 interface SubjectProps {
   subject: Subject;
 }
 
 /**
- * The SubjectItem component renders an individual subject item, which includes an image
+ * SubjectItem is a functional component that renders an individual subject item, which includes an image
  * and its name. If the subject is visible and open, the item is clickable, and navigating
  * to the `GAME_SELECTOR` route for the given subject ID occurs upon click.
- *
- * @component
- *
- * @param {SubjectProps} props - The properties for the SubjectItem component.
- * @param {Subject} props.subject - The subject to be displayed.
- *
- * @returns {JSX.Element|null} A clickable subject item if visible, otherwise null.
  */
 const SubjectItem: React.FC<SubjectProps> = ({ subject }) => {
   if (!subject.isVisible) return null;

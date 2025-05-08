@@ -4,6 +4,7 @@ import React from 'react';
 import '../../styles/waves-text.css';
 
 /**
+ * Props for the Waves Text component.
  * @property {string} text - Text to display.
  */
 interface WavesTextProps {

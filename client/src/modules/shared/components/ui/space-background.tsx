@@ -2,7 +2,7 @@ import React from 'react';
 import '../../styles/space-background.css';
 
 /**
- * SpaceBackground is a functional component that renders an animated space-themed background.
+ * SpaceBackground is a component that renders an animated space-themed background.
  */
 const SpaceBackground: React.FC = () => {
   return (

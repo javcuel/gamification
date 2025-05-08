@@ -4,6 +4,8 @@ import { animated, useSpring } from 'react-spring';
 import '../../styles/floating-text.css';
 
 /**
+ * Props for the Floating Text component.
+ *
  * @property {string} text - Text to display.
  */
 interface FloatingTexProps {
@@ -11,7 +13,7 @@ interface FloatingTexProps {
 }
 
 /**
- * A component that animates text with a floating effect.
+ * FloatingText is a functional component that animates text with a floating effect.
  * The text smoothly moves up and down using the `react-spring` library,
  * creating a floating animation that repeats indefinitely.
  */

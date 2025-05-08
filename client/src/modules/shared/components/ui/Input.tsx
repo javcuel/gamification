@@ -20,7 +20,7 @@ type InputProps = {
 };
 
 /**
- * A controlled input component that can handle text or password input types.
+ * Input is a functional component that can handle text or password input types.
  * It accepts a `placeholder`, `value`, and `onChange` callback to manage the state of the input.
  */
 const Input: React.FC<InputProps> = ({
