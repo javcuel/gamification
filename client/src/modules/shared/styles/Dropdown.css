@@ -1,5 +1,6 @@
 .custom-dropdown {
   width: 100%;
+  max-width: 200px;
   position: relative;
 }
 
@@ -12,6 +13,11 @@
   color: var(--text);
   border: none;
   border-radius: 15px;
+  font-weight: 600;
+}
+
+.custom-dropdown-btn:hover {
+  cursor: pointer;
 }
 
 .custom-dropdown-list {
@@ -58,6 +64,7 @@
 
 .custom-dropdown-item:hover {
   filter: brightness(1.2);
+  cursor: pointer;
 }
 
 .custom-dropdown-btn:focus {

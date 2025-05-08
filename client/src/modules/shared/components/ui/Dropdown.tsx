@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import '../../styles/dropdown.css';
 
+/**
+ * Props for the Dropdown component.
+ *
+ * @property {string[]} options - List of selectable string options.
+ * @property {string} placeholder - Text to display when no option is selected.
+ * @property {(value: string) => void} onChange - Callback executed when an option is selected.
+ */
 interface DropdownProps {
   options: string[];
   placeholder: string;
   onChange: (value: string) => void;
 }
 
+/**
+ * Dropdown is a custom select component that allows the user to choose one option from a list.
+ * It displays a button showing the selected value or a placeholder when no value is selected.
+ * When the user clicks the button, a dropdown list of options appears.
+ */
 const Dropdown: React.FC<DropdownProps> = ({
   options,
   placeholder,
@@ -30,7 +42,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         className="custom-dropdown-btn"
         onClick={toggleDropdown}
       >
-        {selectedOption || `${placeholder} ▼`}
+        {selectedOption || placeholder} ▼
       </button>
 
       <ul className={`custom-dropdown-list ${isOpen ? 'open' : ''}`}>

@@ -3,10 +3,17 @@ import React from 'react';
 
 import '../../styles/loading-msg.css';
 
+/**
+ * @property {string} message - Loading message to display.
+ */
 interface LoadingMessageProps {
-  message?: string;
+  message: string;
 }
 
+/**
+ * LoadingMsg is a functional component that takes in an loading message string and displays it with an animated translate effect.
+ * It uses `motion.div` from Framer Motion to animate the message when rendered.
+ */
 const LoadingMsg: React.FC<LoadingMessageProps> = ({
   message = 'Cargando...',
 }) => {

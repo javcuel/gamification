@@ -25,6 +25,7 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
   // Expand Subject and show games.
   const {
     games,
+    setGames,
     isExpanded,
     error: expandError,
     loading,
@@ -82,6 +83,11 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
       deleteSubject(subject.id);
     }
   };
+  // Handles Game deletion
+
+  const handleGameDeleted = (gameId: number) => {
+    setGames((prev) => prev.filter((game) => game.id !== gameId));
+  };
 
   return (
     <div className="subject-management-item">
@@ -128,7 +134,11 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
         className={`subject-expand-container ${isExpanded ? 'expanded' : ''}`}
       >
         {games.map((game) => (
-          <GameManagementItem key={game.id} game={game} />
+          <GameManagementItem
+            key={game.id}
+            game={game}
+            onGameDeleted={handleGameDeleted}
+          />
         ))}
       </div>
       {isEditing && (

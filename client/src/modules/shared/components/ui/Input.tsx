@@ -2,9 +2,19 @@ import React from 'react';
 
 import '../../styles/input.css';
 
+export type InputType = 'text' | 'password';
+
+/**
+ * Props for a input component.
+ *
+ * @property {string} placeholder - Placeholder of the input.
+ * @property {InputType} type - Input type.
+ * @property {string | number} - The current value of the input.
+ * @property {(e: React.ChangeEvent<HTMLInputElement>) => void} onChange - Callback function triggered when the input value changes.
+ */
 type InputProps = {
   placeholder: string;
-  type: 'text' | 'password';
+  type: InputType;
   value: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -12,24 +22,6 @@ type InputProps = {
 /**
  * A controlled input component that can handle text or password input types.
  * It accepts a `placeholder`, `value`, and `onChange` callback to manage the state of the input.
- *
- * @component
- * @example
- * // Example usage:
- * <Input
- *   placeholder="Enter your username"
- *   type="text"
- *   value={username}
- *   onChange={(e) => setUsername(e.target.value)}
- * />
- *
- * @param {Object} props - The properties passed to the component.
- * @param {string} props.placeholder - The placeholder text to display in the input field.
- * @param {'text' | 'password'} props.type - The type of the input, either 'text' or 'password'.
- * @param {string} props.value - The current value of the input field.
- * @param {Function} props.onChange - A callback function that is called when the input value changes.
- *
- * @returns {JSX.Element} An `input` element with the specified properties.
  */
 const Input: React.FC<InputProps> = ({
   placeholder,

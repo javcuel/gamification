@@ -11,20 +11,42 @@ import React from 'react';
 
 import '../../styles/button.css';
 
-interface ButtonProps {
+/**
+ * Posible button types:
+ *
+ * - `'edit'`: Shows pencil icon.
+ * - `'delete'`: Shows delete icon (X).
+ * - `'lock'`: Shows closed lock icon.
+ * - `'unlock'`: Shows open lock icon.
+ * - `'visible'`: Shows open eye icon.
+ * - `'hidden'`: Shows closed eye icon.
+ */
+export type ButtonType =
+  | 'edit'
+  | 'delete'
+  | 'lock'
+  | 'unlock'
+  | 'visible'
+  | 'hidden';
+
+/**
+ * Props for the Button component.
+ *
+ * @property {string} [text] - Text to display inside the button. Ignored if a `type` with an icon is provided.
+ * @property {() => void} [onClick] - Function to call when the button is clicked.
+ * @property {ButtonType} [type] - Button type that determines which icon to show.
+ * @property {boolean} [disabled] - Whether the button is disabled.
+ */
+export interface ButtonProps {
   text?: string;
   onClick?: () => void;
-  type?: 'edit' | 'delete' | 'lock' | 'unlock' | 'visible' | 'hidden';
+  type?: ButtonType;
   disabled?: boolean;
 }
 
 /**
- * A flexible button component that can render either text or an icon based on the `type` prop.
- *
- * @component
- * @example
- * <Button type="edit" onClick={handleEdit} />
- * <Button text="Click me" onClick={handleClick} />
+ * It can display text or an icon depending on the type.
+ * Uses icons from FontAwesome.
  */
 const Button: React.FC<ButtonProps> = ({ text, onClick, type, disabled }) => {
   const getIcon = () => {

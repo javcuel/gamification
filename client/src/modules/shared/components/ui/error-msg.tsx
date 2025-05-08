@@ -3,10 +3,17 @@ import React from 'react';
 
 import '../../styles/error-msg.css';
 
+/**
+ * @property {string} message - Message to display.
+ */
 interface ErrorMessageProps {
   message: string;
 }
 
+/**
+ * ErrorMsg is a functional component that takes in an error message string and displays it with an animated shake effect.
+ * It uses `motion.div` from Framer Motion to animate the message when rendered.
+ */
 const ErrorMsg: React.FC<ErrorMessageProps> = ({ message }) => {
   return (
     <motion.div

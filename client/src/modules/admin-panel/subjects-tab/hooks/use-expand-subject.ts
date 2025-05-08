@@ -28,7 +28,7 @@ const useExpandSubject = (subjectID: number) => {
     }
   };
 
-  return { games, isExpanded, loading, error, toggleExpand };
+  return { games, setGames, isExpanded, loading, error, toggleExpand };
 };
 
 export default useExpandSubject;
