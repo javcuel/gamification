@@ -5,13 +5,8 @@
   --secondary: #4f5be5;
   --text: #d2d7e1;
 
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  font-size: 1rem;
-  letter-spacing: 1px;
-  /*   --main-font-family: 'Poppins', sans-serif;
-  --main-font-weight: 600;
-  font-size: 1rem; */
+  --main-font-family: 'Poppins', sans-serif;
+  --main-font-weight: bold;
 }
 
 body {
@@ -21,9 +16,10 @@ body {
   color: var(--text);
   background-color: var(--primary);
 
-  /*   font-family: var(--main-font-family);
-  font-weight: var(--main-font-weight);
-  letter-spacing: 1px; */
+  font-family: var(--main-font-family);
+
+  font-size: 1rem;
+  letter-spacing: 1px;
 }
 
 .custom-flex-center {

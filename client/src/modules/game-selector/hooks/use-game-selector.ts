@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Game } from '../../shared/api/domain/game';
 import { gameRepository } from '../../shared/api/repository/game.repository';
 
-const useGame = (subjectId: number) => {
+const useGameSelector = (subjectId: number) => {
   const [games, setGames] = useState<Game[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -29,4 +29,4 @@ const useGame = (subjectId: number) => {
   return { games, error, loading };
 };
 
-export default useGame;
+export default useGameSelector;

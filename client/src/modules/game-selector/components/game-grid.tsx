@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import ErrorMsg from '../../shared/components/ui/error-msg';
 import LoadingMsg from '../../shared/components/ui/loading-msg';
-import useGames from '../hooks/use-game-selector';
+import useGameSelector from '../hooks/use-game-selector';
 import GameItem from './game-item';
 
 /**
@@ -17,7 +17,7 @@ import GameItem from './game-item';
  */
 const GameGrid: React.FC = () => {
   const { subjectId } = useParams<{ subjectId: string }>();
-  const { games, error, loading } = useGames(Number(subjectId));
+  const { games, error, loading } = useGameSelector(Number(subjectId));
 
   return (
     <div className="container">

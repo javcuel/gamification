@@ -16,18 +16,18 @@ export const getGamesBySubject = async (req, res) => {
   }
 };
 
-// Creates a new subject
+// Creates a new game
 export const createGame = async (req, res) => {
-  const { idSubject, name, img, maxScore } = req.body;
+  const { IDMundo, Nombre, UrlImagen, PuntuacionMaxima } = req.body;
 
-  if ((!idSubject, !name || !img || !maxScore)) {
+  if ((!IDMundo, !Nombre || !UrlImagen || !PuntuacionMaxima)) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
   try {
     const [result] = await db.query(
-      "INSERT INTO Minijuegos (IDMundo, Nombre, imgUrl, Puntuacion, Abierto, Visible) VALUES (?, ?, ?, ?, ?, ?)",
-      [idSubject, name, img, maxScore, 0, 0] // Defaults: position = 0, open = false, visible = false
+      "INSERT INTO Minijuegos (IDMundo, Nombre, UrlImagen, PuntuacionMaxima, Abierto, Visible) VALUES (?, ?, ?, ?, ?, ?)",
+      [IDMundo, Nombre, img, PuntuacionMaxima, 0, 0] // Defaults: position = 0, open = false, visible = false
     );
     res
       .status(201)
@@ -41,12 +41,12 @@ export const createGame = async (req, res) => {
 // Update game data
 export const updateGame = async (req, res) => {
   const { id } = req.params;
-  const { idSubject, name, img, maxScore } = req.body;
+  const { IDMundo, Nombre, UrlImagen, PuntuacionMaxima } = req.body;
 
   try {
     await db.query(
       "UPDATE Minijuegos SET Nombre = ?, PuntuacionMaxima = ?, IDMundo = ?, UrlImagen = ? WHERE IDMinijuego = ?",
-      [name, maxScore, idSubject, img, id]
+      [Nombre, PuntuacionMaxima, IDMundo, UrlImagen, id]
     );
     res.json({ message: "Game updated successfully" });
   } catch (error) {
@@ -58,11 +58,11 @@ export const updateGame = async (req, res) => {
 // Toggle open/closed game state
 export const updateGameOpenState = async (req, res) => {
   const { id } = req.params;
-  const { isOpen } = req.body;
+  const { Abierto } = req.body;
 
   try {
     await db.query("UPDATE Minijuegos SET Abierto = ? WHERE IDMinijuego = ?", [
-      isOpen ? 1 : 0,
+      Abierto ? 1 : 0,
       id,
     ]);
     res.json({ message: "Game open state updated successfully" });
@@ -75,11 +75,11 @@ export const updateGameOpenState = async (req, res) => {
 // Toggle visible/hidden game state
 export const updateGameVisibleState = async (req, res) => {
   const { id } = req.params;
-  const { isVisible } = req.body;
+  const { Visible } = req.body;
 
   try {
     await db.query("UPDATE Minijuegos SET Visible = ? WHERE IDMinijuego = ?", [
-      isVisible ? 1 : 0,
+      Visible ? 1 : 0,
       id,
     ]);
     res.json({ message: "Game Visible state updated successfully" });

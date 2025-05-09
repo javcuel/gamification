@@ -10,22 +10,11 @@ import {
 
 const router = express.Router();
 
-// Fetch all users
 router.get("/", getUsers);
-
-// Fetch user score
 router.get("/:id", getScore);
-
-// Login user
 router.post("/login", loginUser);
-
-// Creates new user
 router.post("/", createUser);
-
-// Update a specific user
 router.put("/:id", updateUser);
-
-// Delete a specific user
 router.delete("/:id", deleteUser);
 
 export default router;

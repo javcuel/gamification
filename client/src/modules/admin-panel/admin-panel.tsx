@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Dropdown from '../shared/components/ui/dropdown';
 import AddGameTab from './create-game-tab/create-game-tab';
 import AddSubjectTab from './create-subject-tab/create-subject-tab';
 import AddUserTab from './create-user-tab/create-user-tab';
@@ -39,16 +40,6 @@ const AdminPanel: React.FC = () => {
 
   return (
     <div className="admin-container">
-      {isMobile && (
-        <button
-          className="sidebar-button"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          ☰
-        </button>
-      )}
-
-      {/* Barra lateral */}
       <div
         className={`sidebar ${isMobile ? (menuOpen ? 'open' : 'collapsed') : ''}`}
       >
@@ -67,6 +58,19 @@ const AdminPanel: React.FC = () => {
       </div>
 
       <div className="panel">
+        {isMobile && (
+          <div className="mobile-dropdown-wrapper">
+            <Dropdown
+              options={tabs.map((tab) => tab.label)}
+              placeholder="Select a tab"
+              onChange={(label) => {
+                const selectedTab = tabs.find((tab) => tab.label === label);
+                if (selectedTab) handleTabChange(selectedTab.id);
+              }}
+            />
+          </div>
+        )}
+
         <div className="panel-content">
           {activeTab === 'tab1' && <SubjectsTab />}
           {activeTab === 'tab2' && <UsersTab />}

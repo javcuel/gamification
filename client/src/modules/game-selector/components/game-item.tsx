@@ -40,7 +40,7 @@ const GameItem: React.FC<GameProps> = ({ game }) => {
         alt={game.name}
       ></img>
       <div className="game-item-img-overlay">
-        <p>
+        <div>
           {game.isOpen ? (
             <>
               {game.name}
@@ -50,7 +50,7 @@ const GameItem: React.FC<GameProps> = ({ game }) => {
           ) : (
             '🔒Closed!'
           )}
-        </p>
+        </div>
       </div>
     </div>
   );

@@ -6,9 +6,9 @@ import { IGameRepository } from '../interface/game-repository.interface';
 import { GameMapper } from '../mapper/game.mapper';
 
 class GameRepository implements IGameRepository {
-  async getAll(idSubject: number): Promise<Game[]> {
+  async getAll(subjectId: number): Promise<Game[]> {
     try {
-      const data = await HttpClient.get(API_URLS.GET_GAMES(idSubject));
+      const data = await HttpClient.get(API_URLS.GET_GAMES(subjectId));
       return data.map(GameMapper.toDomain);
     } catch (error) {
       console.error('Error fetching games', error);
@@ -42,7 +42,7 @@ class GameRepository implements IGameRepository {
     const requestDTO = GameMapper.toUpdateOpenDTO(newState);
 
     try {
-      await HttpClient.put(API_URLS.UPDATE_SUBJECT_OPEN(id), requestDTO);
+      await HttpClient.put(API_URLS.UPDATE_GAME_OPEN(id), requestDTO);
     } catch (error) {
       console.error(`Error updating game (ID: ${id}):`, error);
       throw new Error('Failed to update open state.');
@@ -53,7 +53,7 @@ class GameRepository implements IGameRepository {
     const requestDTO = GameMapper.toUpdateVisibleDTO(newState);
 
     try {
-      await HttpClient.put(API_URLS.UPDATE_SUBJECT_VISIBLE(id), requestDTO);
+      await HttpClient.put(API_URLS.UPDATE_GAME_VISIBLE(id), requestDTO);
     } catch (error) {
       console.error(`Error updating game (ID: ${id}):`, error);
       throw new Error('Failed to update visible state.');
