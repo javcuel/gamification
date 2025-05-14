@@ -4,7 +4,7 @@ import useToggleGameOpenState from '../hooks/use-toggle-game-open-state';
 import useToggleGameVisibleState from '../hooks/use-toggle-game-visible-state';
 
 import Button from '../../../shared/components/ui/button';
-import ErrorMsg from '../../../shared/components/ui/error-msg';
+import Toast from '../../../shared/components/ui/toast';
 import useDeleteGame from '../hooks/use-delete-game';
 import useUpdateGame from '../hooks/use-update-game';
 import '../styles/game-management-item.css';
@@ -105,10 +105,10 @@ const GameManagementItem: React.FC<GameManagementItemProps> = ({
       </div>
 
       {/*  //TODO: meter el loadingmsg en vez de esto */}
-      {visibleError && <ErrorMsg message={visibleError} />}
-      {openError && <ErrorMsg message={openError} />}
-      {updateError && <ErrorMsg message={updateError} />}
-      {deleteError && <ErrorMsg message={deleteError} />}
+      {visibleError && <Toast type="error" message={visibleError} />}
+      {openError && <Toast type="error" message={openError} />}
+      {updateError && <Toast type="error" message={updateError} />}
+      {deleteError && <Toast type="error" message={deleteError} />}
       {updateLoading && <div>Loading update...</div>}
       {isEditing && (
         <GameEditModal

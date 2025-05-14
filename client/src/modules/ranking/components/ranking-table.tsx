@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { RANKING_TYPES } from '../../../constants/ranking-types';
 import Dropdown from '../../shared/components/ui/dropdown';
-import ErrorMsg from '../../shared/components/ui/error-msg';
+import Toast from '../../shared/components/ui/toast';
 import LoadingMsg from '../../shared/components/ui/loading-msg';
 import useRankings from '../hooks/use-ranking';
 import '../styles/ranking.css';
@@ -54,7 +54,7 @@ const RankingTable: React.FC = () => {
       </div>
 
       {loading && <LoadingMsg message="Loading Rankings..." />}
-      {error && <ErrorMsg message={error} />}
+      {error && <Toast type="error" message={error} />}
 
       <div className="row">
         <div className="col">

@@ -1,5 +1,5 @@
 import React from 'react';
-import ErrorMsg from '../../shared/components/ui/error-msg';
+import Toast from '../../shared/components/ui/toast';
 import useUsers from './hooks/use-users-tab';
 import UserManagementItem from './user-management-item';
 
@@ -8,7 +8,7 @@ const UsersTab: React.FC = () => {
 
   return (
     <div>
-      {error && <ErrorMsg message={error}></ErrorMsg>}
+      {error && <Toast type="error" message={error} />}
 
       <div className="row m-auto">
         {users.map((user) => (

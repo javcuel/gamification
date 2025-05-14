@@ -27,8 +27,8 @@ const LinkImage: React.FC<LinkImageProps> = ({
   src,
   alt,
   url,
-  width,
-  height,
+  width = 200,
+  height = 200,
 }) => {
   return (
     <a href={url} target="_blank" rel="noopener noreferrer">

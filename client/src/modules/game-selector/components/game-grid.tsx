@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import ErrorMsg from '../../shared/components/ui/error-msg';
+import Toast from '../../shared/components/ui/toast';
 import LoadingMsg from '../../shared/components/ui/loading-msg';
 import useGameSelector from '../hooks/use-game-selector';
 import GameItem from './game-item';
@@ -27,7 +27,7 @@ const GameGrid: React.FC = () => {
         </div>
       ) : (
         <div className="row custom-flex-center text-center">
-          {error && <ErrorMsg message={error} />}
+          {error && <Toast type="error" message={error} />}
 
           {games
             .filter((game) => game.isVisible)

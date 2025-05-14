@@ -21,7 +21,7 @@ const ControlledTemplate = (args: React.ComponentProps<typeof Input>) => {
       value={value}
       onChange={(e) => {
         setValue(e.target.value);
-        args.onChange?.(e); // Optional: call original onChange if passed
+        args.onChange?.(e);
       }}
     />
   );
@@ -30,7 +30,7 @@ const ControlledTemplate = (args: React.ComponentProps<typeof Input>) => {
 export const TextInput: Story = {
   args: {
     type: 'text',
-    placeholder: 'Enter your name',
+    placeholder: 'Enter something',
     value: '',
   },
   render: ControlledTemplate,
@@ -39,7 +39,7 @@ export const TextInput: Story = {
 export const PasswordInput: Story = {
   args: {
     type: 'password',
-    placeholder: 'Enter your password',
+    placeholder: 'Enter password',
     value: '',
   },
   render: ControlledTemplate,

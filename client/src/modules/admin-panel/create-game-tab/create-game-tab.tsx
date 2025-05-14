@@ -2,23 +2,42 @@ import React, { useState } from 'react';
 import { GameCreate } from '../../shared/api/domain/game';
 import Button from '../../shared/components/ui/button';
 import Dropdown from '../../shared/components/ui/dropdown';
-import ErrorMsg from '../../shared/components/ui/error-msg';
+import Toast from '../../shared/components/ui/toast';
 import Input from '../../shared/components/ui/input';
-import SuccessMsg from '../../shared/components/ui/success-msg';
 import useCreateGame from './hooks/use-create-game';
 import LoadingMsg from '../../shared/components/ui/loading-msg';
+import { z } from 'zod';
 
 const CreateGameTab: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [idSubject, setIdSubject] = useState<string>('');
   const [img, setImg] = useState<string>('');
   const [maxScore, setMaxScore] = useState<string>('');
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   const { createGame, error, success, loading } = useCreateGame();
+
+  const createGameSchema = z.object({
+    name: z.string().min(1, 'Game name is required'),
+    img: z.string().min(1, 'Game image is required'),
+    maxscore: z.number().min(1, 'Max score must be a positive number'),
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Form validation
+    setValidationError(null);
+    const validationResult = createGameSchema.safeParse([name, img, maxScore]);
+
+    if (!validationResult.success) {
+      const firstError =
+        validationResult.error.errors[0]?.message || 'Unknown error';
+      setValidationError(firstError);
+      return;
+    }
+
+    // Submit
     const newGame = new GameCreate(
       Number(idSubject),
       img,
@@ -67,9 +86,10 @@ const CreateGameTab: React.FC = () => {
       />
       <Button text="Create" />
 
-      {error && <ErrorMsg message={error}></ErrorMsg>}
-      {success && <SuccessMsg message={'Subject created'}></SuccessMsg>}
-      {loading && <LoadingMsg message="Creating new game..."></LoadingMsg>}
+      {error && <Toast type="error" message={error} />}
+      {validationError && <Toast type="error" message={validationError} />}
+      {success && <Toast type="success" message={'Subject created'} />}
+      {loading && <LoadingMsg message="Creating new game..." />}
     </form>
   );
 };

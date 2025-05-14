@@ -1,4 +1,3 @@
-// LinkImage.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react';
 import LinkImage from './link-image';
 
@@ -17,7 +16,25 @@ export const DefaultLinkImage: Story = {
     src: 'images/uva.png',
     alt: 'UVa Image',
     url: 'https://www.uva.es',
-    width: 200,
-    height: 200,
+  },
+};
+
+export const SmallImage: Story = {
+  args: {
+    src: 'images/inf.png',
+    alt: 'Small Inf Image',
+    url: 'https://www.inf.uva.es',
+    width: 100,
+    height: 100,
+  },
+};
+
+export const CustomAspectRatioImage: Story = {
+  args: {
+    src: 'images/Greidi1.png',
+    alt: 'Large Greidi Image',
+    url: 'https://www.greidi.infor.uva.es',
+    width: 600,
+    height: 400,
   },
 };

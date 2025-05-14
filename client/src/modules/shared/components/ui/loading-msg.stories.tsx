@@ -11,16 +11,14 @@ export default meta;
 
 type Story = StoryObj<typeof LoadingMsg>;
 
-// Example Story: Default Error Message
-export const ExampleDefaultError: Story = {
+export const TextLoading: Story = {
   args: {
     message: 'Loading...',
   },
 };
 
-// Example Story: Custom Error Message
-export const ExampleCustomError: Story = {
+export const EmptyLoading: Story = {
   args: {
-    message: 'Loading subjects...',
+    message: '',
   },
 };

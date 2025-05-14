@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ErrorMsg from '../../shared/components/ui/error-msg';
+import Toast from '../../shared/components/ui/toast';
 import LoadingMsg from '../../shared/components/ui/loading-msg';
 import useSubject from '../hooks/use-home';
 import SubjectItem from './subject-item';
@@ -25,7 +25,7 @@ const SubjectGrid: React.FC = () => {
         </div>
       ) : (
         <div className="row custom-flex-center text-center">
-          {error && <ErrorMsg message={error} />}
+          {error && <Toast type="error" message={error} />}
 
           {subjects
             .filter((subject) => subject.isVisible)

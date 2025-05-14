@@ -3,6 +3,8 @@ import { GameUpdate } from '../../../shared/api/domain/game';
 import Button from '../../../shared/components/ui/button';
 import Input from '../../../shared/components/ui/input';
 import '../../styles/edit-modal.css';
+import { z } from 'zod';
+import Toast from '../../../shared/components/ui/toast';
 
 interface GameEditModalProps {
   data: GameUpdate;
@@ -19,9 +21,29 @@ const GameEditModal: React.FC<GameEditModalProps> = ({
   const [name, setName] = useState(data.name);
   const [img, setImg] = useState(data.img);
   const [maxScore, setMaxScore] = useState(data.maxScore);
+  const [validationError, setValidationError] = useState<string | null>(null);
+
+  const updateGameSchema = z.object({
+    name: z.string().min(1, 'Game name is required'),
+    img: z.string().min(1, 'Game image is required'),
+    maxscore: z.number().min(1, 'Max score must be a positive number'),
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Form validation
+    setValidationError(null);
+    const validationResult = updateGameSchema.safeParse([name, img, maxScore]);
+
+    if (!validationResult.success) {
+      const firstError =
+        validationResult.error.errors[0]?.message || 'Unknown error';
+      setValidationError(firstError);
+      return;
+    }
+
+    // Submit
     onSave({ idSubject, name, img, maxScore });
     onClose();
   };
@@ -59,6 +81,10 @@ const GameEditModal: React.FC<GameEditModalProps> = ({
           <div className="d-flex justify-content-between mt-3">
             <Button text="Cancel" onClick={onClose} />
             <Button text="Save" />
+
+            {validationError && (
+              <Toast type="error" message={validationError} />
+            )}
           </div>
         </form>
       </div>

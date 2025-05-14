@@ -1,5 +1,5 @@
 import React from 'react';
-import ErrorMsg from '../../shared/components/ui/error-msg';
+import Toast from '../../shared/components/ui/toast';
 import SubjectManagementItem from './components/subject-management-item';
 import useSubjectsTab from './hooks/use-subjects-tab';
 
@@ -12,7 +12,7 @@ const SubjectsTab: React.FC = () => {
 
   return (
     <div>
-      {error && <ErrorMsg message={error}></ErrorMsg>}
+      {error && <Toast type="error" message={error}></Toast>}
       {subjects.map((subject) => (
         <SubjectManagementItem
           key={subject.id}

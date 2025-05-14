@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { ROUTES } from '../../../constants/routes';
 import { useAuth } from '../../../context/auth-context';
 import Button from '../../shared/components/ui/button';
-import ErrorMsg from '../../shared/components/ui/error-msg';
+import Toast from '../../shared/components/ui/toast';
 import Input from '../../shared/components/ui/input';
 
 /**
@@ -60,8 +60,8 @@ const LoginForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Form validation
     setValidationError(null);
-
     const validationResult = loginSchema.safeParse({ user, passwd });
 
     if (!validationResult.success) {
@@ -71,6 +71,7 @@ const LoginForm: React.FC = () => {
       return;
     }
 
+    // Submit
     const result = await loginRequest(user, passwd);
     if (result.success && result.role) {
       navigate(ROUTES.HOME);
@@ -96,8 +97,8 @@ const LoginForm: React.FC = () => {
         onChange={handlePasswdChange}
       />
       <Button text="Login" />
-      {error && <ErrorMsg message={error}></ErrorMsg>}
-      {validationError && <ErrorMsg message={validationError}></ErrorMsg>}
+      {error && <Toast type="error" message={error} />}
+      {validationError && <Toast type="error" message={validationError} />}
     </form>
   );
 };

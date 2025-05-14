@@ -1,5 +1,5 @@
-// Button.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import Button from './button';
 
 const meta: Meta<typeof Button> = {
@@ -15,6 +15,56 @@ type Story = StoryObj<typeof Button>;
 export const SimpleText: Story = {
   args: {
     text: 'Click me!',
-    onClick: () => alert('Hello World!'),
+    onClick: fn(() => alert('Click!')),
+  },
+};
+
+export const Visible: Story = {
+  args: {
+    type: 'visible',
+    onClick: fn(() => alert('Visible')),
+  },
+};
+
+export const Hidden: Story = {
+  args: {
+    type: 'hidden',
+    onClick: fn(() => alert('Hidden')),
+  },
+};
+
+export const Lock: Story = {
+  args: {
+    type: 'lock',
+    onClick: fn(() => alert('Lock')),
+  },
+};
+
+export const Unlock: Story = {
+  args: {
+    type: 'unlock',
+    onClick: fn(() => alert('Unlock')),
+  },
+};
+
+export const Edit: Story = {
+  args: {
+    type: 'edit',
+    onClick: fn(() => alert('Edit')),
+  },
+};
+
+export const Delete: Story = {
+  args: {
+    type: 'delete',
+    onClick: fn(() => alert('Delete')),
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    text: 'Disabled',
+    disabled: true,
+    onClick: fn(() => alert('Disabled')),
   },
 };

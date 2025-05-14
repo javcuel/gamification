@@ -2,7 +2,7 @@ import React from 'react';
 import { ROLES } from '../../../../constants/roles';
 import { ROUTES } from '../../../../constants/routes';
 import { useAuth } from '../../../../context/auth-context';
-import NavLinkItem from './nav-link-item';
+import LinkItem from '../ui/link-item';
 
 interface NavLinkProps {
   role: string;
@@ -19,16 +19,16 @@ const NavLinkList: React.FC<NavLinkProps> = ({ role }) => {
   return (
     <ul className="navbar-nav">
       {NAV_LINKS.map(({ to, label }) => (
-        <NavLinkItem key={to} to={to} label={label} />
+        <LinkItem key={to} to={to} label={label} />
       ))}
 
       {role === ROLES.ADMIN && (
-        <NavLinkItem to={ROUTES.ADMIN_PANEL} label="Admin" />
+        <LinkItem to={ROUTES.ADMIN_PANEL} label="Admin" />
       )}
 
-      {role === ROLES.DEV && <NavLinkItem to={ROUTES.DEV_PANEL} label="Dev" />}
+      {role === ROLES.DEV && <LinkItem to={ROUTES.DEV_PANEL} label="Dev" />}
 
-      <NavLinkItem label="Logout" onClick={logoutRequest} />
+      <LinkItem label="Logout" onClick={logoutRequest} />
     </ul>
   );
 };

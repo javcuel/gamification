@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import NavBar from '../shared/components/navbar/navbar';
-import ErrorMsg from '../shared/components/ui/error-msg';
+import Toast from '../shared/components/ui/toast';
 import Iframe from './components/iframe';
 import usePlay from './hooks/use-play';
 
@@ -17,7 +17,7 @@ const Play: React.FC = () => {
       {data.game ? (
         <Iframe selectedGame={data.game} />
       ) : (
-        <ErrorMsg message={'No game founded'} />
+        <Toast type="error" message={'No game founded'} />
       )}
     </div>
   );

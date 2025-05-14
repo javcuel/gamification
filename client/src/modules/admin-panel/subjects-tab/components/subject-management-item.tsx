@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Subject, SubjectUpdate } from '../../../shared/api/domain/subject';
 import Button from '../../../shared/components/ui/button';
-import ErrorMsg from '../../../shared/components/ui/error-msg';
+import Toast from '../../../shared/components/ui/toast';
 import useDeleteSubject from '../hooks/use-delete-subject';
 import useExpandSubject from '../hooks/use-expand-subject';
 import useToggleSubjectOpenState from '../hooks/use-toggle-subject-open-state';
@@ -121,11 +121,11 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
         </div>
       </div>
 
-      {visibleError && <ErrorMsg message={visibleError} />}
-      {openError && <ErrorMsg message={openError} />}
-      {updateError && <ErrorMsg message={updateError} />}
-      {deleteError && <ErrorMsg message={deleteError} />}
-      {expandError && <ErrorMsg message={expandError} />}
+      {visibleError && <Toast type="error" message={visibleError} />}
+      {openError && <Toast type="error" message={openError} />}
+      {updateError && <Toast type="error" message={updateError} />}
+      {deleteError && <Toast type="error" message={deleteError} />}
+      {expandError && <Toast type="error" message={expandError} />}
 
       {loading && <div>Loading games...</div>}
       {updateLoading && <div>Loading update...</div>}
