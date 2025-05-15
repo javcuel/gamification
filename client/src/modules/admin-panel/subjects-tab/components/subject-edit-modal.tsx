@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { z } from 'zod';
 import { SubjectUpdate } from '../../../shared/api/domain/subject';
 import Button from '../../../shared/components/ui/button';
 import Input from '../../../shared/components/ui/input';
-import '../../styles/edit-modal.css';
-import { z } from 'zod';
 import Toast from '../../../shared/components/ui/toast';
+import '../../styles/edit-modal.css';
 
 interface SubjectEditModalProps {
   data: SubjectUpdate;
@@ -33,11 +33,11 @@ const SubjectEditModal: React.FC<SubjectEditModalProps> = ({
 
     // Form validation
     setValidationError(null);
-    const validationResult = updateSubjectSchema.safeParse([
+    const validationResult = updateSubjectSchema.safeParse({
       name,
       img,
       imgBackground,
-    ]);
+    });
 
     if (!validationResult.success) {
       const firstError =

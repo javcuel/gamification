@@ -59,3 +59,21 @@ export class UserLogin {
     public passwd: string
   ) {}
 }
+
+export class UserUpdate {
+  constructor(
+    public group: string,
+    public role: (typeof ROLES)[keyof typeof ROLES],
+    public name: string,
+    public passwd: string
+  ) {}
+}
+
+export class UserCreate {
+  constructor(
+    public group: string,
+    public role: (typeof ROLES)[keyof typeof ROLES],
+    public name: string,
+    public passwd: string
+  ) {}
+}

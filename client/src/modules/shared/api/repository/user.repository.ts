@@ -1,4 +1,10 @@
-import { User, UserLogin, UserScore } from '../domain/user';
+import {
+  User,
+  UserCreate,
+  UserLogin,
+  UserScore,
+  UserUpdate,
+} from '../domain/user';
 
 import { NavigateFunction } from 'react-router/dist';
 import HttpClient from '../../../../api/http-client';
@@ -33,7 +39,7 @@ class UserRepository implements IUserRepository {
     }
   }
 
-  async create(data: User): Promise<void> {
+  async create(data: UserCreate): Promise<void> {
     const requestDTO = UserMapper.toCreateDTO(data);
 
     try {
@@ -44,7 +50,7 @@ class UserRepository implements IUserRepository {
     }
   }
 
-  async update(id: number, data: User): Promise<void> {
+  async update(id: number, data: UserUpdate): Promise<void> {
     const requestDTO = UserMapper.toUpdateDTO(data);
 
     try {

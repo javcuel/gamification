@@ -1,5 +1,18 @@
 import db from "../config/db.js";
 
+// Get all games
+export const getGames = async (req, res) => {
+  try {
+    const [rows] = await db.query(
+      "SELECT * FROM Minijuegos ORDER BY Posicion ASC"
+    );
+    res.json(rows);
+  } catch (error) {
+    console.error("Error fetching games:", error);
+    res.status(500).json({ message: "Error fetching games" });
+  }
+};
+
 // Get all games by the Subject ID
 export const getGamesBySubject = async (req, res) => {
   const { subjectId } = req.params;

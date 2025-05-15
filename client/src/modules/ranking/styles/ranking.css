@@ -4,26 +4,25 @@
 }
 
 .table-responsive-wrapper::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
   height: 8px;
 }
 
 .table-responsive-wrapper::-webkit-scrollbar-track {
-  background: transparent;
+  background-color: color-mix(in srgb, var(--secondary) 30%, transparent);
   border-radius: 15px;
 }
 
 .table-responsive-wrapper::-webkit-scrollbar-thumb {
-  background-color: var(--text);
+  background-color: var(--secondary);
   border-radius: 15px;
-  border: 2px solid var(--secondary);
 }
 
 .table {
   min-width: 600px;
 
-  border: solid 3px var(--text);
-  border-radius: 15px !important;
+  border: solid 1px var(--text);
+  border-radius: 5px !important;
   border-collapse: separate !important;
   border-spacing: 0 !important;
   overflow: hidden;
@@ -31,9 +30,9 @@
 
 .table th,
 .table td {
-  background-color: color-mix(in srgb, var(--primary) 80%, transparent);
+  background-color: color-mix(in srgb, var(--secondary) 5%, transparent);
   color: var(--text);
-  border: 2px solid var(--text);
+  border: 1px solid var(--text);
   transition:
     background-color,
     filter 0.3s ease-in-out;
@@ -45,60 +44,26 @@
     filter 0.3s ease;
 }
 
-.table-row:hover {
-  filter: brightness(0.7);
-}
-
 .podium1 {
-  position: relative;
-}
-
-.podium1::before {
-  content: '🥇';
-  position: absolute;
-
-  font-size: 1rem;
-  color: var(--secondary);
-  animation: podium 2.5s infinite ease-in-out;
+  background-color: color-mix(
+    in srgb,
+    var(--secondary) 90%,
+    transparent
+  ) !important;
 }
 
 .podium2 {
-  position: relative;
-}
-
-.podium2::before {
-  content: '🥈';
-  position: absolute;
-
-  font-size: 1rem;
-  color: var(--secondary);
-  animation: podium 2.5s infinite ease-in-out;
+  background-color: color-mix(
+    in srgb,
+    var(--secondary) 60%,
+    transparent
+  ) !important;
 }
 
 .podium3 {
-  position: relative;
-}
-
-.podium3::before {
-  content: '🥉';
-  position: absolute;
-
-  font-size: 1rem;
-  color: var(--secondary);
-  animation: podium 2.5s infinite ease-in-out;
-}
-
-@keyframes podium {
-  0% {
-    opacity: 0.2;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(2);
-  }
-  100% {
-    opacity: 0.2;
-    transform: scale(1);
-  }
+  background-color: color-mix(
+    in srgb,
+    var(--secondary) 30%,
+    transparent
+  ) !important;
 }

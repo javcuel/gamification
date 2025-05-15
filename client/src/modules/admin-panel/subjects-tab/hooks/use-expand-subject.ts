@@ -15,7 +15,7 @@ const useExpandSubject = (subjectId: number) => {
       setLoading(true);
       setError(null);
       try {
-        const data = await gameRepository.getAll(subjectId);
+        const data = await gameRepository.getById(subjectId);
         setGames(data);
         setLoading(false);
       } catch (error: unknown) {

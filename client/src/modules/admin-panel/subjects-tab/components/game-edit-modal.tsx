@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { z } from 'zod';
 import { GameUpdate } from '../../../shared/api/domain/game';
 import Button from '../../../shared/components/ui/button';
+import Dropdown from '../../../shared/components/ui/dropdown';
 import Input from '../../../shared/components/ui/input';
-import '../../styles/edit-modal.css';
-import { z } from 'zod';
 import Toast from '../../../shared/components/ui/toast';
+import '../../styles/edit-modal.css';
+import useSubjectsTab from '../hooks/use-subjects-tab';
 
 interface GameEditModalProps {
   data: GameUpdate;
@@ -20,21 +22,34 @@ const GameEditModal: React.FC<GameEditModalProps> = ({
   const [idSubject, setIdSubject] = useState(data.idSubject);
   const [name, setName] = useState(data.name);
   const [img, setImg] = useState(data.img);
-  const [maxScore, setMaxScore] = useState(data.maxScore);
+  const [maxScore, setMaxScore] = useState<string>(String(data.maxScore));
   const [validationError, setValidationError] = useState<string | null>(null);
 
   const updateGameSchema = z.object({
     name: z.string().min(1, 'Game name is required'),
     img: z.string().min(1, 'Game image is required'),
-    maxscore: z.number().min(1, 'Max score must be a positive number'),
+    maxScore: z.number().min(1, 'Max score must be a positive number'),
   });
+
+  const { subjects, error: subjectsError } = useSubjectsTab();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     // Form validation
     setValidationError(null);
-    const validationResult = updateGameSchema.safeParse([name, img, maxScore]);
+
+    const parsedScore = parseFloat(maxScore);
+    if (isNaN(parsedScore)) {
+      setValidationError('Max score must be a valid number');
+      return;
+    }
+
+    const validationResult = updateGameSchema.safeParse({
+      name,
+      img,
+      maxScore: parsedScore,
+    });
 
     if (!validationResult.success) {
       const firstError =
@@ -44,7 +59,7 @@ const GameEditModal: React.FC<GameEditModalProps> = ({
     }
 
     // Submit
-    onSave({ idSubject, name, img, maxScore });
+    onSave({ idSubject, name, img, maxScore: parsedScore });
     onClose();
   };
 
@@ -72,15 +87,20 @@ const GameEditModal: React.FC<GameEditModalProps> = ({
             value={maxScore}
             onChange={(e) => setMaxScore(e.target.value)}
           />
-          <Input
-            placeholder="Subject"
-            type="text"
-            value={idSubject}
-            onChange={(e) => setIdSubject(e.target.value)}
+          <Dropdown
+            options={subjects.map((s) => s.name)}
+            placeholder="Select Subject"
+            onChange={(selectedName) => {
+              const selected = subjects.find((s) => s.name === selectedName);
+              if (selected) setIdSubject(selected.id);
+            }}
           />
+
           <div className="d-flex justify-content-between mt-3">
             <Button text="Cancel" onClick={onClose} />
             <Button text="Save" />
+
+            {subjectsError && <Toast type="error" message={subjectsError} />}
 
             {validationError && (
               <Toast type="error" message={validationError} />

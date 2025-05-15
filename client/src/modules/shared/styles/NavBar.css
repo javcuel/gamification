@@ -17,7 +17,7 @@
 }
 
 .navbar-scrolled {
-  background-color: color-mix(in srgb, var(--primary) 95%, transparent);
+  background-color: color-mix(in srgb, var(--primary) 90%, transparent);
 }
 
 .navbar-toggler {

@@ -6,9 +6,19 @@ import { IGameRepository } from '../interface/game-repository.interface';
 import { GameMapper } from '../mapper/game.mapper';
 
 class GameRepository implements IGameRepository {
-  async getAll(subjectId: number): Promise<Game[]> {
+  async getAll(): Promise<Game[]> {
     try {
-      const data = await HttpClient.get(API_URLS.GET_GAMES(subjectId));
+      const data = await HttpClient.get(API_URLS.GET_GAMES);
+      return data.map(GameMapper.toDomain);
+    } catch (error) {
+      console.error('Error fetching games', error);
+      throw new Error('Failed to fetch games');
+    }
+  }
+
+  async getById(subjectId: number): Promise<Game[]> {
+    try {
+      const data = await HttpClient.get(API_URLS.GET_GAMES_BY_ID(subjectId));
       return data.map(GameMapper.toDomain);
     } catch (error) {
       console.error('Error fetching games', error);

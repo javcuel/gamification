@@ -3,8 +3,8 @@ import { Theme } from '../../../api/domain/theme';
 import { ThemeContext } from '../../../context/theme-context';
 import Button from '../../shared/components/ui/button';
 
-import ColorPicker from '../components/color-picker-test';
-import ColorPickerInput from './components/color-pick-test';
+import Input from '../../shared/components/ui/input';
+import ColorPicker from './components/color-picker';
 
 const AdminThemeTab: React.FC = () => {
   const themeContext = useContext(ThemeContext);
@@ -41,82 +41,9 @@ const AdminThemeTab: React.FC = () => {
   const handleColorChange = (colorType: string, newColor: string) => {
     setColors({ ...colors, [colorType]: newColor });
   };
-
   return (
     <div className="container-fluid" style={{ minHeight: '100%' }}>
       <div className="row d-flex flex-wrap justify-content-center">
-        {/* Color Pickers */}
-        <div className="col-12 col-md-4 d-flex flex-column align-items-center">
-          <div className="d-flex flex-column align-items-center">
-            <ColorPicker
-              label="Text"
-              initialColor={colors.text}
-              onChange={(c) => handleColorChange('text', c)}
-            />
-          </div>
-        </div>
-        <div className="col-12 col-md-4 d-flex flex-column align-items-center">
-          <div className="d-flex flex-column align-items-center">
-            <ColorPicker
-              label="Text"
-              initialColor={colors.text}
-              onChange={(c) => handleColorChange('text', c)}
-            />
-          </div>
-        </div>
-        <div className="col-12 col-md-4 d-flex flex-column align-items-center">
-          <ColorPicker
-            label="Text"
-            initialColor={colors.text}
-            onChange={(c) => handleColorChange('text', c)}
-          />
-        </div>
-
-        {/* Vista previa TODO: QUIZA SACARLO A UN COMPONENTE EXTERNO?*/}
-        <div className="col-12 col-md-6 d-flex flex-column align-items-center mt-4">
-          <h2>Preview</h2>
-          <div
-            className="rounded shadow p-4 mt-3 d-flex flex-column align-items-center"
-            style={{
-              backgroundColor: colors.primary,
-              color: colors.text,
-              maxWidth: '400px',
-              width: '100%',
-            }}
-          >
-            <p className="mb-2">Gamispace</p>
-
-            <button
-              className="px-4 py-2 "
-              style={{
-                backgroundColor: colors.secondary,
-                color: colors.text,
-                border: 'none',
-                borderRadius: '15px',
-              }}
-            >
-              Button
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Botón Guardar */}
-      <div className="row d-flex justify-content-center mt-4">
-        <div className="col-auto">
-          <Button text="Save" onClick={handleSave} />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default AdminThemeTab;
-
-/* return (
-    <div className="container-fluid" style={{ minHeight: '100%' }}>
-      <div className="row d-flex flex-wrap justify-content-center">
-   
         <div className="col-12 col-md-4 d-flex flex-column align-items-center">
           <div className="d-flex flex-column align-items-center">
             <div className="mb-3">
@@ -172,7 +99,6 @@ export default AdminThemeTab;
           </div>
         </div>
 
-       
         <div className="col-12 col-md-6 d-flex flex-column align-items-center mt-4">
           <h2>Preview</h2>
           <div
@@ -201,7 +127,6 @@ export default AdminThemeTab;
         </div>
       </div>
 
-
       <div className="row d-flex justify-content-center mt-4">
         <div className="col-auto">
           <Button text="Save" onClick={handleSave} />
@@ -209,4 +134,74 @@ export default AdminThemeTab;
       </div>
     </div>
   );
- */
+};
+
+export default AdminThemeTab;
+
+/*  return (
+    <div className="container-fluid" style={{ minHeight: '100%' }}>
+      <div className="row d-flex flex-wrap justify-content-center">
+       
+        <div className="col-12 col-md-4 d-flex flex-column align-items-center">
+          <div className="d-flex flex-column align-items-center">
+            <ColorPicker
+              label="Text"
+              initialColor={colors.text}
+              onChange={(c) => handleColorChange('text', c)}
+            />
+          </div>
+        </div>
+        <div className="col-12 col-md-4 d-flex flex-column align-items-center">
+          <div className="d-flex flex-column align-items-center">
+            <ColorPicker
+              label="Text"
+              initialColor={colors.text}
+              onChange={(c) => handleColorChange('text', c)}
+            />
+          </div>
+        </div>
+        <div className="col-12 col-md-4 d-flex flex-column align-items-center">
+          <ColorPicker
+            label="Text"
+            initialColor={colors.text}
+            onChange={(c) => handleColorChange('text', c)}
+          />
+        </div>
+
+   
+        <div className="col-12 col-md-6 d-flex flex-column align-items-center mt-4">
+          <h2>Preview</h2>
+          <div
+            className="rounded shadow p-4 mt-3 d-flex flex-column align-items-center"
+            style={{
+              backgroundColor: colors.primary,
+              color: colors.text,
+              maxWidth: '400px',
+              width: '100%',
+            }}
+          >
+            <p className="mb-2">Gamispace</p>
+
+            <button
+              className="px-4 py-2 "
+              style={{
+                backgroundColor: colors.secondary,
+                color: colors.text,
+                border: 'none',
+                borderRadius: '15px',
+              }}
+            >
+              Button
+            </button>
+          </div>
+        </div>
+      </div>
+
+    
+      <div className="row d-flex justify-content-center mt-4">
+        <div className="col-auto">
+          <Button text="Save" onClick={handleSave} />
+        </div>
+      </div>
+    </div>
+  ); */

@@ -122,8 +122,9 @@ export const API_URLS = {
    * uploaded: boolean;
    * }
    */
-  GET_GAMES: (subjectId: number) => `/games/${subjectId}`,
+  GET_GAMES_BY_ID: (subjectId: number) => `/games/${subjectId}`,
 
+  GET_GAMES: '/games',
   /**
    * Get game by id (Method GET):
    * "SELECT * FROM Minijuegos WHERE IDMinijuego = ?"

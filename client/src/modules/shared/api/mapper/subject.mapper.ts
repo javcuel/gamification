@@ -1,8 +1,8 @@
 import { Subject, SubjectCreate, SubjectUpdate } from '../domain/subject';
 
 import {
-  SubjectDTO,
   SubjectCreateDTO,
+  SubjectDTO,
   SubjectUpdateDTO,
   SubjectUpdateOpenDTO,
   SubjectUpdateVisibleDTO,

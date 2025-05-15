@@ -29,7 +29,6 @@ export interface UserCreateDTO {
  * @interface
  */
 export interface UserUpdateDTO {
-  IDUsuario: number;
   Grupo: string;
   TipoUsuario: string;
   Nombre: string;

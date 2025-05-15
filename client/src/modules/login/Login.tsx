@@ -52,7 +52,7 @@ const Login: React.FC = () => {
               src="images/Greidi1.png"
               alt="greidi_logo"
               url="https://www.greidi.infor.uva.es"
-              width={'15%'}
+              width={'20%'}
             />
           </div>
         </div>

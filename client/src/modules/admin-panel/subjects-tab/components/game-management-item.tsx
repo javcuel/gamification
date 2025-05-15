@@ -53,13 +53,7 @@ const GameManagementItem: React.FC<GameManagementItemProps> = ({
 
   // Handles update Game
   const handleSaveGame = (updatedData: GameUpdate) => {
-    const updatedGame = new GameUpdate(
-      updatedData.idSubject,
-      updatedData.name,
-      updatedData.img,
-      updatedData.maxScore
-    );
-    updateGame(game.id, updatedGame);
+    updateGame(game.id, updatedData);
   };
 
   // Handles edit modal

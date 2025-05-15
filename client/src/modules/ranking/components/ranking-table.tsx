@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { RANKING_TYPES } from '../../../constants/ranking-types';
 import Dropdown from '../../shared/components/ui/dropdown';
-import Toast from '../../shared/components/ui/toast';
 import LoadingMsg from '../../shared/components/ui/loading-msg';
+import Toast from '../../shared/components/ui/toast';
 import useRankings from '../hooks/use-ranking';
+import useRankingGames from '../hooks/use-ranking-games';
 import '../styles/ranking.css';
 
 const DEFAULT_RANKING = RANKING_TYPES.PLAYERS;
@@ -14,16 +15,14 @@ const RankingTable: React.FC = () => {
   const [selectedGame, setSelectedGame] = useState<number>(DEFAULT_GAME);
 
   const { rankings, error, loading } = useRankings(rankingType, selectedGame);
+  const { games, error: gamesError, loading: gamesLoading } = useRankingGames();
 
-  const gameOptions = [
-    { id: 120, name: 'Apilas' },
-    { id: 94, name: 'Apuntados' },
-    { id: 127, name: 'Cafetería' },
-    { id: 109, name: 'Caída de Datos' },
-    { id: 129, name: 'Estructura2' },
-    { id: 110, name: 'Fiesta Recursiva' },
-    { id: 130, name: 'Mars Miners' },
-  ];
+  const getPodiumClass = (index: number) => {
+    if (index === 0) return 'podium1';
+    if (index === 1) return 'podium2';
+    if (index === 2) return 'podium3';
+    return '';
+  };
 
   return (
     <div className="container">
@@ -41,14 +40,20 @@ const RankingTable: React.FC = () => {
           rankingType === RANKING_TYPES.GROUPS_BY_GAME) && (
           <div className="col-md-6">
             <label>Select game</label>
-            <Dropdown
-              options={gameOptions.map((g) => g.name)}
-              placeholder="Select game"
-              onChange={(gameName) => {
-                const selected = gameOptions.find((g) => g.name === gameName);
-                if (selected) setSelectedGame(selected.id);
-              }}
-            />
+            {gamesLoading ? (
+              <LoadingMsg message="Loading games..." />
+            ) : gamesError ? (
+              <Toast type="error" message={gamesError} />
+            ) : (
+              <Dropdown
+                options={games.map((g) => g.name)}
+                placeholder="Select game"
+                onChange={(gameName) => {
+                  const selected = games.find((g) => g.name === gameName);
+                  if (selected) setSelectedGame(selected.id);
+                }}
+              />
+            )}
           </div>
         )}
       </div>
@@ -75,7 +80,6 @@ const RankingTable: React.FC = () => {
                   <th>
                     <span>Completed Subjects</span>
                   </th>
-
                   <th>
                     <span>Points</span>
                   </th>
@@ -83,20 +87,20 @@ const RankingTable: React.FC = () => {
               </thead>
               <tbody>
                 {rankings.slice(0, 10).map((entry, index) => (
-                  <tr key={index} className="table-row">
-                    <td
-                      className={
-                        index === 0
-                          ? 'podium1'
-                          : index === 1
-                            ? 'podium2'
-                            : index === 2
-                              ? 'podium3'
-                              : ''
-                      }
-                    >
-                      {index < 3 ? '' : index + 1}
+                  <tr
+                    key={index}
+                    className={`table-row ${getPodiumClass(index)}`}
+                  >
+                    <td>
+                      {index === 0
+                        ? ' 1 🥇'
+                        : index === 1
+                          ? ' 2 🥈'
+                          : index === 2
+                            ? ' 3 🥉'
+                            : index + 1}
                     </td>
+
                     {rankingType === RANKING_TYPES.GROUPS ||
                     rankingType === RANKING_TYPES.GROUPS_BY_GAME ? (
                       <td>{entry.userGroup || 'N/A'}</td>

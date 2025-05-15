@@ -1,4 +1,10 @@
-import { User, UserLogin, UserScore } from '../domain/user';
+import {
+  User,
+  UserCreate,
+  UserLogin,
+  UserScore,
+  UserUpdate,
+} from '../domain/user';
 
 import {
   UserCreateDTO,
@@ -29,7 +35,7 @@ export class UserMapper {
     };
   }
 
-  static toCreateDTO(user: User): UserCreateDTO {
+  static toCreateDTO(user: UserCreate): UserCreateDTO {
     return {
       Nombre: user.name,
       Grupo: user.group,
@@ -38,9 +44,8 @@ export class UserMapper {
     };
   }
 
-  static toUpdateDTO(user: User): UserUpdateDTO {
+  static toUpdateDTO(user: UserUpdate): UserUpdateDTO {
     return {
-      IDUsuario: user.id,
       Nombre: user.name,
       Grupo: user.group,
       TipoUsuario: user.role,

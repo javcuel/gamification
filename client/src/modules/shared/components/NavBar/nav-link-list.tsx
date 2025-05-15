@@ -19,16 +19,20 @@ const NavLinkList: React.FC<NavLinkProps> = ({ role }) => {
   return (
     <ul className="navbar-nav">
       {NAV_LINKS.map(({ to, label }) => (
-        <LinkItem key={to} to={to} label={label} />
+        <div key={to} className="me-3">
+          <LinkItem to={to} label={label} />
+        </div>
       ))}
 
-      {role === ROLES.ADMIN && (
-        <LinkItem to={ROUTES.ADMIN_PANEL} label="Admin" />
-      )}
-
-      {role === ROLES.DEV && <LinkItem to={ROUTES.DEV_PANEL} label="Dev" />}
-
-      <LinkItem label="Logout" onClick={logoutRequest} />
+      <div className="me-3">
+        {role === ROLES.ADMIN && (
+          <LinkItem to={ROUTES.ADMIN_PANEL} label="Admin" />
+        )}
+      </div>
+      <div className="me-3">
+        {role === ROLES.DEV && <LinkItem to={ROUTES.DEV_PANEL} label="Dev" />}
+        <LinkItem label="Logout" onClick={logoutRequest} />
+      </div>
     </ul>
   );
 };

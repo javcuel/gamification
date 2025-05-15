@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
 import { ROLES } from '../../../../constants/roles';
-import { User } from '../../../shared/api/domain/user';
+import { UserUpdate } from '../../../shared/api/domain/user';
 import Button from '../../../shared/components/ui/button';
 import Dropdown from '../../../shared/components/ui/dropdown';
 import Input from '../../../shared/components/ui/input';
-import '../styles/EditModal.css';
+import '../../styles/edit-modal.css';
 
 interface UserEditModalProps {
-  data: User;
+  data: UserUpdate;
   onClose: () => void;
-  onSave: (data: {
-    name: string;
-    passwd: string;
-    role: string;
-    group: string;
-  }) => void;
+  onSave: (data: UserUpdate) => void;
 }
 
 const UserEditModal: React.FC<UserEditModalProps> = ({
