@@ -5,46 +5,69 @@ import { API_URLS } from '../../../../constants/apiUrls';
 import { IRankingRepository } from '../interface/ranking-repository.interface';
 import { RankingMapper } from '../mapper/ranking.mapper';
 
+/**
+ * Implementation of the IRankingRepository interface.
+ * Responsible for handling API communication for user-related operations.
+ */
 class RankingRepository implements IRankingRepository {
-  async getPlayers(): Promise<Ranking[]> {
-    try {
-      const data = await HttpClient.get(API_URLS.GET_P_RANKING);
-      return data.map(RankingMapper.toDomain);
-    } catch (error) {
-      console.error('Error fetching players ranking', error);
-      throw new Error('Error to fetch players ranking');
-    }
-  }
+	/**
+	 * Retrieves all rankings associated to the players.
+	 * @returns A promise resolving to an array of Ranking entities.
+	 */
+	async getPlayers(): Promise<Ranking[]> {
+		try {
+			const data = await HttpClient.get(API_URLS.GET_P_RANKING);
+			return data.map(RankingMapper.toDomain);
+		} catch (error) {
+			console.error('Error fetching players ranking', error);
+			throw new Error('Error to fetch players ranking');
+		}
+	}
 
-  async getGroups(): Promise<Ranking[]> {
-    try {
-      const data = await HttpClient.get(API_URLS.GET_G_RANKING);
-      return data.map(RankingMapper.toDomain);
-    } catch (error) {
-      console.error('Error fetching groups ranking', error);
-      throw new Error('Error to fetch groups ranking');
-    }
-  }
+	/**
+	 * Retrieves all rankings associated to the players.
+	 * @returns A promise resolving to an array of Ranking entities.
+	 */
+	async getGroups(): Promise<Ranking[]> {
+		try {
+			const data = await HttpClient.get(API_URLS.GET_G_RANKING);
+			return data.map(RankingMapper.toDomain);
+		} catch (error) {
+			console.error('Error fetching groups ranking', error);
+			throw new Error('Error to fetch groups ranking');
+		}
+	}
 
-  async getPlayersByGame(gameId: number): Promise<Ranking[]> {
-    try {
-      const data = await HttpClient.get(API_URLS.GET_PG_RANKING(gameId));
-      return data.map(RankingMapper.toDomain);
-    } catch (error) {
-      console.error('Error fetching players by game ranking', error);
-      throw new Error('Error to fetch players by game ranking');
-    }
-  }
+	/**
+	 * Retrieves all rankings associated to the players by game.
+	 * @param gameId - The ID of the game for which rankings are to be fetched.
+	 * @returns A promise resolving to an array of Ranking entities.
+	 */
+	async getPlayersByGame(gameId: number): Promise<Ranking[]> {
+		try {
+			const data = await HttpClient.get(API_URLS.GET_PG_RANKING(gameId));
+			return data.map(RankingMapper.toDomain);
+		} catch (error) {
+			console.error('Error fetching players by game ranking', error);
+			throw new Error('Error to fetch players by game ranking');
+		}
+	}
 
-  async getGroupsByGame(gameId: number): Promise<Ranking[]> {
-    try {
-      const data = await HttpClient.get(API_URLS.GET_GG_RANKING(gameId));
-      return data.map(RankingMapper.toDomain);
-    } catch (error) {
-      console.error('Error fetching groups by game ranking', error);
-      throw new Error('Error to fetch gruops by game ranking');
-    }
-  }
+	/**
+	 * Retrieves all rankings associated to the groups by game.
+	 * @param gameId - The ID of the game for which rankings are to be fetched.
+	 * @returns A promise resolving to an array of Ranking entities.
+	 */
+	async getGroupsByGame(gameId: number): Promise<Ranking[]> {
+		try {
+			const data = await HttpClient.get(API_URLS.GET_GG_RANKING(gameId));
+			return data.map(RankingMapper.toDomain);
+		} catch (error) {
+			console.error('Error fetching groups by game ranking', error);
+			throw new Error('Error to fetch gruops by game ranking');
+		}
+	}
 }
 
+// Exporting a singleton instance of the RankingRepository for use across the application.
 export const rankingRepository = new RankingRepository();

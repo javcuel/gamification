@@ -4,17 +4,17 @@
  * @interface
  */
 export interface GameDTO {
-  IDMinijuego: number;
-  IDMundo: number;
-  UrlImagen: string;
-  Nombre: string;
-  PuntuacionMaxima: number;
-  Abierto: boolean;
-  Visible: boolean;
-  Posicion: number;
-  IDUsuario: number;
-  Nuevo: boolean;
-  Subido: boolean;
+	IDMinijuego: number;
+	IDMundo: number;
+	UrlImagen: string;
+	Nombre: string;
+	PuntuacionMaxima: number;
+	Abierto: boolean;
+	Visible: boolean;
+	Posicion: number;
+	IDUsuario: number;
+	Nuevo: boolean;
+	Subido: boolean;
 }
 
 /**
@@ -23,10 +23,10 @@ export interface GameDTO {
  * @interface
  */
 export interface GameCreateDTO {
-  IDMundo: number;
-  Nombre: string;
-  UrlImagen: string;
-  PuntuacionMaxima: number;
+	IDMundo: number;
+	Nombre: string;
+	UrlImagen: string;
+	PuntuacionMaxima: number;
 }
 
 /**
@@ -35,10 +35,10 @@ export interface GameCreateDTO {
  * @interface
  */
 export interface GameUpdateDTO {
-  IDMundo: number;
-  Nombre: string;
-  UrlImagen: string;
-  PuntuacionMaxima: number;
+	IDMundo: number;
+	Nombre: string;
+	UrlImagen: string;
+	PuntuacionMaxima: number;
 }
 
 /**
@@ -47,7 +47,7 @@ export interface GameUpdateDTO {
  * @interface
  */
 export interface GameUpdateOpenDTO {
-  Abierto: boolean;
+	Abierto: boolean;
 }
 
 /**
@@ -56,5 +56,5 @@ export interface GameUpdateOpenDTO {
  * @interface
  */
 export interface GameUpdateVisibleDTO {
-  Visible: boolean;
+	Visible: boolean;
 }

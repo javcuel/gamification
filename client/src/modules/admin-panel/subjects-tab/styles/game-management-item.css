@@ -1,60 +1,60 @@
 .game-management-item {
-  width: 100%;
-  background-color: transparent;
-  margin: 10px 0px;
-  padding: 10px 10px;
-  border: solid 2px var(--text);
-  border-radius: 15px;
-  cursor: default;
+	width: 100%;
+	background-color: transparent;
+	margin: 10px 0px;
+	padding: 10px 10px;
+	border: solid 2px var(--text);
+	border-radius: 15px;
+	cursor: default;
 }
 
 .game-management-item-button {
-  padding: 15px 15px;
-  margin: 2px 2px;
+	padding: 15px 15px;
+	margin: 2px 2px;
 
-  background-color: var(--secondary);
-  color: var(--text);
-  border: none;
-  border-radius: 15px;
+	background-color: var(--secondary);
+	color: var(--text);
+	border: none;
+	border-radius: 15px;
 
-  transition:
-    background-color 0.3s ease,
-    filter 0.3s ease;
+	transition:
+		background-color 0.3s ease,
+		filter 0.3s ease;
 }
 
 .game-management-item-button:hover {
-  filter: brightness(1.2);
+	filter: brightness(1.2);
 }
 
 .game-item-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .game-item-left {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  min-width: 0;
+	display: flex;
+	align-items: center;
+	flex: 1;
+	min-width: 0;
 }
 
 .game-management-item-image {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 10%;
-  opacity: 1;
-  transition:
-    opacity 0.8s ease,
-    transform 0.8s ease;
+	width: 80px;
+	height: 80px;
+	object-fit: cover;
+	border-radius: 10%;
+	opacity: 1;
+	transition:
+		opacity 0.8s ease,
+		transform 0.8s ease;
 }
 
 .game-item-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  flex-shrink: 0;
-  width: 30%;
-  justify-content: flex-end;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	flex-shrink: 0;
+	width: 30%;
+	justify-content: flex-end;
 }

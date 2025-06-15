@@ -1,17 +1,17 @@
 .nav-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 16px;
 }
 
 .icon-container {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+	display: flex;
+	align-items: center;
+	gap: 4px;
 }
 
 .icon {
-  width: 16px;
-  height: 16px;
+	width: 16px;
+	height: 16px;
 }

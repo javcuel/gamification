@@ -15,29 +15,29 @@ import SubjectItem from './subject-item';
  * `SubjectItem` components. If an error occurs, an alert message is shown.
  */
 const SubjectGrid: React.FC = () => {
-  const { subjects, error, loading } = useSubject();
+	const { subjects, error, loading } = useSubject();
 
-  return (
-    <div className="container">
-      {loading ? (
-        <div className="row custom-flex-center text-center">
-          <LoadingMsg message="Loading Subjects..." />
-        </div>
-      ) : (
-        <div className="row custom-flex-center text-center">
-          {error && <Toast type="error" message={error} />}
+	return (
+		<div className='container'>
+			{loading ? (
+				<div className='row custom-flex-center text-center'>
+					<LoadingMsg message='Loading Subjects...' />
+				</div>
+			) : (
+				<div className='row custom-flex-center text-center'>
+					{error && <Toast type='error' message={error} />}
 
-          {subjects
-            .filter((subject) => subject.isVisible)
-            .map((subject, index) => (
-              <div className="col-auto" key={index}>
-                <SubjectItem subject={subject} />
-              </div>
-            ))}
-        </div>
-      )}
-    </div>
-  );
+					{subjects
+						.filter(subject => subject.isVisible)
+						.map((subject, index) => (
+							<div className='col-auto' key={index}>
+								<SubjectItem subject={subject} />
+							</div>
+						))}
+				</div>
+			)}
+		</div>
+	);
 };
 
 export default SubjectGrid;

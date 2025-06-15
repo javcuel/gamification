@@ -5,86 +5,42 @@ import { ThemeProvider } from '../context/theme-context';
 import SpaceBackground from '../modules/shared/components/ui/space-background';
 import routes from './routes';
 
+/**
+ * AppRoutes component
+ *
+ * Handles the route matching using `useRoutes` based on the provided routes configuration.
+ * This is separated for clarity and to allow composition with other providers or UI elements.
+ *
+ * @returns React element representing the current route based on the route definitions.
+ */
 const AppRoutes = () => {
-  const element = useRoutes(routes);
-  return element;
+	const element = useRoutes(routes);
+	return element;
 };
 
-//TODO: ORGANIZACION CSS:
 /**
- * 
- *  .button {
-  /* Posicionamiento */
-/*   display: inline-block;
-  margin: 10px;
-  padding: 8px 16px; */
-
-/* Estilos visuales */
-/*   background-color: #007bff;
-  color: white;
-  border-radius: 5px; */
-
-/* Tipografía */
-/*  font-size: 16px;
-  font-weight: bold; */
-
-/* Otros */
-/*   transition: background-color 0.3s ease;
-} */
-
-//TODO: INTENTAR UNIFICAR EL INPUT Y EL COLOR PICKER EN UN SOLO COMPONENTE, LUEGO HACER AL STORIE DE COLORPICKER.
-//TODO: EN LA PAGINA DE HOMRE, SI UNA SUBJECT ESTA BLOQUEADA NO DEBERIA DEJAR HACER CLICK, Y EN ESTE CASO DEJA. CAMBIARLO
-//TODO: REVISAR SI EL ORDEN DE LOS ATRIBUTOS DE LA CLASE DOMAIN DE GAME ESTA BIEN , QUE CREO QUE ESTÁ DESORDENADO
-//TODO: POR QUE COJONES LO DE THEME CONTEXT ESTA ESTABLECIDO EN NAV-USER-INFO??
-//TODO: HACER LOS LOGINGS
-//TODO BORRAR LOS CONSOLE.LOG
-//TODO CAMBIAR LOS REQUESTDTO POR UPADTEDTO O CREATEDTO
-//TODO: PONER TODOS LOS HOOKS EN KEBAB-CASE
-//TODO: Poner mensajes de required en los formularios.
-//TODO:  ACTUALMENTE SE ESTÁN SEPARANDO POR VH Y NO POR PORCENTAJES, CAMBIAR ESO EJEMPLO: ADMINPANEL
-//TODO: iNTENBTAR CAMBIAR TODOS LOS MARGENES Y COSAS QUE SEA NECESARIO Y QUE ESTENE EN PX POR VH
-//TODO: CON EL BUSCADOR, BUSCAR BORDER-RADIUS PARA ASEGURARTE DE QUE LOS BORDES SON IGUALES PARA TODOS LOS COMPONTES 15PX EN PRINCIPIO
-//TODO: REVISAR QUE TODOS LOS ARCHIVOS ESTÉN DOCUMENTADOS CON JSDOC
-//TODO: CAMBIAR TODO DONDE PONGA USERTYPE POR ROLE O USER ROLE
-//TODO: COMPROBAR QUE SE USAN LAS CONSTANTES DE API-URLS
-//TODO: COMPROBAR QUE SE USAN LAS COSNTANTES DE PATHS
-//TODO: SEPARAR TODOS LOS IMPORTS DE ARCHIVOS INTERNOS Y LIBRERIAS EXTERNAS
-
-//TODO: BUSCAR CUALQUIER PARTE DEL CODIGO DONDE SE DECLARE EL TIPO DE USUARIO COMO STRING Y LIMITAR
-//TODO_ EL TIPO DE USUARIO A EL TIPO ROLES DEFINIDO EN CONSTANTS, UN EJEMPLO EN USERSERVICE DEL ADMINPANEL.
-//TODO: EN LAS LLAMADAS A LA API CAMBIAR APIRESPONSE POR "DATA"
-//TODO: COMPROBAR QUE CADA CARPETA EN PAGES TENGA SU CARPETA STYLES SI LO NECESITA
-//TODO: REVISAR LOS HOOKS DE USO DE FUNCIONES DE LA API PARA ASEGURAR QUE ESTÉN ESTANDARIZADOS
-//TODO: REPASAR EL INDEX.CSS PARA VER SI SE PUEDE QUITAR ALGO O MOVERLO A LA CARPETA STYLES DE LOS COMPONENTES
-//TODO: ASEGURARSE QUE NO SE ESTÁ USANDO TYPE EN NINGUN LADO Y SE ESTÁ USANDO INTERFACE EN SU LUGAR
-//TODO: CAMBIAR LOS NOMBRES DE LOS ARCHIVOS DE SERVICIOS API EN TODA LA PARTE DE ADMINPANEL
-//TODO: EN LA PARTE DE ADMIN PANEL TAMBIEN SE ESTÁ REPITIENDO EL CODIGO DE LOS SERVICIOS API DE SUBJECT Y GAME
-//TODO: COMPROBAR QUE NO HAYA NADA EN ESPAÑOL EN EL CODIGO
-//TODO: HACER UN COMPONENTE BASE PARA LOS MENSAJES DE ERROR Y PROBARLO EN TODAS LAS PAGINAS.
-//TODO: AÑADIR LOADING EN TODOS LOS HOOKS QUE LO NECESITEN.
-//TODO: PONER LOS NOMBRES DE LAS CARPETAS DE LAS PAGES(HOME, ADMIN...) CON LA PRIMERA EN MINUSCULA, CAMBIARLO AQUI Y EN EL LATEX
-//      FALLO DE LOGIN -> SERVER ERROR
-//      FALLO DE CARGA ASIGNATURAS -> SERVER ERROR
-//      FALLO DE CARGA DE JUEGOS -> SERVER ERROR
-//      FALLO DE CARGA...
-
-// TODO: ARREGLAR PROBLEMA CON LOS DROPDOWNS, BASICAMENTE QUE NO SEA NECESARIO ESCOGER UAN OPCION APRA QUE EL DROPDOWN SE CIERRE, SIMPLEMENTE SI SE HACE CLICK FUERA DEL DROPDOWN ESTE SE DEBE CERRAR AUTOMA´TIOCAMENTE.
-
-//TODO: LAS COSAS NO SE COMPARTEN ENTRE MODULOS, POR ESO SON MODULOS.
-// USE SUBJECTS ESTÁ DUPLICADO( HOME HOOKS Y ADMIN PANLE SUBJECT TABS HOOKS) LO QUE IMPLICA QUE DEBERIA EXTRAERSE A UN NIVEL SUPERIOR PARA REUSARLO
-//TODO:  QUITAR LOS CUSTOM-FLEX-CENTER
-//TODO: GRAN PREGUNTA: CUANDO SE CONSULTA EL RANKING POR JUEGOS, SE MUESTRAN TODOS LOS JUEGOS QUE EXISTEN? O SE FILTRA POR ASIGNATURA O ALGO
+ * App component
+ *
+ * Root-level component that sets up global providers and routing.
+ * - Wraps the application in `BrowserRouter` to enable client-side routing.
+ * - Includes `AuthProvider` to supply authentication context across the app.
+ * - Includes `ThemeProvider` to manage and provide theme-related state.
+ * - Renders a background UI component for consistent visual design.
+ * - Renders the application's route-based content via `AppRoutes`.
+ *
+ * @returns The top-level React component of the application.
+ */
 const App: React.FC = () => {
-  return (
-    <BrowserRouter>
-      <AuthProvider>
-        <ThemeProvider>
-          <SpaceBackground />
-          <AppRoutes />
-        </ThemeProvider>
-      </AuthProvider>
-    </BrowserRouter>
-  );
+	return (
+		<BrowserRouter>
+			<AuthProvider>
+				<ThemeProvider>
+					<SpaceBackground />
+					<AppRoutes />
+				</ThemeProvider>
+			</AuthProvider>
+		</BrowserRouter>
+	);
 };
 
 export default App;

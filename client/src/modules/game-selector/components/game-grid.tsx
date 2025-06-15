@@ -16,30 +16,30 @@ import GameItem from './game-item';
  * `GameItem` components. If an error occurs, an alert message is shown.
  */
 const GameGrid: React.FC = () => {
-  const { subjectId } = useParams<{ subjectId: string }>();
-  const { games, error, loading } = useGameSelector(Number(subjectId));
+	const { subjectId } = useParams<{ subjectId: string }>();
+	const { games, error, loading } = useGameSelector(Number(subjectId));
 
-  return (
-    <div className="container">
-      {loading ? (
-        <div className="row custom-flex-center text-center">
-          <LoadingMsg message="Loading Games..." />
-        </div>
-      ) : (
-        <div className="row custom-flex-center text-center">
-          {error && <Toast type="error" message={error} />}
+	return (
+		<div className='container'>
+			{loading ? (
+				<div className='row custom-flex-center text-center'>
+					<LoadingMsg message='Loading Games...' />
+				</div>
+			) : (
+				<div className='row custom-flex-center text-center'>
+					{error && <Toast type='error' message={error} />}
 
-          {games
-            .filter((game) => game.isVisible)
-            .map((game, index) => (
-              <div className="col-auto" key={index}>
-                <GameItem game={game} />
-              </div>
-            ))}
-        </div>
-      )}
-    </div>
-  );
+					{games
+						.filter(game => game.isVisible)
+						.map((game, index) => (
+							<div className='col-auto' key={index}>
+								<GameItem game={game} />
+							</div>
+						))}
+				</div>
+			)}
+		</div>
+	);
 };
 
 export default GameGrid;

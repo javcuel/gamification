@@ -1,32 +1,32 @@
 .link-item {
-  position: relative;
-  display: inline-block;
-  color: var(--text);
-  text-decoration: none !important;
-  transition: filter 0.3s ease;
+	position: relative;
+	display: inline-block;
+	color: var(--text);
+	text-decoration: none !important;
+	transition: filter 0.3s ease;
 }
 
 .link-item::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  width: 100%;
-  height: 2px;
-  background-color: var(--text);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
+	content: '';
+	position: absolute;
+	left: 0;
+	bottom: -2px;
+	width: 100%;
+	height: 2px;
+	background-color: var(--text);
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform 0.3s ease;
 }
 
 .link-item:hover::after {
-  transform: scaleX(1);
+	transform: scaleX(1);
 }
 
 .link-item:hover {
-  filter: brightness(1.5);
+	filter: brightness(1.5);
 }
 
 .link-item:focus {
-  color: var(--text);
+	color: var(--text);
 }

@@ -1,97 +1,97 @@
 .custom-dropdown {
-  width: 100%;
-  max-width: 300px;
-  position: relative;
+	width: 100%;
+	max-width: 300px;
+	position: relative;
 }
 
 .custom-dropdown-btn {
-  width: 100%;
-  padding: 10px 20px;
-  text-align: center;
+	width: 100%;
+	padding: 10px 20px;
+	text-align: center;
 
-  background-color: var(--secondary);
-  color: var(--text);
-  border: 2px solid transparent;
-  border-radius: 15px;
-  font-weight: 600;
+	background-color: var(--secondary);
+	color: var(--text);
+	border: 2px solid transparent;
+	border-radius: 15px;
+	font-weight: 600;
 
-  transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease;
+	transition:
+		background-color 0.3s ease,
+		border-color 0.3s ease;
 }
 
 .custom-dropdown-btn:hover {
-  border-color: var(--text);
-  background-color: color-mix(in srgb, var(--secondary) 40%, transparent);
-  cursor: pointer;
+	border-color: var(--text);
+	background-color: color-mix(in srgb, var(--secondary) 40%, transparent);
+	cursor: pointer;
 }
 
 .custom-dropdown-list {
-  position: absolute;
-  margin: 5px 0 0;
-  padding: 0;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 9999;
-  max-height: 200px;
-  overflow-y: auto;
+	position: absolute;
+	margin: 5px 0 0;
+	padding: 0;
+	top: 100%;
+	left: 0;
+	right: 0;
+	z-index: 9999;
+	max-height: 200px;
+	overflow-y: auto;
 
-  background-color: var(--secondary);
-  border-radius: 15px;
-  opacity: 0;
-  list-style-type: none;
+	background-color: var(--secondary);
+	border-radius: 15px;
+	opacity: 0;
+	list-style-type: none;
 
-  pointer-events: none;
-  transform: translateY(-40px);
-  transition:
-    opacity 0.3s ease,
-    transform 0.5s ease;
+	pointer-events: none;
+	transform: translateY(-40px);
+	transition:
+		opacity 0.3s ease,
+		transform 0.5s ease;
 }
 
 .custom-dropdown-list.open {
-  opacity: 1;
+	opacity: 1;
 
-  transform: translateY(0);
-  pointer-events: auto;
+	transform: translateY(0);
+	pointer-events: auto;
 }
 
 .custom-dropdown-item {
-  padding: 10px 20px;
+	padding: 10px 20px;
 
-  background-color: var(--secondary);
-  border: solid 2px transparent;
-  border-radius: 15px;
-  cursor: pointer;
+	background-color: var(--secondary);
+	border: solid 2px transparent;
+	border-radius: 15px;
+	cursor: pointer;
 
-  transition:
-    border-color 0.3s ease,
-    background-color 0.3s ease,
-    filter 0.3s ease;
+	transition:
+		border-color 0.3s ease,
+		background-color 0.3s ease,
+		filter 0.3s ease;
 }
 
 .custom-dropdown-item:hover {
-  border-color: var(--text);
-  filter: brightness(1.2);
-  cursor: pointer;
+	border-color: var(--text);
+	filter: brightness(1.2);
+	cursor: pointer;
 }
 
 .custom-dropdown-btn:focus {
-  outline: none;
+	outline: none;
 }
 
 .custom-dropdown-list::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+	width: 8px;
+	height: 8px;
 }
 
 .custom-dropdown-list::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 15px;
+	background: transparent;
+	border-radius: 15px;
 }
 
 .custom-dropdown-list::-webkit-scrollbar-thumb {
-  background-color: var(--text);
-  border: 2px solid var(--secondary);
-  border-radius: 15px;
+	background-color: var(--text);
+	border: 2px solid var(--secondary);
+	border-radius: 15px;
 }

@@ -1,92 +1,92 @@
 .subject-management-item {
-  width: 100%;
-  background-color: transparent;
-  margin: 10px 0px;
-  padding: 10px 10px;
-  border: solid 2px var(--text);
-  border-radius: 15px;
-  cursor: pointer;
+	width: 100%;
+	background-color: transparent;
+	margin: 10px 0px;
+	padding: 10px 10px;
+	border: solid 2px var(--text);
+	border-radius: 15px;
+	cursor: pointer;
 }
 
 .subject-management-item-image:hover {
-  opacity: 1;
-  transform: scale(1.5);
+	opacity: 1;
+	transform: scale(1.5);
 }
 
 .subject-management-item-button {
-  padding: 15px 15px;
-  margin: 2px 2px;
+	padding: 15px 15px;
+	margin: 2px 2px;
 
-  background-color: var(--secondary);
-  color: var(--text);
-  border: none;
-  border-radius: 15px;
+	background-color: var(--secondary);
+	color: var(--text);
+	border: none;
+	border-radius: 15px;
 
-  transition:
-    background-color 0.3s ease,
-    filter 0.3s ease;
+	transition:
+		background-color 0.3s ease,
+		filter 0.3s ease;
 }
 
 .subject-management-item-button:hover {
-  filter: brightness(1.2);
+	filter: brightness(1.2);
 }
 
 .subject-expand-container {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s ease-in-out;
-  padding: 0px 10px;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.5s ease-in-out;
+	padding: 0px 10px;
 }
 
 .subject-expand-container.expanded {
-  max-height: 500px;
-  overflow-y: auto;
+	max-height: 500px;
+	overflow-y: auto;
 }
 
 .subject-item-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .subject-item-left {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  min-width: 0;
+	display: flex;
+	align-items: center;
+	flex: 1;
+	min-width: 0;
 }
 
 .subject-management-item-image {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 10%;
-  opacity: 1;
-  transition:
-    opacity 0.8s ease,
-    transform 0.8s ease;
+	width: 80px;
+	height: 80px;
+	object-fit: cover;
+	border-radius: 10%;
+	opacity: 1;
+	transition:
+		opacity 0.8s ease,
+		transform 0.8s ease;
 }
 
 .subject-item-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  flex-shrink: 0;
-  width: 30%;
-  justify-content: flex-end;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	flex-shrink: 0;
+	width: 30%;
+	justify-content: flex-end;
 }
 
 .subject-expand-container::-webkit-scrollbar {
-  width: 10px;
-  height: 8px;
+	width: 10px;
+	height: 8px;
 }
 
 .subject-expand-container::-webkit-scrollbar-track {
-  background-color: color-mix(in srgb, var(--secondary) 30%, transparent);
-  border-radius: 15px;
+	background-color: color-mix(in srgb, var(--secondary) 30%, transparent);
+	border-radius: 15px;
 }
 
 .subject-expand-container::-webkit-scrollbar-thumb {
-  background-color: var(--secondary);
-  border-radius: 15px;
+	background-color: var(--secondary);
+	border-radius: 15px;
 }

@@ -11,18 +11,18 @@ import WavesText from '../shared/components/ui/waves-text';
  * @returns {JSX.Element} A 404 error page.
  */
 const NotFound: React.FC = () => {
-  return (
-    <div className="container min-vh-100 custom-flex-center text-center">
-      <div className="container">
-        <div className="row">
-          <WavesText text="404 - Not Found" />
-        </div>
-        <div className="row">
-          <WavesText text="This page doesn't exist" />
-        </div>
-      </div>
-    </div>
-  );
+	return (
+		<div className='container min-vh-100 custom-flex-center text-center'>
+			<div className='container'>
+				<div className='row'>
+					<WavesText text='404 - Not Found' />
+				</div>
+				<div className='row'>
+					<WavesText text="This page doesn't exist" />
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default NotFound;

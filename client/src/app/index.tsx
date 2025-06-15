@@ -23,16 +23,16 @@ void React;
 const rootElement = document.getElementById('root');
 
 if (rootElement) {
-  /**
-   * Creates the root of the application in the DOM element with id 'root'.
-   * StrictMode is used to enable additional checks during development.
-   * The components are wrapped with authentication and theme context providers.
-   *
-   * @returns {void}
-   */
-  createRoot(rootElement).render(
-    <StrictMode>
-      <App />
-    </StrictMode>
-  );
+	/**
+	 * Creates the root of the application in the DOM element with id 'root'.
+	 * StrictMode is used to enable additional checks during development.
+	 * The components are wrapped with authentication and theme context providers.
+	 *
+	 * @returns {void}
+	 */
+	createRoot(rootElement).render(
+		<StrictMode>
+			<App />
+		</StrictMode>
+	);
 }

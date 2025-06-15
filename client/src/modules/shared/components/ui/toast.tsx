@@ -10,8 +10,8 @@ import '../../styles/toast.css';
  * @property {string} message - Message to display.
  */
 interface ToastProps {
-  type?: 'success' | 'error';
-  message: string;
+	type?: 'success' | 'error';
+	message: string;
 }
 
 /**
@@ -21,17 +21,17 @@ interface ToastProps {
  * based on the type.
  */
 const Toast: React.FC<ToastProps> = ({ message, type }) => {
-  const emoji = type === 'success' ? '✅' : type === 'error' ? '❌' : '';
-  return (
-    <motion.div
-      initial={{ x: 0 }}
-      animate={{ x: [0, -5, 5, -5, 5, 0] }}
-      transition={{ duration: 0.5, ease: 'easeInOut' }}
-      className="toast"
-    >
-      {emoji} {message}
-    </motion.div>
-  );
+	const emoji = type === 'success' ? '✅' : type === 'error' ? '❌' : '';
+	return (
+		<motion.div
+			initial={{ x: 0 }}
+			animate={{ x: [0, -5, 5, -5, 5, 0] }}
+			transition={{ duration: 0.5, ease: 'easeInOut' }}
+			className='custom-toast'
+		>
+			{emoji} {message}
+		</motion.div>
+	);
 };
 
 export default Toast;

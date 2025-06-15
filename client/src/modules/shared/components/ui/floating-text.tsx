@@ -9,7 +9,7 @@ import '../../styles/floating-text.css';
  * @property {string} text - Text to display.
  */
 interface FloatingTexProps {
-  text: string;
+	text: string;
 }
 
 /**
@@ -18,20 +18,20 @@ interface FloatingTexProps {
  * creating a floating animation that repeats indefinitely.
  */
 const FloatingText: React.FC<FloatingTexProps> = ({ text }) => {
-  const springStyles = useSpring({
-    from: { transform: 'translateY(0px)' },
-    to: { transform: 'translateY(-20px)' },
-    reset: true,
-    reverse: true,
-    config: { tension: 50, friction: 20 },
-    loop: { reverse: true },
-  });
+	const springStyles = useSpring({
+		from: { transform: 'translateY(0px)' },
+		to: { transform: 'translateY(-20px)' },
+		reset: true,
+		reverse: true,
+		config: { tension: 50, friction: 20 },
+		loop: { reverse: true }
+	});
 
-  return (
-    <animated.h1 className="floating-title" style={springStyles}>
-      {text}
-    </animated.h1>
-  );
+	return (
+		<animated.h1 className='floating-title' style={springStyles}>
+			{text}
+		</animated.h1>
+	);
 };
 
 export default FloatingText;

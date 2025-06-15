@@ -1,10 +1,10 @@
 import {
-  faEye,
-  faEyeSlash,
-  faLock,
-  faPencilAlt,
-  faTimes,
-  faUnlock,
+	faEye,
+	faEyeSlash,
+	faLock,
+	faPencilAlt,
+	faTimes,
+	faUnlock
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
@@ -22,12 +22,12 @@ import '../../styles/button.css';
  * - `'hidden'`: Shows closed eye icon.
  */
 export type ButtonType =
-  | 'edit'
-  | 'delete'
-  | 'lock'
-  | 'unlock'
-  | 'visible'
-  | 'hidden';
+	| 'edit'
+	| 'delete'
+	| 'lock'
+	| 'unlock'
+	| 'visible'
+	| 'hidden';
 
 /**
  * Props for the Button component.
@@ -38,10 +38,10 @@ export type ButtonType =
  * @property {boolean} [disabled] - Whether the button is disabled.
  */
 export interface ButtonProps {
-  text?: string;
-  onClick?: () => void;
-  type?: ButtonType;
-  disabled?: boolean;
+	text?: string;
+	onClick?: () => void;
+	type?: ButtonType;
+	disabled?: boolean;
 }
 
 /**
@@ -49,36 +49,36 @@ export interface ButtonProps {
  * Uses icons from FontAwesome.
  */
 const Button: React.FC<ButtonProps> = ({ text, onClick, type, disabled }) => {
-  const getIcon = () => {
-    switch (type) {
-      case 'edit':
-        return faPencilAlt;
-      case 'delete':
-        return faTimes;
-      case 'lock':
-        return faLock;
-      case 'unlock':
-        return faUnlock;
-      case 'visible':
-        return faEye;
-      case 'hidden':
-        return faEyeSlash;
-      default:
-        return null;
-    }
-  };
+	const getIcon = () => {
+		switch (type) {
+			case 'edit':
+				return faPencilAlt;
+			case 'delete':
+				return faTimes;
+			case 'lock':
+				return faLock;
+			case 'unlock':
+				return faUnlock;
+			case 'visible':
+				return faEye;
+			case 'hidden':
+				return faEyeSlash;
+			default:
+				return null;
+		}
+	};
 
-  const icon = getIcon();
+	const icon = getIcon();
 
-  return (
-    <button
-      className={`button ${icon ? 'button-icon' : ''}`}
-      onClick={onClick}
-      disabled={disabled}
-    >
-      {icon ? <FontAwesomeIcon icon={icon} /> : text}
-    </button>
-  );
+	return (
+		<button
+			className={`button ${icon ? 'button-icon' : ''}`}
+			onClick={onClick}
+			disabled={disabled}
+		>
+			{icon ? <FontAwesomeIcon icon={icon} /> : text}
+		</button>
+	);
 };
 
 export default Button;

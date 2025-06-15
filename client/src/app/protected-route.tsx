@@ -5,8 +5,8 @@ import { ROUTES } from '../constants/routes';
 import { useAuth } from '../context/auth-context';
 
 interface ProtectedRouteProps {
-  children: React.ReactNode;
-  allowedRoles: string[];
+	children: React.ReactNode;
+	allowedRoles: string[];
 }
 
 /**
@@ -18,10 +18,6 @@ interface ProtectedRouteProps {
  *
  * @component
  * @example
- * // Example usage
- * <ProtectedRoute allowedRoles={['admin', 'moderator']}>
- *   <Dashboard />
- * </ProtectedRoute>
  *
  * @param {Object} props - Component properties.
  * @param {React.ReactNode} props.children - The child components to render if the route is accessible.
@@ -30,28 +26,28 @@ interface ProtectedRouteProps {
  * @returns {React.ReactNode} The child components if authenticated and authorized, or a redirect if not.
  */
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
-  children,
-  allowedRoles,
+	children,
+	allowedRoles
 }) => {
-  const { isAuthenticated, isLoading, user } = useAuth();
+	const { isAuthenticated, isLoading, user } = useAuth();
 
-  // Authentication is loading
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+	// Authentication is loading
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
 
-  // Not authenticated
-  if (!isAuthenticated) {
-    return <Navigate to={ROUTES.LOGIN} />;
-  }
+	// Not authenticated
+	if (!isAuthenticated) {
+		return <Navigate to={ROUTES.LOGIN} />;
+	}
 
-  // Current user rol not allowed
-  if (!user || !allowedRoles.includes(user.role!)) {
-    return <Navigate to={ROUTES.LOGIN} />;
-  }
+	// Current user rol not allowed
+	if (!user || !allowedRoles.includes(user.role!)) {
+		return <Navigate to={ROUTES.LOGIN} />;
+	}
 
-  // If all OK, render children
-  return <>{children}</>;
+	// If all OK, render children
+	return <>{children}</>;
 };
 
 export default ProtectedRoute;

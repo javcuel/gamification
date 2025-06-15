@@ -4,11 +4,11 @@
  * @interface
  */
 export interface UserDTO {
-  IDUsuario: number;
-  Grupo: string;
-  TipoUsuario: string;
-  Nombre: string;
-  Contrasena: string;
+	IDUsuario: number;
+	Grupo: string;
+	TipoUsuario: string;
+	Nombre: string;
+	Contrasena: string;
 }
 
 /**
@@ -17,10 +17,10 @@ export interface UserDTO {
  * @interface
  */
 export interface UserCreateDTO {
-  Nombre: string;
-  Grupo: string;
-  TipoUsuario: string;
-  Contrasena: string;
+	Nombre: string;
+	Grupo: string;
+	TipoUsuario: string;
+	Contrasena: string;
 }
 
 /**
@@ -29,10 +29,10 @@ export interface UserCreateDTO {
  * @interface
  */
 export interface UserUpdateDTO {
-  Grupo: string;
-  TipoUsuario: string;
-  Nombre: string;
-  Contrasena: string;
+	Grupo: string;
+	TipoUsuario: string;
+	Nombre: string;
+	Contrasena: string;
 }
 
 /**
@@ -41,8 +41,8 @@ export interface UserUpdateDTO {
  * @interface
  */
 export interface UserLoginDTO {
-  Nombre: string;
-  Contrasena: string;
+	Nombre: string;
+	Contrasena: string;
 }
 
 /**
@@ -51,8 +51,8 @@ export interface UserLoginDTO {
  * @interface
  */
 export interface UserScoreDTO {
-  Puntuacion: number;
-  Completado: number;
+	Puntuacion: number;
+	Completado: number;
 }
 
 /**
@@ -61,6 +61,6 @@ export interface UserScoreDTO {
  * @interface
  */
 export interface UserLoginDTO {
-  Nombre: string;
-  Contrasena: string;
+	Nombre: string;
+	Contrasena: string;
 }

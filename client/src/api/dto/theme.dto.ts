@@ -4,12 +4,12 @@
  * @interface
  */
 export interface ThemeDTO {
-  id: number;
-  primary_color: string;
-  secondary_color: string;
-  text_color: string;
-  points_icon: string;
-  completed_subjects_icon: string;
+	id: number;
+	primary_color: string;
+	secondary_color: string;
+	text_color: string;
+	points_icon: string;
+	completed_subjects_icon: string;
 }
 
 /**
@@ -18,9 +18,9 @@ export interface ThemeDTO {
  * @interface
  */
 export interface ThemeCreateDTO {
-  primary_color: string;
-  secondary_color: string;
-  text_color: string;
-  points_icon: string;
-  completed_subjects_icon: string;
+	primary_color: string;
+	secondary_color: string;
+	text_color: string;
+	points_icon: string;
+	completed_subjects_icon: string;
 }

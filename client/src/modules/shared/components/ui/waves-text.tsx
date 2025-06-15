@@ -8,7 +8,7 @@ import '../../styles/waves-text.css';
  * @property {string} text - Text to display.
  */
 interface WavesTextProps {
-  text: string;
+	text: string;
 }
 
 /**
@@ -17,31 +17,31 @@ interface WavesTextProps {
  * to create a wave effect. The animation is achieved using the `framer-motion` library.
  */
 const WavesText: React.FC<WavesTextProps> = ({ text }) => {
-  return (
-    <div className="waves-title">
-      {text.split('').map((char, index) => (
-        <motion.span
-          key={index}
-          initial={{ y: 0 }}
-          animate={char !== ' ' ? { y: [-5, 5, -5] } : {}} // No anima los espacios
-          transition={
-            char !== ' '
-              ? {
-                  duration: 1.8,
-                  repeat: Infinity,
-                  repeatType: 'reverse',
-                  ease: 'easeInOut',
-                  delay: index * 0.1,
-                }
-              : {}
-          }
-          style={{ display: 'inline-block', whiteSpace: 'pre' }} // Mantiene los espacios
-        >
-          {char}
-        </motion.span>
-      ))}
-    </div>
-  );
+	return (
+		<div className='waves-title'>
+			{text.split('').map((char, index) => (
+				<motion.span
+					key={index}
+					initial={{ y: 0 }}
+					animate={char !== ' ' ? { y: [-5, 5, -5] } : {}} // No anima los espacios
+					transition={
+						char !== ' '
+							? {
+									duration: 1.8,
+									repeat: Infinity,
+									repeatType: 'reverse',
+									ease: 'easeInOut',
+									delay: index * 0.1
+								}
+							: {}
+					}
+					style={{ display: 'inline-block', whiteSpace: 'pre' }} // Mantiene los espacios
+				>
+					{char}
+				</motion.span>
+			))}
+		</div>
+	);
 };
 
 export default WavesText;

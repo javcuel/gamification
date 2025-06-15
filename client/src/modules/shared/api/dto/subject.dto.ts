@@ -4,13 +4,13 @@
  * @interface
  */
 export interface SubjectDTO {
-  IDMundo: number;
-  Nombre: string;
-  UrlImgMundo: string;
-  UrlImgDentro: string;
-  Posicion: number;
-  Abierto: boolean;
-  Visible: boolean;
+	IDMundo: number;
+	Nombre: string;
+	UrlImgMundo: string;
+	UrlImgDentro: string;
+	Posicion: number;
+	Abierto: boolean;
+	Visible: boolean;
 }
 
 /**
@@ -19,9 +19,9 @@ export interface SubjectDTO {
  * @interface
  */
 export interface SubjectCreateDTO {
-  Nombre: string;
-  UrlImgMundo: string;
-  UrlImgDentro: string;
+	Nombre: string;
+	UrlImgMundo: string;
+	UrlImgDentro: string;
 }
 
 /**
@@ -30,9 +30,9 @@ export interface SubjectCreateDTO {
  * @interface
  */
 export interface SubjectUpdateDTO {
-  Nombre: string;
-  UrlImgMundo: string;
-  UrlImgDentro: string;
+	Nombre: string;
+	UrlImgMundo: string;
+	UrlImgDentro: string;
 }
 
 /**
@@ -41,7 +41,7 @@ export interface SubjectUpdateDTO {
  * @interface
  */
 export interface SubjectUpdateOpenDTO {
-  Abierto: boolean;
+	Abierto: boolean;
 }
 
 /**
@@ -50,5 +50,5 @@ export interface SubjectUpdateOpenDTO {
  * @interface
  */
 export interface SubjectUpdateVisibleDTO {
-  Visible: boolean;
+	Visible: boolean;
 }

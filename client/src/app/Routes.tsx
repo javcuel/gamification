@@ -2,12 +2,11 @@ import React from 'react';
 import { RouteObject } from 'react-router-dom';
 
 import { ROUTES } from '../constants/routes';
-import AdminPage from '../modules/admin-panel/admin-page';
+import AdminPage from '../modules/admin-panel/admin-panel';
 import DevPanel from '../modules/dev-panel/dev-panel';
 import GameSelector from '../modules/game-selector/game-selector';
 import Home from '../modules/home/home';
 import Login from '../modules/login/login';
-import NotFound from '../modules/not-found/not-found';
 import Play from '../modules/play/play';
 import Ranking from '../modules/ranking/ranking';
 import roleService from '../services/role-service';
@@ -37,80 +36,75 @@ void React;
  * }
  */
 const routes: RouteObject[] = [
-  {
-    path: ROUTES.LOGIN,
+	{
+		path: ROUTES.LOGIN,
 
-    element: <Login />,
-  },
-  {
-    path: ROUTES.HOME,
-    element: (
-      <ProtectedRoute
-        allowedRoles={roleService.getAllowedRolesForRoute(ROUTES.HOME)}
-      >
-        <Home />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: ROUTES.RANKING,
-    element: (
-      <ProtectedRoute
-        allowedRoles={roleService.getAllowedRolesForRoute(ROUTES.RANKING)}
-      >
-        <Ranking />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: ROUTES.GAME_SELECTOR(':subjectId'),
-    element: (
-      <ProtectedRoute
-        allowedRoles={roleService.getAllowedRolesForRoute(
-          ROUTES.GAME_SELECTOR(':subjectId')
-        )}
-      >
-        <GameSelector />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: ROUTES.PLAY(':gameId'),
-    element: (
-      <ProtectedRoute
-        allowedRoles={roleService.getAllowedRolesForRoute(
-          ROUTES.PLAY(':gameId')
-        )}
-      >
-        <Play />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: ROUTES.ADMIN_PANEL,
-    element: (
-      <ProtectedRoute
-        allowedRoles={roleService.getAllowedRolesForRoute(ROUTES.ADMIN_PANEL)}
-      >
-        <AdminPage />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: ROUTES.DEV_PANEL,
-    element: (
-      <ProtectedRoute
-        allowedRoles={roleService.getAllowedRolesForRoute(ROUTES.DEV_PANEL)}
-      >
-        <DevPanel />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    // Matches all undefined routes
-    path: '*',
-    element: <NotFound />,
-  },
+		element: <Login />
+	},
+	{
+		path: ROUTES.HOME,
+		element: (
+			<ProtectedRoute
+				allowedRoles={roleService.getAllowedRolesForRoute(ROUTES.HOME)}
+			>
+				<Home />
+			</ProtectedRoute>
+		)
+	},
+	{
+		path: ROUTES.RANKING,
+		element: (
+			<ProtectedRoute
+				allowedRoles={roleService.getAllowedRolesForRoute(ROUTES.RANKING)}
+			>
+				<Ranking />
+			</ProtectedRoute>
+		)
+	},
+	{
+		path: ROUTES.GAME_SELECTOR(':subjectId'),
+		element: (
+			<ProtectedRoute
+				allowedRoles={roleService.getAllowedRolesForRoute(
+					ROUTES.GAME_SELECTOR(':subjectId')
+				)}
+			>
+				<GameSelector />
+			</ProtectedRoute>
+		)
+	},
+	{
+		path: ROUTES.PLAY(':gameId'),
+		element: (
+			<ProtectedRoute
+				allowedRoles={roleService.getAllowedRolesForRoute(
+					ROUTES.PLAY(':gameId')
+				)}
+			>
+				<Play />
+			</ProtectedRoute>
+		)
+	},
+	{
+		path: ROUTES.ADMIN_PANEL,
+		element: (
+			<ProtectedRoute
+				allowedRoles={roleService.getAllowedRolesForRoute(ROUTES.ADMIN_PANEL)}
+			>
+				<AdminPage />
+			</ProtectedRoute>
+		)
+	},
+	{
+		path: ROUTES.DEV_PANEL,
+		element: (
+			<ProtectedRoute
+				allowedRoles={roleService.getAllowedRolesForRoute(ROUTES.DEV_PANEL)}
+			>
+				<DevPanel />
+			</ProtectedRoute>
+		)
+	}
 ];
 
 export default routes;

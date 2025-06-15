@@ -4,37 +4,49 @@ import { ROUTES } from '../../../../constants/routes';
 import { useAuth } from '../../../../context/auth-context';
 import LinkItem from '../ui/link-item';
 
+// Props expected by the NavLinkList component.
 interface NavLinkProps {
-  role: string;
+	role: string;
 }
 
+// Static list of default navigation links available to all users.
 const NAV_LINKS = [
-  { to: ROUTES.HOME, label: 'Home' },
-  { to: ROUTES.RANKING, label: 'Ranking' },
+	{ to: ROUTES.HOME, label: 'Home' },
+	{ to: ROUTES.RANKING, label: 'Ranking' }
 ];
 
+/**
+ * Renders a list of navigation links based on the user's role.
+ * Includes conditional links for admin and developer users, as well as a logout option.
+ *
+ * @param role - The current user's role used to determine access to role-specific links.
+ */
 const NavLinkList: React.FC<NavLinkProps> = ({ role }) => {
-  const { logoutRequest } = useAuth();
+	const { logoutRequest } = useAuth();
 
-  return (
-    <ul className="navbar-nav">
-      {NAV_LINKS.map(({ to, label }) => (
-        <div key={to} className="me-3">
-          <LinkItem to={to} label={label} />
-        </div>
-      ))}
+	return (
+		<ul className='navbar-nav'>
+			{/* Render common navigation links */}
+			{NAV_LINKS.map(({ to, label }) => (
+				<div key={to} className='me-3'>
+					<LinkItem to={to} label={label} />
+				</div>
+			))}
 
-      <div className="me-3">
-        {role === ROLES.ADMIN && (
-          <LinkItem to={ROUTES.ADMIN_PANEL} label="Admin" />
-        )}
-      </div>
-      <div className="me-3">
-        {role === ROLES.DEV && <LinkItem to={ROUTES.DEV_PANEL} label="Dev" />}
-        <LinkItem label="Logout" onClick={logoutRequest} />
-      </div>
-    </ul>
-  );
+			{/* Render admin-only navigation link */}
+			<div className='me-3'>
+				{role === ROLES.ADMIN && (
+					<LinkItem to={ROUTES.ADMIN_PANEL} label='Admin' />
+				)}
+			</div>
+
+			{/* Render developer-only navigation link and logout option */}
+			<div className='me-3'>
+				{role === ROLES.DEV && <LinkItem to={ROUTES.DEV_PANEL} label='Dev' />}
+				<LinkItem label='Logout' onClick={logoutRequest} />
+			</div>
+		</ul>
+	);
 };
 
 export default NavLinkList;

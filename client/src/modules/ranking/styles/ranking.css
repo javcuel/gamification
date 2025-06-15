@@ -1,69 +1,69 @@
 .table-responsive-wrapper {
-  width: 100%;
-  overflow-x: auto;
+	width: 100%;
+	overflow-x: auto;
 }
 
 .table-responsive-wrapper::-webkit-scrollbar {
-  width: 10px;
-  height: 8px;
+	width: 10px;
+	height: 8px;
 }
 
 .table-responsive-wrapper::-webkit-scrollbar-track {
-  background-color: color-mix(in srgb, var(--secondary) 30%, transparent);
-  border-radius: 15px;
+	background-color: color-mix(in srgb, var(--secondary) 30%, transparent);
+	border-radius: 15px;
 }
 
 .table-responsive-wrapper::-webkit-scrollbar-thumb {
-  background-color: var(--secondary);
-  border-radius: 15px;
+	background-color: var(--secondary);
+	border-radius: 15px;
 }
 
 .table {
-  min-width: 600px;
+	min-width: 600px;
 
-  border: solid 1px var(--text);
-  border-radius: 5px !important;
-  border-collapse: separate !important;
-  border-spacing: 0 !important;
-  overflow: hidden;
+	border: solid 1px var(--text);
+	border-radius: 5px !important;
+	border-collapse: separate !important;
+	border-spacing: 0 !important;
+	overflow: hidden;
 }
 
 .table th,
 .table td {
-  background-color: color-mix(in srgb, var(--secondary) 5%, transparent);
-  color: var(--text);
-  border: 1px solid var(--text);
-  transition:
-    background-color,
-    filter 0.3s ease-in-out;
+	background-color: color-mix(in srgb, var(--secondary) 5%, transparent);
+	color: var(--text);
+	border: 1px solid var(--text);
+	transition:
+		background-color,
+		filter 0.3s ease-in-out;
 }
 
 .table-row {
-  transition:
-    background-color,
-    filter 0.3s ease;
+	transition:
+		background-color,
+		filter 0.3s ease;
 }
 
 .podium1 {
-  background-color: color-mix(
-    in srgb,
-    var(--secondary) 90%,
-    transparent
-  ) !important;
+	background-color: color-mix(
+		in srgb,
+		var(--secondary) 90%,
+		transparent
+	) !important;
 }
 
 .podium2 {
-  background-color: color-mix(
-    in srgb,
-    var(--secondary) 60%,
-    transparent
-  ) !important;
+	background-color: color-mix(
+		in srgb,
+		var(--secondary) 60%,
+		transparent
+	) !important;
 }
 
 .podium3 {
-  background-color: color-mix(
-    in srgb,
-    var(--secondary) 30%,
-    transparent
-  ) !important;
+	background-color: color-mix(
+		in srgb,
+		var(--secondary) 30%,
+		transparent
+	) !important;
 }

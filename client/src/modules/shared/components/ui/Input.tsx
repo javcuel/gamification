@@ -13,10 +13,10 @@ export type InputType = 'text' | 'password';
  * @property {(e: React.ChangeEvent<HTMLInputElement>) => void} onChange - Callback function triggered when the input value changes.
  */
 type InputProps = {
-  placeholder: string;
-  type: InputType;
-  value: string | number;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	placeholder: string;
+	type: InputType;
+	value: string | number;
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 /**
@@ -24,23 +24,23 @@ type InputProps = {
  * It accepts a `placeholder`, `value`, and `onChange` callback to manage the state of the input.
  */
 const Input: React.FC<InputProps> = ({
-  placeholder,
-  type,
-  value,
-  onChange,
+	placeholder,
+	type,
+	value,
+	onChange
 }) => {
-  return (
-    <>
-      <input
-        type={type}
-        className="input"
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        autoComplete="off"
-      />
-    </>
-  );
+	return (
+		<>
+			<input
+				type={type}
+				className='input'
+				placeholder={placeholder}
+				value={value}
+				onChange={onChange}
+				autoComplete='off'
+			/>
+		</>
+	);
 };
 
 export default Input;

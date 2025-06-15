@@ -11,9 +11,9 @@ import '../../styles/link-item.css';
  * @property {() => void} [onClick] - Optional click handler. Used when `to` is not provided.
  */
 interface LinkItemProps {
-  to?: string;
-  label: string;
-  onClick?: () => void;
+	to?: string;
+	label: string;
+	onClick?: () => void;
 }
 
 /**
@@ -23,23 +23,23 @@ interface LinkItemProps {
  * Useful for building navigation menus that combine routing and actions.
  */
 const LinkItem: React.FC<LinkItemProps> = ({ to, label, onClick }) => {
-  return (
-    <li>
-      {to ? (
-        <Link className="link-item" to={to}>
-          {label}
-        </Link>
-      ) : (
-        <span
-          className="link-item"
-          onClick={onClick}
-          style={{ cursor: 'pointer' }}
-        >
-          {label}
-        </span>
-      )}
-    </li>
-  );
+	return (
+		<li>
+			{to ? (
+				<Link className='link-item' to={to}>
+					{label}
+				</Link>
+			) : (
+				<span
+					className='link-item'
+					onClick={onClick}
+					style={{ cursor: 'pointer' }}
+				>
+					{label}
+				</span>
+			)}
+		</li>
+	);
 };
 
 export default LinkItem;
