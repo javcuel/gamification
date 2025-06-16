@@ -68,16 +68,16 @@ export const getScore = async (req, res) => {
 
 // Creates a new user
 export const createUser = async (req, res) => {
-  const { name, password, role, group } = req.body;
+  const { Nombre, Contrasena, TipoUsuario, Grupo } = req.body;
 
-  if (!name || !password || !role || !group) {
+  if (!Nombre || !Contrasena || !TipoUsuario || !Grupo) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
   try {
     await db.query(
       "INSERT INTO Usuarios (Nombre, Contrasena, TipoUsuario, Grupo) VALUES (?, ?, ?, ?)",
-      [name, password, role, group]
+      [Nombre, Contrasena, TipoUsuario, Grupo]
     );
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {
@@ -89,16 +89,16 @@ export const createUser = async (req, res) => {
 // Update subject data
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { name, password, role, group } = req.body;
+  const { Nombre, Contrasena, TipoUsuario, Grupo } = req.body;
 
-  if (!name || !password || !role || !group) {
+  if (!Nombre || !Contrasena || !TipoUsuario || !Grupo) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
   try {
     await db.query(
       "UPDATE Mundos SET Nombre = ?, Contrasena = ?, TipoUsuario = ? Grupo = ? WHERE IDUsuario = ",
-      [name, password, role, group, id]
+      [Nombre, Contrasena, TipoUsuario, Grupo, id]
     );
     res.json({ message: "USer updated successfully" });
   } catch (error) {

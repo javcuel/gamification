@@ -34,15 +34,21 @@ const NavLinkList: React.FC<NavLinkProps> = ({ role }) => {
 			))}
 
 			{/* Render admin-only navigation link */}
-			<div className='me-3'>
-				{role === ROLES.ADMIN && (
+			{role === ROLES.ADMIN && (
+				<div className='me-3'>
 					<LinkItem to={ROUTES.ADMIN_PANEL} label='Admin' />
-				)}
-			</div>
+				</div>
+			)}
 
-			{/* Render developer-only navigation link and logout option */}
+			{/* Render developer-only navigation link */}
+			{role === ROLES.DEV && (
+				<div className='me-3'>
+					<LinkItem to={ROUTES.DEV_PANEL} label='Dev' />
+				</div>
+			)}
+
+			{/* Logout link */}
 			<div className='me-3'>
-				{role === ROLES.DEV && <LinkItem to={ROUTES.DEV_PANEL} label='Dev' />}
 				<LinkItem label='Logout' onClick={logoutRequest} />
 			</div>
 		</ul>
