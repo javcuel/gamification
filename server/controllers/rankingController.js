@@ -14,7 +14,7 @@ import db from "../config/db.js";
 export const getRankingP = async (req, res) => {
   try {
     const [rows] = await db.query(
-      "SELECT u.Nombre, u.Grupo, SUM(un.Completado) AS TotalEstrellas, SUM(un.Puntuacion) AS TotalPuntos FROM usuarios u JOIN usuariominijuego un ON u.IDUsuario = un.IDUsuario WHERE u.TipoUsuario = 'U' GROUP BY u.IDUsuario, u.Nombre, u.Grupo ORDER BY TotalPuntos DESC"
+      "SELECT u.Nombre, u.Grupo, SUM(un.Completado) AS TotalEstrellas, SUM(un.Puntuacion) AS TotalPuntos FROM users u JOIN usuariominijuego un ON u.IDUser = un.IDUser WHERE u.TipoUsuario = 'U' GROUP BY u.IDUser, u.Nombre, u.Grupo ORDER BY TotalPuntos DESC"
     );
 
     res.json(rows);
@@ -27,7 +27,7 @@ export const getRankingP = async (req, res) => {
 export const getRankingG = async (req, res) => {
   try {
     const [rows] = await db.query(
-      "SELECT u.Grupo, SUM(un.Completado) AS TotalEstrellas, SUM(un.Puntuacion) AS TotalPuntos FROM usuarios u JOIN usuariominijuego un ON u.IDUsuario = un.IDUsuario WHERE u.TipoUsuario = 'U'GROUP BY u.Grupo ORDER BY TotalPuntos DESC"
+      "SELECT u.Grupo, SUM(un.Completado) AS TotalEstrellas, SUM(un.Puntuacion) AS TotalPuntos FROM users u JOIN usuariominijuego un ON u.IDUser = un.IDUser WHERE u.TipoUsuario = 'U'GROUP BY u.Grupo ORDER BY TotalPuntos DESC"
     );
 
     res.json(rows);
@@ -42,7 +42,7 @@ export const getRankingPG = async (req, res) => {
 
   try {
     const [rows] = await db.query(
-      "SELECT u.Nombre, u.Grupo, SUM(un.Completado) AS TotalEstrellas, SUM(un.Puntuacion) AS TotalPuntos FROM usuarios u JOIN usuariominijuego un ON u.IDUsuario = un.IDUsuario WHERE u.TipoUsuario = 'U' and un.IDMinijuego = ? GROUP BY un.IDMinijuego, u.IDUsuario, u.Nombre,u.Grupo ORDER BY TotalPuntos DESC",
+      "SELECT u.Nombre, u.Grupo, SUM(un.Completado) AS TotalEstrellas, SUM(un.Puntuacion) AS TotalPuntos FROM users u JOIN usuariominijuego un ON u.IDUser = un.IDUser WHERE u.TipoUsuario = 'U' and un.IDGame = ? GROUP BY un.IDGame, u.IDUser, u.Nombre,u.Grupo ORDER BY TotalPuntos DESC",
       [gameId]
     );
 
@@ -58,7 +58,7 @@ export const getRankingGG = async (req, res) => {
 
   try {
     const [rows] = await db.query(
-      "SELECT u.Grupo, SUM(un.Completado) AS TotalEstrellas, SUM(un.Puntuacion) AS TotalPuntos FROM usuarios u JOIN usuariominijuego un ON u.IDUsuario = un.IDUsuario WHERE u.TipoUsuario = 'U' and un.IDMinijuego = ? GROUP BY u.Grupo ORDER BY TotalPuntos DESC",
+      "SELECT u.Grupo, SUM(un.Completado) AS TotalEstrellas, SUM(un.Puntuacion) AS TotalPuntos FROM users u JOIN usuariominijuego un ON u.IDUser = un.IDUser WHERE u.TipoUsuario = 'U' and un.IDGame = ? GROUP BY u.Grupo ORDER BY TotalPuntos DESC",
       [gameId]
     );
 

@@ -3,7 +3,7 @@ import db from "../config/db.js";
 // Get all subjects
 export const getSubjects = async (req, res) => {
   try {
-    const [rows] = await db.query("SELECT * FROM Mundos ORDER BY Posicion ASC");
+    const [rows] = await db.query("SELECT * FROM subjects ORDER BY Posicion ASC");
     res.json(rows);
   } catch (error) {
     console.error("Error fetching subjects:", error);
@@ -21,7 +21,7 @@ export const createSubject = async (req, res) => {
 
   try {
     const [result] = await db.query(
-      "INSERT INTO Mundos (Nombre, UrlImgMundo, UrlImgDentro, Posicion, Abierto, Visible) VALUES (?, ?, ?, ?, ?, ?)",
+      "INSERT INTO subjects (Nombre, UrlImgMundo, UrlImgDentro, Posicion, Abierto, Visible) VALUES (?, ?, ?, ?, ?, ?)",
       [Nombre, UrlImgMundo, UrlImgDentro, 0, 0, 0] // Defaults: position = 0, open = false, visible = false
     );
     res
@@ -44,7 +44,7 @@ export const updateSubject = async (req, res) => {
 
   try {
     await db.query(
-      "UPDATE Mundos SET Nombre = ?, UrlImgMundo = ?, UrlImgDentro = ? WHERE IDMundo = ?",
+      "UPDATE subjects SET Nombre = ?, UrlImgMundo = ?, UrlImgDentro = ? WHERE IDSubject = ?",
       [Nombre, UrlImgMundo, UrlImgDentro, id]
     );
     res.json({ message: "Subject updated successfully" });
@@ -60,7 +60,7 @@ export const updateSubjectOpenState = async (req, res) => {
   const { Abierto } = req.body;
 
   try {
-    await db.query("UPDATE Mundos SET Abierto = ? WHERE IDMundo = ?", [
+    await db.query("UPDATE subjects SET Abierto = ? WHERE IDSubject = ?", [
       Abierto ? 1 : 0,
       id,
     ]);
@@ -77,7 +77,7 @@ export const updateSubjectVisibleState = async (req, res) => {
   const { Visible } = req.body;
 
   try {
-    await db.query("UPDATE Mundos SET Visible = ? WHERE IDMundo = ?", [
+    await db.query("UPDATE subjects SET Visible = ? WHERE IDSubject = ?", [
       Visible ? 1 : 0,
       id,
     ]);
@@ -93,7 +93,7 @@ export const deleteSubject = async (req, res) => {
   const { id } = req.params;
 
   try {
-    await db.query("DELETE FROM Mundos WHERE IDMundo = ?", [id]);
+    await db.query("DELETE FROM subjects WHERE IDSubject = ?", [id]);
     res.json({ message: "Subject deleted successfully" });
   } catch (error) {
     console.error("Error deleting subject:", error);

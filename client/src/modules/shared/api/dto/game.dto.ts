@@ -4,15 +4,15 @@
  * @interface
  */
 export interface GameDTO {
-	IDMinijuego: number;
-	IDMundo: number;
+	IDGame: number;
+	IDSubject: number;
 	UrlImagen: string;
 	Nombre: string;
 	PuntuacionMaxima: number;
 	Abierto: boolean;
 	Visible: boolean;
 	Posicion: number;
-	IDUsuario: number;
+	IDUser: number;
 	Nuevo: boolean;
 	Subido: boolean;
 }
@@ -23,7 +23,7 @@ export interface GameDTO {
  * @interface
  */
 export interface GameCreateDTO {
-	IDMundo: number;
+	IDSubject: number;
 	Nombre: string;
 	UrlImagen: string;
 	PuntuacionMaxima: number;
@@ -35,7 +35,7 @@ export interface GameCreateDTO {
  * @interface
  */
 export interface GameUpdateDTO {
-	IDMundo: number;
+	IDSubject: number;
 	Nombre: string;
 	UrlImagen: string;
 	PuntuacionMaxima: number;

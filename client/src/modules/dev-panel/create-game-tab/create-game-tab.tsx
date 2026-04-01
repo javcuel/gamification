@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { z } from 'zod';
 import { GameCreate } from '../../shared/api/domain/game';
-import Button from '../../shared/components/ui/button';
-import Dropdown from '../../shared/components/ui/dropdown';
-import Input from '../../shared/components/ui/input';
+import Button from '../../shared/components/ui/Button';
+import Dropdown from '../../shared/components/ui/Dropdown';
+import Input from '../../shared/components/ui/Input';
 import Toast from '../../shared/components/ui/toast';
 import useCreateGame from './hooks/use-create-game';
 

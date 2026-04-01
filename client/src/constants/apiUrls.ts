@@ -9,7 +9,8 @@ export const API_URLS = {
 		`/subjects/${subjectId}/visible`,
 	DELETE_SUBJECT: (subjectId: number) => `/subjects/${subjectId}`,
 
-	GET_GAMES_BY_ID: (subjectId: number) => `/games/${subjectId}`,
+	GET_LINKED_GAMES_BY_ID: (subjectId: number) => `/games/linked/${subjectId}`,
+	GET_UNLINKED_GAMES_BY_ID: (subjectId: number) => `/games/unlinked/${subjectId}`,
 	GET_GAMES: '/games',
 	GET_GAME: (gameId: number) => `/games/${gameId}`,
 	CREATE_GAME: '/games',
@@ -31,5 +32,14 @@ export const API_URLS = {
 	DELETE_USER: (userId: number) => `/users/${userId}`,
 
 	GET_THEME: '/theme',
-	CREATE_THEME: '/theme'
+	CREATE_THEME: '/theme',
+
+
+	LINK_GAME_TO_SUBJECT: '/content', 
+    UNLINK_GAME_FROM_SUBJECT: (subjectId: number, gameId: number) => `/content/${subjectId}/${gameId}`,
+
+	// SESSION ROUTES
+    CREATE_SESSION: '/sessions',
+    CLOSE_SESSION: (sessionId: number) => `/sessions/${sessionId}`,
+    GET_SESSIONS: '/sessions',
 };

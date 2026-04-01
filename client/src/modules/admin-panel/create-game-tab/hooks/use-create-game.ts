@@ -33,7 +33,7 @@ const useCreateGame = () => {
 		setSuccess(false);
 
 		try {
-			await gameRepository.create(data);
+			await gameRepository.create(data); // Here: Data
 			setSuccess(true);
 		} catch (error: unknown) {
 			if (error instanceof Error) {

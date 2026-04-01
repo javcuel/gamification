@@ -5,10 +5,10 @@ import { ROUTES } from '../constants/routes';
 import AdminPage from '../modules/admin-panel/admin-panel';
 import DevPanel from '../modules/dev-panel/dev-panel';
 import GameSelector from '../modules/game-selector/game-selector';
-import Home from '../modules/home/home';
-import Login from '../modules/login/login';
+import Home from '../modules/home/Home';
+import Login from '../modules/login/Login';
 import Play from '../modules/play/play';
-import Ranking from '../modules/ranking/ranking';
+import Ranking from '../modules/ranking/Ranking';
 import roleService from '../services/role-service';
 import ProtectedRoute from './protected-route';
 

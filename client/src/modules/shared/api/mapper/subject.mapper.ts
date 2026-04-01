@@ -20,7 +20,7 @@ export class SubjectMapper {
 	 */
 	static toDomain(dto: SubjectDTO): Subject {
 		return new Subject(
-			dto.IDMundo,
+			dto.IDSubject,
 			dto.Nombre,
 			dto.UrlImgMundo,
 			dto.UrlImgDentro,
@@ -37,7 +37,7 @@ export class SubjectMapper {
 	 */
 	static toDTO(subject: Subject): SubjectDTO {
 		return {
-			IDMundo: subject.id,
+			IDSubject: subject.id,
 			Nombre: subject.name,
 			UrlImgMundo: subject.img,
 			UrlImgDentro: subject.imgBackground,

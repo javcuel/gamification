@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { z } from 'zod';
 import { SubjectUpdate } from '../../../shared/api/domain/subject';
-import Button from '../../../shared/components/ui/button';
-import Input from '../../../shared/components/ui/input';
+import Button from '../../../shared/components/ui/Button';
+import Input from '../../../shared/components/ui/Input';
 import Toast from '../../../shared/components/ui/toast';
 import '../../styles/edit-modal.css';
 

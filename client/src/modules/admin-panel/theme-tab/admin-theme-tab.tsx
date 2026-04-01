@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Theme } from '../../../api/domain/theme';
 import { ThemeContext } from '../../../context/theme-context';
-import Button from '../../shared/components/ui/button';
-import Input from '../../shared/components/ui/input';
+import Button from '../../shared/components/ui/Button';
+import Input from '../../shared/components/ui/Input';
 import ColorPicker from './components/color-picker';
 
 /**

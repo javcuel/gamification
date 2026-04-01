@@ -11,7 +11,7 @@ export const loginUser = async (req, res) => {
 
   try {
     const [rows] = await db.query(
-      "SELECT * FROM usuarios WHERE Nombre = ? AND Contrasena = ?",
+      "SELECT * FROM users WHERE Nombre = ? AND Contrasena = ?",
       [Nombre, Contrasena]
     );
 
@@ -23,7 +23,7 @@ export const loginUser = async (req, res) => {
     //      roel: rows[0].TipoUsuario
     const token = jwt.sign(
       {
-        IDUsuario: rows[0].IDUsuario,
+        IDUser: rows[0].IDUser,
         Nombre: rows[0].Nombre,
         TipoUsuario: rows[0].TipoUsuario,
       },
@@ -41,7 +41,7 @@ export const loginUser = async (req, res) => {
 export const getUsers = async (req, res) => {
   try {
     const [rows] = await db.query(
-      "SELECT IDUsuario, Nombre, TipoUsuario FROM Usuarios"
+      "SELECT IDUser, Nombre, TipoUsuario FROM users"
     );
     res.json(rows);
   } catch (error) {
@@ -56,7 +56,7 @@ export const getScore = async (req, res) => {
 
   try {
     const [rows] = await db.query(
-      "SELECT SUM(um.Puntuacion) AS Puntuacion, SUM(um.Completado) AS Completado FROM usuarios u JOIN usuariominijuego um ON u.IDUsuario = um.IDUsuario WHERE u.IDUsuario = ?",
+      "SELECT SUM(um.Puntuacion) AS Puntuacion, SUM(um.Completado) AS Completado FROM users u JOIN usuariominijuego um ON u.IDUser = um.IDUser WHERE u.IDUser = ?",
       [id]
     );
     res.json(rows);
@@ -76,7 +76,7 @@ export const createUser = async (req, res) => {
 
   try {
     await db.query(
-      "INSERT INTO Usuarios (Nombre, Contrasena, TipoUsuario, Grupo) VALUES (?, ?, ?, ?)",
+      "INSERT INTO users (Nombre, Contrasena, TipoUsuario, Grupo) VALUES (?, ?, ?, ?)",
       [Nombre, Contrasena, TipoUsuario, Grupo]
     );
     res.status(201).json({ message: "User created successfully" });
@@ -97,7 +97,7 @@ export const updateUser = async (req, res) => {
 
   try {
     await db.query(
-      "UPDATE Mundos SET Nombre = ?, Contrasena = ?, TipoUsuario = ? Grupo = ? WHERE IDUsuario = ",
+      "UPDATE subjects SET Nombre = ?, Contrasena = ?, TipoUsuario = ? Grupo = ? WHERE IDUser = ",
       [Nombre, Contrasena, TipoUsuario, Grupo, id]
     );
     res.json({ message: "USer updated successfully" });
@@ -112,7 +112,7 @@ export const deleteUser = async (req, res) => {
   const { id } = req.params;
 
   try {
-    await db.query("DELETE FROM Usuarios WHERE IDUsuario = ?", [id]);
+    await db.query("DELETE FROM users WHERE IDUser = ?", [id]);
     res.json({ message: "User deleted successfully" });
   } catch (error) {
     console.error("Error deleting user:", error);

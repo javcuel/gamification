@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useUserInfo } from '../../hooks/use-user-info';
-import '../../styles/navbar.css';
+import '../../styles/NavBar.css';
 import NavLinksList from './nav-link-list';
 import NavUserInfo from './nav-user-info';
 

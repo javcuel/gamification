@@ -4,6 +4,7 @@ import {
   deleteGame,
   getGames,
   getGamesBySubject,
+  getAvailableGamesForSubject,
   updateGame,
   updateGameOpenState,
   updateGameVisibleState,
@@ -11,7 +12,8 @@ import {
 const router = express.Router();
 
 router.get("/", getGames);
-router.get("/:subjectId", getGamesBySubject);
+router.get("/linked/:subjectId", getGamesBySubject);
+router.get("/unlinked/:subjectId", getAvailableGamesForSubject);
 router.post("/", createGame);
 router.put("/:id", updateGame);
 router.put("/:id/open", updateGameOpenState);

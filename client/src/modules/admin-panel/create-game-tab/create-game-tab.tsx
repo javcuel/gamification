@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { z } from 'zod';
 import { GameCreate } from '../../shared/api/domain/game';
-import Button from '../../shared/components/ui/button';
-import Dropdown from '../../shared/components/ui/dropdown';
-import Input from '../../shared/components/ui/input';
+import Button from '../../shared/components/ui/Button';
+import Dropdown from '../../shared/components/ui/Dropdown';
+import Input from '../../shared/components/ui/Input';
 import Toast from '../../shared/components/ui/toast';
 import useCreateGame from './hooks/use-create-game';
 
@@ -17,7 +17,7 @@ import useCreateGame from './hooks/use-create-game';
  */
 const CreateGameTab: React.FC = () => {
 	const [name, setName] = useState<string>('');
-	const [idSubject, setIdSubject] = useState<string>('');
+	// const [idSubject, setIdSubject] = useState<string>(''); out
 	const [img, setImg] = useState<string>('');
 	const [maxScore, setMaxScore] = useState<string>('');
 	const [validationError, setValidationError] = useState<string | null>(null);
@@ -62,16 +62,16 @@ const CreateGameTab: React.FC = () => {
 		}
 
 		const newGame = new GameCreate(
-			Number(idSubject),
-			img,
+			// Number(idSubject), out
 			name,
+			img,
 			Number(maxScore)
 		);
 
-		await createGame(newGame);
+		await createGame(newGame); // Here: Debug
 
 		setName('');
-		setIdSubject('');
+		// setIdSubject(''); out
 		setImg('');
 		setMaxScore('');
 	};
@@ -109,11 +109,12 @@ const CreateGameTab: React.FC = () => {
 			/>
 
 			{/* Dropdown for subject selection */}
-			<Dropdown
+			
+			{/*<Dropdown
 				options={['Option 1', 'Option 2', 'Option 3']}
 				placeholder='Subject'
-				onChange={value => setIdSubject(value)}
-			/>
+				onChange={value => setIdSubject(value)} out
+			/>*/}
 
 			{/* Submit button */}
 			<Button text='Create' />

@@ -26,7 +26,7 @@ export class UserMapper {
 	 */
 	static toDomain(dto: UserDTO): User {
 		return new User(
-			dto.IDUsuario,
+			dto.IDUser,
 			dto.Grupo,
 			dto.TipoUsuario,
 			dto.Nombre,
@@ -41,7 +41,7 @@ export class UserMapper {
 	 */
 	static toDTO(user: User): UserDTO {
 		return {
-			IDUsuario: user.id,
+			IDUser: user.id,
 			Grupo: user.group,
 			TipoUsuario: user.role,
 			Nombre: user.name,

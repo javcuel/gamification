@@ -28,9 +28,23 @@ class GameRepository implements IGameRepository {
 	 * @param subjectId - The ID of the subject.
 	 * @returns A promise resolving to an array of Game domain objects.
 	 */
-	async getById(subjectId: number): Promise<Game[]> {
+	async getLinkedGamesById(subjectId: number): Promise<Game[]> {
 		try {
-			const data = await HttpClient.get(API_URLS.GET_GAMES_BY_ID(subjectId));
+			const data = await HttpClient.get(API_URLS.GET_LINKED_GAMES_BY_ID(subjectId));
+			return data.map(GameMapper.toDomain);
+		} catch (error) {
+			console.error('Error fetching games', error);
+			throw new Error('Failed to fetch games');
+		}
+	}
+	/**
+	 * Retrieves games NOT associated with a specific subject ID.
+	 * @param subjectId - The ID of the subject.
+	 * @returns A promise resolving to an array of Game domain objects.
+	 */
+	async getUnlinkedGamesById(subjectId: number): Promise<Game[]> {
+		try {
+			const data = await HttpClient.get(API_URLS.GET_UNLINKED_GAMES_BY_ID(subjectId));
 			return data.map(GameMapper.toDomain);
 		} catch (error) {
 			console.error('Error fetching games', error);
@@ -46,7 +60,7 @@ class GameRepository implements IGameRepository {
 		const requestDTO = GameMapper.toCreateDTO(data);
 
 		try {
-			await HttpClient.post(API_URLS.CREATE_GAME, requestDTO);
+			await HttpClient.post(API_URLS.CREATE_GAME, requestDTO); // Here: Debug
 		} catch (error) {
 			console.error('Error creating new game:', error);
 			throw new Error('Failed to create new game');

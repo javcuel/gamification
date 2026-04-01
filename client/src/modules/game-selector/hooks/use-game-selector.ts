@@ -29,7 +29,7 @@ const useGameSelector = (subjectId: number) => {
 		 */
 		const loadGames = async () => {
 			try {
-				const data = await gameRepository.getById(subjectId);
+				const data = await gameRepository.getLinkedGamesById(subjectId);
 				setGames(data);
 			} catch (error: unknown) {
 				if (error instanceof Error) {

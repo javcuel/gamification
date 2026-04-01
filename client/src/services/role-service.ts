@@ -12,7 +12,6 @@ const ROLES_MAP: Record<string, string[]> = {
 	[ROUTES.HOME]: [
 		ROLES.PLAYER,
 		ROLES.TEACHER,
-		ROLES.GUEST,
 		ROLES.DEV,
 		ROLES.ADMIN
 	],
@@ -20,7 +19,6 @@ const ROLES_MAP: Record<string, string[]> = {
 	[ROUTES.RANKING]: [
 		ROLES.PLAYER,
 		ROLES.TEACHER,
-		ROLES.GUEST,
 		ROLES.DEV,
 		ROLES.ADMIN
 	],
@@ -29,7 +27,6 @@ const ROLES_MAP: Record<string, string[]> = {
 	[ROUTES.GAME_SELECTOR(':subjectId')]: [
 		ROLES.PLAYER,
 		ROLES.TEACHER,
-		ROLES.GUEST,
 		ROLES.DEV,
 		ROLES.ADMIN
 	],
@@ -37,7 +34,6 @@ const ROLES_MAP: Record<string, string[]> = {
 	[ROUTES.PLAY(':gameId')]: [
 		ROLES.PLAYER,
 		ROLES.TEACHER,
-		ROLES.GUEST,
 		ROLES.DEV,
 		ROLES.ADMIN
 	],

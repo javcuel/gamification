@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { z } from 'zod';
 import { GameUpdate } from '../../../shared/api/domain/game';
-import Button from '../../../shared/components/ui/button';
-import Dropdown from '../../../shared/components/ui/dropdown';
-import Input from '../../../shared/components/ui/input';
+import Button from '../../../shared/components/ui/Button';
+import Dropdown from '../../../shared/components/ui/Dropdown';
+import Input from '../../../shared/components/ui/Input';
 import Toast from '../../../shared/components/ui/toast';
 import '../../styles/edit-modal.css';
-import useSubjectsTab from '../hooks/use-subjects-tab';
+import useSubjectsTab from '../../subjects-tab/hooks/use-subjects-tab';
 
 interface GameEditModalProps {
 	data: GameUpdate;
@@ -31,7 +31,7 @@ const GameEditModal: React.FC<GameEditModalProps> = ({
 	onClose,
 	onSave
 }) => {
-	const [idSubject, setIdSubject] = useState(data.idSubject);
+	// const [idSubject, setIdSubject] = useState(data.idSubject); out
 	const [name, setName] = useState(data.name);
 	const [img, setImg] = useState(data.img);
 	const [maxScore, setMaxScore] = useState<string>(String(data.maxScore));
@@ -79,7 +79,8 @@ const GameEditModal: React.FC<GameEditModalProps> = ({
 			return;
 		}
 
-		onSave({ idSubject, name, img, maxScore: parsedScore });
+		// onSave({ idSubject, name, img, maxScore: parsedScore }); out
+		onSave({name, img, maxScore: parsedScore });
 		onClose();
 	};
 
@@ -113,8 +114,9 @@ const GameEditModal: React.FC<GameEditModalProps> = ({
 						value={maxScore}
 						onChange={e => setMaxScore(e.target.value)}
 					/>
-
+					
 					{/* Dropdown: Subject selection */}
+					{/*
 					<Dropdown
 						options={subjects.map(s => s.name)}
 						placeholder='Select Subject'
@@ -122,7 +124,7 @@ const GameEditModal: React.FC<GameEditModalProps> = ({
 							const selected = subjects.find(s => s.name === selectedName);
 							if (selected) setIdSubject(selected.id);
 						}}
-					/>
+					/>*/}
 
 					{/* Form controls and feedback */}
 					<div className='d-flex justify-content-between mt-3'>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SubjectCreate } from '../../shared/api/domain/subject';
-import Button from '../../shared/components/ui/button';
-import Input from '../../shared/components/ui/input';
+import Button from '../../shared/components/ui/Button';
+import Input from '../../shared/components/ui/Input';
 import Toast from '../../shared/components/ui/toast';
 import useCreateSubject from './hooks/use-create-subject';
 

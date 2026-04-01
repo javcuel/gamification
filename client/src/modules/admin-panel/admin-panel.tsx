@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from '../shared/components/navbar/navbar';
+import NavBar from '../shared/components/NavBar/NavBar';
 import AdminLayout from './admin-layout';
 
 /**

@@ -9,6 +9,8 @@ import rankingRoutes from "./routes/rankingRoutes.js";
 import subjectRoutes from "./routes/subjectRoutes.js";
 import themeRoutes from "./routes/themeRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import contentRoutes from "./routes/contentRoutes.js";
+import sessionRoutes from "./routes/sessionRoutes.js";
 
 //Instancia de una aplicación express
 const app = express();
@@ -25,11 +27,18 @@ app.use(express.json()); // Parse to JSON in the requests
 
 // Routes
 
+app.use((req, res, next) => {
+  console.log(`Nueva petición: ${req.method} ${req.url}`);
+  next();
+});
+
 app.use("/api/ranking", rankingRoutes);
 app.use("/api/subjects", subjectRoutes);
 app.use("/api/games", gameRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/theme", themeRoutes);
+app.use("/api/content", contentRoutes);
+app.use("/api/sessions", sessionRoutes);
 
 // Start the server
 app.listen(PORT, () => {

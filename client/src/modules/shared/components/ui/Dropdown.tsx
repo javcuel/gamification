@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../styles/dropdown.css';
+import '../../styles/Dropdown.css';
 
 /**
  * Props for the Dropdown component.

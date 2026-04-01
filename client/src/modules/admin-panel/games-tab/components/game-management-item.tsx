@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Game, GameUpdate } from '../../../shared/api/domain/game';
-import useToggleGameOpenState from '../hooks/use-toggle-game-open-state';
-import useToggleGameVisibleState from '../hooks/use-toggle-game-visible-state';
+import useToggleGameOpenState from '../../subjects-tab/hooks/use-toggle-game-open-state';
+import useToggleGameVisibleState from '../../subjects-tab/hooks/use-toggle-game-visible-state';
 
-import Button from '../../../shared/components/ui/button';
+import Button from '../../../shared/components/ui/Button';
 import Toast from '../../../shared/components/ui/toast';
 import useDeleteGame from '../hooks/use-delete-game';
 import useUpdateGame from '../hooks/use-update-game';
@@ -144,7 +144,7 @@ const GameManagementItem: React.FC<GameManagementItemProps> = ({
 			{isEditing && (
 				<GameEditModal
 					data={{
-						idSubject: game.idSubject,
+						// idSubject: game.idSubject, out
 						name: game.name,
 						img: game.img,
 						maxScore: game.maxScore

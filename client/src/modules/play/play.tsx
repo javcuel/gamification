@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import NavBar from '../shared/components/navbar/navbar';
+import NavBar from '../shared/components/NavBar/NavBar';
 import Toast from '../shared/components/ui/toast';
 import Iframe from './components/iframe';
 import usePlay from './hooks/use-play';

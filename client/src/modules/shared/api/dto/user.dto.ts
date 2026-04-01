@@ -4,7 +4,7 @@
  * @interface
  */
 export interface UserDTO {
-	IDUsuario: number;
+	IDUser: number;
 	Grupo: string;
 	TipoUsuario: string;
 	Nombre: string;

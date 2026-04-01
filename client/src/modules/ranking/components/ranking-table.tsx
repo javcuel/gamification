@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { RANKING_TYPES } from '../../../constants/ranking-types';
-import Dropdown from '../../shared/components/ui/dropdown';
+import Dropdown from '../../shared/components/ui/Dropdown';
 import LoadingMsg from '../../shared/components/ui/loading-msg';
 import Toast from '../../shared/components/ui/toast';
 import useRankings from '../hooks/use-ranking';

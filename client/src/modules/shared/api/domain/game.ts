@@ -49,7 +49,7 @@ export class GameCreate {
 	 * @param {number} maxScore - Max Score obtainable in the game
 	 */
 	constructor(
-		public idSubject: number,
+		// public idSubject: number, out
 		public name: string,
 		public img: string,
 		public maxScore: number
@@ -71,7 +71,7 @@ export class GameUpdate {
 	 * @param {number} maxScore - Max Score obtainable in the game
 	 */
 	constructor(
-		public idSubject: number,
+		// public idSubject: number, out
 		public name: string,
 		public img: string,
 		public maxScore: number

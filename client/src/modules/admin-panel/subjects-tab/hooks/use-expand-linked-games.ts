@@ -3,7 +3,7 @@ import { Game } from '../../../shared/api/domain/game';
 import { gameRepository } from '../../../shared/api/repository/game.repository';
 
 /**
- * useExpandSubject hook
+ * useExpandLinked hook
  *
  * Manages the expanded/collapsed state of a subject row and fetches related games on demand.
  * - Fetches games only once when expanding for the first time.
@@ -18,40 +18,30 @@ import { gameRepository } from '../../../shared/api/repository/game.repository';
  * - `error`: String describing any fetch error
  * - `toggleExpand`: Function to toggle the expanded state and optionally trigger data loading
  */
-const useExpandSubject = (subjectId: number) => {
-	const [games, setGames] = useState<Game[]>([]);
+const useExpandLinked = (subjectId: number) => {
+	const [linkedGames, setLinkedGames] = useState<Game[]>([]); // Renombrado
 	const [isExpanded, setIsExpanded] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
-	/**
-	 * toggleExpand
-	 *
-	 * Toggles the expanded state of the subject.
-	 * When expanding for the first time, it fetches the related games from the repository.
-	 */
 	const toggleExpand = async () => {
 		setIsExpanded(prev => !prev);
-
-		if (!isExpanded && games.length === 0) {
+		if (!isExpanded && linkedGames.length === 0) {
 			setLoading(true);
 			setError(null);
 			try {
-				const data = await gameRepository.getById(subjectId);
-				setGames(data);
+				const data = await gameRepository.getLinkedGamesById(subjectId);
+				setLinkedGames(data);
 			} catch (error: unknown) {
-				if (error instanceof Error) {
-					setError(error.message);
-				} else {
-					setError('An unknown error occurred');
-				}
+				setError(error instanceof Error ? error.message : 'An unknown error occurred');
 			} finally {
 				setLoading(false);
 			}
 		}
 	};
 
-	return { games, setGames, isExpanded, loading, error, toggleExpand };
+    // Ahora devuelve linkedGames y setLinkedGames
+	return { linkedGames, setLinkedGames, isExpanded, loading, error, toggleExpand };
 };
 
-export default useExpandSubject;
+export default useExpandLinked;

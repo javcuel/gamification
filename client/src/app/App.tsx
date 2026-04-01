@@ -3,7 +3,7 @@ import { BrowserRouter, useRoutes } from 'react-router-dom';
 import { AuthProvider } from '../context/auth-context';
 import { ThemeProvider } from '../context/theme-context';
 import SpaceBackground from '../modules/shared/components/ui/space-background';
-import routes from './routes';
+import routes from './Routes';
 
 /**
  * AppRoutes component

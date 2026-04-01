@@ -1,0 +1,41 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: gamispace-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init-db:/docker-entrypoint-initdb.d
+
+  backend:
+    build: ./server
+    container_name: gamispace-backend
+    restart: always
+    # Carga el archivo .env automáticamente
+    env_file:
+      - .env
+    environment:
+      # Priorizamos la red interna de Docker
+      - DB_HOST=db
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+  frontend:
+    build: ./client
+    container_name: gamispace-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:5000
+
+volumes:
+  db_data:

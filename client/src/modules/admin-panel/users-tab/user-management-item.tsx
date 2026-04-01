@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { User, UserUpdate } from '../../shared/api/domain/user';
-import Button from '../../shared/components/ui/button';
+import Button from '../../shared/components/ui/Button';
 import UserEditModal from './components/user-edit-modal';
 import UseDeleteUser from './hooks/use-delete-user';
 import UseUpdateUser from './hooks/use-update-user';

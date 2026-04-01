@@ -9,7 +9,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 
-import '../../styles/button.css';
+import '../../styles/Button.css';
 
 /**
  * Posible button types:

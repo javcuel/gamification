@@ -36,7 +36,7 @@ const HttpClient = {
 				throw new Error(errorData.message || 'HTTP Request Failed');
 			}
 
-			return response.json();
+			return response.json(); // Here: Debug 
 		} catch (error) {
 			console.error('HTTP Request Error:', error);
 			throw error;
@@ -62,7 +62,7 @@ const HttpClient = {
 	 * @returns {Promise<any>} A promise that resolves with the response data.
 	 */
 	post: (url: string, body: unknown, headers: Record<string, string> = {}) =>
-		HttpClient.request(url, { method: 'POST', headers, body }),
+		HttpClient.request(url, { method: 'POST', headers, body }), // Here: Debug
 
 	/**
 	 * Sends a DELETE request.

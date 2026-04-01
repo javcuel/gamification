@@ -4,7 +4,7 @@
  * @interface
  */
 export interface SubjectDTO {
-	IDMundo: number;
+	IDSubject: number;
 	Nombre: string;
 	UrlImgMundo: string;
 	UrlImgDentro: string;

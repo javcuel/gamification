@@ -21,15 +21,15 @@ export class GameMapper {
 	 */
 	static toDomain(dto: GameDTO): Game {
 		return new Game(
-			dto.IDMinijuego,
-			dto.IDMundo,
+			dto.IDGame,
+			dto.IDSubject,
 			dto.UrlImagen,
 			dto.Nombre,
 			dto.PuntuacionMaxima,
 			dto.Abierto,
 			dto.Visible,
 			dto.Posicion,
-			dto.IDUsuario,
+			dto.IDUser,
 			dto.Nuevo,
 			dto.Subido
 		);
@@ -42,15 +42,15 @@ export class GameMapper {
 	 */
 	static toDTO(game: Game): GameDTO {
 		return {
-			IDMinijuego: game.id,
-			IDMundo: game.idSubject,
+			IDGame: game.id,
+			IDSubject: game.idSubject,
 			UrlImagen: game.img,
 			Nombre: game.name,
 			PuntuacionMaxima: game.maxScore,
 			Abierto: game.isOpen,
 			Visible: game.isVisible,
 			Posicion: game.position,
-			IDUsuario: game.idUser,
+			IDUser: game.idUser,
 			Nuevo: game.isNew,
 			Subido: game.uploaded
 		};
@@ -63,7 +63,7 @@ export class GameMapper {
 	 */
 	static toCreateDTO(gameCreate: GameCreate): GameCreateDTO {
 		return {
-			IDMundo: gameCreate.idSubject,
+			IDSubject: gameCreate.idSubject,
 			Nombre: gameCreate.name,
 			UrlImagen: gameCreate.img,
 			PuntuacionMaxima: gameCreate.maxScore
@@ -77,7 +77,7 @@ export class GameMapper {
 	 */
 	static toUpdateDTO(gameUpdate: GameUpdate): GameUpdateDTO {
 		return {
-			IDMundo: gameUpdate.idSubject,
+			IDSubject: gameUpdate.idSubject,
 			Nombre: gameUpdate.name,
 			UrlImagen: gameUpdate.img,
 			PuntuacionMaxima: gameUpdate.maxScore

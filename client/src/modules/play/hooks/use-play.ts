@@ -30,14 +30,14 @@ const usePlay = (gameId: number) => {
 		const loadGame = async (gameId: number) => {
 			try {
 				// TODO: Replace with actual API call when ready
-				// const data = await GameApi.getById(gameId);
+				// const data = await GameApi.getLinkedGamesById(gameId);
 
 				// Mocked game data
 				const data = {
 					id: 127,
 					idSubject: 1,
 					img: '',
-					name: 'Cafetería',
+					name: 'Caida de Datos',
 					maxScore: 8000,
 					isOpen: true,
 					isVisible: true,

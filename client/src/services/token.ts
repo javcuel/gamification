@@ -28,7 +28,7 @@ export class Token {
  * @interface
  */
 interface TokenDTO {
-	IDUsuario: number;
+	IDUser: number;
 	Nombre: string;
 	TipoUsuario: string;
 }
@@ -36,9 +36,8 @@ interface TokenDTO {
 export const decodeToken = (token: string): Token | null => {
 	try {
 		const decoded: TokenDTO = jwtDecode(token);
-
 		if (roleService.isValidRole(decoded.TipoUsuario)) {
-			return new Token(decoded.IDUsuario, decoded.Nombre, decoded.TipoUsuario);
+			return new Token(decoded.IDUser, decoded.Nombre, decoded.TipoUsuario);
 		}
 		return null;
 	} catch (error) {

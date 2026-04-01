@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ROLES } from '../../../../constants/roles';
 import { ThemeContext } from '../../../../context/theme-context';
-import Icon from '../ui/icon';
+import Icon from '../ui/Icon';
 
 // Props expected by the NavUserInfo component.
 interface NavUserInfoProps {
