@@ -2,28 +2,29 @@ import db from "../config/db.js";
 
 // Create a new session record when a user logs IN
 export const createSession = async (req, res) => {
-  const { IDUser } = req.body; // Recibimos el ID del usuario desde el body
+    const { IDUser } = req.body;
 
-  if (!IDUser) {
-    return res.status(400).json({ message: "IDUser is required to start a session" });
-  }
+    try {
+        // 1. CERRAMOS CUALQUIER SESIÓN ABIERTA PREVIA DEL MISMO USUARIO
+        // Esto limpia los "NULL" que quedaron por cerrar la pestaña
+        await db.query(
+            "UPDATE session SET LogoutTime = NOW() WHERE IDUser = ? AND LogoutTime IS NULL",
+            [IDUser]
+        );
 
-  try {
-    // Insertamos el IDUser. LoginTime se genera solo por el DEFAULT CURRENT_TIMESTAMP.
-    const [result] = await db.query(
-      "INSERT INTO session (IDUser) VALUES (?)",
-      [IDUser]
-    );
+        // 2. CREAMOS LA NUEVA SESIÓN
+        const [result] = await db.query(
+            "INSERT INTO session (IDUser) VALUES (?)",
+            [IDUser]
+        );
 
-    // Devolvemos el IDSession generado para que el frontend lo gestione
-    res.status(201).json({ 
-      message: "Session registered successfully", 
-      IDSession: result.insertId 
-    });
-  } catch (error) {
-    console.error("Error creating session:", error);
-    res.status(500).json({ message: "Error creating session" });
-  }
+        res.status(201).json({ 
+            message: "Session created", 
+            IDSession: result.insertId 
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
 
 // Update the LogoutTime for a specific session

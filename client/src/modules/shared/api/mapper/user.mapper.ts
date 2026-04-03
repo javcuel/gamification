@@ -27,7 +27,7 @@ export class UserMapper {
 	static toDomain(dto: UserDTO): User {
 		return new User(
 			dto.IDUser,
-			dto.Grupo,
+			// dto.Grupo,
 			dto.TipoUsuario,
 			dto.Nombre,
 			dto.Contrasena
@@ -42,7 +42,7 @@ export class UserMapper {
 	static toDTO(user: User): UserDTO {
 		return {
 			IDUser: user.id,
-			Grupo: user.group,
+			// Grupo: user.group,
 			TipoUsuario: user.role,
 			Nombre: user.name,
 			Contrasena: user.passwd
@@ -57,7 +57,7 @@ export class UserMapper {
 	static toCreateDTO(user: UserCreate): UserCreateDTO {
 		return {
 			Nombre: user.name,
-			Grupo: user.group,
+			// Grupo: user.group,
 			TipoUsuario: user.role,
 			Contrasena: user.passwd
 		};
@@ -71,7 +71,7 @@ export class UserMapper {
 	static toUpdateDTO(user: UserUpdate): UserUpdateDTO {
 		return {
 			Nombre: user.name,
-			Grupo: user.group,
+			// Grupo: user.group,
 			TipoUsuario: user.role,
 			Contrasena: user.passwd
 		};

@@ -3,10 +3,13 @@ import { startGameSession, endGameSession } from "../controllers/gameSessionCont
 
 const router = express.Router();
 
-// POST /api/game-sessions - Iniciar
+// Ruta para iniciar una sesion de juego al hacer clikc sobre uno
 router.post("/", startGameSession);
 
-// PUT /api/game-sessions/:id - Finalizar
-router.put("/:id", endGameSession);
+// Ruta para navegación normal (React)
+router.put("/:id", endGameSession); 
+
+// Ruta para cierre de pestaña (Beacon)
+router.post("/:id/close-beacon", endGameSession);
 
 export default router;

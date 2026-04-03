@@ -12,6 +12,8 @@ import userRoutes from "./routes/userRoutes.js";
 import contentRoutes from "./routes/contentRoutes.js";
 import sessionRoutes from "./routes/sessionRoutes.js";
 import gameSessionRoutes from "./routes/gameSessionRoutes.js";
+import groupRoutes from "./routes/groupRoutes.js";
+import assignmentRoutes from "./routes/assignmentRoutes.js";
 
 //Instancia de una aplicación express
 const app = express();
@@ -41,6 +43,8 @@ app.use("/api/theme", themeRoutes);
 app.use("/api/content", contentRoutes);
 app.use("/api/sessions", sessionRoutes);
 app.use("/api/game-sessions", gameSessionRoutes);
+app.use("/api/groups", groupRoutes);
+app.use("/api/assignments", assignmentRoutes);
 
 // Start the server
 app.listen(PORT, () => {

@@ -17,7 +17,7 @@ export class User {
 	 */
 	constructor(
 		public id: number,
-		public group: string,
+		// public group: string,
 		public role: (typeof ROLES)[keyof typeof ROLES],
 		public name: string,
 		public passwd: string

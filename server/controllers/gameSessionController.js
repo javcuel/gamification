@@ -2,25 +2,19 @@ import db from "../config/db.js";
 
 // Iniciar una sesión de juego (clic en minijuego)
 export const startGameSession = async (req, res) => {
+  console.log("Datos recibidos en el controlador:", req.body); 
   const { IDSession, IDGame } = req.body;
-
-  if (!IDSession || !IDGame) {
-    return res.status(400).json({ message: "IDSession and IDGame are required" });
-  }
 
   try {
     const [result] = await db.query(
       "INSERT INTO game_session (IDSession, IDGame) VALUES (?, ?)",
       [IDSession, IDGame]
     );
-
-    res.status(201).json({ 
-      message: "Game session started", 
-      IDGameSession: result.insertId 
-    });
+    console.log("Inserción exitosa, ID:", result.insertId);
+    res.status(201).json({ IDGameSession: result.insertId });
   } catch (error) {
-    console.error("Error starting game session:", error);
-    res.status(500).json({ message: "Error starting game session" });
+    console.error("ERROR REAL EN BD:", error);
+    res.status(500).json({ message: error.message });
   }
 };
 

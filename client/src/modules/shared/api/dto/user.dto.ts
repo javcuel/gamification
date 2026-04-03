@@ -5,7 +5,7 @@
  */
 export interface UserDTO {
 	IDUser: number;
-	Grupo: string;
+	// Grupo: string;
 	TipoUsuario: string;
 	Nombre: string;
 	Contrasena: string;
@@ -18,7 +18,7 @@ export interface UserDTO {
  */
 export interface UserCreateDTO {
 	Nombre: string;
-	Grupo: string;
+	// Grupo: string;
 	TipoUsuario: string;
 	Contrasena: string;
 }
@@ -29,7 +29,7 @@ export interface UserCreateDTO {
  * @interface
  */
 export interface UserUpdateDTO {
-	Grupo: string;
+	// Grupo: string;
 	TipoUsuario: string;
 	Nombre: string;
 	Contrasena: string;

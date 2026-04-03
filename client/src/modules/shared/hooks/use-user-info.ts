@@ -41,7 +41,7 @@ export const useUserInfo = () => {
 					}));
 
 					// Fetch score-related user info from API
-					const data = await userRepository.getScore(decoded.id);
+					/*const data = await userRepository.getScore(decoded.id); Lo he metido en comentario para que deje de dar logs de error el getScore
 
 					if (data) {
 						setUserInfo(prev => ({
@@ -51,7 +51,7 @@ export const useUserInfo = () => {
 							totalScore: data.totalScore,
 							completedSubjects: data.completedSubjects
 						}));
-					}
+					}*/
 				}
 			}
 		};
