@@ -9,7 +9,7 @@ export interface ISessionRepository {
      * Creates a new session in the database.
      * @returns A promise resolving to the generated IDSession.
      */
-    create(): Promise<number>;
+    create(idUser: number): Promise<number>;
 
     /**
      * Updates the logout time for a specific session.

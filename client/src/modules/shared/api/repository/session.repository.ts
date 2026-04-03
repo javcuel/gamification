@@ -12,18 +12,21 @@ import { ISessionRepository } from '../interface/session-repository.interface';
 class SessionRepository implements ISessionRepository {
     /**
      * Registers a new session (Login).
+     * @param idUser - The ID of the user logging in.
      * @returns The newly created IDSession.
      */
-    async create(): Promise<number> {
-        try {
-            // We use the Specific DTO for the create response
-            const response: SessionCreateResponseDTO = await HttpClient.post(API_URLS.CREATE_SESSION, {});
-            return response.IDSession;
-        } catch (error) {
-            console.error('Error creating session:', error);
-            throw new Error('Failed to create session');
-        }
+    async create(idUser: number): Promise<number> {
+    try {
+        // Enviamos el IDUser al backend
+        const response: SessionCreateResponseDTO = await HttpClient.post(API_URLS.CREATE_SESSION, { 
+            IDUser: idUser 
+        });
+        return response.IDSession;
+    } catch (error) {
+        console.error('Error creating session:', error);
+        throw new Error('Failed to create session');
     }
+}
 
     /**
      * Closes an existing session (Logout).

@@ -1,15 +1,21 @@
 import db from "../config/db.js";
 
-// Create a new session record when a user logs in
+// Create a new session record when a user logs IN
 export const createSession = async (req, res) => {
+  const { IDUser } = req.body; // Recibimos el ID del usuario desde el body
+
+  if (!IDUser) {
+    return res.status(400).json({ message: "IDUser is required to start a session" });
+  }
+
   try {
-    // LoginTime is handled by DEFAULT CURRENT_TIMESTAMP in MySQL
+    // Insertamos el IDUser. LoginTime se genera solo por el DEFAULT CURRENT_TIMESTAMP.
     const [result] = await db.query(
-      "INSERT INTO session () VALUES ()"
+      "INSERT INTO session (IDUser) VALUES (?)",
+      [IDUser]
     );
 
-    // We return the generated IDSession so the frontend can store it
-    // and use it later to close the session or link game sessions.
+    // Devolvemos el IDSession generado para que el frontend lo gestione
     res.status(201).json({ 
       message: "Session registered successfully", 
       IDSession: result.insertId 
@@ -22,10 +28,9 @@ export const createSession = async (req, res) => {
 
 // Update the LogoutTime for a specific session
 export const closeSession = async (req, res) => {
-  const { id } = req.params; // This is the IDSession
+  const { id } = req.params; // Este es el IDSession
 
   try {
-    // We use NOW() to set the current date and time in LogoutTime
     const [result] = await db.query(
       "UPDATE session SET LogoutTime = NOW() WHERE IDSession = ?",
       [id]
@@ -42,29 +47,19 @@ export const closeSession = async (req, res) => {
   }
 };
 
-// Optional: Get all sessions (for admin logs)
+// Get all sessions (with User Name for better logs)
 export const getAllSessions = async (req, res) => {
   try {
-    const [rows] = await db.query("SELECT * FROM session");
+    // Hacemos un JOIN con la tabla 'users' para saber de quién es cada sesión
+    const [rows] = await db.query(`
+      SELECT s.*, u.Nombre 
+      FROM session s 
+      JOIN users u ON s.IDUser = u.IDUser
+      ORDER BY s.LoginTime DESC
+    `);
     res.json(rows);
   } catch (error) {
     console.error("Error fetching sessions:", error);
     res.status(500).json({ message: "Error fetching sessions" });
   }
 };
-
-/**
- * SUMMARY OF HTTP CALLS FOR SESSION MANAGEMENT:
- * * 1. POST /api/sessions
- * - Action: Triggered during user login.
- * - Purpose: Creates a new record in the 'session' table.
- * - Key Data: Returns 'IDSession' to the frontend.
- * * 2. POST /api/game-sessions
- * - Action: Triggered when the user starts a game.
- * - Purpose: Links a specific game activity to the current session.
- * - Key Data: Frontend sends the stored 'IDSession' in the request body.
- * * 3. PUT /api/sessions/:id
- * - Action: Triggered when the user logs out or closes the app.
- * - Purpose: Updates 'LogoutTime' using the IDSession provided in the URL.
- * - Key Data: Uses 'id' from params to identify which session to close.
- */

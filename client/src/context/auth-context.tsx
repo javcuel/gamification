@@ -38,35 +38,36 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }, []);
 
     const loginRequest = async (name: string, passwd: string) => {
-        const userLogin = new UserLogin(name, passwd);
-        const result = await userRepository.login(userLogin);
+    // CORRECCIÓN: Enviamos un objeto para evitar el error de "1 argument expected"
+    const result = await userRepository.login({ name: name, passwd: passwd }); 
 
-        if (result.success && result.token) {
+    if (result.success && result.token) {
+        const decoded = decodeToken(result.token);
+        if (decoded) {
             localStorage.setItem('token', result.token);
-            const decoded = decodeToken(result.token);
-            
-            if (decoded) {
-                try {
-                    // --- Lógica de Sesión Inyectada ---
-                    // Tras el login exitoso, creamos la entrada en la tabla 'session'
-                    const sessionId = await sessionRepository.create();
-                    // Guardamos el IDSession en localStorage para recuperarlo en el logout
-                    localStorage.setItem('sessionId', sessionId.toString());
-                    // ----------------------------------
+            setIsAuthenticated(true);
+            setUser(decoded);
 
-                    setIsAuthenticated(true);
-                    setError(null);
-                    setUser(decoded);
-                    return { success: true, role: decoded.role };
-                } catch (sessionError) {
-                    // Si falla la creación de sesión, podríamos decidir si abortar el login
-                    console.error("Session creation failed", sessionError);
+            try {
+                // CORRECCIÓN: Usamos .id que es como se define en tu clase Token
+                const userId = decoded.id; 
+
+                if (userId) {
+                    // Llamamos al repositorio de sesión con el ID
+                    const sessionId = await sessionRepository.create(userId);
+                    localStorage.setItem('sessionId', sessionId.toString());
                 }
+                
+                return { success: true, role: decoded.role };
+            } catch (sessionError) {
+                console.error("Session creation failed", sessionError);
+                return { success: true, role: decoded.role };
             }
         }
-        setError(result.message || 'Login failed');
-        return { success: false };
-    };
+    }
+    setError(result.message || 'Login failed');
+    return { success: false };
+};
 
     const logoutRequest = async () => {
         // Recuperamos el ID de la sesión antes de limpiar el storage

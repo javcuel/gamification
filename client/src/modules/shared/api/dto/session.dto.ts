@@ -5,7 +5,8 @@
  */
 export interface SessionDTO {
     IDSession: number;
-    LoginTime: string;  // En el DTO es string porque el JSON no tiene tipo Date
+    IDUser: number;      
+    LoginTime: string;
     LogoutTime: string | null;
 }
 

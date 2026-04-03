@@ -22,40 +22,46 @@
 DROP TABLE IF EXISTS `session`;
 CREATE TABLE `session` (
   `IDSession` int NOT NULL AUTO_INCREMENT,
+  `IDUser` int NOT NULL, 
   `LoginTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `LogoutTime` datetime DEFAULT NULL,
-  PRIMARY KEY (`IDSession`)
+  PRIMARY KEY (`IDSession`),
+  CONSTRAINT `fk_session_user` FOREIGN KEY (`IDUser`) 
+    REFERENCES `users` (`IDUser`) 
+    ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
 -- Table structure for table `gameSession`
 --
-DROP TABLE IF EXISTS `gameSession`;
-CREATE TABLE `gameSession` (
+-- Se crea cuando el usuario hace clic en un juego
+DROP TABLE IF EXISTS `game_session`;
+CREATE TABLE `game_session` (
   `IDGameSession` int NOT NULL AUTO_INCREMENT,
-  `IDSession` int NOT NULL, -- Nuevo campo para la relación
-  `LoginTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `LogoutTime` datetime DEFAULT NULL,
+  `IDSession` int NOT NULL,
+  `IDGame` int NOT NULL, -- Este es el ID 127 que vemos en el log
+  `GameStartTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `GameEndTime` datetime DEFAULT NULL,
   PRIMARY KEY (`IDGameSession`),
-  KEY `fk_gameSession_session_idx` (`IDSession`),
-  CONSTRAINT `fk_gameSession_session` FOREIGN KEY (`IDSession`) REFERENCES `session` (`IDSession`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_gamesession_session` FOREIGN KEY (`IDSession`) 
+    REFERENCES `session` (`IDSession`) ON DELETE CASCADE,
+  CONSTRAINT `fk_gamesession_game` FOREIGN KEY (`IDGame`) 
+    REFERENCES `games` (`IDGame`) ON DELETE CASCADE 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
 -- Table structure for table `play`
 --
-
+-- Se crea cuando se termina una partida/intento dentro de esa sesión de juego
 DROP TABLE IF EXISTS `play`;
 CREATE TABLE `play` (
   `IDPlay` int NOT NULL AUTO_INCREMENT,
-  `IDGameSession` int NOT NULL,
-  `level` int NOT NULL,
-  `score` int NOT NULL,
-  `time` int NOT NULL,
-  `completed` tinyint(1) NOT NULL,
+  `IDGameSession` int NOT NULL,  -- Referencia a la sesión de juego
+  `Score` int DEFAULT 0,
+  `PlayDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Metadata` json DEFAULT NULL,  -- Para guardar datos extra en el futuro (opcional)
   PRIMARY KEY (`IDPlay`),
-  KEY `fk_play_gameSession_idx` (`IDGameSession`),
-  CONSTRAINT `fk_play_gameSession` FOREIGN KEY (`IDGameSession`) REFERENCES `gameSession` (`IDGameSession`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_play_gamesession` FOREIGN KEY (`IDGameSession`) REFERENCES `game_session` (`IDGameSession`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
@@ -119,7 +125,7 @@ CREATE TABLE `users` (
   `Nombre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `Contrasena` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   PRIMARY KEY (`IDUser`)
-) ENGINE=MyISAM AUTO_INCREMENT=721 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=721 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

@@ -42,4 +42,7 @@ export const API_URLS = {
     CREATE_SESSION: '/sessions',
     CLOSE_SESSION: (sessionId: number) => `/sessions/${sessionId}`,
     GET_SESSIONS: '/sessions',
+
+	CREATE_GAME_SESSION: '/game-sessions',
+    CLOSE_GAME_SESSION: (id: number) => `/game-sessions/${id}`,
 };

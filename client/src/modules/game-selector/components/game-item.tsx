@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '../../../constants/routes';
 import { Game } from '../../shared/api/domain/game';
+import { gameSessionRepository } from '../../shared/api/repository/game-session.repository';
 
 import '../styles/game-item.css';
 
@@ -35,8 +36,31 @@ const GameItem: React.FC<GameProps> = ({ game }) => {
 	 *
 	 * Navigates to the game play route if the game is open.
 	 */
-	const handleClick = () => {
-		if (game.isOpen) navigate(ROUTES.PLAY(game.id));
+	const handleClick = async () => {
+		if (game.isOpen) {
+			try {
+				// 1. Recuperamos el ID de la sesión de login que guardamos al entrar
+				const sessionId = localStorage.getItem('sessionId');
+				
+				if (sessionId) {
+					// 2. Creamos la sesión de juego en la BD
+					const gameSessionId = await gameSessionRepository.start(
+						Number(sessionId), 
+						game.id
+					);
+					
+					// 3. Guardamos el ID de esta sesión de juego específica.
+					// Usamos sessionStorage porque solo nos interesa mientras estemos dentro del juego.
+					sessionStorage.setItem('activeGameSessionId', gameSessionId.toString());
+				}
+			} catch (error) {
+				// Si falla el registro, imprimimos error pero dejamos que el usuario juegue igual
+				console.error("Could not register game session", error);
+			}
+
+			// 4. Navegamos al juego
+			navigate(ROUTES.PLAY(game.id));
+		}
 	};
 
 	// Apply different class styles depending on whether the game is open

@@ -11,6 +11,7 @@ import themeRoutes from "./routes/themeRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import contentRoutes from "./routes/contentRoutes.js";
 import sessionRoutes from "./routes/sessionRoutes.js";
+import gameSessionRoutes from "./routes/gameSessionRoutes.js";
 
 //Instancia de una aplicación express
 const app = express();
@@ -39,6 +40,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/theme", themeRoutes);
 app.use("/api/content", contentRoutes);
 app.use("/api/sessions", sessionRoutes);
+app.use("/api/game-sessions", gameSessionRoutes);
 
 // Start the server
 app.listen(PORT, () => {
