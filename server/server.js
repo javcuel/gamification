@@ -35,7 +35,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/ranking", rankingRoutes);
+app.use("/api/rankings", rankingRoutes);
 app.use("/api/subjects", subjectRoutes);
 app.use("/api/games", gameRoutes);
 app.use("/api/users", userRoutes);

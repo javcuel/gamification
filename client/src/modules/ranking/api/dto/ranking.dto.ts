@@ -1,11 +1,6 @@
-/**
- * Interface representing the ranking data in the backend.
- *
- * @interface
- */
 export interface RankingDTO {
-	Nombre: string;
-	Grupo: string;
-	TotalEstrellas: number;
-	TotalPuntos: number;
+	Nombre?: string;
+	Grupo?: string;
+	TotalTime: number;  // Debe coincidir con el SQL
+	TotalScore: number; // Debe coincidir con el SQL
 }

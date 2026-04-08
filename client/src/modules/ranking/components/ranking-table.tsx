@@ -6,37 +6,24 @@ import Toast from '../../shared/components/ui/toast';
 import useRankings from '../hooks/use-ranking';
 import useRankingGames from '../hooks/use-ranking-games';
 import '../styles/ranking.css';
+import useRankingSubjects from '../hooks/use-ranking-subjects';
+
 
 const DEFAULT_RANKING = RANKING_TYPES.PLAYERS;
 const DEFAULT_GAME = 0;
+const DEFAULT_SUBJECT = 0; // 0 significa que aún no ha seleccionado asignatura
 
-/**
- * RankingTable component
- *
- * Displays a ranking table based on the selected ranking type and optionally a selected game.
- * - Allows switching between different ranking types via a dropdown.
- * - For rankings by game, allows selecting a specific game.
- * - Fetches and displays the top 10 ranking entries with podium styling.
- * - Handles loading and error states for both rankings and games.
- * @component
- *
- * @returns {JSX.Element}
- */
 const RankingTable: React.FC = () => {
 	const [rankingType, setRankingType] = useState<string>(DEFAULT_RANKING);
 	const [selectedGame, setSelectedGame] = useState<number>(DEFAULT_GAME);
+    const [selectedSubject, setSelectedSubject] = useState<number>(DEFAULT_SUBJECT);
 
-	const { rankings, error, loading } = useRankings(rankingType, selectedGame);
+    // Ahora el hook usa el selectedSubject que el usuario elige en el desplegable
+	const { rankings, error, loading } = useRankings(selectedSubject, rankingType, selectedGame);
 	const { games, error: gamesError, loading: gamesLoading } = useRankingGames();
 
-	/**
-	 * getPodiumClass
-	 *
-	 * Returns a specific CSS class name to visually distinguish the top 3 positions.
-	 *
-	 * @param index - The ranking index (starting at 0)
-	 * @returns A string representing the CSS class for the podium position
-	 */
+    const { subjects, error: subjectsError, loading: subjectsLoading } = useRankingSubjects();
+
 	const getPodiumClass = (index: number) => {
 		if (index === 0) return 'podium1';
 		if (index === 1) return 'podium2';
@@ -44,10 +31,39 @@ const RankingTable: React.FC = () => {
 		return '';
 	};
 
+    const formatTime = (totalSeconds: number) => {
+        if (!totalSeconds) return "00:00.000";
+        const mins = Math.floor(totalSeconds / 60);
+        const secs = Math.floor(totalSeconds % 60);
+        const ms = Math.round((totalSeconds - Math.floor(totalSeconds)) * 1000);
+        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}.${ms.toString().padStart(3, '0')}`;
+    };
+
 	return (
 		<div className='container'>
+            {/* ZONA DE FILTROS / DESPLEGABLES */}
 			<div className='row mb-3'>
-				<div className='col-md-6'>
+                {/* 1. Selector de Asignatura (NUEVO) */}
+                <div className='col-md-4'>
+					<label>Select Subject</label>
+					{subjectsLoading ? (
+						<LoadingMsg message='Loading subjects...' />
+					) : subjectsError ? (
+						<Toast type='error' message={subjectsError} />
+					) : (
+						<Dropdown
+							options={subjects.map(s => s.name)}
+							placeholder='Select Subject'
+							onChange={subjectName => {
+								const selected = subjects.find(s => s.name === subjectName);
+								if (selected) setSelectedSubject(selected.id);
+							}}
+						/>
+					)}
+				</div>
+
+                {/* 2. Selector de Tipo de Ranking */}
+				<div className='col-md-4'>
 					<label>Select ranking</label>
 					<Dropdown
 						options={Object.values(RANKING_TYPES)}
@@ -56,9 +72,10 @@ const RankingTable: React.FC = () => {
 					/>
 				</div>
 
+                {/* 3. Selector de Juego (Solo si es ranking por juego) */}
 				{(rankingType === RANKING_TYPES.PLAYERS_BY_GAME ||
 					rankingType === RANKING_TYPES.GROUPS_BY_GAME) && (
-					<div className='col-md-6'>
+					<div className='col-md-4'>
 						<label>Select game</label>
 						{gamesLoading ? (
 							<LoadingMsg message='Loading games...' />
@@ -78,67 +95,53 @@ const RankingTable: React.FC = () => {
 				)}
 			</div>
 
-			{loading && <LoadingMsg message='Loading Rankings...' />}
+            {/* AVISOS DE CARGA Y ERRORES */}
+			{selectedSubject === 0 && <div className="alert alert-info">Please select a subject to view rankings.</div>}
+            {selectedSubject !== 0 && loading && <LoadingMsg message='Loading Rankings...' />}
 			{error && <Toast type='error' message={error} />}
 
-			<div className='row'>
-				<div className='col'>
-					<div className='table-responsive-wrapper'>
-						<table className='table'>
-							<thead>
-								<tr>
-									<th>Position</th>
-									{rankingType === RANKING_TYPES.GROUPS ||
-									rankingType === RANKING_TYPES.GROUPS_BY_GAME ? (
-										<th>Group</th>
-									) : (
-										<>
-											<th>Name</th>
-											<th>Group</th>
-										</>
-									)}
-									<th>
-										<span>Completed Subjects</span>
-									</th>
-									<th>
-										<span>Points</span>
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								{rankings.slice(0, 10).map((entry, index) => (
-									<tr
-										key={index}
-										className={`table-row ${getPodiumClass(index)}`}
-									>
-										<td>
-											{index === 0
-												? ' 1 🥇'
-												: index === 1
-													? ' 2 🥈'
-													: index === 2
-														? ' 3 🥉'
-														: index + 1}
-										</td>
+            {/* TABLA DE RANKING */}
+            {selectedSubject !== 0 && !loading && (
+                <div className='row'>
+                    <div className='col'>
+                        <div className='table-responsive-wrapper'>
+                            <table className='table'>
+                                <thead>
+                                    <tr>
+                                        <th>Position</th>
+                                        {rankingType === RANKING_TYPES.GROUPS ||
+                                        rankingType === RANKING_TYPES.GROUPS_BY_GAME ? (
+                                            <th>Group Name</th>
+                                        ) : (
+                                            <th>Name</th>
+                                        )}
+                                        <th>Points</th>
+                                        <th>Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {rankings.slice(0, 10).map((entry, index) => (
+                                        <tr key={index} className={`table-row ${getPodiumClass(index)}`}>
+                                            <td>
+                                                {index === 0 ? ' 1 🥇' : index === 1 ? ' 2 🥈' : index === 2 ? ' 3 🥉' : index + 1}
+                                            </td>
 
-										{rankingType === RANKING_TYPES.GROUPS ||
-										rankingType === RANKING_TYPES.GROUPS_BY_GAME ? (
-											<td>{entry.userGroup || 'N/A'}</td>
-										) : (
-											<>
-												<td>{entry.userName || 'N/A'}</td>
-												<td>{entry.userGroup || 'N/A'}</td>
-											</>
-										)}
-										<td>{entry.userCompletedSubjects || 0}</td>
-										<td>{entry.userTotalScore || 0}</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
+                                            {rankingType === RANKING_TYPES.GROUPS ||
+                                            rankingType === RANKING_TYPES.GROUPS_BY_GAME ? (
+                                                <td>{entry.userGroup || 'N/A'}</td>
+                                            ) : (
+                                                <td>{entry.userName || 'N/A'}</td>
+                                            )}
+                                            <td>{entry.userTotalScore || 0}</td>
+                                            <td>{formatTime(entry.userTotalTime)}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            )}
 		</div>
 	);
 };

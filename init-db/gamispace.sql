@@ -79,20 +79,23 @@ CREATE TABLE `game_session` (
     REFERENCES `games` (`IDGame`) ON DELETE CASCADE 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
+
 --
 -- Table structure for table `play`
 --
--- Se crea cuando se termina una partida/intento dentro de esa sesión de juego
 DROP TABLE IF EXISTS `play`;
 CREATE TABLE `play` (
   `IDPlay` int NOT NULL AUTO_INCREMENT,
-  `IDGameSession` int NOT NULL,  -- Referencia a la sesión de juego
+  `IDGameSession` int NOT NULL,  
+  `Level` int NOT NULL DEFAULT 1,
   `Score` int DEFAULT 0,
-  `PlayDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Metadata` json DEFAULT NULL,  -- Para guardar datos extra en el futuro (opcional)
+  `Time` decimal(8,3) DEFAULT 0.000, -- DECIMAL para guardar milisegundos de forma exacta
+  `Completed` tinyint(1) DEFAULT 0, 
   PRIMARY KEY (`IDPlay`),
-  CONSTRAINT `fk_play_gamesession` FOREIGN KEY (`IDGameSession`) REFERENCES `game_session` (`IDGameSession`) ON DELETE CASCADE
+  CONSTRAINT `fk_play_gamesession` FOREIGN KEY (`IDGameSession`) 
+    REFERENCES `game_session` (`IDGameSession`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
 
 --
 -- Table structure for table `games`
@@ -114,7 +117,7 @@ LOCK TABLES `games` WRITE;
 INSERT INTO `games` VALUES 
 (127,'url_img_1','Cafeteria',8000,1,1,1),
 (109,'url_img_1','Caida de Datos',8000,1,1,1),
-(128,'url_img_2','La No Cafeteria',9000,1,1,1);
+(128,'url_img_2','Strings Invaders',9000,1,1,1);
 UNLOCK TABLES;
 
 --
@@ -135,8 +138,8 @@ CREATE TABLE `subjects` (
 
 LOCK TABLES `subjects` WRITE;
 INSERT INTO `subjects` VALUES 
-(48,'Prueba 1','1u9116483zzh7z','0y4x2248tqdp8x',0,1,1),
-(50,'hola','sdasd','asdasd',0,0,1);
+(48,'FPRO','1u9116483zzh7z','0y4x2248tqdp8x',0,1,1),
+(50,'FMAT','sdasd','asdasd',0,0,1);
 UNLOCK TABLES;
 
 
@@ -164,9 +167,11 @@ LOCK TABLES `users` WRITE;
 -- Elimina el quinto valor (el que antes era el grupo o nombre repetido)
 INSERT INTO `users` VALUES 
 (1,'A','admin','admin'),
-(2,'P','player','player'),
-(4,'T','teacher','teacher'),
-(5,'D','dev','dev');
+(2,'P','player_cafeteria','player_cafeteria'),
+(3,'P','player_strings','player_strings'),
+(4,'P','player_detodo','player_detodo'),
+(5,'T','teacher','teacher'),
+(6,'D','dev','dev');
 -- ... haz lo mismo con el resto de la lista (Demo1, Demo2, etc.)
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -186,16 +191,17 @@ CREATE TABLE `subjectGroups` (
     REFERENCES `subjects` (`IDSubject`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
+/*
 LOCK TABLES `subjectGroups` WRITE;
 INSERT INTO `subjectGroups` (`IDGroup`, `Name`, `IDSubject`) VALUES 
 (1, 'Laboratorio A', 48), -- Vinculado a Prueba 1
 (2, 'Laboratorio B', 50); -- Vinculado a hola
-UNLOCK TABLES;
+UNLOCK TABLES;*/
 
 --
 -- Table structure for table `assignments`
 --
-DROP TABLE IF EXISTS `assignments`;
+DROP TABLE IF EXISTS `assignments`; 
 CREATE TABLE `assignments` (
   `IDAssignment` int NOT NULL AUTO_INCREMENT,
   `IDUser` int NOT NULL,
@@ -208,13 +214,14 @@ CREATE TABLE `assignments` (
     REFERENCES `subjectGroups` (`IDGroup`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
+/*
 LOCK TABLES `assignments` WRITE;
 INSERT INTO `assignments` (`IDUser`, `IDGroup`) VALUES 
 (1, 1), -- Admin en Lab A
 (2, 1), -- Player en Lab A
 (2, 2); -- Player también en Lab B (Muchos a Muchos)
 UNLOCK TABLES;
-
+*/
 
 --
 -- Table structure for table `content`
@@ -231,6 +238,65 @@ CREATE TABLE `content` (
 
 -- Lo dejamos vacío para que puedas probar la vinculación desde el Front
 LOCK TABLES `content` WRITE;
+UNLOCK TABLES;
+
+
+
+
+-- ==========================================
+-- DATOS DE PRUEBA PARA DEMOSTRACIÓN (RANKINGS)
+-- ==========================================
+
+-- Limpiamos datos anteriores para evitar conflictos al recrear los contenedores
+DELETE FROM `play`;
+DELETE FROM `game_session`;
+DELETE FROM `session`;
+ALTER TABLE `play` AUTO_INCREMENT = 1;
+ALTER TABLE `game_session` AUTO_INCREMENT = 1;
+ALTER TABLE `session` AUTO_INCREMENT = 1;
+
+-- 1. SESIONES DE LOGIN (session)
+LOCK TABLES `session` WRITE;
+INSERT INTO `session` (`IDSession`, `IDUser`, `LoginTime`) VALUES 
+(1, 2, '2026-05-10 09:00:00'), -- player_cafeteria inicia sesión
+(2, 3, '2026-05-10 10:00:00'), -- player_strings inicia sesión
+(3, 4, '2026-05-10 11:00:00'); -- player_detodo inicia sesión
+UNLOCK TABLES;
+
+-- 2. SESIONES DE JUEGO (game_session)
+LOCK TABLES `game_session` WRITE;
+INSERT INTO `game_session` (`IDGameSession`, `IDSession`, `IDGame`, `GameStartTime`) VALUES 
+(1, 1, 127, '2026-05-10 09:05:00'), -- player_cafeteria juega a 'Cafeteria' (127)
+(2, 2, 128, '2026-05-10 10:05:00'), -- player_strings juega a 'Strings Invaders' (128)
+(3, 3, 127, '2026-05-10 11:05:00'), -- player_detodo juega a 'Cafeteria' (127)
+(4, 3, 128, '2026-05-10 11:45:00'); -- player_detodo juega a 'Strings Invaders' (128) en su misma sesión
+UNLOCK TABLES;
+
+-- 3. PARTIDAS (play)
+LOCK TABLES `play` WRITE;
+INSERT INTO `play` (`IDGameSession`, `Level`, `Score`, `Time`, `Completed`) VALUES 
+-- ==========================================
+-- Partidas de: player_cafeteria (Solo juega Cafeteria)
+-- ==========================================
+(1, 1, 1500, 120.500, 1), -- Nivel 1 completado
+(1, 2, 2100, 180.250, 1), -- Nivel 2 completado
+(1, 3,  600,  45.000, 0), -- Nivel 3 fallado a los 45s
+
+-- ==========================================
+-- Partidas de: player_strings (Solo juega Strings Invaders)
+-- ==========================================
+(2, 1, 2000,  95.000, 1), -- Nivel 1 completado muy rápido
+(2, 2, 3500, 210.100, 1), -- Nivel 2 completado
+
+-- ==========================================
+-- Partidas de: player_detodo (Juega a ambos)
+-- ==========================================
+-- Juega a Cafeteria (IDGameSession 3)
+(3, 1, 2100, 105.000, 1), -- Nivel 1: Saca MÁS puntos que player_cafeteria.
+(3, 2, 2100, 170.000, 1), -- Nivel 2: EMPATA a puntos (2100) con player_cafeteria, pero MEJORA su tiempo (170s vs 180s).
+
+-- Juega a Strings Invaders (IDGameSession 4)
+(4, 1, 1900, 110.000, 1); -- Nivel 1: Saca MENOS puntos que player_strings.
 UNLOCK TABLES;
 
 

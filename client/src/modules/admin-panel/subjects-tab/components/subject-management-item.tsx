@@ -12,6 +12,7 @@ import useUpdateSubject from '../hooks/use-update-subject';
 import '../styles/subject-management-item.css';
 import SubjectEditModal from './subject-edit-modal';
 import SubjectGameLinkItem from './subject-game-link-item';
+import SubjectGroupSection from './subject-group-section';
 
 
 interface SubjectiItemProps {
@@ -50,6 +51,8 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 	const { isOpen, error: openError, toggleOpenState } = useToggleSubjectOpenState(subject);
 	const { isVisible, error: visibleError, toggleVisibleState } = useToggleSubjectVisibleState(subject);
 	const { deleteSubject, loading: deleteLoading, error: deleteError } = useDeleteSubject(onSubjectDeleted);
+
+	const [isGroupsExpanded, setIsGroupsExpanded] = useState(false);
 
 	const handleSaveSubject = (updatedData: SubjectUpdate) => {
 		updateSubject(subject.id, new SubjectUpdate(updatedData.name, updatedData.img, updatedData.imgBackground));
@@ -111,6 +114,7 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 				</div>
 				<div className='subject-item-buttons'>
                     {/* Botón para gestionar vinculación (icono visible/ojo según tu código) */}
+					<Button text="Grupos" onClick={() => setIsGroupsExpanded(!isGroupsExpanded)} />
 					<Button 
 						type='visible' 
 						onClick={toggleAddMode} 
@@ -186,6 +190,15 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
                         )}
                     </div>
                 )}
+			</div>
+			
+			{/* Sección de GRUPOS (NUEVA) */}
+			<div className={`subject-expand-container ${isGroupsExpanded ? 'expanded' : ''}`}>
+				{isGroupsExpanded && (
+					<div className="p-3 border-top bg-light bg-opacity-10">
+						<SubjectGroupSection subjectId={subject.id} />
+					</div>
+				)}
 			</div>
 
 			{isEditing && (

@@ -9,9 +9,10 @@ import {
 
 const router = express.Router();
 
-router.get("/p", getRankingP);
-router.get("/g", getRankingG);
-router.get("/pg/:gameId", getRankingPG);
-router.get("/gg/:gameId", getRankingGG);
+// Añadimos :subjectId a todas las rutas
+router.get("/p/:subjectId", getRankingP);
+router.get("/g/:subjectId", getRankingG);
+router.get("/pg/:subjectId/:gameId", getRankingPG);
+router.get("/gg/:subjectId/:gameId", getRankingGG);
 
 export default router;
