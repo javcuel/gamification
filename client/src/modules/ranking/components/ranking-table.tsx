@@ -47,7 +47,12 @@ const RankingTable: React.FC = () => {
 						<LoadingMsg message='Loading subjects...' />
 					) : subjectsError ? (
 						<Toast type='error' message={subjectsError} />
-					) : (
+					) : subjects.length === 0 ? (
+                        /* NUEVO: Aviso si el usuario no tiene asignaturas asignadas */
+                        <div className="alert alert-warning py-2 mb-0" style={{ fontSize: '0.9rem' }}>
+                            No subjects assigned to you.
+                        </div>
+                    ) : (
 						<Dropdown
 							options={subjects.map(s => s.name)}
 							placeholder='Select Subject'
@@ -82,7 +87,6 @@ const RankingTable: React.FC = () => {
 						) : gamesError ? (
 							<Toast type='error' message={gamesError} />
 						) : selectedSubject !== 0 && games.length === 0 ? (
-                            /* NUEVO: Aviso si la asignatura no tiene juegos vinculados */
                             <div className="alert alert-warning py-2 mb-0" style={{ fontSize: '0.9rem' }}>
                                 No games linked to this subject.
                             </div>
@@ -101,7 +105,16 @@ const RankingTable: React.FC = () => {
 			</div>
 
             {/* AVISOS DE CARGA Y ERRORES GLOBALES */}
-			{selectedSubject === 0 && <div className="alert alert-info">Please select a subject to view rankings.</div>}
+            {/* NUEVO: Solo pedimos que seleccione asignatura si realmente tiene asignaturas en su lista */}
+			{selectedSubject === 0 && subjects.length > 0 && (
+                <div className="alert alert-info">Please select a subject to view rankings.</div>
+            )}
+            
+            {/* NUEVO: Mensaje global si el usuario está completamente sin asignar */}
+            {subjects.length === 0 && !subjectsLoading && !subjectsError && (
+                <div className="alert alert-secondary">You do not have access to any rankings at this time because you are not enrolled in any active subjects.</div>
+            )}
+
             {selectedSubject !== 0 && loading && <LoadingMsg message='Loading Rankings...' />}
 			{error && <Toast type='error' message={error} />}
 
@@ -125,7 +138,6 @@ const RankingTable: React.FC = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {/* NUEVO: Controlamos si hay datos en el ranking o está vacío */}
                                     {rankings.length > 0 ? (
                                         rankings.slice(0, 10).map((entry, index) => (
                                             <tr key={index} className={`table-row ${getPodiumClass(index)}`}>
@@ -144,7 +156,6 @@ const RankingTable: React.FC = () => {
                                             </tr>
                                         ))
                                     ) : (
-                                        /* NUEVO: Fila para cuando no hay rankings */
                                         <tr>
                                             <td colSpan={4} className="text-center text-muted py-4">
                                                 No ranking data available for this selection yet.
