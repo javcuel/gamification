@@ -24,6 +24,22 @@ class SubjectRepository implements ISubjectRepository {
 	}
 
 	/**
+	 * Fetches subjects associated with a specific user.
+	 * @param userId - The ID of the user.
+	 * @returns A promise resolving to an array of Subject domain objects.
+	 */
+	async getByUser(userId: number): Promise<Subject[]> {
+		try {
+			// Usamos la ruta que crearemos en el backend
+			const data = await HttpClient.get(`/subjects/user/${userId}`);
+			return data.map(SubjectMapper.toDomain);
+		} catch (error) {
+			console.error(`Error fetching subjects for user ${userId}`, error);
+			throw new Error('Failed to fetch subjects for user');
+		}
+	}
+
+	/**
 	 * Sends a request to create a new subject.
 	 * @param data - SubjectCreate data to be sent in the request.
 	 */

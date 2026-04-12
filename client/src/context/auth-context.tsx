@@ -2,9 +2,9 @@ import React, { createContext, ReactNode, useContext, useEffect, useState } from
 import { useNavigate } from 'react-router-dom';
 import { UserLogin } from '../modules/shared/api/domain/user';
 import { userRepository } from '../modules/shared/api/repository/user.repository';
-// IMPORTANTE: Importamos el repositorio de sesiones
 import { sessionRepository } from '../modules/shared/api/repository/session.repository'; 
 import { decodeToken, Token } from '../services/token';
+import StorageService from '../services/storage-service'; 
 
 interface IAuthContext {
     isAuthenticated: boolean;
@@ -24,9 +24,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    // Al cargar la app, verificamos si hay token y si hay una sesión activa
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        // 2. Usamos StorageService
+        const token = StorageService.getItem('token');
         if (token) {
             const decoded = decodeToken(token);
             if (decoded) {
@@ -38,53 +38,51 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }, []);
 
     const loginRequest = async (name: string, passwd: string) => {
-    // CORRECCIÓN: Enviamos un objeto para evitar el error de "1 argument expected"
-    const result = await userRepository.login({ name: name, passwd: passwd }); 
+        const result = await userRepository.login({ name: name, passwd: passwd }); 
 
-    if (result.success && result.token) {
-        const decoded = decodeToken(result.token);
-        if (decoded) {
-            localStorage.setItem('token', result.token);
-            setIsAuthenticated(true);
-            setUser(decoded);
+        if (result.success && result.token) {
+            const decoded = decodeToken(result.token);
+            if (decoded) {
+                // 3. Usamos StorageService
+                StorageService.setItem('token', result.token);
+                setIsAuthenticated(true);
+                setUser(decoded);
 
-            try {
-                // CORRECCIÓN: Usamos .id que es como se define en tu clase Token
-                const userId = decoded.id; 
+                try {
+                    const userId = decoded.id; 
 
-                if (userId) {
-                    // Llamamos al repositorio de sesión con el ID
-                    const sessionId = await sessionRepository.create(userId);
-                    localStorage.setItem('sessionId', sessionId.toString());
+                    if (userId) {
+                        const sessionId = await sessionRepository.create(userId);
+                        // 4. Usamos StorageService
+                        StorageService.setItem('sessionId', sessionId.toString());
+                    }
+                    
+                    return { success: true, role: decoded.role };
+                } catch (sessionError) {
+                    console.error("Session creation failed", sessionError);
+                    return { success: true, role: decoded.role };
                 }
-                
-                return { success: true, role: decoded.role };
-            } catch (sessionError) {
-                console.error("Session creation failed", sessionError);
-                return { success: true, role: decoded.role };
             }
         }
-    }
-    setError(result.message || 'Login failed');
-    return { success: false };
-};
+        setError(result.message || 'Login failed');
+        return { success: false };
+    };
 
     const logoutRequest = async () => {
-        // Recuperamos el ID de la sesión antes de limpiar el storage
-        const sessionId = localStorage.getItem('sessionId');
+        // 5. Usamos StorageService
+        const sessionId = StorageService.getItem('sessionId');
         
         if (sessionId) {
             try {
-                // Notificamos al backend para que actualice LogoutTime = NOW()
                 await sessionRepository.close(Number(sessionId));
             } catch (err) {
                 console.error("Error closing database session", err);
             }
         }
 
-        // Limpieza de seguridad
-        localStorage.removeItem('token');
-        localStorage.removeItem('sessionId');
+        // 6. Usamos StorageService para limpiar
+        StorageService.removeItem('token');
+        StorageService.removeItem('sessionId');
         
         userRepository.logout(navigate);
         setIsAuthenticated(false);

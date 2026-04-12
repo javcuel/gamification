@@ -100,3 +100,22 @@ export const deleteSubject = async (req, res) => {
     res.status(500).json({ message: "Error deleting subject" });
   }
 };
+
+export const getSubjectsByUser = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const query = `
+      SELECT DISTINCT s.*
+      FROM subjects s
+      JOIN subjectGroups sg ON s.IDSubject = sg.IDSubject
+      JOIN assignments a ON sg.IDGroup = a.IDGroup
+      WHERE a.IDUser = ? AND s.Visible = 1
+      ORDER BY s.Posicion ASC;
+    `;
+    const [rows] = await db.query(query, [userId]);
+    res.json(rows);
+  } catch (error) {
+    console.error("Error obteniendo asignaturas por usuario:", error.message);
+    res.status(500).json({ error: error.message });
+  }
+};

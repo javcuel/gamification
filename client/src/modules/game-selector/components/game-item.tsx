@@ -6,6 +6,7 @@ import { Game } from '../../shared/api/domain/game';
 import { gameSessionRepository } from '../../shared/api/repository/game-session.repository';
 
 import '../styles/game-item.css';
+import StorageService from '../../../services/storage-service';
 
 /**
  * @property {Game} game - The game to display.
@@ -39,26 +40,22 @@ const GameItem: React.FC<GameProps> = ({ game }) => {
 	const handleClick = async () => {
 		if (game.isOpen) {
 			try {
-				// 1. Recuperamos el ID de la sesión de login que guardamos al entrar
-				const sessionId = localStorage.getItem('sessionId');
+				// Usamos StorageService en lugar de localStorage
+				const sessionId = StorageService.getItem('sessionId');
 				
 				if (sessionId) {
-					// 2. Creamos la sesión de juego en la BD
 					const gameSessionId = await gameSessionRepository.start(
 						Number(sessionId), 
 						game.id
 					);
 					
-					// 3. Guardamos el ID de esta sesión de juego específica.
-					// Usamos sessionStorage porque solo nos interesa mientras estemos dentro del juego.
+					// Este lo dejamos como sessionStorage porque es temporal solo para la pestaña actual
 					sessionStorage.setItem('activeGameSessionId', gameSessionId.toString());
 				}
 			} catch (error) {
-				// Si falla el registro, imprimimos error pero dejamos que el usuario juegue igual
 				console.error("Could not register game session", error);
 			}
 
-			// 4. Navegamos al juego
 			navigate(ROUTES.PLAY(game.id));
 		}
 	};
