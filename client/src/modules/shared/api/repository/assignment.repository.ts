@@ -2,8 +2,8 @@ import HttpClient from '../../../../api/http-client';
 
 export interface GroupUser {
     IDUser: number;
-    Nombre: string;
-    TipoUsuario: string;
+    Name: string;
+    UserType: string;
 }
 
 export const assignmentRepository = {

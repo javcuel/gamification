@@ -28,9 +28,9 @@ export class UserMapper {
 		return new User(
 			dto.IDUser,
 			// dto.Grupo,
-			dto.TipoUsuario,
-			dto.Nombre,
-			dto.Contrasena
+			dto.UserType,
+			dto.Name,
+			dto.Password
 		);
 	}
 
@@ -43,9 +43,9 @@ export class UserMapper {
 		return {
 			IDUser: user.id,
 			// Grupo: user.group,
-			TipoUsuario: user.role,
-			Nombre: user.name,
-			Contrasena: user.passwd
+			UserType: user.role,
+			Name: user.name,
+			Password: user.passwd
 		};
 	}
 
@@ -56,10 +56,10 @@ export class UserMapper {
 	 */
 	static toCreateDTO(user: UserCreate): UserCreateDTO {
 		return {
-			Nombre: user.name,
+			Name: user.name,
 			// Grupo: user.group,
-			TipoUsuario: user.role,
-			Contrasena: user.passwd
+			UserType: user.role,
+			Password: user.passwd
 		};
 	}
 
@@ -70,10 +70,10 @@ export class UserMapper {
 	 */
 	static toUpdateDTO(user: UserUpdate): UserUpdateDTO {
 		return {
-			Nombre: user.name,
+			Name: user.name,
 			// Grupo: user.group,
-			TipoUsuario: user.role,
-			Contrasena: user.passwd
+			UserType: user.role,
+			Password: user.passwd
 		};
 	}
 
@@ -84,8 +84,8 @@ export class UserMapper {
 	 */
 	static toLoginDTO(user: UserLogin): UserLoginDTO {
 		return {
-			Nombre: user.name,
-			Contrasena: user.passwd
+			Name: user.name,
+			Password: user.passwd
 		};
 	}
 

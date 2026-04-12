@@ -13,16 +13,16 @@ export const getSubjects = async (req, res) => {
 
 // Creates a new subject
 export const createSubject = async (req, res) => {
-  const { Nombre, UrlImgMundo, UrlImgDentro } = req.body;
+  const { Name, UrlImgMundo, UrlImgDentro } = req.body;
 
-  if (!Nombre || !UrlImgMundo || !UrlImgDentro) {
+  if (!Name || !UrlImgMundo || !UrlImgDentro) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
   try {
     const [result] = await db.query(
-      "INSERT INTO subjects (Nombre, UrlImgMundo, UrlImgDentro, Posicion, Abierto, Visible) VALUES (?, ?, ?, ?, ?, ?)",
-      [Nombre, UrlImgMundo, UrlImgDentro, 0, 0, 0] // Defaults: position = 0, open = false, visible = false
+      "INSERT INTO subjects (Name, UrlImgMundo, UrlImgDentro, Posicion, Abierto, Visible) VALUES (?, ?, ?, ?, ?, ?)",
+      [Name, UrlImgMundo, UrlImgDentro, 0, 0, 0] // Defaults: position = 0, open = false, visible = false
     );
     res
       .status(201)
@@ -36,16 +36,16 @@ export const createSubject = async (req, res) => {
 // Update subject data
 export const updateSubject = async (req, res) => {
   const { id } = req.params;
-  const { Nombre, UrlImgMundo, UrlImgDentro } = req.body;
+  const { Name, UrlImgMundo, UrlImgDentro } = req.body;
 
-  if (!Nombre || !UrlImgMundo || !UrlImgDentro) {
+  if (!Name || !UrlImgMundo || !UrlImgDentro) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
   try {
     await db.query(
-      "UPDATE subjects SET Nombre = ?, UrlImgMundo = ?, UrlImgDentro = ? WHERE IDSubject = ?",
-      [Nombre, UrlImgMundo, UrlImgDentro, id]
+      "UPDATE subjects SET Name = ?, UrlImgMundo = ?, UrlImgDentro = ? WHERE IDSubject = ?",
+      [Name, UrlImgMundo, UrlImgDentro, id]
     );
     res.json({ message: "Subject updated successfully" });
   } catch (error) {

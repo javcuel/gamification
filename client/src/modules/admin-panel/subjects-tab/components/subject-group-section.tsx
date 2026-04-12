@@ -32,7 +32,7 @@ const SubjectGroupSection: React.FC<SubjectGroupSectionProps> = ({ subjectId }) 
                 <div className="d-flex gap-2">
                     <Input
                         type="text"
-                        placeholder="Nombre del grupo..."
+                        placeholder="Name del grupo..."
                         value={newGroupName}
                         onChange={(e) => setNewGroupName(e.target.value)}
                     />

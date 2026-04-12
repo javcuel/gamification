@@ -41,8 +41,8 @@ const SubjectGroupItem: React.FC<SubjectGroupItemProps> = ({ group, onDelete }) 
         }
     };
 
-    const handleRemoveUser = (userId: number, nombre: string) => {
-        if (window.confirm(`¿Desvincular a ${nombre} del grupo?`)) {
+    const handleRemoveUser = (userId: number, Name: string) => {
+        if (window.confirm(`¿Desvincular a ${Name} del grupo?`)) {
             removeUser(userId);
         }
     };
@@ -89,8 +89,8 @@ const SubjectGroupItem: React.FC<SubjectGroupItemProps> = ({ group, onDelete }) 
                     ) : users.length > 0 ? (
                         users.map(user => (
                             <div key={user.IDUser} className="d-flex justify-content-between align-items-center p-1 border-bottom">
-                                <span className="small">{user.Nombre} <span className="text-muted">(ID: {user.IDUser} - {user.TipoUsuario})</span></span>
-                                <Button type="delete" onClick={() => handleRemoveUser(user.IDUser, user.Nombre)} />
+                                <span className="small">{user.Name} <span className="text-muted">(ID: {user.IDUser} - {user.UserType})</span></span>
+                                <Button type="delete" onClick={() => handleRemoveUser(user.IDUser, user.Name)} />
                             </div>
                         ))
                     ) : (

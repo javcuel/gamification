@@ -53,7 +53,7 @@ export const getAllSessions = async (req, res) => {
   try {
     // Hacemos un JOIN con la tabla 'users' para saber de quién es cada sesión
     const [rows] = await db.query(`
-      SELECT s.*, u.Nombre 
+      SELECT s.*, u.Name 
       FROM session s 
       JOIN users u ON s.IDUser = u.IDUser
       ORDER BY s.LoginTime DESC

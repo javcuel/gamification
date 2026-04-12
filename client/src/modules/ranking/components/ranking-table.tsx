@@ -8,20 +8,17 @@ import useRankingGames from '../hooks/use-ranking-games';
 import '../styles/ranking.css';
 import useRankingSubjects from '../hooks/use-ranking-subjects';
 
-
 const DEFAULT_RANKING = RANKING_TYPES.PLAYERS;
 const DEFAULT_GAME = 0;
-const DEFAULT_SUBJECT = 0; // 0 significa que aún no ha seleccionado asignatura
+const DEFAULT_SUBJECT = 0; 
 
 const RankingTable: React.FC = () => {
 	const [rankingType, setRankingType] = useState<string>(DEFAULT_RANKING);
 	const [selectedGame, setSelectedGame] = useState<number>(DEFAULT_GAME);
     const [selectedSubject, setSelectedSubject] = useState<number>(DEFAULT_SUBJECT);
 
-    // Ahora el hook usa el selectedSubject que el usuario elige en el desplegable
 	const { rankings, error, loading } = useRankings(selectedSubject, rankingType, selectedGame);
-	const { games, error: gamesError, loading: gamesLoading } = useRankingGames();
-
+	const { games, error: gamesError, loading: gamesLoading } = useRankingGames(selectedSubject);
     const { subjects, error: subjectsError, loading: subjectsLoading } = useRankingSubjects();
 
 	const getPodiumClass = (index: number) => {
@@ -42,8 +39,8 @@ const RankingTable: React.FC = () => {
 	return (
 		<div className='container'>
             {/* ZONA DE FILTROS / DESPLEGABLES */}
-			<div className='row mb-3'>
-                {/* 1. Selector de Asignatura (NUEVO) */}
+			<div className='row mb-3 align-items-end'>
+                {/* 1. Selector de Asignatura */}
                 <div className='col-md-4'>
 					<label>Select Subject</label>
 					{subjectsLoading ? (
@@ -56,7 +53,10 @@ const RankingTable: React.FC = () => {
 							placeholder='Select Subject'
 							onChange={subjectName => {
 								const selected = subjects.find(s => s.name === subjectName);
-								if (selected) setSelectedSubject(selected.id);
+								if (selected) {
+									setSelectedSubject(selected.id);
+									setSelectedGame(DEFAULT_GAME); 
+								}
 							}}
 						/>
 					)}
@@ -81,7 +81,12 @@ const RankingTable: React.FC = () => {
 							<LoadingMsg message='Loading games...' />
 						) : gamesError ? (
 							<Toast type='error' message={gamesError} />
-						) : (
+						) : selectedSubject !== 0 && games.length === 0 ? (
+                            /* NUEVO: Aviso si la asignatura no tiene juegos vinculados */
+                            <div className="alert alert-warning py-2 mb-0" style={{ fontSize: '0.9rem' }}>
+                                No games linked to this subject.
+                            </div>
+                        ) : (
 							<Dropdown
 								options={games.map(g => g.name)}
 								placeholder='Select game'
@@ -95,7 +100,7 @@ const RankingTable: React.FC = () => {
 				)}
 			</div>
 
-            {/* AVISOS DE CARGA Y ERRORES */}
+            {/* AVISOS DE CARGA Y ERRORES GLOBALES */}
 			{selectedSubject === 0 && <div className="alert alert-info">Please select a subject to view rankings.</div>}
             {selectedSubject !== 0 && loading && <LoadingMsg message='Loading Rankings...' />}
 			{error && <Toast type='error' message={error} />}
@@ -120,22 +125,32 @@ const RankingTable: React.FC = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {rankings.slice(0, 10).map((entry, index) => (
-                                        <tr key={index} className={`table-row ${getPodiumClass(index)}`}>
-                                            <td>
-                                                {index === 0 ? ' 1 🥇' : index === 1 ? ' 2 🥈' : index === 2 ? ' 3 🥉' : index + 1}
-                                            </td>
+                                    {/* NUEVO: Controlamos si hay datos en el ranking o está vacío */}
+                                    {rankings.length > 0 ? (
+                                        rankings.slice(0, 10).map((entry, index) => (
+                                            <tr key={index} className={`table-row ${getPodiumClass(index)}`}>
+                                                <td>
+                                                    {index === 0 ? ' 1 🥇' : index === 1 ? ' 2 🥈' : index === 2 ? ' 3 🥉' : index + 1}
+                                                </td>
 
-                                            {rankingType === RANKING_TYPES.GROUPS ||
-                                            rankingType === RANKING_TYPES.GROUPS_BY_GAME ? (
-                                                <td>{entry.userGroup || 'N/A'}</td>
-                                            ) : (
-                                                <td>{entry.userName || 'N/A'}</td>
-                                            )}
-                                            <td>{entry.userTotalScore || 0}</td>
-                                            <td>{formatTime(entry.userTotalTime)}</td>
+                                                {rankingType === RANKING_TYPES.GROUPS ||
+                                                rankingType === RANKING_TYPES.GROUPS_BY_GAME ? (
+                                                    <td>{entry.userGroup || 'N/A'}</td>
+                                                ) : (
+                                                    <td>{entry.userName || 'N/A'}</td>
+                                                )}
+                                                <td>{entry.userTotalScore || 0}</td>
+                                                <td>{formatTime(entry.userTotalTime)}</td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        /* NUEVO: Fila para cuando no hay rankings */
+                                        <tr>
+                                            <td colSpan={4} className="text-center text-muted py-4">
+                                                No ranking data available for this selection yet.
+                                            </td>
                                         </tr>
-                                    ))}
+                                    )}
                                 </tbody>
                             </table>
                         </div>

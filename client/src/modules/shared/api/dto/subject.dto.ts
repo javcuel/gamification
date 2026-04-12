@@ -5,7 +5,7 @@
  */
 export interface SubjectDTO {
 	IDSubject: number;
-	Nombre: string;
+	Name: string;
 	UrlImgMundo: string;
 	UrlImgDentro: string;
 	Posicion: number;
@@ -19,7 +19,7 @@ export interface SubjectDTO {
  * @interface
  */
 export interface SubjectCreateDTO {
-	Nombre: string;
+	Name: string;
 	UrlImgMundo: string;
 	UrlImgDentro: string;
 }
@@ -30,7 +30,7 @@ export interface SubjectCreateDTO {
  * @interface
  */
 export interface SubjectUpdateDTO {
-	Nombre: string;
+	Name: string;
 	UrlImgMundo: string;
 	UrlImgDentro: string;
 }

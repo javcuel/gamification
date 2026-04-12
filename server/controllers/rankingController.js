@@ -16,7 +16,7 @@ const baseCTE = `
     JOIN game_session gs ON p.IDGameSession = gs.IDGameSession
     JOIN session s ON gs.IDSession = s.IDSession
     JOIN users u ON s.IDUser = u.IDUser
-    WHERE u.TipoUsuario = 'P'
+    WHERE u.UserType = 'P'
   ),
   BestPlays AS (
     SELECT IDUser, IDGame, Score, Time 
@@ -41,7 +41,7 @@ export const getRankingP = async (req, res) => {
     const query = `
       ${baseCTE}
       SELECT 
-          u.Nombre, 
+          u.Name, 
           SUM(pgt.TotalScore) as TotalScore, 
           SUM(pgt.TotalTime) as TotalTime
       FROM PlayerGameTotals pgt
@@ -50,7 +50,7 @@ export const getRankingP = async (req, res) => {
       JOIN assignments a ON u.IDUser = a.IDUser
       JOIN subjectGroups sg ON a.IDGroup = sg.IDGroup AND sg.IDSubject = c.IDSubject
       WHERE c.IDSubject = ?
-      GROUP BY u.IDUser, u.Nombre
+      GROUP BY u.IDUser, u.Name
       ORDER BY TotalScore DESC, TotalTime ASC;
     `;
     const [rows] = await db.query(query, [subjectId]);
@@ -93,7 +93,7 @@ export const getRankingPG = async (req, res) => {
     const query = `
       ${baseCTE}
       SELECT 
-          u.Nombre, 
+          u.Name, 
           pgt.TotalScore, 
           pgt.TotalTime
       FROM PlayerGameTotals pgt

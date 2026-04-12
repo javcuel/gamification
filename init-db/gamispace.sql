@@ -105,7 +105,7 @@ DROP TABLE IF EXISTS `games`;
 CREATE TABLE `games` (
   `IDGame` int NOT NULL AUTO_INCREMENT,
   `UrlImagen` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `Nombre` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `Name` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `PuntuacionMaxima` int NOT NULL,
   `Abierto` tinyint(1) NOT NULL,
   `Visible` tinyint(1) NOT NULL,
@@ -127,7 +127,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `subjects`;
 CREATE TABLE `subjects` (
   `IDSubject` int NOT NULL AUTO_INCREMENT,
-  `Nombre` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `Name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `UrlImgMundo` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `UrlImgDentro` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `Posicion` int NOT NULL,
@@ -147,13 +147,13 @@ UNLOCK TABLES;
 --
 -- Table structure for table `users`
 --
-
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `IDUser` int NOT NULL AUTO_INCREMENT,
-  `TipoUsuario` enum('A','D','T','P') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `Nombre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `Contrasena` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `UserType` enum('A','D','T','P') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `RealName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL, --  OPTIONAL
+  `Password` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   PRIMARY KEY (`IDUser`)
 ) ENGINE=InnoDB AUTO_INCREMENT=721 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -164,15 +164,13 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
--- Elimina el quinto valor (el que antes era el grupo o nombre repetido)
-INSERT INTO `users` VALUES 
+INSERT INTO `users` (`IDUser`, `UserType`, `Name`, `Password`) VALUES 
 (1,'A','admin','admin'),
 (2,'P','player_cafeteria','player_cafeteria'),
 (3,'P','player_strings','player_strings'),
 (4,'P','player_detodo','player_detodo'),
 (5,'T','teacher','teacher'),
 (6,'D','dev','dev');
--- ... haz lo mismo con el resto de la lista (Demo1, Demo2, etc.)
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 

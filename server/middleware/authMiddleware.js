@@ -15,8 +15,8 @@ const authenticateToken = (req, res, next) => {
 
    * req.user tiene los datos almacenados del token, tendrá una forma aprecida a esto:
    * req.user.userId: El ID del usuario (es decir, IDUser).
-   * req.user.userName: El nombre del usuario (es decir, Nombre).
-   * req.user.userType: El tipo de usuario (es decir, TipoUsuario).
+   * req.user.userName: El Name del usuario (es decir, Name).
+   * req.user.userType: El tipo de usuario (es decir, UserType).
    * req.user.iat: El timestamp de cuándo se emitió el token.
    * req.user.exp: El timestamp de cuándo expira el token.
    */

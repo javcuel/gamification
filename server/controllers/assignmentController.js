@@ -42,7 +42,7 @@ export const getUsersByGroup = async (req, res) => {
     const { idGroup } = req.params;
     try {
         const [users] = await db.query(
-            `SELECT u.IDUser, u.Nombre, u.TipoUsuario 
+            `SELECT u.IDUser, u.Name, u.UserType 
              FROM users u 
              JOIN assignments a ON u.IDUser = a.IDUser 
              WHERE a.IDGroup = ?`,

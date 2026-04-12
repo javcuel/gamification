@@ -24,7 +24,7 @@ export class GameMapper {
 			dto.IDGame,
 			dto.IDSubject,
 			dto.UrlImagen,
-			dto.Nombre,
+			dto.Name,
 			dto.PuntuacionMaxima,
 			dto.Abierto,
 			dto.Visible,
@@ -45,7 +45,7 @@ export class GameMapper {
 			IDGame: game.id,
 			IDSubject: game.idSubject,
 			UrlImagen: game.img,
-			Nombre: game.name,
+			Name: game.name,
 			PuntuacionMaxima: game.maxScore,
 			Abierto: game.isOpen,
 			Visible: game.isVisible,
@@ -64,7 +64,7 @@ export class GameMapper {
 	static toCreateDTO(gameCreate: GameCreate): GameCreateDTO {
 		return {
 			IDSubject: gameCreate.idSubject,
-			Nombre: gameCreate.name,
+			Name: gameCreate.name,
 			UrlImagen: gameCreate.img,
 			PuntuacionMaxima: gameCreate.maxScore
 		};
@@ -78,7 +78,7 @@ export class GameMapper {
 	static toUpdateDTO(gameUpdate: GameUpdate): GameUpdateDTO {
 		return {
 			IDSubject: gameUpdate.idSubject,
-			Nombre: gameUpdate.name,
+			Name: gameUpdate.name,
 			UrlImagen: gameUpdate.img,
 			PuntuacionMaxima: gameUpdate.maxScore
 		};

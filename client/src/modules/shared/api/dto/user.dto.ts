@@ -6,9 +6,9 @@
 export interface UserDTO {
 	IDUser: number;
 	// Grupo: string;
-	TipoUsuario: string;
-	Nombre: string;
-	Contrasena: string;
+	UserType: string;
+	Name: string;
+	Password: string;
 }
 
 /**
@@ -17,10 +17,10 @@ export interface UserDTO {
  * @interface
  */
 export interface UserCreateDTO {
-	Nombre: string;
+	Name: string;
 	// Grupo: string;
-	TipoUsuario: string;
-	Contrasena: string;
+	UserType: string;
+	Password: string;
 }
 
 /**
@@ -30,9 +30,9 @@ export interface UserCreateDTO {
  */
 export interface UserUpdateDTO {
 	// Grupo: string;
-	TipoUsuario: string;
-	Nombre: string;
-	Contrasena: string;
+	UserType: string;
+	Name: string;
+	Password: string;
 }
 
 /**
@@ -41,8 +41,8 @@ export interface UserUpdateDTO {
  * @interface
  */
 export interface UserLoginDTO {
-	Nombre: string;
-	Contrasena: string;
+	Name: string;
+	Password: string;
 }
 
 /**
@@ -61,6 +61,6 @@ export interface UserScoreDTO {
  * @interface
  */
 export interface UserLoginDTO {
-	Nombre: string;
-	Contrasena: string;
+	Name: string;
+	Password: string;
 }

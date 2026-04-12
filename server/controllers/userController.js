@@ -3,16 +3,16 @@ import db from "../config/db.js";
 
 // Login user
 export const loginUser = async (req, res) => {
-  const { Nombre, Contrasena } = req.body;
+  const { Name, Password } = req.body;
 
-  if (!Nombre || !Contrasena) {
+  if (!Name || !Password) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
   try {
     const [rows] = await db.query(
-      "SELECT * FROM users WHERE Nombre = ? AND Contrasena = ?",
-      [Nombre, Contrasena]
+      "SELECT * FROM users WHERE Name = ? AND Password = ?",
+      [Name, Password]
     );
 
     if (rows.length === 0) {
@@ -20,12 +20,12 @@ export const loginUser = async (req, res) => {
     }
 
     //TODO: Como el rol P no existe en la BD, lo cambio manualmente aqui, aunque deberia ser:
-    //      roel: rows[0].TipoUsuario
+    //      roel: rows[0].UserType
     const token = jwt.sign(
       {
         IDUser: rows[0].IDUser,
-        Nombre: rows[0].Nombre,
-        TipoUsuario: rows[0].TipoUsuario,
+        Name: rows[0].Name,
+        UserType: rows[0].UserType,
       },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
@@ -41,7 +41,7 @@ export const loginUser = async (req, res) => {
 export const getUsers = async (req, res) => {
   try {
     const [rows] = await db.query(
-      "SELECT IDUser, Nombre, TipoUsuario FROM users"
+      "SELECT IDUser, Name, UserType FROM users"
     );
     res.json(rows);
   } catch (error) {
@@ -68,16 +68,16 @@ export const getScore = async (req, res) => {
 
 // Creates a new user
 export const createUser = async (req, res) => {
-  const { Nombre, Contrasena, TipoUsuario, Grupo } = req.body;
+  const { Name, Password, UserType, Grupo } = req.body;
 
-  if (!Nombre || !Contrasena || !TipoUsuario || !Grupo) {
+  if (!Name || !Password || !UserType || !Grupo) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
   try {
     await db.query(
-      "INSERT INTO users (Nombre, Contrasena, TipoUsuario, Grupo) VALUES (?, ?, ?, ?)",
-      [Nombre, Contrasena, TipoUsuario, Grupo]
+      "INSERT INTO users (Name, Password, UserType, Grupo) VALUES (?, ?, ?, ?)",
+      [Name, Password, UserType, Grupo]
     );
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {
@@ -89,16 +89,16 @@ export const createUser = async (req, res) => {
 // Update subject data
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { Nombre, Contrasena, TipoUsuario, Grupo } = req.body;
+  const { Name, Password, UserType, Grupo } = req.body;
 
-  if (!Nombre || !Contrasena || !TipoUsuario || !Grupo) {
+  if (!Name || !Password || !UserType || !Grupo) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
   try {
     await db.query(
-      "UPDATE subjects SET Nombre = ?, Contrasena = ?, TipoUsuario = ? Grupo = ? WHERE IDUser = ",
-      [Nombre, Contrasena, TipoUsuario, Grupo, id]
+      "UPDATE subjects SET Name = ?, Password = ?, UserType = ? Grupo = ? WHERE IDUser = ",
+      [Name, Password, UserType, Grupo, id]
     );
     res.json({ message: "USer updated successfully" });
   } catch (error) {

@@ -4,7 +4,7 @@ import db from "../config/db.js";
 export const getGames = async (req, res) => {
   try {
     const [rows] = await db.query(
-      "SELECT * FROM games ORDER BY Nombre ASC"
+      "SELECT * FROM games ORDER BY Name ASC"
     );
     res.json(rows);
   } catch (error) {
@@ -22,7 +22,7 @@ export const getGamesBySubject = async (req, res) => {
       `SELECT m.* FROM games m
        JOIN content c ON m.IDGame = c.IDGame
        WHERE c.IDSubject = ? 
-       ORDER BY m.Nombre ASC`,
+       ORDER BY m.Name ASC`,
       [subjectId]
     );
     
@@ -35,20 +35,20 @@ export const getGamesBySubject = async (req, res) => {
 
 // Creates a new game
 export const createGame = async (req, res) => {
-  const { Nombre, UrlImagen, PuntuacionMaxima } = req.body;
-  // const { IDSubject, Nombre, UrlImagen, PuntuacionMaxima } = req.body; out
+  const { Name, UrlImagen, PuntuacionMaxima } = req.body;
+  // const { IDSubject, Name, UrlImagen, PuntuacionMaxima } = req.body; out
 
-  //if ((!IDSubject, !Nombre || !UrlImagen || !PuntuacionMaxima)) { out
-  if ((!Nombre || !UrlImagen || !PuntuacionMaxima)) {
+  //if ((!IDSubject, !Name || !UrlImagen || !PuntuacionMaxima)) { out
+  if ((!Name || !UrlImagen || !PuntuacionMaxima)) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
   try {
     const [result] = await db.query(
-      // "INSERT INTO games (IDSubject, Nombre, UrlImagen, PuntuacionMaxima, Abierto, Visible) VALUES (?, ?, ?, ?, ?, ?)", out
-      "INSERT INTO games (Nombre, UrlImagen, PuntuacionMaxima, Abierto, Visible, Disponible) VALUES ( ?, ?, ?, ?, ?, ?)",
-      [Nombre, UrlImagen, PuntuacionMaxima, 0, 0, 0] // Defaults: position = 0, open = false, visible = false
-      // [IDSubject, Nombre, UrlImagen, PuntuacionMaxima, 0, 0, 0] // Defaults: position = 0, open = false, visible = false out
+      // "INSERT INTO games (IDSubject, Name, UrlImagen, PuntuacionMaxima, Abierto, Visible) VALUES (?, ?, ?, ?, ?, ?)", out
+      "INSERT INTO games (Name, UrlImagen, PuntuacionMaxima, Abierto, Visible, Disponible) VALUES ( ?, ?, ?, ?, ?, ?)",
+      [Name, UrlImagen, PuntuacionMaxima, 0, 0, 0] // Defaults: position = 0, open = false, visible = false
+      // [IDSubject, Name, UrlImagen, PuntuacionMaxima, 0, 0, 0] // Defaults: position = 0, open = false, visible = false out
     );
     res
       .status(201)
@@ -62,15 +62,15 @@ export const createGame = async (req, res) => {
 // Update game data
 export const updateGame = async (req, res) => {
   const { id } = req.params;
-  // const { IDSubject, Nombre, UrlImagen, PuntuacionMaxima } = req.body; out
-  const { Nombre, UrlImagen, PuntuacionMaxima } = req.body; 
+  // const { IDSubject, Name, UrlImagen, PuntuacionMaxima } = req.body; out
+  const { Name, UrlImagen, PuntuacionMaxima } = req.body; 
   try {
     await db.query(
-      /*"UPDATE games SET Nombre = ?, PuntuacionMaxima = ?, IDSubject = ?, UrlImagen = ? WHERE IDGame = ?",
-      [Nombre, PuntuacionMaxima, IDSubject, UrlImagen, id]
+      /*"UPDATE games SET Name = ?, PuntuacionMaxima = ?, IDSubject = ?, UrlImagen = ? WHERE IDGame = ?",
+      [Name, PuntuacionMaxima, IDSubject, UrlImagen, id]
     ); out */
-    "UPDATE games SET Nombre = ?, PuntuacionMaxima = ?, UrlImagen = ? WHERE IDGame = ?",
-      [Nombre, PuntuacionMaxima, UrlImagen, id]
+    "UPDATE games SET Name = ?, PuntuacionMaxima = ?, UrlImagen = ? WHERE IDGame = ?",
+      [Name, PuntuacionMaxima, UrlImagen, id]
     );
     res.json({ message: "Game updated successfully" });
   } catch (error) {
@@ -135,7 +135,7 @@ export const getAvailableGamesForSubject = async (req, res) => {
       `SELECT * FROM games 
        WHERE IDGame NOT IN (
          SELECT IDGame FROM content WHERE IDSubject = ?
-       ) ORDER BY Nombre ASC`,
+       ) ORDER BY Name ASC`,
       [subjectId]
     );
     res.json(rows);

@@ -4,7 +4,7 @@ import Button from '../../../shared/components/ui/Button';
 
 interface SubjectGameLinkItemProps {
     game: Game;
-    // Nombre genérico para la acción
+    // Name genérico para la acción
     onActionClick: () => void; 
     disabled?: boolean;
     // Nuevas props para controlar la estética y el propósito

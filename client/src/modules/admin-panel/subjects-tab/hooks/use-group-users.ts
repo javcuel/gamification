@@ -28,7 +28,7 @@ const useGroupUsers = (groupId: number, isExpanded: boolean) => {
         setError(null);
         try {
             await assignmentRepository.assignUser(userId, groupId);
-            // Recargamos la lista para obtener el nombre real del backend
+            // Recargamos la lista para obtener el Name real del backend
             const data = await assignmentRepository.getUsersByGroup(groupId);
             setUsers(data);
         } catch (err: any) {

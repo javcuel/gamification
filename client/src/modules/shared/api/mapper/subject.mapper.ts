@@ -21,7 +21,7 @@ export class SubjectMapper {
 	static toDomain(dto: SubjectDTO): Subject {
 		return new Subject(
 			dto.IDSubject,
-			dto.Nombre,
+			dto.Name,
 			dto.UrlImgMundo,
 			dto.UrlImgDentro,
 			dto.Posicion,
@@ -38,7 +38,7 @@ export class SubjectMapper {
 	static toDTO(subject: Subject): SubjectDTO {
 		return {
 			IDSubject: subject.id,
-			Nombre: subject.name,
+			Name: subject.name,
 			UrlImgMundo: subject.img,
 			UrlImgDentro: subject.imgBackground,
 			Posicion: subject.position,
@@ -54,7 +54,7 @@ export class SubjectMapper {
 	 */
 	static toCreateDTO(subjectCreate: SubjectCreate): SubjectCreateDTO {
 		return {
-			Nombre: subjectCreate.name,
+			Name: subjectCreate.name,
 			UrlImgMundo: subjectCreate.img,
 			UrlImgDentro: subjectCreate.imgBackground
 		};
@@ -67,7 +67,7 @@ export class SubjectMapper {
 	 */
 	static toUpdateDTO(subjectUpdate: SubjectUpdate): SubjectUpdateDTO {
 		return {
-			Nombre: subjectUpdate.name,
+			Name: subjectUpdate.name,
 			UrlImgMundo: subjectUpdate.img,
 			UrlImgDentro: subjectUpdate.imgBackground
 		};
