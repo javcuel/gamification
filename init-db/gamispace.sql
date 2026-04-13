@@ -62,21 +62,23 @@ CREATE TABLE `session` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
--- Table structure for table `gameSession`
+-- Table structure for table `game_session`
 --
--- Se crea cuando el usuario hace clic en un juego
 DROP TABLE IF EXISTS `game_session`;
 CREATE TABLE `game_session` (
   `IDGameSession` int NOT NULL AUTO_INCREMENT,
   `IDSession` int NOT NULL,
-  `IDGame` int NOT NULL, -- Este es el ID 127 que vemos en el log
+  `IDGame` int NOT NULL,
+  `IDSubject` int NOT NULL, 
   `GameStartTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `GameEndTime` datetime DEFAULT NULL,
   PRIMARY KEY (`IDGameSession`),
   CONSTRAINT `fk_gamesession_session` FOREIGN KEY (`IDSession`) 
     REFERENCES `session` (`IDSession`) ON DELETE CASCADE,
   CONSTRAINT `fk_gamesession_game` FOREIGN KEY (`IDGame`) 
-    REFERENCES `games` (`IDGame`) ON DELETE CASCADE 
+    REFERENCES `games` (`IDGame`) ON DELETE CASCADE,
+  CONSTRAINT `fk_gamesession_subject` FOREIGN KEY (`IDSubject`) 
+    REFERENCES `subjects` (`IDSubject`) ON DELETE CASCADE -- NUEVA RESTRICCIÓN
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 
@@ -263,11 +265,11 @@ UNLOCK TABLES;
 
 -- 2. SESIONES DE JUEGO (game_session)
 LOCK TABLES `game_session` WRITE;
-INSERT INTO `game_session` (`IDGameSession`, `IDSession`, `IDGame`, `GameStartTime`) VALUES 
-(1, 1, 127, '2026-05-10 09:05:00'), -- player_cafeteria juega a 'Cafeteria' (127)
-(2, 2, 128, '2026-05-10 10:05:00'), -- player_strings juega a 'Strings Invaders' (128)
-(3, 3, 127, '2026-05-10 11:05:00'), -- player_detodo juega a 'Cafeteria' (127)
-(4, 3, 128, '2026-05-10 11:45:00'); -- player_detodo juega a 'Strings Invaders' (128) en su misma sesión
+INSERT INTO `game_session` (`IDGameSession`, `IDSession`, `IDGame`, `IDSubject`,`GameStartTime`) VALUES 
+(1, 1, 127, 48,'2026-05-10 09:05:00'), -- player_cafeteria juega a 'Cafeteria' (127)
+(2, 2, 128, 48,'2026-05-10 10:05:00'), -- player_strings juega a 'Strings Invaders' (128)
+(3, 3, 127, 48,'2026-05-10 11:05:00'), -- player_detodo juega a 'Cafeteria' (127)
+(4, 3, 128, 48,'2026-05-10 11:45:00'); -- player_detodo juega a 'Strings Invaders' (128) en su misma sesión
 UNLOCK TABLES;
 
 -- 3. PARTIDAS (play)

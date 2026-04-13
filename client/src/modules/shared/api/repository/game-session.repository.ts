@@ -7,12 +7,14 @@ class GameSessionRepository {
      * Registra el inicio de un juego.
      * @param idSession - ID de la sesión de login activa.
      * @param idGame - ID del juego que se va a jugar.
+     * @param idSubject - ID de la asignatura desde donde se accede.
      */
-    async start(idSession: number, idGame: number): Promise<number> {
+    async start(idSession: number, idGame: number, idSubject: number): Promise<number> {
         try {
             const response: GameSessionCreateResponseDTO = await HttpClient.post(
                 '/game-sessions', 
-                { IDSession: idSession, IDGame: idGame }
+                // Añadimos IDSubject al payload
+                { IDSession: idSession, IDGame: idGame, IDSubject: idSubject }
             );
             return response.IDGameSession;
         } catch (error) {

@@ -39,7 +39,8 @@ type Story = StoryObj<typeof GameItem>;
 
 export const OpenAndVisible: Story = {
 	args: {
-		game: mockGame
+		game: mockGame,
+		subjectId: 1
 	}
 };
 
@@ -48,7 +49,8 @@ export const ClosedGame: Story = {
 		game: {
 			...mockGame,
 			isOpen: false
-		}
+		},
+		subjectId: 1
 	}
 };
 
@@ -57,6 +59,7 @@ export const InvisibleGame: Story = {
 		game: {
 			...mockGame,
 			isVisible: false
-		}
+		},
+		subjectId: 1
 	}
 };

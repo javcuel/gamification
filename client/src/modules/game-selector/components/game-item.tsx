@@ -10,46 +10,34 @@ import StorageService from '../../../services/storage-service';
 
 /**
  * @property {Game} game - The game to display.
+ * @property {number} subjectId - The ID of the subject from which the game is accessed.
  */
 interface GameProps {
 	game: Game;
+    subjectId: number; // NUEVO PROP
 }
 
 /**
  * GameItem component
- *
- * Renders a single game card with an image and name.
- * - If the game is marked as visible, it is displayed; otherwise, it is not rendered.
- * - If the game is open, clicking the card navigates to the `PLAY` route for that game.
- * - Displays a fallback image if the game image fails to load.
- * - Shows a locked message if the game is closed.
- *
- * @param game - The game object to display
- * @returns A styled React element representing a game item, or null if not visible
  */
-const GameItem: React.FC<GameProps> = ({ game }) => {
+// Recibimos subjectId como parámetro
+const GameItem: React.FC<GameProps> = ({ game, subjectId }) => {
 	if (!game.isVisible) return null;
 
 	const navigate = useNavigate();
 
-	/**
-	 * handleClick
-	 *
-	 * Navigates to the game play route if the game is open.
-	 */
 	const handleClick = async () => {
 		if (game.isOpen) {
 			try {
-				// Usamos StorageService en lugar de localStorage
 				const sessionId = StorageService.getItem('sessionId');
 				
 				if (sessionId) {
 					const gameSessionId = await gameSessionRepository.start(
 						Number(sessionId), 
-						game.id
+						game.id,
+                        subjectId // PASAMOS EL DATO AL REPOSITORIO
 					);
 					
-					// Este lo dejamos como sessionStorage porque es temporal solo para la pestaña actual
 					sessionStorage.setItem('activeGameSessionId', gameSessionId.toString());
 				}
 			} catch (error) {
@@ -60,7 +48,6 @@ const GameItem: React.FC<GameProps> = ({ game }) => {
 		}
 	};
 
-	// Apply different class styles depending on whether the game is open
 	const gameClassName = game.isOpen ? 'game-item' : 'game-item-disabled';
 
 	return (
@@ -69,7 +56,6 @@ const GameItem: React.FC<GameProps> = ({ game }) => {
 				className='game-item-img'
 				src={game.img}
 				onError={e => {
-					// Fallback image if the original source fails to load
 					e.currentTarget.src = '/images/default_game_image.png';
 				}}
 				alt={game.name}
