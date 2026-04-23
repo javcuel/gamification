@@ -1,34 +1,35 @@
 import { API_URLS } from '../constants/apiUrls';
 
-/**
- * Interface representing the options of a HttpRequest.
- *
- * @interface
- */
 interface HttpClientOptions {
 	method: string;
 	headers?: Record<string, string>;
 	body?: unknown;
 }
 
-/**
- * Performs an HTTP request.
- *
- * @param {string} url - The endpoint URL (relative to the base API URL).
- * @param {HttpClientOptions} options - The request options (method, headers, body).
- * @returns {Promise<any>} A promise that resolves with the response data.
- * @throws {Error} Throws an error if the request fails.
- */
 const HttpClient = {
 	request: async (url: string, options: HttpClientOptions) => {
 		try {
+            // 1. Detectamos si el body es un archivo/FormData
+            const isFormData = options.body instanceof FormData;
+
+            // 2. Preparamos las cabeceras base
+            const headers: Record<string, string> = { ...options.headers };
+
+            // 3. SOLO inyectamos 'application/json' si NO es un FormData
+            // y si no se ha especificado otra cabecera manualmente.
+            if (!isFormData && !headers['Content-Type']) {
+                headers['Content-Type'] = 'application/json';
+            }
+
+            // 4. Preparamos el body: si es FormData va tal cual, si no, lo hacemos String
+            const finalBody = isFormData 
+                ? (options.body as FormData) 
+                : (options.body ? JSON.stringify(options.body) : undefined);
+
 			const response = await fetch(`${API_URLS.BASE_URL}${url}`, {
 				method: options.method,
-				headers: {
-					'Content-Type': 'application/json',
-					...options.headers
-				},
-				body: options.body ? JSON.stringify(options.body) : undefined
+				headers: headers,
+				body: finalBody
 			});
 
 			if (!response.ok) {
@@ -36,52 +37,22 @@ const HttpClient = {
 				throw new Error(errorData.message || 'HTTP Request Failed');
 			}
 
-			return response.json(); // Here: Debug 
+			return response.json(); 
 		} catch (error) {
 			console.error('HTTP Request Error:', error);
 			throw error;
 		}
 	},
 
-	/**
-	 * Sends a GET request.
-	 *
-	 * @param {string} url - The endpoint URL.
-	 * @param {Record<string, string>} [headers={}] - Optional request headers.
-	 * @returns {Promise<any>} A promise that resolves with the response data.
-	 */
 	get: (url: string, headers: Record<string, string> = {}) =>
 		HttpClient.request(url, { method: 'GET', headers }),
 
-	/**
-	 * Sends a POST request.
-	 *
-	 * @param {string} url - The endpoint URL.
-	 * @param {unknown} body - The request payload.
-	 * @param {Record<string, string>} [headers={}] - Optional request headers.
-	 * @returns {Promise<any>} A promise that resolves with the response data.
-	 */
 	post: (url: string, body: unknown, headers: Record<string, string> = {}) =>
-		HttpClient.request(url, { method: 'POST', headers, body }), // Here: Debug
+		HttpClient.request(url, { method: 'POST', headers, body }), 
 
-	/**
-	 * Sends a DELETE request.
-	 *
-	 * @param {string} url - The endpoint URL.
-	 * @param {Record<string, string>} [headers={}] - Optional request headers.
-	 * @returns {Promise<any>} A promise that resolves when the deletion is successful.
-	 */
 	delete: (url: string, headers: Record<string, string> = {}) =>
 		HttpClient.request(url, { method: 'DELETE', headers }),
 
-	/**
-	 * Sends a PUT request.
-	 *
-	 * @param {string} url - The endpoint URL.
-	 * @param {unknown} body - The request payload.
-	 * @param {Record<string, string>} [headers={}] - Optional request headers.
-	 * @returns {Promise<any>} A promise that resolves with the updated response data.
-	 */
 	put: (url: string, body: unknown, headers: Record<string, string> = {}) =>
 		HttpClient.request(url, { method: 'PUT', headers, body })
 };

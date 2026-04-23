@@ -107,12 +107,13 @@ DROP TABLE IF EXISTS `games`;
 CREATE TABLE `games` (
   `IDGame` int NOT NULL AUTO_INCREMENT,
   `UrlImagen` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `Name` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `Name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL, -- Reducido a 100 para indexación
   `PuntuacionMaxima` int NOT NULL,
   `Abierto` tinyint(1) NOT NULL,
   `Visible` tinyint(1) NOT NULL,
   `Disponible` tinyint(1) NOT NULL,
-  PRIMARY KEY (`IDGame`)
+  PRIMARY KEY (`IDGame`),
+  UNIQUE KEY `idx_game_name` (`Name`) -- Restricción para búsqueda exacta
 ) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 LOCK TABLES `games` WRITE;
@@ -132,10 +133,11 @@ CREATE TABLE `subjects` (
   `Name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `UrlImgMundo` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `UrlImgDentro` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `Posicion` int NOT NULL,
-  `Abierto` tinyint(1) NOT NULL,
-  `Visible` tinyint(1) NOT NULL,
-  PRIMARY KEY (`IDSubject`)
+  `Posicion` int NOT NULL DEFAULT 0,
+  `Abierto` tinyint(1) NOT NULL DEFAULT 0,
+  `Visible` tinyint(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`IDSubject`),
+  UNIQUE KEY `idx_subject_name` (`Name`) -- Restricción para vinculación por nombre
 ) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 LOCK TABLES `subjects` WRITE;
@@ -154,9 +156,10 @@ CREATE TABLE `users` (
   `IDUser` int NOT NULL AUTO_INCREMENT,
   `UserType` enum('A','D','T','P') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `RealName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL, --  OPTIONAL
+  `RealName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `Password` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  PRIMARY KEY (`IDUser`)
+  PRIMARY KEY (`IDUser`),
+  UNIQUE KEY `idx_user_name` (`Name`) 
 ) ENGINE=InnoDB AUTO_INCREMENT=721 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -187,6 +190,7 @@ CREATE TABLE `subjectGroups` (
   `Name` varchar(100) NOT NULL, 
   `IDSubject` int NOT NULL,
   PRIMARY KEY (`IDGroup`),
+  UNIQUE KEY `idx_group_subject` (`Name`, `IDSubject`), -- Evita grupos duplicados en una asignatura
   CONSTRAINT `fk_group_subject` FOREIGN KEY (`IDSubject`) 
     REFERENCES `subjects` (`IDSubject`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
@@ -232,6 +236,7 @@ CREATE TABLE `content` (
   `IDSubject` int NOT NULL,
   `IDGame` int NOT NULL,
   PRIMARY KEY (`IDContent`),
+  UNIQUE KEY `idx_subject_game` (`IDSubject`, `IDGame`), -- RESTRICCIÓN PARA EVITAR DUPLICADOS
   CONSTRAINT `fk_content_mundo` FOREIGN KEY (`IDSubject`) REFERENCES `subjects` (`IDSubject`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_content_minijuego` FOREIGN KEY (`IDGame`) REFERENCES `games` (`IDGame`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
