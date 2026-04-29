@@ -4,6 +4,9 @@ dotenv.config();
 import cors from "cors";
 import express from "express";
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 import gameRoutes from "./routes/gameRoutes.js";
 import rankingRoutes from "./routes/rankingRoutes.js";
 import subjectRoutes from "./routes/subjectRoutes.js";
@@ -15,6 +18,8 @@ import gameSessionRoutes from "./routes/gameSessionRoutes.js";
 import groupRoutes from "./routes/groupRoutes.js";
 import assignmentRoutes from "./routes/assignmentRoutes.js";
 import bulkRoutes from "./routes/bulkRoutes.js";
+import playRoutes from "./routes/playRoutes.js";
+
 
 
 //Instancia de una aplicación express
@@ -27,8 +32,35 @@ const corsOptions = {
   credentials: true,
 };
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.use(cors(corsOptions)); // User CORS options
 app.use(express.json()); // Parse to JSON in the requests
+
+
+app.use('/games', express.static(path.join(__dirname, 'public/games'), {
+  setHeaders: (res, filePath) => {
+    // 1. Configuramos el tipo de compresión
+    if (filePath.endsWith('.br')) {
+      res.setHeader('Content-Encoding', 'br');
+    } else if (filePath.endsWith('.gz')) {
+      res.setHeader('Content-Encoding', 'gzip');
+    }
+
+    // 2. Configuramos el tipo de contenido exacto (evita que Express lo cambie)
+    if (filePath.includes('.wasm')) {
+      res.setHeader('Content-Type', 'application/wasm');
+    } else if (filePath.includes('.js')) {
+      res.setHeader('Content-Type', 'application/javascript');
+    } else if (filePath.includes('.data')) {
+      res.setHeader('Content-Type', 'application/octet-stream');
+    }
+  }
+}));
+
+// Servimos también el script de integración desde el backend
+app.use('/ApiComunicacionPlataforma', express.static(path.join(__dirname, 'public/ApiComunicacionPlataforma')));
 
 // Routes
 
@@ -48,6 +80,8 @@ app.use("/api/game-sessions", gameSessionRoutes);
 app.use("/api/groups", groupRoutes);
 app.use("/api/assignments", assignmentRoutes);
 app.use("/api/bulk", bulkRoutes);
+app.use("/api/plays", playRoutes);
+
 
 // Start the server
 app.listen(PORT, () => {

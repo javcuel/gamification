@@ -18,7 +18,7 @@ export interface IGameRepository {
 	 * @param data - The data required to create a new game.
 	 * @returns A promise that resolves when the operation is complete.
 	 */
-	create(data: GameCreate): Promise<void>;
+	create(data: FormData): Promise<void>;
 
 	/**
 	 * Updates an existing game with new data.

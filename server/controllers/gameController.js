@@ -1,5 +1,13 @@
 import db from "../config/db.js";
 
+import AdmZip from "adm-zip";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // Get all games
 export const getGames = async (req, res) => {
   try {
@@ -10,6 +18,21 @@ export const getGames = async (req, res) => {
   } catch (error) {
     console.error("Error fetching games:", error);
     res.status(500).json({ message: "Error fetching games" });
+  }
+};
+
+// Obtener un juego por su ID
+export const getGameById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [rows] = await db.query("SELECT * FROM games WHERE IDGame = ?", [id]);
+    if (rows.length === 0) {
+      return res.status(404).json({ message: "Game not found" });
+    }
+    res.json(rows[0]);
+  } catch (error) {
+    console.error("Error fetching game:", error);
+    res.status(500).json({ message: "Error fetching game" });
   }
 };
 
@@ -33,29 +56,110 @@ export const getGamesBySubject = async (req, res) => {
   }
 };
 
-// Creates a new game
+// Creates a new game and extracts the uploaded .zip file
 export const createGame = async (req, res) => {
-  const { Name, UrlImagen, PuntuacionMaxima } = req.body;
-  // const { IDSubject, Name, UrlImagen, PuntuacionMaxima } = req.body; out
+  // Los datos de texto ahora vienen en req.body (porque usamos FormData en React)
+  const { name, img, maxScore } = req.body; 
+  // El archivo viene en req.file
+  const file = req.file;
 
-  //if ((!IDSubject, !Name || !UrlImagen || !PuntuacionMaxima)) { out
-  if ((!Name || !UrlImagen || !PuntuacionMaxima)) {
+  if (!name || !img || !maxScore) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
+  // Si decides hacer el archivo obligatorio para crear el juego, descomenta esto:
+  // if (!file) {
+  //   return res.status(400).json({ message: "Game .zip file is required" });
+  // }
+
   try {
+    // 1. Insertamos en la Base de Datos
     const [result] = await db.query(
-      // "INSERT INTO games (IDSubject, Name, UrlImagen, PuntuacionMaxima, Abierto, Visible) VALUES (?, ?, ?, ?, ?, ?)", out
-      "INSERT INTO games (Name, UrlImagen, PuntuacionMaxima, Abierto, Visible, Disponible) VALUES ( ?, ?, ?, ?, ?, ?)",
-      [Name, UrlImagen, PuntuacionMaxima, 0, 0, 0] // Defaults: position = 0, open = false, visible = false
-      // [IDSubject, Name, UrlImagen, PuntuacionMaxima, 0, 0, 0] // Defaults: position = 0, open = false, visible = false out
+      "INSERT INTO games (Name, UrlImagen, PuntuacionMaxima, Abierto, Visible, Disponible) VALUES (?, ?, ?, ?, ?, ?)",
+      [name, img, maxScore, 0, 0, 0] 
     );
-    res
-      .status(201)
-      .json({ message: "Game created successfully", id: result.insertId });
+    
+    const newGameId = result.insertId;
+
+    // 2. Si se subió un archivo, procedemos a descomprimirlo
+    if (file) {
+      const extractPath = path.join(__dirname, "..", "public", "games", String(newGameId));
+
+      if (!fs.existsSync(extractPath)) {
+        fs.mkdirSync(extractPath, { recursive: true });
+      }
+
+      const zip = new AdmZip(file.buffer);
+      zip.extractAllTo(extractPath, true);
+      
+      // --- LÓGICA DE AUTO-CORRECCIÓN DE CARPETAS ---
+      const indexPath = path.join(extractPath, "index.html");
+
+      // Si index.html NO está en la raíz, comprobamos si hay una carpeta contenedora
+      if (!fs.existsSync(indexPath)) {
+        const items = fs.readdirSync(extractPath);
+
+        // Si solo hay exactamente 1 elemento y resulta ser una carpeta (ej. "MiJuego")
+        if (items.length === 1) {
+          const subfolderPath = path.join(extractPath, items[0]);
+
+          if (fs.statSync(subfolderPath).isDirectory()) {
+            console.log(`Auto-corrigiendo carpeta contenedora: ${items[0]}`);
+            
+            // Movemos todos los archivos de la subcarpeta hacia arriba (la raíz de extractPath)
+            const subItems = fs.readdirSync(subfolderPath);
+            for (const item of subItems) {
+              fs.renameSync(
+                path.join(subfolderPath, item),
+                path.join(extractPath, item)
+              );
+            }
+            // Borramos la subcarpeta que ahora ha quedado vacía
+            fs.rmdirSync(subfolderPath);
+          }
+        }
+      }
+      // ---------------------------------------------------
+
+      // --- NUEVA LÓGICA DE AUTO-INYECCIÓN DEL SCRIPT ---
+      // Volvemos a definir la ruta por si fue corregida en el paso anterior
+      const finalIndexPath = path.join(extractPath, "index.html");
+
+      if (fs.existsSync(finalIndexPath)) {
+        let htmlContent = fs.readFileSync(finalIndexPath, 'utf8');
+
+        // Verificamos si el script ya está inyectado para no duplicarlo
+        if (!htmlContent.includes('IntegrationApi.js')) {
+          console.log(`Inyectando IntegrationApi.js en el juego ${newGameId}...`);
+          
+          // El script que inyectamos apunta a la ruta del backend configurada en server.js
+          const scriptTag = `\n  <script src="/ApiComunicacionPlataforma/IntegrationApi.js"></script>\n`;
+          
+          // Lo insertamos justo antes del cierre de la etiqueta </head> o al inicio del <body>
+          if (htmlContent.includes('</head>')) {
+            htmlContent = htmlContent.replace('</head>', `${scriptTag}</head>`);
+          } else if (htmlContent.includes('<body>')) {
+            htmlContent = htmlContent.replace('<body>', `<body>${scriptTag}`);
+          }
+
+          fs.writeFileSync(finalIndexPath, htmlContent, 'utf8');
+        }
+      } else {
+        console.log(`Advertencia: No se encontró index.html para inyectar el script en el juego ${newGameId}`);
+      }
+      // ---------------------------------------------------
+
+      console.log(`Juego ${newGameId} listo, auto-corregido e inyectado en ${extractPath}`);
+    }
+
+    res.status(201).json({ 
+      message: "Game created and prepared successfully", 
+      id: newGameId 
+    });
+
   } catch (error) {
     console.error("Error creating game:", error);
-    res.status(500).json({ message: "Error creating game" });
+    res.status(500).json({ message: "Error creating game or extracting file" });
   }
 };
 

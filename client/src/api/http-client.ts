@@ -15,6 +15,15 @@ const HttpClient = {
             // 2. Preparamos las cabeceras base
             const headers: Record<string, string> = { ...options.headers };
 
+            // --- NUEVO: INYECCIÓN AUTOMÁTICA DEL TOKEN ---
+            // Buscamos el token en el almacenamiento local del navegador
+            const token = localStorage.getItem('token');
+            if (token) {
+                // Si existe, lo añadimos con el formato estándar "Bearer"
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+            // ---------------------------------------------
+
             // 3. SOLO inyectamos 'application/json' si NO es un FormData
             // y si no se ha especificado otra cabecera manualmente.
             if (!isFormData && !headers['Content-Type']) {

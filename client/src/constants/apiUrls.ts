@@ -45,4 +45,7 @@ export const API_URLS = {
 
 	CREATE_GAME_SESSION: '/game-sessions',
     CLOSE_GAME_SESSION: (id: number) => `/game-sessions/${id}`,
+
+	GET_GAME_PROGRESS: (gameId: number) => `/plays/game/${gameId}/progress`,
+    SAVE_PLAY: (gameSessionId: number) => `/plays/game-session/${gameSessionId}/plays`,
 };

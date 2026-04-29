@@ -24,6 +24,22 @@ class GameRepository implements IGameRepository {
 	}
 
 	/**
+	 * Retrieves a specific game by its ID.
+	 * @param id - The ID of the game to fetch.
+	 * @returns A promise resolving to a Game domain object.
+	 */
+	async getById(id: number): Promise<Game> {
+		try {
+            // USAR LA CONSTANTE EN VEZ DEL STRING MANUAL
+			const data = await HttpClient.get(API_URLS.GET_GAME(id)); 
+			return GameMapper.toDomain(data);
+		} catch (error) {
+			console.error(`Error fetching game (ID: ${id})`, error);
+			throw new Error('Failed to fetch game');
+		}
+	}
+
+	/**
 	 * Retrieves games associated with a specific subject ID.
 	 * @param subjectId - The ID of the subject.
 	 * @returns A promise resolving to an array of Game domain objects.
@@ -52,18 +68,31 @@ class GameRepository implements IGameRepository {
 		}
 	}
 
-	/**
-	 * Sends a request to create a new game.
-	 * @param data - The GameCreate structure containing new game data.
-	 */
-	async create(data: GameCreate): Promise<void> {
-		const requestDTO = GameMapper.toCreateDTO(data);
 
+	/**
+	 * Crea un nuevo juego enviando los datos y el archivo en formato FormData.
+	 * @param data - Objeto FormData con nombre, maxScore, img y el archivo .zip
+	 */
+	async create(data: FormData): Promise<void> {
 		try {
-			await HttpClient.post(API_URLS.CREATE_GAME, requestDTO); // Here: Debug
+			await HttpClient.post(API_URLS.CREATE_GAME, data);
 		} catch (error) {
-			console.error('Error creating new game:', error);
-			throw new Error('Failed to create new game');
+			console.error('Error creating game', error);
+			throw new Error('Failed to create game');
+		}
+	}
+
+
+	/**
+	 * Crea un nuevo juego enviando los datos y el archivo en formato FormData.
+	 * @param data - Objeto FormData con nombre, maxScore, img y el archivo .zip
+	 */
+	async createWithFile(data: FormData): Promise<void> {
+		try {
+			await HttpClient.post(API_URLS.CREATE_GAME, data);
+		} catch (error) {
+			console.error('Error creating game with file', error);
+			throw new Error('Failed to create game');
 		}
 	}
 
