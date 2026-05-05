@@ -42,7 +42,6 @@ const NavUserInfo: React.FC<NavUserInfoProps> = ({
 		[ROLES.ADMIN]: 'Admin',
 		[ROLES.DEV]: 'Dev',
 		[ROLES.PLAYER]: 'Player',
-		[ROLES.GUEST]: 'Guest'
 	};
 
 	// Fallback to raw role string if no label mapping is found.

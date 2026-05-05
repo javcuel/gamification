@@ -8,7 +8,6 @@ import SubjectsTab from './subjects-tab/subjects-tab';
 import ThemeTab from './theme-tab/admin-theme-tab';
 import UsersTab from './users-tab/users-tab';
 import GamesTab from './games-tab/games-tab';
-import BulkUploadTab from './bulk-tab/bulk-upload-tab';
 
 /**
  * AdminLayout component
@@ -87,8 +86,6 @@ const AdminLayout: React.FC = () => {
 					{activeTab === 'tab4' && <AddGameTab />}
 					{activeTab === 'tab5' && <AddUserTab />}
 					{activeTab === 'tab6' && <ThemeTab />}
-					{/* 3. Renderizamos el nuevo componente */}
-					{activeTab === 'tab8' && <BulkUploadTab />} 
 				</div>
 			</div>
 		</div>

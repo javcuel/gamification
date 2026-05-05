@@ -11,7 +11,6 @@ export class Game {
 	 * @param {number} idSubject - Identifier of the subject to which the game belongs
 	 * @param {string} img - Game image
 	 * @param {string} name - Game name
-	 * @param {number} maxScore - Max Score obtainable in the game
 	 * @param {boolean} isOpen - Open state of the game
 	 * @param {boolean} isVisible - Visible state of the game
 	 * @param {number} position - Game position
@@ -24,7 +23,6 @@ export class Game {
 		public idSubject: number,
 		public img: string,
 		public name: string,
-		public maxScore: number,
 		public isOpen: boolean,
 		public isVisible: boolean,
 		public position: number,
@@ -46,13 +44,11 @@ export class GameCreate {
 	 * @param {number} idSubject - Identifier of the subject to which the game belongs
 	 * @param {string} img - Game image
 	 * @param {string} name - Game name
-	 * @param {number} maxScore - Max Score obtainable in the game
 	 */
 	constructor(
 		// public idSubject: number, out
 		public name: string,
-		public img: string,
-		public maxScore: number
+		public img: string
 	) {}
 }
 
@@ -68,12 +64,10 @@ export class GameUpdate {
 	 * @param {number} idSubject - Identifier of the subject to which the game belongs
 	 * @param {string} img - Game image
 	 * @param {string} name - Game name
-	 * @param {number} maxScore - Max Score obtainable in the game
 	 */
 	constructor(
 		// public idSubject: number, out
 		public name: string,
-		public img: string,
-		public maxScore: number
+		public img: string
 	) {}
 }

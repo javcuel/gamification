@@ -67,7 +67,7 @@ const CreateUserTab: React.FC = () => {
 			return;
 		}
 
-		const newUser = new User(0, group, role, name, passwd);
+		const newUser = new User(0, role, name, passwd);
 
 		await createUser(newUser);
 

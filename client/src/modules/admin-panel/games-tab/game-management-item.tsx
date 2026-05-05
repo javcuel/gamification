@@ -26,9 +26,6 @@ const GameManagementItem: React.FC<GameManagementItemProps> = ({ game, onDelete 
 
 	return (
 		<li className='user-management-item'>
-			<div>
-				<strong>{game.name}</strong> - Máx: {game.maxScore}
-			</div>
 			<div className='user-management-item-buttons'>
 				<Button type='edit' onClick={() => setIsEditing(true)} />
 				<Button type='delete' onClick={() => deleteGame(game.id)} disabled={deleteLoading} />

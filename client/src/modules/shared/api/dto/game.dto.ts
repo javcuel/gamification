@@ -8,7 +8,6 @@ export interface GameDTO {
 	IDSubject: number;
 	UrlImagen: string;
 	Name: string;
-	PuntuacionMaxima: number;
 	Abierto: boolean;
 	Visible: boolean;
 	Posicion: number;
@@ -23,10 +22,9 @@ export interface GameDTO {
  * @interface
  */
 export interface GameCreateDTO {
-	IDSubject: number;
+	// IDSubject: number;
 	Name: string;
 	UrlImagen: string;
-	PuntuacionMaxima: number;
 }
 
 /**
@@ -35,10 +33,9 @@ export interface GameCreateDTO {
  * @interface
  */
 export interface GameUpdateDTO {
-	IDSubject: number;
+	// IDSubject: number;
 	Name: string;
 	UrlImagen: string;
-	PuntuacionMaxima: number;
 }
 
 /**

@@ -9,7 +9,6 @@ const mockGame: Game = {
 	idSubject: 1,
 	img: '/images/default_game_image.png',
 	name: 'MarsMinner',
-	maxScore: 8000,
 	isOpen: true,
 	isVisible: true,
 	position: 1,

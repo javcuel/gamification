@@ -71,7 +71,7 @@ class GameRepository implements IGameRepository {
 
 	/**
 	 * Crea un nuevo juego enviando los datos y el archivo en formato FormData.
-	 * @param data - Objeto FormData con nombre, maxScore, img y el archivo .zip
+	 * @param data - Objeto FormData con nombre, img y el archivo .zip
 	 */
 	async create(data: FormData): Promise<void> {
 		try {
@@ -85,7 +85,7 @@ class GameRepository implements IGameRepository {
 
 	/**
 	 * Crea un nuevo juego enviando los datos y el archivo en formato FormData.
-	 * @param data - Objeto FormData con nombre, maxScore, img y el archivo .zip
+	 * @param data - Objeto FormData con nombre, img y el archivo .zip
 	 */
 	async createWithFile(data: FormData): Promise<void> {
 		try {

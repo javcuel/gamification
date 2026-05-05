@@ -114,7 +114,7 @@ const GameManagementItem: React.FC<GameManagementItemProps> = ({
 
 				{/* Game info */}
 				<div className='flex-grow-1'>
-					{game.name} - Max Score: {game.maxScore}
+					{game.name}
 				</div>
 
 				{/* Action buttons */}
@@ -146,8 +146,7 @@ const GameManagementItem: React.FC<GameManagementItemProps> = ({
 					data={{
 						// idSubject: game.idSubject, out
 						name: game.name,
-						img: game.img,
-						maxScore: game.maxScore
+						img: game.img
 					}}
 					onClose={() => setIsEditing(false)}
 					onSave={handleSaveGame}

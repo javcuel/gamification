@@ -59,11 +59,11 @@ export const getGamesBySubject = async (req, res) => {
 // Creates a new game and extracts the uploaded .zip file
 export const createGame = async (req, res) => {
   // Los datos de texto ahora vienen en req.body (porque usamos FormData en React)
-  const { name, img, maxScore } = req.body; 
+  const { name, img } = req.body; 
   // El archivo viene en req.file
   const file = req.file;
 
-  if (!name || !img || !maxScore) {
+  if (!name || !img ) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
@@ -75,8 +75,8 @@ export const createGame = async (req, res) => {
   try {
     // 1. Insertamos en la Base de Datos
     const [result] = await db.query(
-      "INSERT INTO games (Name, UrlImagen, PuntuacionMaxima, Abierto, Visible, Disponible) VALUES (?, ?, ?, ?, ?, ?)",
-      [name, img, maxScore, 0, 0, 0] 
+      "INSERT INTO games (Name, UrlImagen, Abierto, Visible, Disponible) VALUES (?, ?, ?, ?, ?)",
+      [name, img, 0, 0, 0] 
     );
     
     const newGameId = result.insertId;
@@ -166,15 +166,15 @@ export const createGame = async (req, res) => {
 // Update game data
 export const updateGame = async (req, res) => {
   const { id } = req.params;
-  // const { IDSubject, Name, UrlImagen, PuntuacionMaxima } = req.body; out
-  const { Name, UrlImagen, PuntuacionMaxima } = req.body; 
+  // const { IDSubject, Name, UrlImagen } = req.body; out
+  const { Name, UrlImagen } = req.body; 
   try {
     await db.query(
-      /*"UPDATE games SET Name = ?, PuntuacionMaxima = ?, IDSubject = ?, UrlImagen = ? WHERE IDGame = ?",
-      [Name, PuntuacionMaxima, IDSubject, UrlImagen, id]
+      /*"UPDATE games SET Name = ?, IDSubject = ?, UrlImagen = ? WHERE IDGame = ?",
+      [Name, IDSubject, UrlImagen, id]
     ); out */
-    "UPDATE games SET Name = ?, PuntuacionMaxima = ?, UrlImagen = ? WHERE IDGame = ?",
-      [Name, PuntuacionMaxima, UrlImagen, id]
+    "UPDATE games SET Name = ?, UrlImagen = ? WHERE IDGame = ?",
+      [Name , UrlImagen, id]
     );
     res.json({ message: "Game updated successfully" });
   } catch (error) {

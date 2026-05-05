@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { groupRepository, SubjectGroup } from '../../../shared/api/repository/group.repository';
 
 const useGroups = (subjectId: number) => {
@@ -6,21 +6,23 @@ const useGroups = (subjectId: number) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    // Cargar grupos al montar
-    useEffect(() => {
-        const fetchGroups = async () => {
-            setLoading(true);
-            try {
-                const data = await groupRepository.getBySubject(subjectId);
-                setGroups(data);
-            } catch (err: any) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchGroups();
+    // 1. Extraemos la función y la envolvemos en useCallback
+    const fetchGroups = useCallback(async () => {
+        setLoading(true);
+        try {
+            const data = await groupRepository.getBySubject(subjectId);
+            setGroups(data);
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
     }, [subjectId]);
+
+    // 2. Cargar grupos al montar el componente
+    useEffect(() => {
+        fetchGroups();
+    }, [fetchGroups]);
 
     const addGroup = async (name: string) => {
         setError(null);
@@ -42,7 +44,8 @@ const useGroups = (subjectId: number) => {
         }
     };
 
-    return { groups, loading, error, addGroup, removeGroup };
+    // 3. Exportamos fetchGroups para poder llamarlo desde fuera
+    return { groups, loading, error, addGroup, removeGroup, fetchGroups };
 };
 
 export default useGroups;

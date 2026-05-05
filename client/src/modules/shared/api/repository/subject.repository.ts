@@ -114,6 +114,25 @@ class SubjectRepository implements ISubjectRepository {
 			throw new Error('Failed to delete subject');
 		}
 	}
+
+	/**
+	 * Envía un archivo CSV para importar usuarios y asignarlos a grupos de la asignatura.
+	 * @param subjectId - El ID de la asignatura destino.
+	 * @param file - Archivo CSV con las columnas: UserName; Password; Real Name; LabGroup
+	 */
+	async importUsersFromCsv(subjectId: number, file: File): Promise<any> {
+		const formData = new FormData();
+		formData.append('csvFile', file);
+
+		try {
+			// Usamos el endpoint que creamos en el backend
+			const response = await HttpClient.post(`/subjects/${subjectId}/import-users`, formData);
+			return response;
+		} catch (error) {
+			console.error('Error importing users from CSV:', error);
+			throw new Error('No se pudo procesar el archivo CSV. Revisa la conexión o el formato del archivo.');
+		}
+	}
 }
 
 // Exporting a singleton instance of the SubjectRepository.

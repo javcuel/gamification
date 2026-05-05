@@ -19,7 +19,7 @@ interface GameEditModalProps {
  *
  * Modal interface to edit a game's details.
  * - Validates input using Zod before applying changes.
- * - Allows updating the name, image, max score, and subject.
+ * - Allows updating the name, image, and subject.
  * - Fetches available subjects dynamically for the dropdown.
  *
  * @param data - The current game data to prefill the form
@@ -34,9 +34,7 @@ const GameEditModal: React.FC<GameEditModalProps> = ({
 	// const [idSubject, setIdSubject] = useState(data.idSubject); out
 	const [name, setName] = useState(data.name);
 	const [img, setImg] = useState(data.img);
-	const [maxScore, setMaxScore] = useState<string>(String(data.maxScore));
 	const [validationError, setValidationError] = useState<string | null>(null);
-
 	const { subjects, error: subjectsError } = useSubjectsTab();
 
 	/**
@@ -45,7 +43,6 @@ const GameEditModal: React.FC<GameEditModalProps> = ({
 	const updateGameSchema = z.object({
 		name: z.string().min(1, 'Game name is required'),
 		img: z.string().min(1, 'Game image is required'),
-		maxScore: z.number().min(1, 'Max score must be a positive number')
 	});
 
 	/**
@@ -60,16 +57,9 @@ const GameEditModal: React.FC<GameEditModalProps> = ({
 
 		setValidationError(null);
 
-		const parsedScore = parseFloat(maxScore);
-		if (isNaN(parsedScore)) {
-			setValidationError('Max score must be a valid number');
-			return;
-		}
-
 		const validationResult = updateGameSchema.safeParse({
 			name,
-			img,
-			maxScore: parsedScore
+			img
 		});
 
 		if (!validationResult.success) {
@@ -79,8 +69,8 @@ const GameEditModal: React.FC<GameEditModalProps> = ({
 			return;
 		}
 
-		// onSave({ idSubject, name, img, maxScore: parsedScore }); out
-		onSave({name, img, maxScore: parsedScore });
+		// onSave({ idSubject, name, img}); out
+		onSave({name, img});
 		onClose();
 	};
 
@@ -105,14 +95,6 @@ const GameEditModal: React.FC<GameEditModalProps> = ({
 						type='text'
 						value={img}
 						onChange={e => setImg(e.target.value)}
-					/>
-
-					{/* Input: Game max score */}
-					<Input
-						placeholder='Max Score'
-						type='text'
-						value={maxScore}
-						onChange={e => setMaxScore(e.target.value)}
 					/>
 					
 					{/* Dropdown: Subject selection */}

@@ -19,7 +19,6 @@ const CreateGameTab: React.FC = () => {
 	const [name, setName] = useState<string>('');
 	// const [idSubject, setIdSubject] = useState<string>(''); out
 	const [img, setImg] = useState<string>('');
-	const [maxScore, setMaxScore] = useState<string>('');
 	const [validationError, setValidationError] = useState<string | null>(null);
 
 	const { createGame, error, success } = useCreateGame();
@@ -31,7 +30,6 @@ const CreateGameTab: React.FC = () => {
 	const createGameSchema = z.object({
 		name: z.string().min(1, 'Game name is required'),
 		img: z.string().min(1, 'Game image is required'),
-		maxscore: z.number().min(1, 'Max score must be a positive number')
 	});
 
 	/**
@@ -50,8 +48,7 @@ const CreateGameTab: React.FC = () => {
 
 		const validationResult = createGameSchema.safeParse({
 			name,
-			img,
-			maxscore: Number(maxScore)
+			img
 		});
 
 		if (!validationResult.success) {
@@ -64,8 +61,7 @@ const CreateGameTab: React.FC = () => {
 		const newGame = new GameCreate(
 			// Number(idSubject), out
 			name,
-			img,
-			Number(maxScore)
+			img
 		);
 
 		await createGame(newGame); // Here: Debug
@@ -73,7 +69,6 @@ const CreateGameTab: React.FC = () => {
 		setName('');
 		// setIdSubject(''); out
 		setImg('');
-		setMaxScore('');
 	};
 
 	return (
@@ -98,14 +93,6 @@ const CreateGameTab: React.FC = () => {
 				type='text'
 				value={img}
 				onChange={e => setImg(e.target.value)}
-			/>
-
-			{/* Input field for max score */}
-			<Input
-				placeholder='Max Score'
-				type='text'
-				value={maxScore}
-				onChange={e => setMaxScore(e.target.value)}
 			/>
 
 			{/* Dropdown for subject selection */}

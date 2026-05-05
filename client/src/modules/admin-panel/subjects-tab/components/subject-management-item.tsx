@@ -14,7 +14,6 @@ import SubjectEditModal from './subject-edit-modal';
 import SubjectGameLinkItem from './subject-game-link-item';
 import SubjectGroupSection from './subject-group-section';
 
-
 interface SubjectiItemProps {
 	subject: Subject;
 	onSubjectDeleted: (subjectId: number) => void;
@@ -25,6 +24,10 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 	onSubjectDeleted
 }) => {
 	const [isEditing, setIsEditing] = useState(false);
+	
+	// Estado maestro para la nueva sección unificada de juegos
+	const [showGamesMenu, setShowGamesMenu] = useState(false);
+	const [isGroupsExpanded, setIsGroupsExpanded] = useState(false);
 
 	// 1. Juegos vinculados (Linked)
 	const {
@@ -52,8 +55,6 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 	const { isVisible, error: visibleError, toggleVisibleState } = useToggleSubjectVisibleState(subject);
 	const { deleteSubject, loading: deleteLoading, error: deleteError } = useDeleteSubject(onSubjectDeleted);
 
-	const [isGroupsExpanded, setIsGroupsExpanded] = useState(false);
-
 	const handleSaveSubject = (updatedData: SubjectUpdate) => {
 		updateSubject(subject.id, new SubjectUpdate(updatedData.name, updatedData.img, updatedData.imgBackground));
 	};
@@ -67,7 +68,6 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 	// 3. Acciones de Contenido (Link/Unlink)
 	const { linkGame, unlinkGame, loading: contentLoading, error: contentError } = useContentActions({
 		onLinkSuccess: (gameId) => {
-			// Movemos el juego de 'disponibles' a 'vinculados' localmente
 			const movedGame = unlinkedGames.find(g => g.id === gameId);
 			if (movedGame) {
 				setLinkedGames(prev => [...prev, movedGame]);
@@ -75,7 +75,6 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 			}
 		},
 		onUnlinkSuccess: (gameId) => {
-			// Movemos el juego de 'vinculados' a 'disponibles' localmente
 			const movedGame = linkedGames.find(g => g.id === gameId);
 			if (movedGame) {
 				setUnlinkedGames(prev => [...prev, movedGame]);
@@ -86,22 +85,40 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 
     const handleGameUnlinked = (gameId: number) => {
         if (window.confirm('Are you sure you want to unlink this game?')) {
-            unlinkGame(subject.id, gameId); //
+            unlinkGame(subject.id, gameId);
         }
 	}
+	
 	const handleGameLinked = (gameId: number) => {
 		if (window.confirm('Are you sure you want to link this game?')) {
-			linkGame(subject.id, gameId); //
+			linkGame(subject.id, gameId);
+		}
+	};
+
+	// Comportamiento tipo acordeón para no tener todo abierto a la vez
+	const handleToggleGroups = () => {
+		const willShow = !isGroupsExpanded;
+		setIsGroupsExpanded(willShow);
+		if (willShow) setShowGamesMenu(false);
+	};
+
+	const handleToggleGamesMenu = () => {
+		const willShow = !showGamesMenu;
+		setShowGamesMenu(willShow);
+		if (willShow) {
+			setIsGroupsExpanded(false);
+			// Si no hay ninguna pestaña interna abierta, abrimos "Asociados" por defecto
+			if (!isExpanded && !isAdding) {
+				toggleExpand();
+			}
 		}
 	};
 
 	return (
 		<div className='subject-management-item'>
 			<div className='subject-item-header d-flex justify-content-between align-items-center'>
-				<div
-					className='subject-item-left d-flex align-items-center'
-					onClick={toggleExpand}
-				>
+				{/* Quitamos el onClick de aquí para que la imagen no despliegue nada */}
+				<div className='subject-item-left d-flex align-items-center'>
 					<img
 						src={subject.img}
 						onError={e => {
@@ -112,33 +129,21 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 					/>
 					<span>{subject.name}</span>
 				</div>
-				<div className='subject-item-buttons'>
-                    {/* Botón para gestionar vinculación (icono visible/ojo según tu código) */}
-					<Button text="Grupos" onClick={() => setIsGroupsExpanded(!isGroupsExpanded)} />
-					<Button 
-						type='visible' 
-						onClick={toggleAddMode} 
-					/>
+				
+				{/* Añadimos d-flex flex-nowrap gap-2 para forzar los botones en 1 sola fila */}
+				<div className='subject-item-buttons d-flex flex-nowrap gap-2 align-items-center'>
+					<Button text="Alumnado" onClick={handleToggleGroups} />
+					<Button text="Juegos" onClick={handleToggleGamesMenu} />
 					<Button type={isOpen ? 'unlock' : 'lock'} onClick={toggleOpenState} />
-					<Button
-						type={isVisible ? 'visible' : 'hidden'}
-						onClick={toggleVisibleState}
-					/>
+					<Button type={isVisible ? 'visible' : 'hidden'} onClick={toggleVisibleState} />
 					<Button type='edit' onClick={() => setIsEditing(true)} />
-					<Button
-						type='delete'
-						onClick={handleDeleteClick}
-						disabled={deleteLoading}
-					/>
+					<Button type='delete' onClick={handleDeleteClick} disabled={deleteLoading} />
 				</div>
 			</div>
 
 			{/* Renderizado de errores combinados */}
 			{(visibleError || openError || updateError || deleteError || expandError || availableError || contentError) && (
-				<Toast 
-                    type='error' 
-                    message={contentError || expandError || availableError || "Error en la operación"} 
-                />
+				<Toast type='error' message={contentError || expandError || availableError || "Error en la operación"} />
 			)}
 
             {/* Indicadores de carga de datos y de acciones */}
@@ -146,53 +151,76 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
                 <div className="p-2 text-info small">Procesando...</div>
             )}
 			
-			{/* Sección de juegos NO VINCULADOS (Unlinked) */}
-			<div className={`subject-expand-container ${isAdding ? 'expanded' : ''}`}>
-				{isAdding && (
-					<div className="p-3 border-bottom">
-						<small className="text-muted d-block mb-3 fw-bold text-uppercase" style={{ fontSize: '0.7rem' }}>
-                            Juegos disponibles para vincular
-                        </small>
-						{unlinkedGames.map(game => (
-							<SubjectGameLinkItem
-								key={game.id}
-								game={game}
-								actionType="edit"
-								buttonText="Link"
-                                disabled={contentLoading}
-								onActionClick={() => handleGameLinked(game.id)}
-							/>
-						))}
-						{unlinkedGames.length === 0 && !loadingUnlinked && (
-							<div className="p-2 text-muted small italic">No hay más juegos disponibles para esta asignatura.</div>
+			{/* NUEVA SECCIÓN UNIFICADA DE JUEGOS */}
+			<div className={`subject-expand-container ${showGamesMenu ? 'expanded' : ''}`}>
+				{showGamesMenu && (
+					<div className="p-3 border-top bg-light bg-opacity-10">
+						
+						{/* Pestañas de Juegos */}
+						<div className="d-flex gap-2 mb-3">
+							<button 
+								className={`btn btn-sm ${isExpanded ? 'btn-primary' : 'btn-outline-primary'}`}
+								onClick={() => {
+									if (!isExpanded) toggleExpand();
+									if (isAdding) toggleAddMode();
+								}}
+							>
+								Juegos Asociados
+							</button>
+							<button 
+								className={`btn btn-sm ${isAdding ? 'btn-primary' : 'btn-outline-primary'}`}
+								onClick={() => {
+									if (!isAdding) toggleAddMode();
+									if (isExpanded) toggleExpand();
+								}}
+							>
+								Juegos No Asociados
+							</button>
+						</div>
+
+						{/* Lista de Asociados */}
+						{isExpanded && (
+							<div className="games-list">
+								{linkedGames.length > 0 ? (
+									linkedGames.map(game => (
+										<SubjectGameLinkItem
+											key={game.id}
+											game={game}
+											actionType="delete"
+											buttonText="Unlink"
+											disabled={contentLoading}
+											onActionClick={() => handleGameUnlinked(game.id)}
+										/>
+									))
+								) : (
+									!loadingLinked && <div className="p-2 text-muted small">Esta asignatura no tiene juegos asociados.</div>
+								)}
+							</div>
+						)}
+
+						{/* Lista de NO Asociados */}
+						{isAdding && (
+							<div className="games-list">
+								{unlinkedGames.map(game => (
+									<SubjectGameLinkItem
+										key={game.id}
+										game={game}
+										actionType="edit"
+										buttonText="Link"
+										disabled={contentLoading}
+										onActionClick={() => handleGameLinked(game.id)}
+									/>
+								))}
+								{unlinkedGames.length === 0 && !loadingUnlinked && (
+									<div className="p-2 text-muted small italic">No hay más juegos disponibles para esta asignatura.</div>
+								)}
+							</div>
 						)}
 					</div>
 				)}
 			</div>
-
-			{/* Sección de juegos VINCULADOS (Linked) */}
-			<div className={`subject-expand-container ${isExpanded ? 'expanded' : ''}`}>
-                {isExpanded && (
-                    <div className="p-2">
-                        {linkedGames.length > 0 ? (
-                            linkedGames.map(game => (
-                                <SubjectGameLinkItem
-                                    key={game.id}
-                                    game={game}
-                                    actionType="delete"
-                                    buttonText="Unlink"
-                                    disabled={contentLoading}
-                                    onActionClick={() => handleGameUnlinked(game.id)}
-                                />
-                            ))
-                        ) : (
-                            !loadingLinked && <div className="p-2 text-muted small">Esta asignatura no tiene juegos asociados.</div>
-                        )}
-                    </div>
-                )}
-			</div>
 			
-			{/* Sección de GRUPOS (NUEVA) */}
+			{/* Sección de GRUPOS (Alumnado) */}
 			<div className={`subject-expand-container ${isGroupsExpanded ? 'expanded' : ''}`}>
 				{isGroupsExpanded && (
 					<div className="p-3 border-top bg-light bg-opacity-10">

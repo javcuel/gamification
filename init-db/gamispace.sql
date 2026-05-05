@@ -108,7 +108,6 @@ CREATE TABLE `games` (
   `IDGame` int NOT NULL AUTO_INCREMENT,
   `UrlImagen` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `Name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL, -- Reducido a 100 para indexación
-  `PuntuacionMaxima` int NOT NULL,
   `Abierto` tinyint(1) NOT NULL,
   `Visible` tinyint(1) NOT NULL,
   `Disponible` tinyint(1) NOT NULL,
@@ -118,9 +117,9 @@ CREATE TABLE `games` (
 
 LOCK TABLES `games` WRITE;
 INSERT INTO `games` VALUES 
-(127,'url_img_1','Cafeteria',8000,1,1,1),
-(109,'url_img_1','Caida de Datos',8000,1,1,1),
-(128,'url_img_2','Strings Invaders',9000,1,1,1);
+(127,'url_img_1','Cafeteria',1,1,1),
+(109,'url_img_1','Caida de Datos',1,1,1),
+(128,'url_img_2','Strings Invaders',1,1,1);
 UNLOCK TABLES;
 
 --

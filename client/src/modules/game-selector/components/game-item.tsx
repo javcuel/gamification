@@ -65,8 +65,6 @@ const GameItem: React.FC<GameProps> = ({ game, subjectId }) => {
 					{game.isOpen ? (
 						<>
 							{game.name}
-							<hr />
-							Max Score: {game.maxScore}
 						</>
 					) : (
 						'🔒Closed!'
