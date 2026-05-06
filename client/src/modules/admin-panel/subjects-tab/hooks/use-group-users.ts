@@ -6,7 +6,6 @@ const useGroupUsers = (groupId: number, isExpanded: boolean) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    // Solo cargamos usuarios si la pestaña está expandida (optimización)
     useEffect(() => {
         if (!isExpanded) return;
         
@@ -24,16 +23,16 @@ const useGroupUsers = (groupId: number, isExpanded: boolean) => {
         fetchUsers();
     }, [groupId, isExpanded]);
 
-    const addUser = async (userId: number) => {
+    // Cambiamos userId por userName
+    const addUser = async (userName: string) => {
         setError(null);
         try {
-            await assignmentRepository.assignUser(userId, groupId);
-            // Recargamos la lista para obtener el Name real del backend
+            await assignmentRepository.assignUser(userName, groupId);
             const data = await assignmentRepository.getUsersByGroup(groupId);
             setUsers(data);
         } catch (err: any) {
             setError(err.message);
-            throw err; // Lanzamos para que el componente sepa que falló
+            throw err; 
         }
     };
 

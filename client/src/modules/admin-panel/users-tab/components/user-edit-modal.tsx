@@ -16,7 +16,7 @@ interface UserEditModalProps {
  * UserEditModal component
  *
  * Renders a modal interface for editing a user's information.
- * Allows updating user name, password, role, and group.
+ * Allows updating user name, password, role, and real name.
  */
 const UserEditModal: React.FC<UserEditModalProps> = ({
 	data,
@@ -24,10 +24,10 @@ const UserEditModal: React.FC<UserEditModalProps> = ({
 	onSave
 }) => {
 	// State for editable fields
-	const [name, setName] = useState(data.name);
-	const [passwd, setPasswd] = useState(data.passwd);
-	const [role, setRole] = useState(data.role);
-	const [group, setGroup] = useState(data.group);
+	const [name, setName] = useState(data.name || '');
+	const [passwd, setPasswd] = useState(data.passwd || '');
+	const [role, setRole] = useState(data.role || '');
+	const [realName, setRealName] = useState(data.realName || '');
 
 	/**
 	 * Handles form submission and invokes the onSave callback with updated data.
@@ -36,7 +36,8 @@ const UserEditModal: React.FC<UserEditModalProps> = ({
 	 */
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		onSave({ name, passwd, role, group });
+		// Pasamos realName en lugar de group
+		onSave({ name, passwd, role, realName });
 		onClose();
 	};
 
@@ -63,17 +64,17 @@ const UserEditModal: React.FC<UserEditModalProps> = ({
 
 					{/* Role dropdown selection */}
 					<Dropdown
-						options={Object.keys(ROLES)}
+						options={Object.values(ROLES)}
 						placeholder='Role'
 						onChange={value => setRole(value)}
 					/>
 
-					{/* Group input */}
+					{/* Real Name input (antes Group) */}
 					<Input
-						placeholder='Group'
+						placeholder='Real Name'
 						type='text'
-						value={group}
-						onChange={e => setGroup(e.target.value)}
+						value={realName}
+						onChange={e => setRealName(e.target.value)}
 					/>
 
 					{/* Action buttons */}

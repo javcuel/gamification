@@ -42,7 +42,7 @@ const UserManagementItem: React.FC<UserManagementItemProps> = ({
 	// Handles update user
 	const handleSaveUser = (updatedData: UserUpdate) => {
 		const updatedUser = new UserUpdate(
-			updatedData.group,
+			updatedData.realName, // Cambiado de group a realName
 			updatedData.role,
 			updatedData.name,
 			updatedData.passwd
@@ -79,7 +79,7 @@ const UserManagementItem: React.FC<UserManagementItemProps> = ({
 			{isEditing && (
 				<UserEditModal
 					data={{
-						group: user.group,
+						realName: user.realName, 
 						role: user.role,
 						name: user.name,
 						passwd: user.passwd

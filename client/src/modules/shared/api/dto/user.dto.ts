@@ -5,10 +5,10 @@
  */
 export interface UserDTO {
 	IDUser: number;
-	// Grupo: string;
 	UserType: string;
 	Name: string;
 	Password: string;
+	RealName?: string; // Añadido para reemplazar al antiguo Grupo
 }
 
 /**
@@ -18,9 +18,9 @@ export interface UserDTO {
  */
 export interface UserCreateDTO {
 	Name: string;
-	// Grupo: string;
 	UserType: string;
 	Password: string;
+	RealName?: string; // Añadido para reemplazar al antiguo Grupo
 }
 
 /**
@@ -29,10 +29,10 @@ export interface UserCreateDTO {
  * @interface
  */
 export interface UserUpdateDTO {
-	// Grupo: string;
 	UserType: string;
 	Name: string;
 	Password: string;
+	RealName?: string; // Añadido para reemplazar al antiguo Grupo
 }
 
 /**
@@ -53,14 +53,4 @@ export interface UserLoginDTO {
 export interface UserScoreDTO {
 	Puntuacion: number;
 	Completado: number;
-}
-
-/**
- * Interface representing the user login data in the backend
- *
- * @interface
- */
-export interface UserLoginDTO {
-	Name: string;
-	Password: string;
 }

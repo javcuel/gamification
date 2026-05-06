@@ -40,8 +40,9 @@ export const loginUser = async (req, res) => {
 // Get all users
 export const getUsers = async (req, res) => {
   try {
+    // Añadimos RealName a la consulta para que el frontend lo reciba
     const [rows] = await db.query(
-      "SELECT IDUser, Name, UserType FROM users"
+      "SELECT IDUser, Name, UserType, RealName FROM users"
     );
     res.json(rows);
   } catch (error) {
@@ -68,16 +69,17 @@ export const getScore = async (req, res) => {
 
 // Creates a new user
 export const createUser = async (req, res) => {
-  const { Name, Password, UserType, Grupo } = req.body;
+  // Volvemos a mayúsculas para coincidir con tu repositorio HTTP
+  const { Name, Password, UserType, RealName } = req.body;
 
-  if (!Name || !Password || !UserType || !Grupo) {
-    return res.status(400).json({ message: "All fields are required" });
+  if (!Name || !Password || !UserType) {
+    return res.status(400).json({ message: "Name, Password and UserType are required" });
   }
 
   try {
     await db.query(
-      "INSERT INTO users (Name, Password, UserType, Grupo) VALUES (?, ?, ?, ?)",
-      [Name, Password, UserType, Grupo]
+      "INSERT INTO users (Name, Password, UserType, RealName) VALUES (?, ?, ?, ?)",
+      [Name, Password, UserType, RealName]
     );
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {
@@ -86,21 +88,31 @@ export const createUser = async (req, res) => {
   }
 };
 
-// Update subject data
+// Update user data
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { Name, Password, UserType, Grupo } = req.body;
+  const { Name, Password, UserType, RealName } = req.body;
 
-  if (!Name || !Password || !UserType || !Grupo) {
-    return res.status(400).json({ message: "All fields are required" });
+  // Hacemos que Password NO sea obligatorio para poder actualizar el resto de datos
+  if (!Name || !UserType) {
+    return res.status(400).json({ message: "Name and UserType are required" });
   }
 
   try {
-    await db.query(
-      "UPDATE subjects SET Name = ?, Password = ?, UserType = ? Grupo = ? WHERE IDUser = ",
-      [Name, Password, UserType, Grupo, id]
-    );
-    res.json({ message: "USer updated successfully" });
+    if (Password) {
+      // Si escriben una contraseña nueva, la actualizamos
+      await db.query(
+        "UPDATE users SET Name = ?, Password = ?, UserType = ?, RealName = ? WHERE IDUser = ?",
+        [Name, Password, UserType, RealName, id]
+      );
+    } else {
+      // Si la contraseña viene vacía, conservamos la que ya existía
+      await db.query(
+        "UPDATE users SET Name = ?, UserType = ?, RealName = ? WHERE IDUser = ?",
+        [Name, UserType, RealName, id]
+      );
+    }
+    res.json({ message: "User updated successfully" });
   } catch (error) {
     console.error("Error updating user:", error);
     res.status(500).json({ message: "Error updating user" });

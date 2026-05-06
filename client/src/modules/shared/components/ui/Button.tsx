@@ -4,7 +4,8 @@ import {
 	faLock,
 	faPencilAlt,
 	faTimes,
-	faUnlock
+	faUnlock,
+	faPlus
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
@@ -20,6 +21,7 @@ import '../../styles/Button.css';
  * - `'unlock'`: Shows open lock icon.
  * - `'visible'`: Shows open eye icon.
  * - `'hidden'`: Shows closed eye icon.
+ * - `'add'`: Shows plus icon (+)
  */
 export type ButtonType =
 	| 'edit'
@@ -27,7 +29,8 @@ export type ButtonType =
 	| 'lock'
 	| 'unlock'
 	| 'visible'
-	| 'hidden';
+	| 'hidden'
+	| 'add';
 
 /**
  * Props for the Button component.
@@ -62,7 +65,9 @@ const Button: React.FC<ButtonProps> = ({ text, onClick, type, disabled }) => {
 			case 'visible':
 				return faEye;
 			case 'hidden':
-				return faEyeSlash;
+				return faEyeSlash
+			case 'add':
+				return faPlus;
 			default:
 				return null;
 		}

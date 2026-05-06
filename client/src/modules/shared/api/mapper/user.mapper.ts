@@ -27,10 +27,10 @@ export class UserMapper {
 	static toDomain(dto: UserDTO): User {
 		return new User(
 			dto.IDUser,
-			// dto.Grupo,
 			dto.UserType,
 			dto.Name,
-			dto.Password
+			dto.Password,
+			dto.RealName // Añadimos la lectura del RealName que nos manda el backend
 		);
 	}
 
@@ -42,10 +42,10 @@ export class UserMapper {
 	static toDTO(user: User): UserDTO {
 		return {
 			IDUser: user.id,
-			// Grupo: user.group,
 			UserType: user.role,
 			Name: user.name,
-			Password: user.passwd
+			Password: user.passwd,
+			RealName: user.realName // Mapeamos realName hacia la API
 		};
 	}
 
@@ -57,9 +57,9 @@ export class UserMapper {
 	static toCreateDTO(user: UserCreate): UserCreateDTO {
 		return {
 			Name: user.name,
-			// Grupo: user.group,
 			UserType: user.role,
-			Password: user.passwd
+			Password: user.passwd,
+			RealName: user.realName // Mapeamos realName hacia la API al crear
 		};
 	}
 
@@ -71,9 +71,9 @@ export class UserMapper {
 	static toUpdateDTO(user: UserUpdate): UserUpdateDTO {
 		return {
 			Name: user.name,
-			// Grupo: user.group,
 			UserType: user.role,
-			Password: user.passwd
+			Password: user.passwd,
+			RealName: user.realName // Mapeamos realName hacia la API al actualizar
 		};
 	}
 

@@ -13,7 +13,7 @@ interface SubjectGroupItemProps {
 const SubjectGroupItem: React.FC<SubjectGroupItemProps> = ({ group, onDelete }) => {
     const [isAddingUser, setIsAddingUser] = useState(false);
     const [isUsersExpanded, setIsUsersExpanded] = useState(false);
-    const [newUserId, setNewUserId] = useState('');
+    const [newUserName, setNewUserName] = useState('');
 
     // CONECTAMOS EL HOOK
     const { users, loading, error, addUser, removeUser, setError } = useGroupUsers(group.IDGroup, isUsersExpanded);
@@ -25,15 +25,18 @@ const SubjectGroupItem: React.FC<SubjectGroupItemProps> = ({ group, onDelete }) 
     };
 
     const handleAddUser = async () => {
-        const id = parseInt(newUserId);
-        if (isNaN(id)) {
-            setError("El ID debe ser un número");
+        // 1. Validamos que el input no esté vacío
+        if (!newUserName.trim()) {
+            setError("El nombre de usuario no puede estar vacío");
             return;
         }
         
         try {
-            await addUser(id);
-            setNewUserId(''); 
+            // 2. Mandamos el string trimado (sin espacios extra a los lados)
+            await addUser(newUserName.trim());
+            
+            // 3. Reseteamos la UI
+            setNewUserName(''); 
             setIsAddingUser(false); 
             setIsUsersExpanded(true); // Abrimos la lista para que vea que se añadió
         } catch (e) {
@@ -70,9 +73,9 @@ const SubjectGroupItem: React.FC<SubjectGroupItemProps> = ({ group, onDelete }) 
                 <div className="d-flex gap-2 p-2 border-top bg-light bg-opacity-50">
                     <Input
                         type="text"
-                        placeholder="ID Numérico del Usuario (Ej. 2)"
-                        value={newUserId}
-                        onChange={(e) => setNewUserId(e.target.value)}
+                        placeholder="Nombre de Usuario (Ej. juan_perez)"
+                        value={newUserName}
+                        onChange={(e) => setNewUserName(e.target.value)}
                     />
                     <Button text="Vincular" onClick={handleAddUser} disabled={loading} />
                 </div>

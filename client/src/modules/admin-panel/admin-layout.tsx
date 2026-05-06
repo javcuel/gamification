@@ -44,7 +44,6 @@ const AdminLayout: React.FC = () => {
 		{ id: 'tab4', label: 'Add Game' },
 		{ id: 'tab5', label: 'Add User' },
 		{ id: 'tab6', label: 'Add Theme' },
-		{ id: 'tab8', label: 'Add info by file' } // NUEVA PESTAÑA
 	];
 
 	return (

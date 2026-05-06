@@ -205,7 +205,7 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 									<SubjectGameLinkItem
 										key={game.id}
 										game={game}
-										actionType="edit"
+										actionType="add"
 										buttonText="Link"
 										disabled={contentLoading}
 										onActionClick={() => handleGameLinked(game.id)}

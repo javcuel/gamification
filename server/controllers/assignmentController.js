@@ -2,10 +2,20 @@ import db from "../config/db.js";
 
 // Vincular un usuario a un grupo (Con Auto-Migración)
 export const createAssignment = async (req, res) => {
-    const { IDUser, IDGroup } = req.body;
+    // Cambiamos IDUser por UserName
+    const { UserName, IDGroup } = req.body;
     
     try {
-        // 1. Averiguar a qué asignatura pertenece el grupo de destino
+        // 1. Buscar el IDUser a partir del UserName
+        const [[user]] = await db.query("SELECT IDUser FROM users WHERE Name = ?", [UserName]);
+        
+        if (!user) {
+            return res.status(404).json({ message: `El usuario '${UserName}' no existe en el sistema.` });
+        }
+        
+        const IDUser = user.IDUser;
+
+        // 2. Averiguar a qué asignatura pertenece el grupo de destino
         const [[groupInfo]] = await db.query(
             "SELECT IDSubject FROM subjectGroups WHERE IDGroup = ?",
             [IDGroup]
@@ -17,24 +27,23 @@ export const createAssignment = async (req, res) => {
 
         const subjectId = groupInfo.IDSubject;
 
-        // 2. Auto-Migración: Borrar al usuario de cualquier otro grupo de ESTA asignatura
+        // 3. Auto-Migración: Borrar al usuario de cualquier otro grupo de ESTA asignatura
         await db.query(`
             DELETE a FROM assignments a
             JOIN subjectGroups sg ON a.IDGroup = sg.IDGroup
             WHERE a.IDUser = ? AND sg.IDSubject = ?
         `, [IDUser, subjectId]);
 
-        // 3. Crear la nueva asignación
+        // 4. Crear la nueva asignación
         await db.query(
             "INSERT INTO assignments (IDUser, IDGroup) VALUES (?, ?)",
             [IDUser, IDGroup]
         );
         
-        res.status(201).json({ message: "User assigned to group successfully" });
+        res.status(201).json({ message: "Usuario asignado al grupo correctamente." });
     } catch (error) {
-        // Aunque la auto-migración borra previos, dejamos este catch por si acaso (ej. doble click rápido en el front)
         if (error.code === 'ER_DUP_ENTRY') {
-            return res.status(400).json({ message: "User is already in this group" });
+            return res.status(400).json({ message: "El usuario ya está en este grupo." });
         }
         console.error("Error asignando usuario:", error);
         res.status(500).json({ message: error.message });

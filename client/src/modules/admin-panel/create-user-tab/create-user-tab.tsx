@@ -10,44 +10,26 @@ import { User } from '../../shared/api/domain/user';
 import '../styles/admin-add-card.css';
 import useCreateUser from './hooks/use-create-user';
 
-/**
- * CreateUserTab component
- *
- * Renders a form to create a new user.
- * - Validates user input using Zod.
- * - Sends user data to the backend via a custom hook.
- * - Displays error or success messages depending on the result.
- */
 const CreateUserTab: React.FC = () => {
 	const [name, setName] = useState<string>('');
 	const [passwd, setPasswd] = useState<string>('');
 	const [role, setRole] = useState(ROLES.PLAYER);
-	const [group, setGroup] = useState<string>('');
+	// 1. Cambiamos group por realName
+	const [realName, setRealName] = useState<string>(''); 
 	const [validationError, setValidationError] = useState<string | null>(null);
 
 	const { createUser, error, success } = useCreateUser();
 
-	/**
-	 * Zod schema for user form validation.
-	 * - Validates name, password, group, and role.
-	 */
 	const createUserSchema = z.object({
 		name: z.string().min(1, 'User name is required'),
 		passwd: z.string().min(1, 'User password is required'),
-		group: z.string().min(1, 'User group is required'),
+		// 2. Validamos realName en lugar de group (opcional o requerido, según prefieras)
+		realName: z.string().optional(), 
 		role: z.enum(Object.values(ROLES) as [string, ...string[]], {
 			errorMap: () => ({ message: 'Invalid role selected' })
 		})
 	});
 
-	/**
-	 * Handles form submission:
-	 * - Validates fields.
-	 * - Creates a User instance.
-	 * - Triggers the user creation process.
-	 *
-	 * @param e - React form submit event
-	 */
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
@@ -56,7 +38,7 @@ const CreateUserTab: React.FC = () => {
 		const validationResult = createUserSchema.safeParse({
 			name,
 			passwd,
-			group,
+			realName, // 3. Pasamos realName a la validación
 			role
 		});
 
@@ -67,14 +49,16 @@ const CreateUserTab: React.FC = () => {
 			return;
 		}
 
-		const newUser = new User(0, role, name, passwd);
+        // 4. ATENCIÓN: Asegúrate de que la clase User esté actualizada en 'domain/user.ts' 
+        // para aceptar realName en su constructor si es necesario enviarlo.
+		const newUser = new User(0, role, name, passwd, realName);
 
 		await createUser(newUser);
 
 		setName('');
 		setPasswd('');
 		setRole(ROLES.PLAYER);
-		setGroup('');
+		setRealName(''); // 5. Limpiamos el nuevo estado
 	};
 
 	return (
@@ -85,7 +69,6 @@ const CreateUserTab: React.FC = () => {
 		>
 			<h3 className='text-center mb-4'>Create User</h3>
 
-			{/* Input for user name */}
 			<Input
 				placeholder='New User'
 				type='text'
@@ -93,7 +76,6 @@ const CreateUserTab: React.FC = () => {
 				onChange={e => setName(e.target.value)}
 			/>
 
-			{/* Input for user password */}
 			<Input
 				placeholder='User Password'
 				type='password'
@@ -101,25 +83,22 @@ const CreateUserTab: React.FC = () => {
 				onChange={e => setPasswd(e.target.value)}
 			/>
 
-			{/* Input for user group */}
+			{/* 6. Cambiamos el Input visual para que pida el Real Name */}
 			<Input
-				placeholder='User Group'
+				placeholder='Real Name'
 				type='text'
-				value={group}
-				onChange={e => setGroup(e.target.value)}
+				value={realName}
+				onChange={e => setRealName(e.target.value)}
 			/>
 
-			{/* Dropdown for selecting user role */}
 			<Dropdown
 				options={Object.values(ROLES)}
 				placeholder='User Role'
 				onChange={value => setRole(value)}
 			/>
 
-			{/* Submit button */}
 			<Button text='Create' />
 
-			{/* Feedback messages */}
 			{error && <Toast type='error' message={error} />}
 			{validationError && <Toast type='error' message={validationError} />}
 			{success && <Toast type='success' message={'User created'} />}

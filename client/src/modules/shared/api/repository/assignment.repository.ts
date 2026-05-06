@@ -12,9 +12,10 @@ export const assignmentRepository = {
         return response as GroupUser[];
     },
     
-    assignUser: async (userId: number, groupId: number): Promise<void> => {
+    // Cambiamos userId por userName
+    assignUser: async (userName: string, groupId: number): Promise<void> => {
         await HttpClient.post(`/assignments`, { 
-            IDUser: userId, 
+            UserName: userName, // Mandamos la cadena de texto
             IDGroup: groupId 
         });
     },
