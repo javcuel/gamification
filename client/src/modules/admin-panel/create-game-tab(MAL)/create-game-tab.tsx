@@ -17,7 +17,6 @@ import useCreateGame from './hooks/use-create-game';
  */
 const CreateGameTab: React.FC = () => {
 	const [name, setName] = useState<string>('');
-	// const [idSubject, setIdSubject] = useState<string>(''); out
 	const [img, setImg] = useState<string>('');
 	const [validationError, setValidationError] = useState<string | null>(null);
 
@@ -59,7 +58,6 @@ const CreateGameTab: React.FC = () => {
 		}
 
 		const newGame = new GameCreate(
-			// Number(idSubject), out
 			name,
 			img
 		);
@@ -67,7 +65,6 @@ const CreateGameTab: React.FC = () => {
 		await createGame(newGame); // Here: Debug
 
 		setName('');
-		// setIdSubject(''); out
 		setImg('');
 	};
 
@@ -94,22 +91,13 @@ const CreateGameTab: React.FC = () => {
 				value={img}
 				onChange={e => setImg(e.target.value)}
 			/>
-
-			{/* Dropdown for subject selection */}
-			
-			{/*<Dropdown
-				options={['Option 1', 'Option 2', 'Option 3']}
-				placeholder='Subject'
-				onChange={value => setIdSubject(value)} out
-			/>*/}
-
 			{/* Submit button */}
 			<Button text='Create' />
 
 			{/* Error and success messages */}
 			{error && <Toast type='error' message={error} />}
 			{validationError && <Toast type='error' message={validationError} />}
-			{success && <Toast type='success' message={'Subject created'} />}
+			{success && <Toast type='success' message={'Game created'} />}
 		</form>
 	);
 };

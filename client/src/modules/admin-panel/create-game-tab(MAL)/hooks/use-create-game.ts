@@ -29,23 +29,30 @@ const useCreateGame = () => {
 	 * @param data - The game data to be sent for creation
 	 */
 	const createGame = async (data: GameCreate) => {
-		setError(null);
-		setSuccess(false);
+	setError(null);
+	setSuccess(false);
 
-		try {
-			await gameRepository.create(data); // Here: Data
-			setSuccess(true);
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				setError(error.message);
-			} else {
-				setError('An unknown error occurred');
-			}
-		} finally {
-			setLoading(false);
+	try {
+		// 1. Instanciamos un nuevo objeto FormData
+		const formData = new FormData();
+		
+		// 2. Añadimos las propiedades de GameCreate al FormData
+		formData.append('name', data.name);
+		formData.append('img', data.img);
+
+		// 3. Pasamos el formData al repositorio en lugar de "data"
+		await gameRepository.create(formData); 
+		setSuccess(true);
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			setError(error.message);
+		} else {
+			setError('An unknown error occurred');
 		}
-	};
-
+	} finally {
+		setLoading(false);
+	}
+};
 	return { createGame, error, success, loading };
 };
 

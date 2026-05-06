@@ -67,10 +67,10 @@ export const createGame = async (req, res) => {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
-  // Si decides hacer el archivo obligatorio para crear el juego, descomenta esto:
-  // if (!file) {
-  //   return res.status(400).json({ message: "Game .zip file is required" });
-  // }
+  
+   if (!file) {
+     return res.status(400).json({ message: "Game .zip file is required" });
+   }
 
   try {
     // 1. Insertamos en la Base de Datos
@@ -170,9 +170,6 @@ export const updateGame = async (req, res) => {
   const { Name, UrlImagen } = req.body; 
   try {
     await db.query(
-      /*"UPDATE games SET Name = ?, IDSubject = ?, UrlImagen = ? WHERE IDGame = ?",
-      [Name, IDSubject, UrlImagen, id]
-    ); out */
     "UPDATE games SET Name = ?, UrlImagen = ? WHERE IDGame = ?",
       [Name , UrlImagen, id]
     );

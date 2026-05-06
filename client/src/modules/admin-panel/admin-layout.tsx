@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Dropdown from '../shared/components/ui/Dropdown';
-import AddGameTab from './create-game-tab/create-game-tab';
+// import AddGameTab from './create-game-tab/create-game-tab';
 import AddSubjectTab from './create-subject-tab/create-subject-tab';
 import AddUserTab from './create-user-tab/create-user-tab';
 import './styles/admin-panel.css';
@@ -41,7 +41,7 @@ const AdminLayout: React.FC = () => {
 		{ id: 'tab7', label: 'Games' },
 		{ id: 'tab2', label: 'Users' },
 		{ id: 'tab3', label: 'Add Subject' },
-		{ id: 'tab4', label: 'Add Game' },
+		// { id: 'tab4', label: 'Add Game' },
 		{ id: 'tab5', label: 'Add User' },
 		{ id: 'tab6', label: 'Add Theme' },
 	];
@@ -82,7 +82,7 @@ const AdminLayout: React.FC = () => {
 					{activeTab === 'tab7' && <GamesTab />}
 					{activeTab === 'tab2' && <UsersTab />}
 					{activeTab === 'tab3' && <AddSubjectTab />}
-					{activeTab === 'tab4' && <AddGameTab />}
+					{/* {activeTab === 'tab4' && <AddGameTab />} */}
 					{activeTab === 'tab5' && <AddUserTab />}
 					{activeTab === 'tab6' && <ThemeTab />}
 				</div>

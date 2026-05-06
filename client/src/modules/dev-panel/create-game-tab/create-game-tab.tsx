@@ -8,7 +8,6 @@ import useCreateGame from './hooks/use-create-game';
 
 const CreateGameTab: React.FC = () => {
 	const [name, setName] = useState<string>('');
-	const [idSubject, setIdSubject] = useState<string>('');
 	const [img, setImg] = useState<string>('');
     const [file, setFile] = useState<File | null>(null); // NUEVO ESTADO
 	const [validationError, setValidationError] = useState<string | null>(null);
@@ -52,7 +51,6 @@ const CreateGameTab: React.FC = () => {
         // Limpiamos todo tras éxito
         if (!error) {
             setName('');
-            setIdSubject('');
             setImg('');
             setFile(null);
         }
@@ -68,7 +66,6 @@ const CreateGameTab: React.FC = () => {
 
 			<Input placeholder='New Game' type='text' value={name} onChange={e => setName(e.target.value)} />
 			<Input placeholder='Game Img URL' type='text' value={img} onChange={e => setImg(e.target.value)} />
-			<Dropdown options={['Option 1', 'Option 2', 'Option 3']} placeholder='Subject' onChange={value => setIdSubject(value)} />
 
             {/* NUEVO INPUT DE ARCHIVO .ZIP */}
             <div className="w-100 d-flex flex-column gap-2" style={{ maxWidth: '300px' }}>
