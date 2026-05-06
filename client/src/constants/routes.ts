@@ -9,7 +9,7 @@ export const ROUTES = {
 	LOGIN: '/',
 	HOME: '/Home',
 	RANKING: '/Ranking',
-	ADMIN_PANEL: '/AdminPanel',
+	ADMIN_OR_TEACH_PANEL: '/AdminPanel',
 	DEV_PANEL: '/DevPanel',
 	PLAY: (gameId: string | number) => `/Play/${gameId}`,
 	GAME_SELECTOR: (subjectId: string | number) => `/GameSelector/${subjectId}`

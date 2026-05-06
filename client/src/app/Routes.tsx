@@ -86,10 +86,10 @@ const routes: RouteObject[] = [
 		)
 	},
 	{
-		path: ROUTES.ADMIN_PANEL,
+		path: ROUTES.ADMIN_OR_TEACH_PANEL,
 		element: (
 			<ProtectedRoute
-				allowedRoles={roleService.getAllowedRolesForRoute(ROUTES.ADMIN_PANEL)}
+				allowedRoles={roleService.getAllowedRolesForRoute(ROUTES.ADMIN_OR_TEACH_PANEL)}
 			>
 				<AdminPage />
 			</ProtectedRoute>

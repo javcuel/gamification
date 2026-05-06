@@ -53,6 +53,7 @@ DROP TABLE IF EXISTS `session`;
 CREATE TABLE `session` (
   `IDSession` int NOT NULL AUTO_INCREMENT,
   `IDUser` int NOT NULL, 
+  `DeviceType` varchar(20) DEFAULT 'Desktop',
   `LoginTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `LogoutTime` datetime DEFAULT NULL,
   PRIMARY KEY (`IDSession`),
@@ -106,7 +107,7 @@ CREATE TABLE `play` (
 DROP TABLE IF EXISTS `games`;
 CREATE TABLE `games` (
   `IDGame` int NOT NULL AUTO_INCREMENT,
-  `UrlImagen` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `UrlImagen` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `Name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL, -- Reducido a 100 para indexación
   `Abierto` tinyint(1) NOT NULL,
   `Visible` tinyint(1) NOT NULL,
@@ -129,9 +130,9 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `subjects`;
 CREATE TABLE `subjects` (
   `IDSubject` int NOT NULL AUTO_INCREMENT,
-  `Name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `UrlImgMundo` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `UrlImgDentro` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `UrlImgMundo` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `UrlImgDentro` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `Posicion` int NOT NULL DEFAULT 0,
   `Abierto` tinyint(1) NOT NULL DEFAULT 0,
   `Visible` tinyint(1) NOT NULL DEFAULT 1,
@@ -188,6 +189,7 @@ CREATE TABLE `subjectGroups` (
   `IDGroup` int NOT NULL AUTO_INCREMENT,
   `Name` varchar(100) NOT NULL, 
   `IDSubject` int NOT NULL,
+  `IsTeacherGroup` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`IDGroup`),
   UNIQUE KEY `idx_group_subject` (`Name`, `IDSubject`), -- Evita grupos duplicados en una asignatura
   CONSTRAINT `fk_group_subject` FOREIGN KEY (`IDSubject`) 

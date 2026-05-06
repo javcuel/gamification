@@ -75,7 +75,7 @@ export const getRankingG = async (req, res) => {
       JOIN content c ON pgt.IDGame = c.IDGame
       JOIN assignments a ON pgt.IDUser = a.IDUser
       JOIN subjectGroups sg ON a.IDGroup = sg.IDGroup AND sg.IDSubject = c.IDSubject
-      WHERE c.IDSubject = ?
+      WHERE c.IDSubject = ? AND sg.IsTeacherGroup = 0 -- Ocultar grupo de profesores
       GROUP BY sg.IDGroup, sg.Name
       ORDER BY TotalScore DESC, TotalTime ASC;
     `;
@@ -125,7 +125,7 @@ export const getRankingGG = async (req, res) => {
       JOIN content c ON pgt.IDGame = c.IDGame
       JOIN assignments a ON pgt.IDUser = a.IDUser
       JOIN subjectGroups sg ON a.IDGroup = sg.IDGroup AND sg.IDSubject = c.IDSubject
-      WHERE c.IDSubject = ? AND pgt.IDGame = ?
+      WHERE c.IDSubject = ? AND pgt.IDGame = ? AND sg.IsTeacherGroup = 0 -- Ocultar grupo de profesores
       GROUP BY sg.IDGroup, sg.Name
       ORDER BY TotalScore DESC, TotalTime ASC;
     `;

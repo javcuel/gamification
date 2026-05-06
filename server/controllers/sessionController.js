@@ -3,19 +3,25 @@ import db from "../config/db.js";
 // Create a new session record when a user logs IN
 export const createSession = async (req, res) => {
     const { IDUser } = req.body;
+    
+    // 1. Capturamos el User-Agent de las cabeceras HTTP
+    const userAgent = req.headers['user-agent'] || '';
+
+    // 2. Expresión regular sencilla para detectar móviles y tablets
+    const isMobile = /mobile|android|iphone|ipad|tablet/i.test(userAgent);
+    const deviceType = isMobile ? 'Mobile' : 'Desktop';
 
     try {
-        // 1. CERRAMOS CUALQUIER SESIÓN ABIERTA PREVIA DEL MISMO USUARIO
-        // Esto limpia los "NULL" que quedaron por cerrar la pestaña
+        // 3. CERRAMOS CUALQUIER SESIÓN ABIERTA PREVIA DEL MISMO USUARIO
         await db.query(
             "UPDATE session SET LogoutTime = NOW() WHERE IDUser = ? AND LogoutTime IS NULL",
             [IDUser]
         );
 
-        // 2. CREAMOS LA NUEVA SESIÓN
+        // 4. CREAMOS LA NUEVA SESIÓN (Ahora guardando también el DeviceType)
         const [result] = await db.query(
-            "INSERT INTO session (IDUser) VALUES (?)",
-            [IDUser]
+            "INSERT INTO session (IDUser, DeviceType) VALUES (?, ?)",
+            [IDUser, deviceType]
         );
 
         res.status(201).json({ 

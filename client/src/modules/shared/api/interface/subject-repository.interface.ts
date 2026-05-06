@@ -12,6 +12,20 @@ export interface ISubjectRepository {
 	getAll(): Promise<Subject[]>;
 
 	/**
+	 * Fetches subjects associated with a specific user.
+	 * @param userId - The ID of the user.
+	 * @returns A promise resolving to an array of Subject entities.
+	 */
+	getByUser(userId: number): Promise<Subject[]>;
+
+	/**
+	 * Fetches subjects associated with a specific teacher (ignoring visibility constraints).
+	 * @param userId - The ID of the teacher.
+	 * @returns A promise resolving to an array of Subject entities.
+	 */
+	getByTeacher(userId: number): Promise<Subject[]>;
+
+	/**
 	 * Creates a new subject entry.
 	 * @param data - The data required to create a new subject.
 	 * @returns A promise that resolves when the operation is complete.
@@ -45,7 +59,15 @@ export interface ISubjectRepository {
 	/**
 	 * Deletes a subject by its ID.
 	 * @param id - The ID of the subject to delete.
-	 * @returns A promise that resolves when the subject has been successfully removed.
+	 * @returns A promise that resolves when the subject has been deleted.
 	 */
 	delete(id: number): Promise<void>;
+
+	/**
+	 * Uploads a CSV file to import users and assign them to subject groups.
+	 * @param subjectId - The ID of the target subject.
+	 * @param file - The CSV file containing user and group data.
+	 * @returns A promise resolving to the import report.
+	 */
+	importUsersFromCsv(subjectId: number, file: File): Promise<any>;
 }

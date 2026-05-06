@@ -18,10 +18,22 @@ export const createGroup = async (req, res) => {
     }
 };
 
-// Eliminar un grupo (El ON DELETE CASCADE de la BD limpiará assignments automáticamente)
+// Eliminar un grupo (Protegido contra el grupo de Profesores)
 export const deleteGroup = async (req, res) => {
     const { id } = req.params;
     try {
+        // 1. Verificar si el grupo tiene el flag de profesor activado
+        const [[group]] = await db.query("SELECT IsTeacherGroup FROM subjectGroups WHERE IDGroup = ?", [id]);
+
+        if (!group) {
+            return res.status(404).json({ message: "Group not found" });
+        }
+
+        if (group.IsTeacherGroup === 1) {
+            return res.status(403).json({ message: "Acción denegada: No se puede borrar el grupo por defecto de Profesores." });
+        }
+
+        // 2. Si no es de profesores, procedemos a borrar
         await db.query("DELETE FROM subjectGroups WHERE IDGroup = ?", [id]);
         res.json({ message: "Group deleted successfully" });
     } catch (error) {

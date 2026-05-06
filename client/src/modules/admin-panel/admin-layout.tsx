@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Dropdown from '../shared/components/ui/Dropdown';
-// import AddGameTab from './create-game-tab/create-game-tab';
 import AddSubjectTab from './create-subject-tab/create-subject-tab';
 import AddUserTab from './create-user-tab/create-user-tab';
 import './styles/admin-panel.css';
@@ -9,12 +8,14 @@ import ThemeTab from './theme-tab/admin-theme-tab';
 import UsersTab from './users-tab/users-tab';
 import GamesTab from './games-tab/games-tab';
 
-/**
- * AdminLayout component
- *
- * Renders the main layout of the admin panel with tab-based navigation.
- */
+// 1. IMPORTAMOS EL CONTEXTO DE AUTENTICACIÓN
+import { useAuth } from '../../context/auth-context'; 
+
 const AdminLayout: React.FC = () => {
+    // 2. OBTENEMOS EL USUARIO Y SU ROL
+    const { user } = useAuth();
+    const userRole = user?.role || 'P'; // Por defecto 'P' como medida de seguridad
+
 	const [activeTab, setActiveTab] = useState('tab1');
 	const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 	const [menuOpen, setMenuOpen] = useState(false);
@@ -35,16 +36,19 @@ const AdminLayout: React.FC = () => {
 		setMenuOpen(false);
 	};
 
-	// 2. Añadimos la nueva pestaña 'tab8'
-	const tabs = [
-		{ id: 'tab1', label: 'Subjects' },
-		{ id: 'tab7', label: 'Games' },
-		{ id: 'tab2', label: 'Users' },
-		{ id: 'tab3', label: 'Add Subject' },
-		// { id: 'tab4', label: 'Add Game' },
-		{ id: 'tab5', label: 'Add User' },
-		{ id: 'tab6', label: 'Add Theme' },
-	];
+
+	// 3. DEFINIMOS LOS PERMISOS DE CADA PESTAÑA (Corregido sin el rol 'D')
+		const allTabs = [
+			{ id: 'tab1', label: 'Subjects', allowedRoles: ['A', 'T'] }, // Solo Admin y Profesores
+			{ id: 'tab7', label: 'Games', allowedRoles: ['A'] },         // Solo Admin
+			{ id: 'tab2', label: 'Users', allowedRoles: ['A'] },         // Solo Admin
+			{ id: 'tab3', label: 'Add Subject', allowedRoles: ['A'] },   // Solo Admin
+			{ id: 'tab5', label: 'Add User', allowedRoles: ['A'] },      // Solo Admin
+			{ id: 'tab6', label: 'Add Theme', allowedRoles: ['A'] },     // Solo Admin
+		];
+
+    // 4. FILTRAMOS LAS PESTAÑAS
+    const tabs = allTabs.filter(tab => tab.allowedRoles.includes(userRole));
 
 	return (
 		<div className='admin-container'>
@@ -78,13 +82,13 @@ const AdminLayout: React.FC = () => {
 				)}
 
 				<div className='panel-content'>
-					{activeTab === 'tab1' && <SubjectsTab />}
-					{activeTab === 'tab7' && <GamesTab />}
-					{activeTab === 'tab2' && <UsersTab />}
-					{activeTab === 'tab3' && <AddSubjectTab />}
-					{/* {activeTab === 'tab4' && <AddGameTab />} */}
-					{activeTab === 'tab5' && <AddUserTab />}
-					{activeTab === 'tab6' && <ThemeTab />}
+                    {/* Renderizado seguro: comprueba que el usuario tenga la tab en su lista de permitidas */}
+					{activeTab === 'tab1' && tabs.some(t => t.id === 'tab1') && <SubjectsTab />}
+					{activeTab === 'tab7' && tabs.some(t => t.id === 'tab7') && <GamesTab />}
+					{activeTab === 'tab2' && tabs.some(t => t.id === 'tab2') && <UsersTab />}
+					{activeTab === 'tab3' && tabs.some(t => t.id === 'tab3') && <AddSubjectTab />}
+					{activeTab === 'tab5' && tabs.some(t => t.id === 'tab5') && <AddUserTab />}
+					{activeTab === 'tab6' && tabs.some(t => t.id === 'tab6') && <ThemeTab />}
 				</div>
 			</div>
 		</div>

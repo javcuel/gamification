@@ -38,6 +38,20 @@ class SubjectRepository implements ISubjectRepository {
 			throw new Error('Failed to fetch subjects for user');
 		}
 	}
+	/**
+	 * Fetches subjects associated with a specific teacher (ignora si están ocultas).
+	 * @param userId - The ID of the teacher.
+	 * @returns A promise resolving to an array of Subject domain objects.
+	 */
+	async getByTeacher(userId: number): Promise<Subject[]> {
+		try {
+			const data = await HttpClient.get(`/subjects/teacher/${userId}`);
+			return data.map(SubjectMapper.toDomain);
+		} catch (error) {
+			console.error(`Error fetching subjects for teacher ${userId}`, error);
+			throw new Error('Failed to fetch subjects for teacher');
+		}
+	}
 
 	/**
 	 * Sends a request to create a new subject.

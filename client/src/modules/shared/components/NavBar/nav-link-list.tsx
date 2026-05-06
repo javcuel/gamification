@@ -17,7 +17,7 @@ const NAV_LINKS = [
 
 /**
  * Renders a list of navigation links based on the user's role.
- * Includes conditional links for admin and developer users, as well as a logout option.
+ * Includes conditional links for admin, teacher, and developer users, as well as a logout option.
  *
  * @param role - The current user's role used to determine access to role-specific links.
  */
@@ -36,7 +36,14 @@ const NavLinkList: React.FC<NavLinkProps> = ({ role }) => {
 			{/* Render admin-only navigation link */}
 			{role === ROLES.ADMIN && (
 				<div className='me-3'>
-					<LinkItem to={ROUTES.ADMIN_PANEL} label='Admin' />
+					<LinkItem to={ROUTES.ADMIN_OR_TEACH_PANEL} label='Admin' />
+				</div>
+			)}
+
+            {/* Render teacher-only navigation link */}
+			{role === ROLES.TEACHER && (
+				<div className='me-3'>
+					<LinkItem to={ROUTES.ADMIN_OR_TEACH_PANEL} label='Gestión' />
 				</div>
 			)}
 

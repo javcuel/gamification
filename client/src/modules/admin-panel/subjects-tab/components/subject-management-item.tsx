@@ -132,7 +132,7 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 				
 				{/* Añadimos d-flex flex-nowrap gap-2 para forzar los botones en 1 sola fila */}
 				<div className='subject-item-buttons d-flex flex-nowrap gap-2 align-items-center'>
-					<Button text="Alumnado" onClick={handleToggleGroups} />
+					<Button text="Participantes" onClick={handleToggleGroups} />
 					<Button text="Juegos" onClick={handleToggleGamesMenu} />
 					<Button type={isOpen ? 'unlock' : 'lock'} onClick={toggleOpenState} />
 					<Button type={isVisible ? 'visible' : 'hidden'} onClick={toggleVisibleState} />
@@ -220,7 +220,7 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 				)}
 			</div>
 			
-			{/* Sección de GRUPOS (Alumnado) */}
+			{/* Sección de GRUPOS (Participantes) */}
 			<div className={`subject-expand-container ${isGroupsExpanded ? 'expanded' : ''}`}>
 				{isGroupsExpanded && (
 					<div className="p-3 border-top bg-light bg-opacity-10">

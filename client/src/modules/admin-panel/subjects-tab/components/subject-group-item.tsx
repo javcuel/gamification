@@ -15,7 +15,6 @@ const SubjectGroupItem: React.FC<SubjectGroupItemProps> = ({ group, onDelete }) 
     const [isUsersExpanded, setIsUsersExpanded] = useState(false);
     const [newUserName, setNewUserName] = useState('');
 
-    // CONECTAMOS EL HOOK
     const { users, loading, error, addUser, removeUser, setError } = useGroupUsers(group.IDGroup, isUsersExpanded);
 
     const handleDeleteGroup = () => {
@@ -25,20 +24,16 @@ const SubjectGroupItem: React.FC<SubjectGroupItemProps> = ({ group, onDelete }) 
     };
 
     const handleAddUser = async () => {
-        // 1. Validamos que el input no esté vacío
         if (!newUserName.trim()) {
             setError("El nombre de usuario no puede estar vacío");
             return;
         }
         
         try {
-            // 2. Mandamos el string trimado (sin espacios extra a los lados)
             await addUser(newUserName.trim());
-            
-            // 3. Reseteamos la UI
             setNewUserName(''); 
             setIsAddingUser(false); 
-            setIsUsersExpanded(true); // Abrimos la lista para que vea que se añadió
+            setIsUsersExpanded(true);
         } catch (e) {
             // El error ya lo maneja el hook
         }
@@ -51,9 +46,18 @@ const SubjectGroupItem: React.FC<SubjectGroupItemProps> = ({ group, onDelete }) 
     };
 
     return (
-        <div className="border rounded">
+        <div className="border rounded mb-2">
             <div className="d-flex justify-content-between align-items-center p-2 subject-game-item-row">
-                <span className="fw-bold">{group.Name}</span>
+                <div className="d-flex align-items-center">
+                    <span className="fw-bold">{group.Name}</span>
+                    {/* EXTRA UX: Etiqueta visual para identificar el grupo de profesores */}
+                    {group.IsTeacherGroup === 1 && (
+                        <span className="badge bg-info ms-2" style={{ fontSize: '0.65rem' }}>
+                            Docentes
+                        </span>
+                    )}
+                </div>
+                
                 <div className="d-flex gap-2">
                     <Button 
                         text={isAddingUser ? "Cancelar" : "+ Usuario"} 
@@ -63,11 +67,14 @@ const SubjectGroupItem: React.FC<SubjectGroupItemProps> = ({ group, onDelete }) 
                         type={isUsersExpanded ? 'hidden' : 'visible'} 
                         onClick={() => setIsUsersExpanded(!isUsersExpanded)} 
                     />
-                    <Button type="delete" onClick={handleDeleteGroup} />
+                    {/* CONDICIONAL: Solo mostramos la papelera si NO es el grupo de Profesores */}
+                    {group.IsTeacherGroup !== 1 && (
+                        <Button type="delete" onClick={handleDeleteGroup} />
+                    )}
                 </div>
             </div>
 
-            {error && <div className="px-2"><Toast type="error" message={error} /></div>}
+            {error && <div className="px-2 pb-2"><Toast type="error" message={error} /></div>}
 
             {isAddingUser && (
                 <div className="d-flex gap-2 p-2 border-top bg-light bg-opacity-50">
@@ -92,12 +99,12 @@ const SubjectGroupItem: React.FC<SubjectGroupItemProps> = ({ group, onDelete }) 
                     ) : users.length > 0 ? (
                         users.map(user => (
                             <div key={user.IDUser} className="d-flex justify-content-between align-items-center p-1 border-bottom">
-                                <span className="small">{user.Name} <span className="text-muted">(ID: {user.IDUser} - {user.UserType})</span></span>
+                                <span className="small">{user.Name} <span className="text-muted">({user.UserType})</span></span>
                                 <Button type="delete" onClick={() => handleRemoveUser(user.IDUser, user.Name)} />
                             </div>
                         ))
                     ) : (
-                        <div className="text-muted small italic">No hay usuarios en este grupo.</div>
+                        <div className="text-muted small fst-italic">No hay usuarios en este grupo.</div>
                     )}
                 </div>
             )}

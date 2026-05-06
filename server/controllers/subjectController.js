@@ -11,7 +11,47 @@ export const getSubjects = async (req, res) => {
   }
 };
 
-// Creates a new subject
+export const getSubjectsByUser = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const query = `
+      SELECT DISTINCT s.*
+      FROM subjects s
+      JOIN subjectGroups sg ON s.IDSubject = sg.IDSubject
+      JOIN assignments a ON sg.IDGroup = a.IDGroup
+      WHERE a.IDUser = ? AND s.Visible = 1
+      ORDER BY s.Posicion ASC;
+    `;
+    const [rows] = await db.query(query, [userId]);
+    res.json(rows);
+  } catch (error) {
+    console.error("Error obteniendo asignaturas por usuario:", error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Obtiene las asignaturas de un profesor (ignora si están ocultas o cerradas)
+export const getSubjectsByTeacher = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const query = `
+      SELECT DISTINCT s.*
+      FROM subjects s
+      JOIN subjectGroups sg ON s.IDSubject = sg.IDSubject
+      JOIN assignments a ON sg.IDGroup = a.IDGroup
+      WHERE a.IDUser = ? 
+      ORDER BY s.Posicion ASC;
+    `;
+    const [rows] = await db.query(query, [userId]);
+    res.json(rows);
+  } catch (error) {
+    console.error("Error obteniendo asignaturas por profesor:", error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+// Creates a new subject (Y su grupo de profesores por defecto)
 export const createSubject = async (req, res) => {
   const { Name, UrlImgMundo, UrlImgDentro } = req.body;
 
@@ -20,13 +60,23 @@ export const createSubject = async (req, res) => {
   }
 
   try {
+    // 1. Crear la Asignatura
     const [result] = await db.query(
       "INSERT INTO subjects (Name, UrlImgMundo, UrlImgDentro, Posicion, Abierto, Visible) VALUES (?, ?, ?, ?, ?, ?)",
       [Name, UrlImgMundo, UrlImgDentro, 0, 0, 0] // Defaults: position = 0, open = false, visible = false
     );
+    
+    const newSubjectId = result.insertId;
+
+    // 2. AUTO-CREACIÓN: Crear el grupo blindado de Profesores para esta asignatura
+    await db.query(
+      "INSERT INTO subjectGroups (Name, IDSubject, IsTeacherGroup) VALUES (?, ?, 1)",
+      ['Profesores', newSubjectId]
+    );
+
     res
       .status(201)
-      .json({ message: "Subject created successfully", id: result.insertId });
+      .json({ message: "Subject and Teacher Group created successfully", id: newSubjectId });
   } catch (error) {
     console.error("Error creating subject:", error);
     res.status(500).json({ message: "Error creating subject" });
@@ -101,24 +151,7 @@ export const deleteSubject = async (req, res) => {
   }
 };
 
-export const getSubjectsByUser = async (req, res) => {
-  const { userId } = req.params;
-  try {
-    const query = `
-      SELECT DISTINCT s.*
-      FROM subjects s
-      JOIN subjectGroups sg ON s.IDSubject = sg.IDSubject
-      JOIN assignments a ON sg.IDGroup = a.IDGroup
-      WHERE a.IDUser = ? AND s.Visible = 1
-      ORDER BY s.Posicion ASC;
-    `;
-    const [rows] = await db.query(query, [userId]);
-    res.json(rows);
-  } catch (error) {
-    console.error("Error obteniendo asignaturas por usuario:", error.message);
-    res.status(500).json({ error: error.message });
-  }
-};
+
 
 // Este método interactúa con tablas mas allá de subject lo cual viola el Principio de Responsabilidad Única (SRP) 
 // sin embargo ponemos por delante la facilidad de implementación para este caso en concreto como excepción

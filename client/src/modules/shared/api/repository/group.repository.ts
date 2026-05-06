@@ -4,11 +4,11 @@ export interface SubjectGroup {
     IDGroup: number;
     Name: string;
     IDSubject: number;
+    IsTeacherGroup: number; // <-- NUEVO FLAG (Suele llegar como 0 o 1 desde MySQL)
 }
 
 export const groupRepository = {
     getBySubject: async (subjectId: number): Promise<SubjectGroup[]> => {
-        // Asumiendo que tu HttpClient ya devuelve el body de la respuesta
         const response = await HttpClient.get(`/groups/subject/${subjectId}`);
         return response as SubjectGroup[];
     },

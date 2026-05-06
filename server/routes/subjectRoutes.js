@@ -8,6 +8,7 @@ import {
   updateSubjectOpenState,
   updateSubjectVisibleState,
   getSubjectsByUser,
+  getSubjectsByTeacher,
   importUsersToSubject 
 } from "../controllers/subjectController.js";
 
@@ -23,6 +24,7 @@ router.put("/:id/open", updateSubjectOpenState);
 router.put("/:id/visible", updateSubjectVisibleState);
 router.delete("/:id", deleteSubject);
 router.get("/user/:userId", getSubjectsByUser);
+router.get("/teacher/:userId", getSubjectsByTeacher);
 router.post("/:id/import-users", upload.single("csvFile"), importUsersToSubject);
 
 export default router;
