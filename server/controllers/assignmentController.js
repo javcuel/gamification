@@ -10,7 +10,7 @@ export const createAssignment = async (req, res) => {
         const [[user]] = await db.query("SELECT IDUser FROM users WHERE Name = ?", [UserName]);
         
         if (!user) {
-            return res.status(404).json({ message: `El usuario '${UserName}' no existe en el sistema.` });
+            return res.status(404).json({ message: `User '${UserName}' does not exist.` });
         }
         
         const IDUser = user.IDUser;
@@ -22,7 +22,7 @@ export const createAssignment = async (req, res) => {
         );
 
         if (!groupInfo) {
-            return res.status(404).json({ message: "El grupo especificado no existe." });
+            return res.status(404).json({ message: "Group does not exist" });
         }
 
         const subjectId = groupInfo.IDSubject;
@@ -40,10 +40,10 @@ export const createAssignment = async (req, res) => {
             [IDUser, IDGroup]
         );
         
-        res.status(201).json({ message: "Usuario asignado al grupo correctamente." });
+        res.status(201).json({ message: "User successfully assigned to the group." });
     } catch (error) {
         if (error.code === 'ER_DUP_ENTRY') {
-            return res.status(400).json({ message: "El usuario ya está en este grupo." });
+            return res.status(400).json({ message: "User is already assigned to group" });
         }
         console.error("Error asignando usuario:", error);
         res.status(500).json({ message: error.message });

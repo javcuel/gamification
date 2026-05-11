@@ -79,6 +79,8 @@ app.use("/api/game-sessions", gameSessionRoutes);
 app.use("/api/groups", groupRoutes);
 app.use("/api/assignments", assignmentRoutes);
 app.use("/api/plays", playRoutes);
+// Permitir acceso público a las imágenes subidas
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
 
 
 // Start the server

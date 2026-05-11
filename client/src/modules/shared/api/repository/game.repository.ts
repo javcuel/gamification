@@ -70,28 +70,32 @@ class GameRepository implements IGameRepository {
 
 
 	/**
-	 * Crea un nuevo juego enviando los datos y el archivo en formato FormData.
-	 * @param data - Objeto FormData con nombre, img y el archivo .zip
+	 * Crea un nuevo juego enviando los datos y los archivos al backend.
+	 * Se encarga de transformar el modelo de dominio en un FormData válido para HTTP.
+	 * * @param gameData - Instancia del modelo de dominio con la información y archivos
 	 */
-	async create(data: FormData): Promise<void> {
+	async create(gameData: GameCreate): Promise<void> {
 		try {
-			await HttpClient.post(API_URLS.CREATE_GAME, data);
+			// 1. El Repositorio asume la responsabilidad de empaquetar para HTTP
+			const formData = new FormData();
+			
+			formData.append('name', gameData.name);
+			formData.append('img', gameData.img);
+
+			// Adjuntamos el archivo .zip si existe
+			if (gameData.gameFile) {
+				formData.append('gameFile', gameData.gameFile);
+			}
+
+			// Adjuntamos la imagen física si el usuario decidió subirla en vez de URL
+			if (gameData.imageFile) {
+				formData.append('imageFile', gameData.imageFile);
+			}
+
+			// 2. Enviamos la petición
+			await HttpClient.post(API_URLS.CREATE_GAME, formData);
 		} catch (error) {
 			console.error('Error creating game', error);
-			throw new Error('Failed to create game');
-		}
-	}
-
-
-	/**
-	 * Crea un nuevo juego enviando los datos y el archivo en formato FormData.
-	 * @param data - Objeto FormData con nombre, img y el archivo .zip
-	 */
-	async createWithFile(data: FormData): Promise<void> {
-		try {
-			await HttpClient.post(API_URLS.CREATE_GAME, data);
-		} catch (error) {
-			console.error('Error creating game with file', error);
 			throw new Error('Failed to create game');
 		}
 	}

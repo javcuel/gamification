@@ -17,6 +17,8 @@ const SubjectGroupSection: React.FC<SubjectGroupSectionProps> = ({ subjectId }) 
     const [newGroupName, setNewGroupName] = useState('');
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
     
     // Hook de grupos
     const { groups, loading: groupsLoading, error: groupsError, addGroup, removeGroup, fetchGroups } = useGroups(subjectId);
@@ -53,6 +55,10 @@ const SubjectGroupSection: React.FC<SubjectGroupSectionProps> = ({ subjectId }) 
         }
     };
 
+    const handleUserAssigned = () => {
+        setRefreshTrigger(prev => prev + 1);
+    };
+
     return (
         <div className="d-flex flex-column gap-3">
             {/* Errores */}
@@ -62,7 +68,7 @@ const SubjectGroupSection: React.FC<SubjectGroupSectionProps> = ({ subjectId }) 
             {/* 2. CARGA MASIVA POR CSV */}
             <div className="card bg-dark border-secondary p-3 shadow-sm">
                 <label htmlFor={`csv-upload-${subjectId}`} className="form-label small text-light mb-2 fw-semibold">
-                    Importar Alumnos (CSV: UserName; Password; RealName; LabGroup)
+                    Load students (CSV: UserName; Password; RealName; LabGroup)
                 </label>
                 <div className="d-flex gap-2 align-items-center">
                     <input 
@@ -79,12 +85,12 @@ const SubjectGroupSection: React.FC<SubjectGroupSectionProps> = ({ subjectId }) 
                         onClick={handleUpload} 
                         disabled={!selectedFile || uploadLoading}
                     >
-                        {uploadLoading ? 'Subiendo...' : 'Cargar Archivo'}
+                        {uploadLoading ? 'Loading...' : 'Load file'}
                     </button>
                 </div>
             </div>
 
-            {uploadLoading && <LoadingMsg message="Procesando usuarios, por favor espera..." />}
+            {uploadLoading && <LoadingMsg message="Processing users, please wait..." />}
 
             {/* 3. REPORTE DE RESULTADOS */}
             {report && !uploadLoading && (
@@ -98,21 +104,21 @@ const SubjectGroupSection: React.FC<SubjectGroupSectionProps> = ({ subjectId }) 
                         <table className="table table-dark table-sm table-bordered text-center align-middle m-0" style={{ fontSize: '0.85rem' }}>
                             <thead className="table-secondary text-dark">
                                 <tr>
-                                    <th className="text-start">Entidad</th>
-                                    <th title="Registros creados de cero">🆕 Creados</th>
-                                    <th title="Registros ya existentes que se han actualizado (Upsert)">🔄 Actualizados</th>
-                                    <th title="Registros con fallos (campos vacíos, error BD...)">❌ Errores</th>
+                                    <th className="text-start">Entity</th>
+                                    <th title="Users created from scratch">🆕 Created</th>
+                                    <th title="Existing users that have been updated (Upsert)">🔄 Updated</th>
+                                    <th title="Errors (empty fields, error DB...)">❌ Errors</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td className="text-start fw-bold">Usuarios</td>
+                                    <td className="text-start fw-bold">Users</td>
                                     <td className="text-success">{report.users.created}</td>
                                     <td className="text-info">{report.users.updated}</td>
                                     <td className={report.users.errors > 0 ? "text-danger fw-bold" : "text-muted"}>{report.users.errors}</td>
                                 </tr>
                                 <tr>
-                                    <td className="text-start fw-bold">Asignaciones</td>
+                                    <td className="text-start fw-bold">Assignements</td>
                                     <td className="text-success">{report.assignments.created}</td>
                                     <td className="text-info">{report.assignments.updated}</td>
                                     <td className={report.assignments.errors > 0 ? "text-danger fw-bold" : "text-muted"}>{report.assignments.errors}</td>
@@ -123,7 +129,7 @@ const SubjectGroupSection: React.FC<SubjectGroupSectionProps> = ({ subjectId }) 
 
                     {report.updatedDetails && report.updatedDetails.length > 0 && (
                         <div className="mt-2">
-                            <h6 className="text-info small fw-bold mb-1">Detalles de Actualizaciones ({report.updatedDetails.length}):</h6>
+                            <h6 className="text-info small fw-bold mb-1">Update details ({report.updatedDetails.length}):</h6>
                             <div className="p-2 bg-dark border border-info rounded" style={{ maxHeight: '120px', overflowY: 'auto', fontSize: '0.75rem' }}>
                                 <ul className="mb-0 text-info ps-3">
                                     {report.updatedDetails.map((msg, index) => (
@@ -152,16 +158,16 @@ const SubjectGroupSection: React.FC<SubjectGroupSectionProps> = ({ subjectId }) 
             {/* 1. CREACIÓN MANUAL DE GRUPO */}
             <div className="d-flex justify-content-between align-items-center">
                 <span className="fw-bold text-uppercase" style={{ fontSize: '0.8rem' }}>
-                    Gestión de Grupos
+                    Groups
                 </span>
                 <div className="d-flex gap-2">
                     <Input
                         type="text"
-                        placeholder="Nombre del grupo..."
+                        placeholder="Group's name ..."
                         value={newGroupName}
                         onChange={(e) => setNewGroupName(e.target.value)}
                     />
-                    <Button text="Crear" onClick={handleCreateGroup} disabled={groupsLoading || uploadLoading} />
+                    <Button text="Create" onClick={handleCreateGroup} disabled={groupsLoading || uploadLoading} />
                 </div>
             </div>
             
@@ -175,10 +181,12 @@ const SubjectGroupSection: React.FC<SubjectGroupSectionProps> = ({ subjectId }) 
                             key={group.IDGroup} 
                             group={group} 
                             onDelete={() => removeGroup(group.IDGroup)} 
+                            onUserAssigned={handleUserAssigned}
+                            refreshTrigger={refreshTrigger}
                         />
                     ))
                 ) : (
-                    !groupsLoading && <div className="text-center text-muted small py-3 border rounded">No hay grupos para esta asignatura.</div>
+                    !groupsLoading && <div className="text-center text-muted small py-3 border rounded">No groups for this subject.</div>
                 )}
             </div>
         </div>

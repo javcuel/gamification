@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { assignmentRepository, GroupUser } from '../../../shared/api/repository/assignment.repository';
 
-const useGroupUsers = (groupId: number, isExpanded: boolean) => {
+const useGroupUsers = (groupId: number, isExpanded: boolean, refreshTrigger: number = 0) => {
     const [users, setUsers] = useState<GroupUser[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -21,7 +21,7 @@ const useGroupUsers = (groupId: number, isExpanded: boolean) => {
             }
         };
         fetchUsers();
-    }, [groupId, isExpanded]);
+    }, [groupId, isExpanded, refreshTrigger]);
 
     // Cambiamos userId por userName
     const addUser = async (userName: string) => {

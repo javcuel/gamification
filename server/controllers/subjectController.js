@@ -25,7 +25,7 @@ export const getSubjectsByUser = async (req, res) => {
     const [rows] = await db.query(query, [userId]);
     res.json(rows);
   } catch (error) {
-    console.error("Error obteniendo asignaturas por usuario:", error.message);
+    console.error("Error obtaining user's subjects:", error.message);
     res.status(500).json({ error: error.message });
   }
 };
@@ -45,7 +45,7 @@ export const getSubjectsByTeacher = async (req, res) => {
     const [rows] = await db.query(query, [userId]);
     res.json(rows);
   } catch (error) {
-    console.error("Error obteniendo asignaturas por profesor:", error.message);
+    console.error("Error obtaining teacher's subjects:", error.message);
     res.status(500).json({ error: error.message });
   }
 };
@@ -193,7 +193,7 @@ export const importUsersToSubject = async (req, res) => {
     try {
       // 1. Validaciones estrictas
       if (!userName || !password || !labGroup) {
-        throw new Error("Campos obligatorios faltantes. Se requiere UserName, Password y LabGroup.");
+        throw new Error("Missing required fields. UserName, Password and LabGroup. are required");
       }
 
       // 2. Gestión del Usuario (UPSERT)
@@ -208,7 +208,7 @@ export const importUsersToSubject = async (req, res) => {
           [password, realName || null, userId]
         );
         report.users.updated++;
-        report.updatedDetails.push(`Fila ${i + 1} (${userName}): Contraseña/Datos actualizados y asignado a '${labGroup}'.`);
+        report.updatedDetails.push(`Row ${i + 1} (${userName}): Password/Data updated and assigned to '${labGroup}'.`);
       } else {
         // Creamos usuario nuevo con rol 'P'
         const [result] = await db.query(

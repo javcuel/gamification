@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../admin-panel/styles/admin-panel.css';
 import Dropdown from '../shared/components/ui/Dropdown';
-import AddGameTab from './create-game-tab/create-game-tab';
+import AddGameTab from '../admin-panel/create-game-tab/create-game-tab';
 
 /**
  * DevLayout component

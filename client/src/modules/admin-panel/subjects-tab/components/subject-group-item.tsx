@@ -8,24 +8,31 @@ import Toast from '../../../shared/components/ui/toast';
 interface SubjectGroupItemProps {
     group: SubjectGroup;
     onDelete: () => void;
+    onUserAssigned: () => void;
+    refreshTrigger: number; 
 }
 
-const SubjectGroupItem: React.FC<SubjectGroupItemProps> = ({ group, onDelete }) => {
+const SubjectGroupItem: React.FC<SubjectGroupItemProps> = ({ 
+    group, 
+    onDelete, 
+    onUserAssigned, 
+    refreshTrigger 
+}) => {
     const [isAddingUser, setIsAddingUser] = useState(false);
     const [isUsersExpanded, setIsUsersExpanded] = useState(false);
     const [newUserName, setNewUserName] = useState('');
 
-    const { users, loading, error, addUser, removeUser, setError } = useGroupUsers(group.IDGroup, isUsersExpanded);
+    const { users, loading, error, addUser, removeUser, setError } = useGroupUsers(group.IDGroup, isUsersExpanded, refreshTrigger);
 
     const handleDeleteGroup = () => {
-        if (window.confirm(`¿Seguro que quieres borrar el grupo ${group.Name}? Se borrarán todos los alumnos asociados a él.`)) {
+        if (window.confirm(`¿Are you sure you want to delete ${group.Name}? All links with users will be eliminated as well.`)) {
             onDelete();
         }
     };
 
     const handleAddUser = async () => {
         if (!newUserName.trim()) {
-            setError("El nombre de usuario no puede estar vacío");
+            setError("User's name must not be empty");
             return;
         }
         
@@ -34,13 +41,17 @@ const SubjectGroupItem: React.FC<SubjectGroupItemProps> = ({ group, onDelete }) 
             setNewUserName(''); 
             setIsAddingUser(false); 
             setIsUsersExpanded(true);
+            
+            // ¡Avisamos al padre de que hemos movido un usuario!
+            onUserAssigned(); 
+            
         } catch (e) {
-            // El error ya lo maneja el hook
+            // Error manejado por el hook
         }
     };
 
     const handleRemoveUser = (userId: number, Name: string) => {
-        if (window.confirm(`¿Desvincular a ${Name} del grupo?`)) {
+        if (window.confirm(`¿Unlink ${Name} from group?`)) {
             removeUser(userId);
         }
     };
@@ -53,14 +64,14 @@ const SubjectGroupItem: React.FC<SubjectGroupItemProps> = ({ group, onDelete }) 
                     {/* EXTRA UX: Etiqueta visual para identificar el grupo de profesores */}
                     {group.IsTeacherGroup === 1 && (
                         <span className="badge bg-info ms-2" style={{ fontSize: '0.65rem' }}>
-                            Docentes
+                            Teachers
                         </span>
                     )}
                 </div>
                 
                 <div className="d-flex gap-2">
                     <Button 
-                        text={isAddingUser ? "Cancelar" : "+ Usuario"} 
+                        text={isAddingUser ? "Cancel" : "+ User"} 
                         onClick={() => setIsAddingUser(!isAddingUser)} 
                     />
                     <Button 
@@ -80,22 +91,22 @@ const SubjectGroupItem: React.FC<SubjectGroupItemProps> = ({ group, onDelete }) 
                 <div className="d-flex gap-2 p-2 border-top bg-light bg-opacity-50">
                     <Input
                         type="text"
-                        placeholder="Nombre de Usuario (Ej. juan_perez)"
+                        placeholder="User name (Ej. juan_perez)"
                         value={newUserName}
                         onChange={(e) => setNewUserName(e.target.value)}
                     />
-                    <Button text="Vincular" onClick={handleAddUser} disabled={loading} />
+                    <Button text="Assign" onClick={handleAddUser} disabled={loading} />
                 </div>
             )}
 
             {isUsersExpanded && (
                 <div className="p-2 border-top">
                     <small className="text-muted d-block mb-2 text-uppercase fw-bold" style={{ fontSize: '0.7rem' }}>
-                        Usuarios asignados ({users.length})
+                        Assigned users ({users.length})
                     </small>
                     
                     {loading ? (
-                        <div className="small text-muted">Cargando usuarios...</div>
+                        <div className="small text-muted">Loading users...</div>
                     ) : users.length > 0 ? (
                         users.map(user => (
                             <div key={user.IDUser} className="d-flex justify-content-between align-items-center p-1 border-bottom">
@@ -104,7 +115,7 @@ const SubjectGroupItem: React.FC<SubjectGroupItemProps> = ({ group, onDelete }) 
                             </div>
                         ))
                     ) : (
-                        <div className="text-muted small fst-italic">No hay usuarios en este grupo.</div>
+                        <div className="text-muted small fst-italic">No users assigned to this group</div>
                     )}
                 </div>
             )}

@@ -132,8 +132,8 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 				
 				{/* Añadimos d-flex flex-nowrap gap-2 para forzar los botones en 1 sola fila */}
 				<div className='subject-item-buttons d-flex flex-nowrap gap-2 align-items-center'>
-					<Button text="Participantes" onClick={handleToggleGroups} />
-					<Button text="Juegos" onClick={handleToggleGamesMenu} />
+					<Button text="Participants" onClick={handleToggleGroups} />
+					<Button text="Games" onClick={handleToggleGamesMenu} />
 					<Button type={isOpen ? 'unlock' : 'lock'} onClick={toggleOpenState} />
 					<Button type={isVisible ? 'visible' : 'hidden'} onClick={toggleVisibleState} />
 					<Button type='edit' onClick={() => setIsEditing(true)} />
@@ -165,7 +165,7 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 									if (isAdding) toggleAddMode();
 								}}
 							>
-								Juegos Asociados
+								Linked games
 							</button>
 							<button 
 								className={`btn btn-sm ${isAdding ? 'btn-primary' : 'btn-outline-primary'}`}
@@ -174,7 +174,7 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 									if (isExpanded) toggleExpand();
 								}}
 							>
-								Juegos No Asociados
+								Not linked games
 							</button>
 						</div>
 
@@ -193,7 +193,7 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 										/>
 									))
 								) : (
-									!loadingLinked && <div className="p-2 text-muted small">Esta asignatura no tiene juegos asociados.</div>
+									!loadingLinked && <div className="p-2 text-muted small">This subject does not have linked games.</div>
 								)}
 							</div>
 						)}
@@ -212,7 +212,7 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 									/>
 								))}
 								{unlinkedGames.length === 0 && !loadingUnlinked && (
-									<div className="p-2 text-muted small italic">No hay más juegos disponibles para esta asignatura.</div>
+									<div className="p-2 text-muted small italic">There are no more available games for this subject</div>
 								)}
 							</div>
 						)}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { GameCreate } from '../../../shared/api/domain/game';
 import { gameRepository } from '../../../shared/api/repository/game.repository';
 
 const useCreateGame = () => {
@@ -6,14 +7,15 @@ const useCreateGame = () => {
 	const [success, setSuccess] = useState(false);
 	const [loading, setLoading] = useState<boolean>(true);
 
-    // Cambiamos GameCreate por FormData
-	const createGame = async (formData: FormData) => {
+	// El hook vuelve a recibir el modelo puro del dominio
+	const createGame = async (data: GameCreate) => {
 		setError(null);
 		setSuccess(false);
 
 		try {
-            // Usaremos una nueva función en el repositorio
-			await gameRepository.create(formData);
+			// Le pasamos el objeto limpio al repositorio. 
+            // El repositorio se encargará de convertirlo a FormData.
+			await gameRepository.create(data);
 			setSuccess(true);
 		} catch (error: unknown) {
 			if (error instanceof Error) {

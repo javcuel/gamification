@@ -41,14 +41,16 @@ export class GameCreate {
 	/**
 	 * Creates a new GameCreate instance.
 	 *
-	 * @param {number} idSubject - Identifier of the subject to which the game belongs
-	 * @param {string} img - Game image
 	 * @param {string} name - Game name
+	 * @param {string} img - Game image URL (can be empty if uploading file)
+	 * @param {File | null} gameFile - The .zip file containing the game
+	 * @param {File | null} imageFile - The optional physical image file
 	 */
 	constructor(
-		// public idSubject: number, out
 		public name: string,
-		public img: string
+		public img: string,
+		public gameFile: File | null = null,
+		public imageFile: File | null = null
 	) {}
 }
 

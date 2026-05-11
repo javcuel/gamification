@@ -58,99 +58,109 @@ export const getGamesBySubject = async (req, res) => {
 
 // Creates a new game and extracts the uploaded .zip file
 export const createGame = async (req, res) => {
-  // Los datos de texto ahora vienen en req.body (porque usamos FormData en React)
   const { name, img } = req.body; 
-  // El archivo viene en req.file
-  const file = req.file;
+  
+  // Extraemos los archivos de req.files
+  const gameFiles = req.files && req.files['gameFile'] ? req.files['gameFile'] : null;
+  const imageFiles = req.files && req.files['imageFile'] ? req.files['imageFile'] : null;
 
-  if (!name || !img ) {
+  const file = gameFiles ? gameFiles[0] : null; // El .zip
+  const imageFile = imageFiles ? imageFiles[0] : null; // La imagen (opcional)
+
+  if (!name) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
-  
-   if (!file) {
-     return res.status(400).json({ message: "Game .zip file is required" });
-   }
+  if (!file) {
+    return res.status(400).json({ message: "Game .zip file is required" });
+  }
+
+  // --- NUEVA LÓGICA DE LA IMAGEN ---
+  let finalImgUrl = img || ""; // Por defecto, usamos la URL de texto si la mandan
+
+  // Si el usuario ha subido un archivo de imagen real
+  if (imageFile) {
+    const imagesDir = path.join(__dirname, "..", "public", "images");
+    
+    // Asegurarnos de que la carpeta existe
+    if (!fs.existsSync(imagesDir)) {
+      fs.mkdirSync(imagesDir, { recursive: true });
+    }
+
+    // Le ponemos un nombre único usando la fecha actual para que no haya conflictos
+    const imageName = `${Date.now()}-${imageFile.originalname.replace(/\\s+/g, '_')}`;
+    const imagePath = path.join(imagesDir, imageName);
+
+    // Escribimos el archivo físico en el disco duro del servidor
+    fs.writeFileSync(imagePath, imageFile.buffer);
+
+    // Actualizamos la URL que se guardará en la base de datos
+    finalImgUrl = `/images/${imageName}`;
+  }
+  // ---------------------------------
 
   try {
-    // 1. Insertamos en la Base de Datos
+    // 1. Insertamos en la Base de Datos usando finalImgUrl
     const [result] = await db.query(
       "INSERT INTO games (Name, UrlImagen, Abierto, Visible, Disponible) VALUES (?, ?, ?, ?, ?)",
-      [name, img, 0, 0, 0] 
+      [name, finalImgUrl, 0, 0, 0] 
     );
     
     const newGameId = result.insertId;
 
-    // 2. Si se subió un archivo, procedemos a descomprimirlo
-    if (file) {
-      const extractPath = path.join(__dirname, "..", "public", "games", String(newGameId));
+    // 2. Descomprimimos el .zip (Tu código original intacto)
+    const extractPath = path.join(__dirname, "..", "public", "games", String(newGameId));
 
-      if (!fs.existsSync(extractPath)) {
-        fs.mkdirSync(extractPath, { recursive: true });
-      }
-
-      const zip = new AdmZip(file.buffer);
-      zip.extractAllTo(extractPath, true);
-      
-      // --- LÓGICA DE AUTO-CORRECCIÓN DE CARPETAS ---
-      const indexPath = path.join(extractPath, "index.html");
-
-      // Si index.html NO está en la raíz, comprobamos si hay una carpeta contenedora
-      if (!fs.existsSync(indexPath)) {
-        const items = fs.readdirSync(extractPath);
-
-        // Si solo hay exactamente 1 elemento y resulta ser una carpeta (ej. "MiJuego")
-        if (items.length === 1) {
-          const subfolderPath = path.join(extractPath, items[0]);
-
-          if (fs.statSync(subfolderPath).isDirectory()) {
-            console.log(`Auto-corrigiendo carpeta contenedora: ${items[0]}`);
-            
-            // Movemos todos los archivos de la subcarpeta hacia arriba (la raíz de extractPath)
-            const subItems = fs.readdirSync(subfolderPath);
-            for (const item of subItems) {
-              fs.renameSync(
-                path.join(subfolderPath, item),
-                path.join(extractPath, item)
-              );
-            }
-            // Borramos la subcarpeta que ahora ha quedado vacía
-            fs.rmdirSync(subfolderPath);
-          }
-        }
-      }
-      // ---------------------------------------------------
-
-      // --- NUEVA LÓGICA DE AUTO-INYECCIÓN DEL SCRIPT ---
-      // Volvemos a definir la ruta por si fue corregida en el paso anterior
-      const finalIndexPath = path.join(extractPath, "index.html");
-
-      if (fs.existsSync(finalIndexPath)) {
-        let htmlContent = fs.readFileSync(finalIndexPath, 'utf8');
-
-        // Verificamos si el script ya está inyectado para no duplicarlo
-        if (!htmlContent.includes('IntegrationApi.js')) {
-          console.log(`Inyectando IntegrationApi.js en el juego ${newGameId}...`);
-          
-          // El script que inyectamos apunta a la ruta del backend configurada en server.js
-          const scriptTag = `\n  <script src="/ApiComunicacionPlataforma/IntegrationApi.js"></script>\n`;
-          
-          // Lo insertamos justo antes del cierre de la etiqueta </head> o al inicio del <body>
-          if (htmlContent.includes('</head>')) {
-            htmlContent = htmlContent.replace('</head>', `${scriptTag}</head>`);
-          } else if (htmlContent.includes('<body>')) {
-            htmlContent = htmlContent.replace('<body>', `<body>${scriptTag}`);
-          }
-
-          fs.writeFileSync(finalIndexPath, htmlContent, 'utf8');
-        }
-      } else {
-        console.log(`Advertencia: No se encontró index.html para inyectar el script en el juego ${newGameId}`);
-      }
-      // ---------------------------------------------------
-
-      console.log(`Juego ${newGameId} listo, auto-corregido e inyectado en ${extractPath}`);
+    if (!fs.existsSync(extractPath)) {
+      fs.mkdirSync(extractPath, { recursive: true });
     }
+
+    const zip = new AdmZip(file.buffer);
+    zip.extractAllTo(extractPath, true);
+    
+    // --- LÓGICA DE AUTO-CORRECCIÓN DE CARPETAS ---
+    const indexPath = path.join(extractPath, "index.html");
+
+    if (!fs.existsSync(indexPath)) {
+      const items = fs.readdirSync(extractPath);
+      if (items.length === 1) {
+        const subfolderPath = path.join(extractPath, items[0]);
+        if (fs.statSync(subfolderPath).isDirectory()) {
+          console.log(`Auto-corrigiendo carpeta contenedora: ${items[0]}`);
+          const subItems = fs.readdirSync(subfolderPath);
+          for (const item of subItems) {
+            fs.renameSync(
+              path.join(subfolderPath, item),
+              path.join(extractPath, item)
+            );
+          }
+          fs.rmdirSync(subfolderPath);
+        }
+      }
+    }
+    // ---------------------------------------------------
+
+    // --- NUEVA LÓGICA DE AUTO-INYECCIÓN DEL SCRIPT ---
+    const finalIndexPath = path.join(extractPath, "index.html");
+
+    if (fs.existsSync(finalIndexPath)) {
+      let htmlContent = fs.readFileSync(finalIndexPath, 'utf8');
+      if (!htmlContent.includes('IntegrationApi.js')) {
+        console.log(`Inyectando IntegrationApi.js en el juego ${newGameId}...`);
+        const scriptTag = `\n  <script src="/ApiComunicacionPlataforma/IntegrationApi.js"></script>\n`;
+        if (htmlContent.includes('</head>')) {
+          htmlContent = htmlContent.replace('</head>', `${scriptTag}</head>`);
+        } else if (htmlContent.includes('<body>')) {
+          htmlContent = htmlContent.replace('<body>', `<body>${scriptTag}`);
+        }
+        fs.writeFileSync(finalIndexPath, htmlContent, 'utf8');
+      }
+    } else {
+      console.log(`Advertencia: No se encontró index.html para inyectar el script en el juego ${newGameId}`);
+    }
+    // ---------------------------------------------------
+
+    console.log(`Juego ${newGameId} listo, auto-corregido e inyectado en ${extractPath}`);
 
     res.status(201).json({ 
       message: "Game created and prepared successfully", 

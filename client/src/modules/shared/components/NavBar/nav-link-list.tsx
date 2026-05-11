@@ -43,7 +43,7 @@ const NavLinkList: React.FC<NavLinkProps> = ({ role }) => {
             {/* Render teacher-only navigation link */}
 			{role === ROLES.TEACHER && (
 				<div className='me-3'>
-					<LinkItem to={ROUTES.ADMIN_OR_TEACH_PANEL} label='Gestión' />
+					<LinkItem to={ROUTES.ADMIN_OR_TEACH_PANEL} label='Management' />
 				</div>
 			)}
 

@@ -23,7 +23,14 @@ router.get("/", getGames);
 router.get("/:id", getGameById);
 router.get("/linked/:subjectId", getGamesBySubject);
 router.get("/unlinked/:subjectId", getAvailableGamesForSubject);
-router.post("/", upload.single('gameFile'), createGame);
+router.post(
+  "/",
+  upload.fields([
+    { name: "gameFile", maxCount: 1 },
+    { name: "imageFile", maxCount: 1 },
+  ]),
+  createGame
+);
 router.put("/:id", updateGame);
 router.put("/:id/open", updateGameOpenState);
 router.put("/:id/visible", updateGameVisibleState);

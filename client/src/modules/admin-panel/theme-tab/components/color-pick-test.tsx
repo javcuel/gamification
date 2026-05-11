@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
-import Input from '../../../shared/components/ui/input';
+import Input from '../../../shared/components/ui/Input';
+
 
 interface ColorPickerInputProps {
 	label: string;

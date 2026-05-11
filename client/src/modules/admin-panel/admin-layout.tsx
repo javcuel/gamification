@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Dropdown from '../shared/components/ui/Dropdown';
 import AddSubjectTab from './create-subject-tab/create-subject-tab';
+import AddGameTab from './create-game-tab/create-game-tab';
 import AddUserTab from './create-user-tab/create-user-tab';
-import './styles/admin-panel.css';
 import SubjectsTab from './subjects-tab/subjects-tab';
 import ThemeTab from './theme-tab/admin-theme-tab';
 import UsersTab from './users-tab/users-tab';
 import GamesTab from './games-tab/games-tab';
+
+import './styles/admin-panel.css';
 
 // 1. IMPORTAMOS EL CONTEXTO DE AUTENTICACIÓN
 import { useAuth } from '../../context/auth-context'; 
@@ -43,6 +45,7 @@ const AdminLayout: React.FC = () => {
 			{ id: 'tab7', label: 'Games', allowedRoles: ['A'] },         // Solo Admin
 			{ id: 'tab2', label: 'Users', allowedRoles: ['A'] },         // Solo Admin
 			{ id: 'tab3', label: 'Add Subject', allowedRoles: ['A'] },   // Solo Admin
+			{ id: 'tab4', label: 'Add Game', allowedRoles: ['A'] },   	// Solo Admin
 			{ id: 'tab5', label: 'Add User', allowedRoles: ['A'] },      // Solo Admin
 			{ id: 'tab6', label: 'Add Theme', allowedRoles: ['A'] },     // Solo Admin
 		];
@@ -87,6 +90,7 @@ const AdminLayout: React.FC = () => {
 					{activeTab === 'tab7' && tabs.some(t => t.id === 'tab7') && <GamesTab />}
 					{activeTab === 'tab2' && tabs.some(t => t.id === 'tab2') && <UsersTab />}
 					{activeTab === 'tab3' && tabs.some(t => t.id === 'tab3') && <AddSubjectTab />}
+					{activeTab === 'tab4' && tabs.some(t => t.id === 'tab4') && <AddGameTab />}
 					{activeTab === 'tab5' && tabs.some(t => t.id === 'tab5') && <AddUserTab />}
 					{activeTab === 'tab6' && tabs.some(t => t.id === 'tab6') && <ThemeTab />}
 				</div>

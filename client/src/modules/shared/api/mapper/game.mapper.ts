@@ -20,10 +20,20 @@ export class GameMapper {
 	 * @returns A domain Game instance constructed from the DTO.
 	 */
 	static toDomain(dto: GameDTO): Game {
+		// --- NUEVA LÓGICA DE RUTAS ---
+		let finalImageUrl = dto.UrlImagen;
+		
+		// Si la imagen existe y empieza por "/images", es un archivo subido localmente a nuestro servidor
+		if (finalImageUrl && finalImageUrl.startsWith('/images/')) {
+			// Le concatenamos la URL de tu backend. (Ajusta el puerto si en producción es distinto)
+			finalImageUrl = `http://localhost:5000${finalImageUrl}`;
+		}
+		// -----------------------------
+
 		return new Game(
 			dto.IDGame,
 			dto.IDSubject,
-			dto.UrlImagen,
+			finalImageUrl, // Pasamos nuestra variable corregida
 			dto.Name,
 			dto.Abierto,
 			dto.Visible,
