@@ -4,9 +4,9 @@ import useGamesTab from './hooks/use-games-tab';
 import GameManagementItem from './components/game-management-item';
 
 const GamesTab: React.FC = () => {
-    const { games, setGames, error } = useGamesTab();
+    // Extraemos reloadGames
+    const { games, setGames, error, reloadGames } = useGamesTab(); 
 
-    // Esta es la función que TypeScript te está pidiendo
     const handleGameDeleted = (gameId: number) => {
         setGames(prev => prev.filter(game => game.id !== gameId));
     };
@@ -17,7 +17,8 @@ const GamesTab: React.FC = () => {
                 <div key={game.id} className='col-md-4 mt-3'>
                     <GameManagementItem 
                         game={game} 
-                        onGameDeleted={handleGameDeleted} // ¡Aquí se soluciona el error!
+                        onGameDeleted={handleGameDeleted}
+                        onGameUpdated={reloadGames} // <-- NUEVO: Le pasamos la recarga
                     />
                 </div>
             ))}

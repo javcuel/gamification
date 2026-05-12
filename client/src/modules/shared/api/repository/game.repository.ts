@@ -101,18 +101,30 @@ class GameRepository implements IGameRepository {
 	}
 
 	/**
-	 * Sends a request to update an existing game.
-	 * @param id - The ID of the game to be updated.
-	 * @param data - The GameUpdate structure with updated values.
+	 * Updates an existing game with new data.
+	 * @param id - The ID of the game to update.
+	 * @param gameData - The updated game data (includes files).
 	 */
-	async update(id: number, data: GameUpdate): Promise<void> {
-		const requestDTO = GameMapper.toUpdateDTO(data);
-
+	async update(id: number, gameData: GameUpdate): Promise<void> {
 		try {
-			await HttpClient.put(API_URLS.UPDATE_GAME(id), requestDTO);
+			const formData = new FormData();
+			
+			formData.append('name', gameData.name);
+			formData.append('img', gameData.img);
+
+			if (gameData.gameFile) {
+				formData.append('gameFile', gameData.gameFile);
+			}
+
+			if (gameData.imageFile) {
+				formData.append('imageFile', gameData.imageFile);
+			}
+
+			// Asegúrate de que API_URLS.UPDATE_GAME apunte a la ruta correcta
+			await HttpClient.put(API_URLS.UPDATE_GAME(id), formData);
 		} catch (error) {
 			console.error(`Error updating game (ID: ${id}):`, error);
-			throw new Error('Failed to update game');
+			throw new Error('Failed to update game.');
 		}
 	}
 

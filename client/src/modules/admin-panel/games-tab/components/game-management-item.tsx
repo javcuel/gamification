@@ -10,88 +10,55 @@ import useUpdateGame from '../hooks/use-update-game';
 import '../styles/game-management-item.css';
 import GameEditModal from './game-edit-modal';
 
+// 1. AÑADIMOS onGameUpdated A LA INTERFAZ
 interface GameManagementItemProps {
 	game: Game;
 	onGameDeleted: (gameId: number) => void;
+	onGameUpdated: () => void; 
 }
 
-/**
- * GameManagementItem component
- *
- * Displays a single game entry within the game management panel.
- * - Allows toggling game visibility and accessibility (open/closed).
- * - Supports in-place editing via a modal.
- * - Handles game deletion with confirmation.
- * - Displays feedback via toast messages.
- *
- * @param game - The game entity to render and manage
- * @param onGameDeleted - Callback triggered after a successful deletion
- */
 const GameManagementItem: React.FC<GameManagementItemProps> = ({
 	game,
-	onGameDeleted
+	onGameDeleted,
+	onGameUpdated // 2. LA RECIBIMOS COMO PROP
 }) => {
 	const [isEditing, setIsEditing] = useState(false);
 
-	/**
-	 * Hook to handle updating game data.
-	 * Automatically closes the edit modal on successful update.
-	 */
 	const {
 		updateGame,
 		loading: updateLoading,
 		error: updateError
 	} = useUpdateGame(() => {
 		setIsEditing(false);
+		onGameUpdated(); // 3. LA EJECUTAMOS AL CERRAR EL MODAL
 	});
 
-	/**
-	 * Hook to handle toggling game open/locked state.
-	 */
 	const {
 		isOpen,
 		error: openError,
 		toggleOpenState
 	} = useToggleGameOpenState(game);
 
-	/**
-	 * Hook to handle toggling game visibility state.
-	 */
 	const {
 		isVisible,
 		error: visibleError,
 		toggleVisibleState
 	} = useToggleGameVisibleState(game);
 
-	/**
-	 * Hook to handle deleting a game.
-	 * Triggers the onGameDeleted callback after successful deletion.
-	 */
 	const {
 		deleteGame,
 		loading: deleteLoading,
 		error: deleteError
 	} = useDeleteGame(onGameDeleted);
 
-	/**
-	 * Submits updated game data to the update hook.
-	 *
-	 * @param updatedData - The modified game values from the modal
-	 */
 	const handleSaveGame = (updatedData: GameUpdate) => {
 		updateGame(game.id, updatedData);
 	};
 
-	/**
-	 * Opens the edit modal for the current game.
-	 */
 	const handleEditClick = () => {
 		setIsEditing(true);
 	};
 
-	/**
-	 * Prompts for confirmation and deletes the game if confirmed.
-	 */
 	const handleDeleteClick = () => {
 		if (window.confirm('Are you sure you want to delete this game?')) {
 			deleteGame(game.id);
@@ -144,7 +111,6 @@ const GameManagementItem: React.FC<GameManagementItemProps> = ({
 			{isEditing && (
 				<GameEditModal
 					data={{
-						// idSubject: game.idSubject, out
 						name: game.name,
 						img: game.img
 					}}

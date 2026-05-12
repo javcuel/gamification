@@ -4,20 +4,6 @@
  * @class
  */
 export class Game {
-	/**
-	 * Creates a new Game instance.
-	 *
-	 * @param {number} id - Game identifier
-	 * @param {number} idSubject - Identifier of the subject to which the game belongs
-	 * @param {string} img - Game image
-	 * @param {string} name - Game name
-	 * @param {boolean} isOpen - Open state of the game
-	 * @param {boolean} isVisible - Visible state of the game
-	 * @param {number} position - Game position
-	 * @param {number} idUser - Id of the user that uploaded the game
-	 * @param {boolean} isNew - State that shows if the game is new
-	 * @param {boolean} uploaded - State thta show if the game is uploaded
-	 */
 	constructor(
 		public id: number,
 		public idSubject: number,
@@ -28,7 +14,12 @@ export class Game {
 		public position: number,
 		public idUser: number,
 		public isNew: boolean,
-		public uploaded: boolean
+		public uploaded: boolean,
+        // NUEVAS PROPIEDADES (Opcionales, porque la consulta global del Admin no las trae)
+        public adminIsOpen?: boolean,
+        public adminIsVisible?: boolean,
+        public teacherIsOpen?: boolean,
+        public teacherIsVisible?: boolean
 	) {}
 }
 
@@ -63,13 +54,15 @@ export class GameUpdate {
 	/**
 	 * Creates a new GameUpdate instance.
 	 *
-	 * @param {number} idSubject - Identifier of the subject to which the game belongs
-	 * @param {string} img - Game image
 	 * @param {string} name - Game name
+	 * @param {string} img - Game image URL (can be empty if uploading file)
+	 * @param {File | null} gameFile - Optional new .zip file
+	 * @param {File | null} imageFile - Optional physical image file
 	 */
 	constructor(
-		// public idSubject: number, out
 		public name: string,
-		public img: string
+		public img: string,
+		public gameFile: File | null = null,
+		public imageFile: File | null = null
 	) {}
 }

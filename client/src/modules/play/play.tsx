@@ -11,6 +11,8 @@ import useGameLoader from './hooks/use-game-loader';
 import { gameSessionRepository } from '../shared/api/repository/game-session.repository';
 import { playRepository } from '../shared/api/repository/play.repository';
 
+import { API_URLS } from '../../constants/apiUrls';
+
 
 const Play: React.FC = () => {
 	const { gameId } = useParams<{ gameId: string }>();
@@ -68,7 +70,7 @@ const Play: React.FC = () => {
 		const handleBeforeUnload = () => {
 			const id = sessionStorage.getItem('activeGameSessionId');
 			if (id) {
-				const url = `http://localhost:5000/api/game-sessions/${id}/close-beacon`;
+				const url = `${API_URLS.BASE_URL}${API_URLS.CLOSE_SESSION_BEACON(id)}`;
 				navigator.sendBeacon(url);
 			}
 		};

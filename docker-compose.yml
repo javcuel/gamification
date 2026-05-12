@@ -18,16 +18,17 @@ services:
     build: ./server
     container_name: gamispace-backend
     restart: always
-    # Carga el archivo .env automáticamente
     env_file:
       - .env
     environment:
-      # Priorizamos la red interna de Docker
       - DB_HOST=db
     ports:
       - "5000:5000"
     depends_on:
       - db
+    # --- AÑADIMOS EL VOLUMEN AQUÍ ---
+    volumes:
+      - backend_public:/app/public
 
   frontend:
     build: ./client
@@ -37,5 +38,7 @@ services:
     environment:
       - VITE_API_URL=http://localhost:5000
 
+# --- DECLARAMOS EL VOLUMEN AL FINAL ---
 volumes:
   db_data:
+  backend_public:

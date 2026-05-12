@@ -8,6 +8,8 @@ import {
 	GameUpdateVisibleDTO
 } from '../dto/game.dto';
 
+import { API_URLS } from '../../../../constants/apiUrls';
+
 /**
  * Utility class responsible for mapping between domain models and DTOs
  * for Game-related data. This ensures a clear separation between
@@ -20,27 +22,30 @@ export class GameMapper {
 	 * @returns A domain Game instance constructed from the DTO.
 	 */
 	static toDomain(dto: GameDTO): Game {
-		// --- NUEVA LÓGICA DE RUTAS ---
+		// --- LÓGICA DE RUTAS ---
 		let finalImageUrl = dto.UrlImagen;
 		
-		// Si la imagen existe y empieza por "/images", es un archivo subido localmente a nuestro servidor
 		if (finalImageUrl && finalImageUrl.startsWith('/images/')) {
-			// Le concatenamos la URL de tu backend. (Ajusta el puerto si en producción es distinto)
-			finalImageUrl = `http://localhost:5000${finalImageUrl}`;
+			finalImageUrl = `${API_URLS.SERVER_URL}${finalImageUrl}`;
 		}
 		// -----------------------------
 
 		return new Game(
 			dto.IDGame,
-			dto.IDSubject,
-			finalImageUrl, // Pasamos nuestra variable corregida
+			dto.IDSubject, // ¡Ahora esto vendrá lleno desde el backend!
+			finalImageUrl, 
 			dto.Name,
-			dto.Abierto,
-			dto.Visible,
+			!!dto.Abierto,
+			!!dto.Visible,
 			dto.Posicion,
 			dto.IDUser,
-			dto.Nuevo,
-			dto.Subido
+			!!dto.Nuevo,
+			!!dto.Subido,
+            // Convertimos el 0/1 de MySQL a booleanos reales de TypeScript (true/false)
+            (dto as any).AdminAbierto !== undefined ? !!(dto as any).AdminAbierto : undefined,
+            (dto as any).AdminVisible !== undefined ? !!(dto as any).AdminVisible : undefined,
+            (dto as any).TeacherAbierto !== undefined ? !!(dto as any).TeacherAbierto : undefined,
+            (dto as any).TeacherVisible !== undefined ? !!(dto as any).TeacherVisible : undefined
 		);
 	}
 

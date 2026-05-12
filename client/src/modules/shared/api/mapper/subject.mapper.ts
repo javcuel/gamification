@@ -1,5 +1,5 @@
 import { Subject, SubjectCreate, SubjectUpdate } from '../domain/subject';
-
+import { API_URLS } from '../../../../constants/apiUrls'; 
 import {
 	SubjectCreateDTO,
 	SubjectDTO,
@@ -8,22 +8,28 @@ import {
 	SubjectUpdateVisibleDTO
 } from '../dto/subject.dto';
 
-/**
- * Utility class responsible for mapping between Subject domain models
- * and their corresponding Data Transfer Object (DTO) representations.
- */
 export class SubjectMapper {
 	/**
 	 * Converts a SubjectDTO to a Subject domain model.
-	 * @param dto - The data transfer object containing subject data.
-	 * @returns A Subject domain object.
 	 */
 	static toDomain(dto: SubjectDTO): Subject {
+		// CAMBIO: Inyectamos la URL del servidor a ambas imágenes locales
+		let finalImageUrl = dto.UrlImgMundo;
+		if (finalImageUrl && finalImageUrl.startsWith('/images/')) {
+			finalImageUrl = `${API_URLS.SERVER_URL}${finalImageUrl}`;
+		}
+
+		let finalBgImageUrl = dto.UrlImgDentro;
+		if (finalBgImageUrl && finalBgImageUrl.startsWith('/images/')) {
+			finalBgImageUrl = `${API_URLS.SERVER_URL}${finalBgImageUrl}`;
+		}
+		// --------------------------------------------------------
+
 		return new Subject(
 			dto.IDSubject,
 			dto.Name,
-			dto.UrlImgMundo,
-			dto.UrlImgDentro,
+			finalImageUrl,
+			finalBgImageUrl,
 			dto.Posicion,
 			dto.Abierto,
 			dto.Visible

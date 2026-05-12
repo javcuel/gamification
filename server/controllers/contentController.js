@@ -56,3 +56,36 @@ export const linkGameToSubject = async (req, res) => {
     res.status(500).json({ message: "Error interno al vincular el juego" });
   }
 };
+// Toggle Teacher's Open state (Abierto local)
+export const updateContentOpenState = async (req, res) => {
+  const { subjectId, gameId } = req.params;
+  const { Abierto } = req.body;
+
+  try {
+    await db.query(
+      "UPDATE content SET Abierto = ? WHERE IDSubject = ? AND IDGame = ?",
+      [Abierto ? 1 : 0, subjectId, gameId]
+    );
+    res.json({ message: "Teacher open state updated successfully" });
+  } catch (error) {
+    console.error("Error updating content open state:", error);
+    res.status(500).json({ message: "Error updating content open state" });
+  }
+};
+
+// Toggle Teacher's Visible state (Visible local)
+export const updateContentVisibleState = async (req, res) => {
+  const { subjectId, gameId } = req.params;
+  const { Visible } = req.body;
+
+  try {
+    await db.query(
+      "UPDATE content SET Visible = ? WHERE IDSubject = ? AND IDGame = ?",
+      [Visible ? 1 : 0, subjectId, gameId]
+    );
+    res.json({ message: "Teacher visible state updated successfully" });
+  } catch (error) {
+    console.error("Error updating content visible state:", error);
+    res.status(500).json({ message: "Error updating content visible state" });
+  }
+};

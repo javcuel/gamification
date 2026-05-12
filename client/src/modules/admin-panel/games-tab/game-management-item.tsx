@@ -6,19 +6,28 @@ import GameEditModal from './components/game-edit-modal';
 import useDeleteGame from './hooks/use-delete-game';
 import useUpdateGame from './hooks/use-update-game'; 
 
+// 1. ACTUALIZAMOS LA INTERFAZ PARA RECIBIR LAS PROPS DEL PADRE
 interface GameManagementItemProps {
 	game: Game;
-	onDelete: (id: number) => void;
+	onGameDeleted: (id: number) => void; 
+	onGameUpdated: () => void;           
 }
 
-const GameManagementItem: React.FC<GameManagementItemProps> = ({ game, onDelete }) => {
+const GameManagementItem: React.FC<GameManagementItemProps> = ({ 
+    game, 
+    onGameDeleted, // 2. LAS RECIBIMOS AQUÍ
+    onGameUpdated 
+}) => {
 	const [isEditing, setIsEditing] = useState(false);
 
+    // 3. EJECUTAMOS LA RECARGA AL CERRAR EL MODAL CON ÉXITO
 	const { updateGame, loading: updateLoading, error: updateError } = useUpdateGame(() => {
 		setIsEditing(false);
+		onGameUpdated(); 
 	});
 
-	const { deleteGame, loading: deleteLoading, error: deleteError } = useDeleteGame(onDelete);
+    // 4. USAMOS EL NOMBRE CORRECTO PARA EL BORRADO
+	const { deleteGame, loading: deleteLoading, error: deleteError } = useDeleteGame(onGameDeleted);
 
 	const handleSave = (updatedData: GameUpdate) => {
 		updateGame(game.id, updatedData);
@@ -33,7 +42,7 @@ const GameManagementItem: React.FC<GameManagementItemProps> = ({ game, onDelete 
 
 			{isEditing && (
 				<GameEditModal 
-					data={game} 
+					data={{ name: game.name, img: game.img }} 
 					onClose={() => setIsEditing(false)} 
 					onSave={handleSave} 
 				/>
@@ -46,3 +55,5 @@ const GameManagementItem: React.FC<GameManagementItemProps> = ({ game, onDelete 
 		</li>
 	);
 };
+
+export default GameManagementItem;

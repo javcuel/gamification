@@ -36,6 +36,7 @@ export const getGameById = async (req, res) => {
   }
 };
 
+/*
 // Get all games by the Subject ID
 export const getGamesBySubject = async (req, res) => {
   const { subjectId } = req.params;
@@ -54,7 +55,34 @@ export const getGamesBySubject = async (req, res) => {
     console.error("Error fetching games:", error);
     res.status(500).json({ message: "Error fetching games" });
   }
+};*/
+// Get all games by the Subject ID (Doble Candado Aplicado)
+export const getGamesBySubject = async (req, res) => {
+  const { subjectId } = req.params;
+
+  try {
+    const query = `
+      SELECT 
+        g.*, 
+        c.IDSubject, -- ¡El eslabón perdido!
+        g.Abierto AS AdminAbierto, 
+        g.Visible AS AdminVisible,
+        c.Abierto AS TeacherAbierto, 
+        c.Visible AS TeacherVisible,
+        (g.Abierto AND c.Abierto) AS Abierto, 
+        (g.Visible AND c.Visible) AS Visible
+      FROM games g
+      JOIN content c ON g.IDGame = c.IDGame
+      WHERE c.IDSubject = ?
+    `;
+    const [rows] = await db.query(query, [subjectId]);
+    res.json(rows);
+  } catch (error) {
+    console.error("Error fetching games by subject:", error);
+    res.status(500).json({ message: "Error fetching games by subject" });
+  }
 };
+
 
 // Creates a new game and extracts the uploaded .zip file
 export const createGame = async (req, res) => {
@@ -173,16 +201,91 @@ export const createGame = async (req, res) => {
   }
 };
 
-// Update game data
+// Update game
 export const updateGame = async (req, res) => {
   const { id } = req.params;
-  // const { IDSubject, Name, UrlImagen } = req.body; out
-  const { Name, UrlImagen } = req.body; 
+  const { name, img } = req.body;
+
+  // Extraemos archivos si vienen
+  const gameFiles = req.files && req.files['gameFile'] ? req.files['gameFile'] : null;
+  const imageFiles = req.files && req.files['imageFile'] ? req.files['imageFile'] : null;
+
+  const file = gameFiles ? gameFiles[0] : null; // El .zip (opcional)
+  const imageFile = imageFiles ? imageFiles[0] : null; // La imagen (opcional)
+
+  if (!name) {
+    return res.status(400).json({ message: "Missing required fields" });
+  }
+
+  let finalImgUrl = img || "";
+
+  // 1. GESTIÓN DE LA IMAGEN NUEVA
+  if (imageFile) {
+    const imagesDir = path.join(__dirname, "..", "public", "images");
+    if (!fs.existsSync(imagesDir)) {
+      fs.mkdirSync(imagesDir, { recursive: true });
+    }
+    const imageName = `${Date.now()}-${imageFile.originalname.replace(/\s+/g, '_')}`;
+    const imagePath = path.join(imagesDir, imageName);
+    fs.writeFileSync(imagePath, imageFile.buffer);
+    finalImgUrl = `/images/${imageName}`;
+  }
+
   try {
+    // 2. ACTUALIZAMOS EN BASE DE DATOS
     await db.query(
-    "UPDATE games SET Name = ?, UrlImagen = ? WHERE IDGame = ?",
-      [Name , UrlImagen, id]
+      "UPDATE games SET Name = ?, UrlImagen = ? WHERE IDGame = ?",
+      [name, finalImgUrl, id]
     );
+
+    // 3. GESTIÓN DEL .ZIP NUEVO (SOLO SI SUBIERON UNO)
+    if (file) {
+      const extractPath = path.join(__dirname, "..", "public", "games", String(id));
+
+      // BUENA PRÁCTICA: Si la carpeta ya existe, la vaciamos entera primero para evitar archivos fantasma
+      if (fs.existsSync(extractPath)) {
+        fs.rmSync(extractPath, { recursive: true, force: true });
+      }
+      fs.mkdirSync(extractPath, { recursive: true });
+
+      const zip = new AdmZip(file.buffer);
+      zip.extractAllTo(extractPath, true);
+
+      // --- LÓGICA DE AUTO-CORRECCIÓN ---
+      const indexPath = path.join(extractPath, "index.html");
+      if (!fs.existsSync(indexPath)) {
+        const items = fs.readdirSync(extractPath);
+        if (items.length === 1) {
+          const subfolderPath = path.join(extractPath, items[0]);
+          if (fs.statSync(subfolderPath).isDirectory()) {
+            const subItems = fs.readdirSync(subfolderPath);
+            for (const item of subItems) {
+              fs.renameSync(
+                path.join(subfolderPath, item),
+                path.join(extractPath, item)
+              );
+            }
+            fs.rmdirSync(subfolderPath);
+          }
+        }
+      }
+
+      // --- AUTO-INYECCIÓN DEL SCRIPT ---
+      const finalIndexPath = path.join(extractPath, "index.html");
+      if (fs.existsSync(finalIndexPath)) {
+        let htmlContent = fs.readFileSync(finalIndexPath, 'utf8');
+        if (!htmlContent.includes('IntegrationApi.js')) {
+          const scriptTag = `\n  <script src="/ApiComunicacionPlataforma/IntegrationApi.js"></script>\n`;
+          if (htmlContent.includes('</head>')) {
+            htmlContent = htmlContent.replace('</head>', `${scriptTag}</head>`);
+          } else if (htmlContent.includes('<body>')) {
+            htmlContent = htmlContent.replace('<body>', `<body>${scriptTag}`);
+          }
+          fs.writeFileSync(finalIndexPath, htmlContent, 'utf8');
+        }
+      }
+    }
+
     res.json({ message: "Game updated successfully" });
   } catch (error) {
     console.error("Error updating game:", error);

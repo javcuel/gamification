@@ -6,19 +6,23 @@ const useGamesTab = () => {
 	const [games, setGames] = useState<Game[]>([]);
 	const [error, setError] = useState<string | null>(null);
 
+	// 1. Sacamos la función FUERA del useEffect
+	const loadGames = async () => {
+		try {
+			const data = await gameRepository.getAll();
+			setGames(data);
+		} catch (error: unknown) {
+			setError(error instanceof Error ? error.message : 'An unknown error occurred');
+		}
+	};
+
+	// 2. El useEffect ahora solo la llama
 	useEffect(() => {
-		const loadGames = async () => {
-			try {
-				const data = await gameRepository.getAll();
-				setGames(data);
-			} catch (error: unknown) {
-				setError(error instanceof Error ? error.message : 'An unknown error occurred');
-			}
-		};
 		loadGames();
 	}, []);
 
-	return { games, setGames,error };
+	// 3. Ahora el return sí encuentra loadGames
+	return { games, setGames, error, reloadGames: loadGames };
 };
 
 export default useGamesTab;

@@ -8,64 +8,79 @@ import useCreateSubject from './hooks/use-create-subject';
 import { z } from 'zod';
 import '../styles/admin-add-card.css';
 
-/**
- * CreateSubjectTab component
- *
- * Provides a form interface for creating a new subject.
- * - Validates input fields using Zod schema.
- * - Uses a custom hook to handle the creation logic.
- * - Displays validation, error, and success messages accordingly.
- */
 const CreateSubjectTab: React.FC = () => {
 	const [name, setName] = useState<string>('');
 	const [img, setImg] = useState<string>('');
 	const [imgBackground, setImgBackground] = useState<string>('');
+
+	// Nuevos estados para archivos
+	const [imageFile, setImageFile] = useState<File | null>(null);
+	const [bgImageFile, setBgImageFile] = useState<File | null>(null);
+
+	// Interruptores de modo URL vs Archivo
+	const [useImageUrl, setUseImageUrl] = useState<boolean>(true);
+	const [useBgImageUrl, setUseBgImageUrl] = useState<boolean>(true);
+
 	const [validationError, setValidationError] = useState<string | null>(null);
 
 	const { createSubject, error, success } = useCreateSubject();
 
-	/**
-	 * Schema for subject form validation.
-	 * Ensures all fields are non-empty strings.
-	 */
+	// Zod solo valida el nombre
 	const createSubjectSchema = z.object({
 		name: z.string().min(1, 'Subject name is required'),
-		img: z.string().min(1, 'Subject image is required'),
-		imgBackground: z.string().min(1, 'Subject background image is required')
 	});
 
-	/**
-	 * handleSubmit
-	 *
-	 * Validates form data and submits a new subject if validation passes.
-	 * Clears input fields after successful creation.
-	 *
-	 * @param e - React form event
-	 */
-	const handleSubmit = async (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-
 		setValidationError(null);
 
-		const validationResult = createSubjectSchema.safeParse({
-			name,
-			img,
-			imgBackground
-		});
+		const parsedData = createSubjectSchema.safeParse({ name });
 
-		if (!validationResult.success) {
-			const firstError =
-				validationResult.error.errors[0]?.message || 'Unknown error';
+		if (!parsedData.success) {
+			const firstError = parsedData.error.errors[0]?.message || 'Unknown error';
 			setValidationError(firstError);
 			return;
 		}
 
-		const newSubject = new SubjectCreate(name, img, imgBackground);
+		// Validaciones manuales para Imagen Icono
+		if (useImageUrl && img.trim() === '') {
+			setValidationError('Introduce una URL válida para el icono o sube un archivo');
+			return;
+		}
+		if (!useImageUrl && !imageFile) {
+			setValidationError('Selecciona un archivo para el icono o usa la opción URL');
+			return;
+		}
+
+		// Validaciones manuales para Imagen de Fondo
+		if (useBgImageUrl && imgBackground.trim() === '') {
+			setValidationError('Introduce una URL válida para el fondo o sube un archivo');
+			return;
+		}
+		if (!useBgImageUrl && !bgImageFile) {
+			setValidationError('Selecciona un archivo para el fondo o usa la opción URL');
+			return;
+		}
+
+		// Instanciamos el objeto puro de dominio
+		const newSubject = new SubjectCreate(
+			name,
+			useImageUrl ? img : '',
+			useBgImageUrl ? imgBackground : '',
+			useImageUrl ? null : imageFile,
+			useBgImageUrl ? null : bgImageFile
+		);
+
 		await createSubject(newSubject);
 
-		setName('');
-		setImg('');
-		setImgBackground('');
+		// Limpieza de estados si fue exitoso
+		if (!error) {
+			setName('');
+			setImg('');
+			setImgBackground('');
+			setImageFile(null);
+			setBgImageFile(null);
+		}
 	};
 
 	return (
@@ -76,37 +91,57 @@ const CreateSubjectTab: React.FC = () => {
 		>
 			<h3 className='text-center mb-4'>Create Subject</h3>
 
-			{/* Input for subject name */}
-			<Input
-				placeholder='Subject Name'
-				type='text'
-				value={name}
-				onChange={e => setName(e.target.value)}
-			/>
+			<Input placeholder='Subject Name' type='text' value={name} onChange={e => setName(e.target.value)} />
 
-			{/* Input for subject image */}
-			<Input
-				placeholder='Subject Img'
-				type='text'
-				value={img}
-				onChange={e => setImg(e.target.value)}
-			/>
+			{/* SECCIÓN IMAGEN DEL ICONO */}
+			<div className="w-100 d-flex flex-column gap-2" style={{ maxWidth: '300px' }}>
+				<div className="d-flex justify-content-between align-items-center mb-1">
+					<label className="text-start mb-0" style={{ color: 'white', fontSize: '0.9rem' }}>
+						Subject Icon
+					</label>
+					<button
+						type="button"
+						className="btn btn-sm btn-outline-light"
+						style={{ fontSize: '0.8rem', padding: '2px 8px' }}
+						onClick={() => setUseImageUrl(!useImageUrl)}
+					>
+						{useImageUrl ? 'Subir Archivo' : 'Usar URL'}
+					</button>
+				</div>
+				{useImageUrl ? (
+					<Input placeholder='Subject Img URL' type='text' value={img} onChange={e => setImg(e.target.value)} />
+				) : (
+					<input type="file" accept="image/*" className="form-control" onChange={(e) => setImageFile(e.target.files?.[0] || null)} />
+				)}
+			</div>
 
-			{/* Input for subject background image */}
-			<Input
-				placeholder='Subject Back Img'
-				type='text'
-				value={imgBackground}
-				onChange={e => setImgBackground(e.target.value)}
-			/>
+			{/* SECCIÓN IMAGEN DE FONDO */}
+			<div className="w-100 d-flex flex-column gap-2" style={{ maxWidth: '300px' }}>
+				<div className="d-flex justify-content-between align-items-center mb-1">
+					<label className="text-start mb-0" style={{ color: 'white', fontSize: '0.9rem' }}>
+						Background Image
+					</label>
+					<button
+						type="button"
+						className="btn btn-sm btn-outline-light"
+						style={{ fontSize: '0.8rem', padding: '2px 8px' }}
+						onClick={() => setUseBgImageUrl(!useBgImageUrl)}
+					>
+						{useBgImageUrl ? 'Subir Archivo' : 'Usar URL'}
+					</button>
+				</div>
+				{useBgImageUrl ? (
+					<Input placeholder='Background Img URL' type='text' value={imgBackground} onChange={e => setImgBackground(e.target.value)} />
+				) : (
+					<input type="file" accept="image/*" className="form-control" onChange={(e) => setBgImageFile(e.target.files?.[0] || null)} />
+				)}
+			</div>
 
-			{/* Submit button */}
 			<Button text='Create' />
 
-			{/* Feedback messages */}
-			{error && <Toast type='error' message={error} />}
 			{validationError && <Toast type='error' message={validationError} />}
-			{success && <Toast type='success' message={'Subject created!'} />}
+			{error && <Toast type='error' message={error} />}
+			{success && <Toast type='success' message='Subject created successfully' />}
 		</form>
 	);
 };

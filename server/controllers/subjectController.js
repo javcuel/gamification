@@ -1,4 +1,23 @@
 import db from "../config/db.js";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Función de ayuda para guardar imágenes localmente
+const saveImage = (file) => {
+  const imagesDir = path.join(__dirname, "..", "public", "images");
+  if (!fs.existsSync(imagesDir)) {
+    fs.mkdirSync(imagesDir, { recursive: true });
+  }
+  // Limpiamos el nombre original para evitar problemas con espacios
+  const imageName = `${Date.now()}-${file.originalname.replace(/\s+/g, '_')}`;
+  const imagePath = path.join(imagesDir, imageName);
+  fs.writeFileSync(imagePath, file.buffer);
+  return `/images/${imageName}`;
+};
 
 // Get all subjects
 export const getSubjects = async (req, res) => {
@@ -50,33 +69,38 @@ export const getSubjectsByTeacher = async (req, res) => {
   }
 };
 
-
 // Creates a new subject (Y su grupo de profesores por defecto)
 export const createSubject = async (req, res) => {
   const { Name, UrlImgMundo, UrlImgDentro } = req.body;
 
-  if (!Name || !UrlImgMundo || !UrlImgDentro) {
-    return res.status(400).json({ message: "Missing required fields" });
+  const imageFile = req.files && req.files['imageFile'] ? req.files['imageFile'][0] : null;
+  const bgImageFile = req.files && req.files['bgImageFile'] ? req.files['bgImageFile'][0] : null;
+
+  if (!Name) {
+    return res.status(400).json({ message: "Missing required field: Name" });
   }
 
+  // CORRECCIÓN: Usar "" en lugar de null para evitar el crash de MySQL
+  let finalImgMundo = UrlImgMundo || "";
+  let finalImgDentro = UrlImgDentro || "";
+
+  if (imageFile) finalImgMundo = saveImage(imageFile);
+  if (bgImageFile) finalImgDentro = saveImage(bgImageFile);
+
   try {
-    // 1. Crear la Asignatura
     const [result] = await db.query(
       "INSERT INTO subjects (Name, UrlImgMundo, UrlImgDentro, Posicion, Abierto, Visible) VALUES (?, ?, ?, ?, ?, ?)",
-      [Name, UrlImgMundo, UrlImgDentro, 0, 0, 0] // Defaults: position = 0, open = false, visible = false
+      [Name, finalImgMundo, finalImgDentro, 0, 0, 0] 
     );
     
     const newSubjectId = result.insertId;
 
-    // 2. AUTO-CREACIÓN: Crear el grupo blindado de Profesores para esta asignatura
     await db.query(
       "INSERT INTO subjectGroups (Name, IDSubject, IsTeacherGroup) VALUES (?, ?, 1)",
       ['Profesores', newSubjectId]
     );
 
-    res
-      .status(201)
-      .json({ message: "Subject and Teacher Group created successfully", id: newSubjectId });
+    res.status(201).json({ message: "Subject and Teacher Group created successfully", id: newSubjectId });
   } catch (error) {
     console.error("Error creating subject:", error);
     res.status(500).json({ message: "Error creating subject" });
@@ -88,14 +112,24 @@ export const updateSubject = async (req, res) => {
   const { id } = req.params;
   const { Name, UrlImgMundo, UrlImgDentro } = req.body;
 
-  if (!Name || !UrlImgMundo || !UrlImgDentro) {
-    return res.status(400).json({ message: "Missing required fields" });
+  const imageFile = req.files && req.files['imageFile'] ? req.files['imageFile'][0] : null;
+  const bgImageFile = req.files && req.files['bgImageFile'] ? req.files['bgImageFile'][0] : null;
+
+  if (!Name) {
+    return res.status(400).json({ message: "Missing required field: Name" });
   }
+
+  // CORRECCIÓN: Usar "" en lugar de null
+  let finalImgMundo = UrlImgMundo || "";
+  let finalImgDentro = UrlImgDentro || "";
+
+  if (imageFile) finalImgMundo = saveImage(imageFile);
+  if (bgImageFile) finalImgDentro = saveImage(bgImageFile);
 
   try {
     await db.query(
       "UPDATE subjects SET Name = ?, UrlImgMundo = ?, UrlImgDentro = ? WHERE IDSubject = ?",
-      [Name, UrlImgMundo, UrlImgDentro, id]
+      [Name, finalImgMundo, finalImgDentro, id]
     );
     res.json({ message: "Subject updated successfully" });
   } catch (error) {
@@ -151,10 +185,7 @@ export const deleteSubject = async (req, res) => {
   }
 };
 
-
-
-// Este método interactúa con tablas mas allá de subject lo cual viola el Principio de Responsabilidad Única (SRP) 
-// sin embargo ponemos por delante la facilidad de implementación para este caso en concreto como excepción
+// Importar usuarios (Se mantiene tu lógica intacta)
 export const importUsersToSubject = async (req, res) => {
   const subjectId = req.params.id;
 

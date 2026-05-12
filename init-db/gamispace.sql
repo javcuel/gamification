@@ -231,15 +231,17 @@ UNLOCK TABLES;
 --
 -- Table structure for table `content`
 --
+-- Table structure for table `content`
 DROP TABLE IF EXISTS `content`;
 CREATE TABLE `content` (
-  `IDContent` int NOT NULL AUTO_INCREMENT,
   `IDSubject` int NOT NULL,
   `IDGame` int NOT NULL,
-  PRIMARY KEY (`IDContent`),
-  UNIQUE KEY `idx_subject_game` (`IDSubject`, `IDGame`), -- RESTRICCIÓN PARA EVITAR DUPLICADOS
-  CONSTRAINT `fk_content_mundo` FOREIGN KEY (`IDSubject`) REFERENCES `subjects` (`IDSubject`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_content_minijuego` FOREIGN KEY (`IDGame`) REFERENCES `games` (`IDGame`) ON DELETE CASCADE ON UPDATE CASCADE
+  `Abierto` tinyint(1) NOT NULL DEFAULT 0,  -- Candado Local Profesor
+  `Visible` tinyint(1) NOT NULL DEFAULT 0,  -- Candado Local Profesor
+  PRIMARY KEY (`IDSubject`,`IDGame`),
+  KEY `fk_content_game` (`IDGame`),
+  CONSTRAINT `fk_content_game` FOREIGN KEY (`IDGame`) REFERENCES `games` (`IDGame`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_content_subject` FOREIGN KEY (`IDSubject`) REFERENCES `subjects` (`IDSubject`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 -- Lo dejamos vacío para que puedas probar la vinculación desde el Front

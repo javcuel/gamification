@@ -18,8 +18,22 @@ const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
 router.get("/", getSubjects);
-router.post("/", createSubject);
-router.put("/:id", updateSubject);
+router.post(
+  "/",
+  upload.fields([
+    { name: "imageFile", maxCount: 1 },
+    { name: "bgImageFile", maxCount: 1 },
+  ]),
+  createSubject
+);
+router.put(
+  "/:id",
+  upload.fields([
+    { name: "imageFile", maxCount: 1 },
+    { name: "bgImageFile", maxCount: 1 },
+  ]),
+  updateSubject
+);  
 router.put("/:id/open", updateSubjectOpenState);
 router.put("/:id/visible", updateSubjectVisibleState);
 router.delete("/:id", deleteSubject);

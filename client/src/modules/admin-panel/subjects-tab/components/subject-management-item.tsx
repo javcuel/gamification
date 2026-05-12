@@ -17,11 +17,13 @@ import SubjectGroupSection from './subject-group-section';
 interface SubjectiItemProps {
 	subject: Subject;
 	onSubjectDeleted: (subjectId: number) => void;
+	onSubjectUpdated: () => void; // <-- 1. NUEVO PROP
 }
 
 const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 	subject,
-	onSubjectDeleted
+	onSubjectDeleted,
+	onSubjectUpdated // <-- 2. RECIBIMOS EL PROP
 }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	
@@ -49,14 +51,18 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 		toggleAddMode
 	} = useExpandUnlinked(subject.id);
 
-	// Hooks de gestión de asignatura
-	const { updateSubject, loading: updateLoading, error: updateError } = useUpdateSubject(() => setIsEditing(false));
+	// <-- 3. EJECUTAMOS LA RECARGA AL TENER ÉXITO
+	const { updateSubject, loading: updateLoading, error: updateError } = useUpdateSubject(() => {
+		setIsEditing(false);
+		onSubjectUpdated();
+	});
+	
 	const { isOpen, error: openError, toggleOpenState } = useToggleSubjectOpenState(subject);
 	const { isVisible, error: visibleError, toggleVisibleState } = useToggleSubjectVisibleState(subject);
 	const { deleteSubject, loading: deleteLoading, error: deleteError } = useDeleteSubject(onSubjectDeleted);
 
 	const handleSaveSubject = (updatedData: SubjectUpdate) => {
-		updateSubject(subject.id, new SubjectUpdate(updatedData.name, updatedData.img, updatedData.imgBackground));
+		updateSubject(subject.id, new SubjectUpdate(updatedData.name, updatedData.img, updatedData.imgBackground, updatedData.imageFile, updatedData.bgImageFile));
 	};
 
 	const handleDeleteClick = () => {
@@ -190,6 +196,7 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 											buttonText="Unlink"
 											disabled={contentLoading}
 											onActionClick={() => handleGameUnlinked(game.id)}
+                                            subjectId={subject.id} // <-- ¡EL ESLABÓN PERDIDO!
 										/>
 									))
 								) : (
@@ -209,6 +216,7 @@ const SubjectManagementItem: React.FC<SubjectiItemProps> = ({
 										buttonText="Link"
 										disabled={contentLoading}
 										onActionClick={() => handleGameLinked(game.id)}
+                                        subjectId={subject.id} // <-- ¡AQUÍ TAMBIÉN!
 									/>
 								))}
 								{unlinkedGames.length === 0 && !loadingUnlinked && (

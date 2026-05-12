@@ -31,7 +31,14 @@ router.post(
   ]),
   createGame
 );
-router.put("/:id", updateGame);
+router.put(
+  "/:id",
+  upload.fields([
+    { name: "gameFile", maxCount: 1 },
+    { name: "imageFile", maxCount: 1 },
+  ]),
+  updateGame
+);
 router.put("/:id/open", updateGameOpenState);
 router.put("/:id/visible", updateGameVisibleState);
 router.delete("/:id", deleteGame);

@@ -2,120 +2,110 @@ import React, { useState } from 'react';
 import { z } from 'zod';
 import { GameUpdate } from '../../../shared/api/domain/game';
 import Button from '../../../shared/components/ui/Button';
-import Dropdown from '../../../shared/components/ui/Dropdown';
 import Input from '../../../shared/components/ui/Input';
 import Toast from '../../../shared/components/ui/toast';
 import '../../styles/edit-modal.css';
-import useSubjectsTab from '../../subjects-tab/hooks/use-subjects-tab';
 
 interface GameEditModalProps {
-	data: GameUpdate;
+	data: { name: string; img: string };
 	onClose: () => void;
 	onSave: (data: GameUpdate) => void;
 }
 
-/**
- * GameEditModal component
- *
- * Modal interface to edit a game's details.
- * - Validates input using Zod before applying changes.
- * - Allows updating the name, image, and subject.
- * - Fetches available subjects dynamically for the dropdown.
- *
- * @param data - The current game data to prefill the form
- * @param onClose - Callback to close the modal
- * @param onSave - Callback triggered with the updated game data upon saving
- */
 const GameEditModal: React.FC<GameEditModalProps> = ({
 	data,
 	onClose,
 	onSave
 }) => {
-	// const [idSubject, setIdSubject] = useState(data.idSubject); out
 	const [name, setName] = useState(data.name);
 	const [img, setImg] = useState(data.img);
+	
+	// Nuevos estados
+	const [gameFile, setGameFile] = useState<File | null>(null);
+	const [imageFile, setImageFile] = useState<File | null>(null);
+	// Si data.img viene de "/images/", asumimos que es una URL válida para empezar, 
+	// pero le damos al usuario la opción de cambiarla.
+	const [useImageUrl, setUseImageUrl] = useState<boolean>(true);
+	
 	const [validationError, setValidationError] = useState<string | null>(null);
-	const { subjects, error: subjectsError } = useSubjectsTab();
 
-	/**
-	 * Zod schema to validate the form fields for updating a game.
-	 */
+	// Nombre corregido
 	const updateGameSchema = z.object({
 		name: z.string().min(1, 'Game name is required'),
-		img: z.string().min(1, 'Game image is required'),
 	});
 
-	/**
-	 * handleSubmit
-	 *
-	 * Validates and prepares the updated game data, then calls onSave and closes the modal.
-	 *
-	 * @param e - React form event
-	 */
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-
 		setValidationError(null);
 
-		const validationResult = updateGameSchema.safeParse({
-			name,
-			img
-		});
+		const validationResult = updateGameSchema.safeParse({ name });
 
 		if (!validationResult.success) {
-			const firstError =
-				validationResult.error.errors[0]?.message || 'Unknown error';
+			const firstError = validationResult.error.errors[0]?.message || 'Unknown error';
 			setValidationError(firstError);
 			return;
 		}
 
-		// onSave({ idSubject, name, img}); out
-		onSave({name, img});
+		// Validaciones de imagen
+		if (useImageUrl && img.trim() === '') {
+			setValidationError('Introduce una URL de imagen válida o cambia a subir archivo');
+			return;
+		}
+
+		if (!useImageUrl && !imageFile) {
+			setValidationError('Selecciona un archivo de imagen o cambia a usar URL');
+			return;
+		}
+
+		// CORRECCIÓN: Instanciamos el objeto de dominio correctamente
+		const updatedGame = new GameUpdate(
+			name,
+			useImageUrl ? img : '',
+			gameFile, // Opcional (si es null, el backend no toca el zip)
+			useImageUrl ? null : imageFile // Opcional
+		);
+
+		onSave(updatedGame);
 		onClose();
 	};
 
 	return (
 		<div className='modal-overlay'>
-			<div className='modal-content'>
+			<div className='modal-content' style={{ maxWidth: '400px' }}>
 				<h3 className='text-center mb-3'>Edit Game</h3>
 
-				{/* Form to update game fields */}
 				<form onSubmit={handleSubmit} className='d-flex flex-column gap-3'>
-					{/* Input: Game name */}
-					<Input
-						placeholder='Name'
-						type='text'
-						value={name}
-						onChange={e => setName(e.target.value)}
-					/>
+					<Input placeholder='Name' type='text' value={name} onChange={e => setName(e.target.value)} />
 
-					{/* Input: Game image URL */}
-					<Input
-						placeholder='Image'
-						type='text'
-						value={img}
-						onChange={e => setImg(e.target.value)}
-					/>
-					
-					{/* Dropdown: Subject selection */}
-					{/*
-					<Dropdown
-						options={subjects.map(s => s.name)}
-						placeholder='Select Subject'
-						onChange={selectedName => {
-							const selected = subjects.find(s => s.name === selectedName);
-							if (selected) setIdSubject(selected.id);
-						}}
-					/>*/}
+					{/* SECCIÓN IMAGEN */}
+					<div className="w-100 d-flex flex-column gap-2">
+						<div className="d-flex justify-content-between align-items-center mb-1">
+							<label className="text-start mb-0" style={{ color: 'white', fontSize: '0.9rem' }}>Game Image</label>
+							<button type="button" className="btn btn-sm btn-outline-light" style={{ fontSize: '0.8rem', padding: '2px 8px' }} onClick={() => setUseImageUrl(!useImageUrl)}>
+								{useImageUrl ? 'Subir Archivo' : 'Usar URL'}
+							</button>
+						</div>
 
-					{/* Form controls and feedback */}
+						{useImageUrl ? (
+							<Input placeholder='Game Img URL' type='text' value={img} onChange={e => setImg(e.target.value)} />
+						) : (
+							<input type="file" accept="image/*" className="form-control" onChange={(e) => setImageFile(e.target.files?.[0] || null)} />
+						)}
+					</div>
+
+					{/* SECCIÓN JUEGO OPCIONAL */}
+					<div className="w-100 d-flex flex-column gap-2">
+						<label className="text-start mb-0" style={{ color: 'white', fontSize: '0.9rem' }}>
+							Update Game File (.zip) <small className="text-muted">(Optional)</small>
+						</label>
+						<input type="file" accept=".zip" className="form-control" onChange={(e) => setGameFile(e.target.files?.[0] || null)} />
+					</div>
+
 					<div className='d-flex justify-content-between mt-3'>
 						<Button text='Cancel' onClick={onClose} />
 						<Button text='Save' />
 					</div>
-
-					{/* Error messages */}
-					{subjectsError && <Toast type='error' message={subjectsError} />}
+					
 					{validationError && <Toast type='error' message={validationError} />}
 				</form>
 			</div>

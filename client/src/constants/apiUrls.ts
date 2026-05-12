@@ -1,5 +1,11 @@
+const SERVER = import.meta.env.VITE_SERVER_URL || 'http://localhost:5000';
+
 export const API_URLS = {
-	BASE_URL: 'http://localhost:5000/api',
+
+	// --- RUTAS BASE DINÁMICAS ---
+	SERVER_URL: SERVER,
+	BASE_URL: `${SERVER}/api`,
+	CLOSE_SESSION_BEACON: (sessionId: string | number) => `/game-sessions/${sessionId}/close-beacon`,
 
 	GET_SUBJECTS: '/subjects',
 	CREATE_SUBJECT: '/subjects',

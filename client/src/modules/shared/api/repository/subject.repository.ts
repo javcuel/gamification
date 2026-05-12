@@ -53,31 +53,46 @@ class SubjectRepository implements ISubjectRepository {
 		}
 	}
 
-	/**
-	 * Sends a request to create a new subject.
-	 * @param data - SubjectCreate data to be sent in the request.
-	 */
-	async create(data: SubjectCreate): Promise<void> {
-		const requestDTO = SubjectMapper.toCreateDTO(data);
-
+	async create(subjectData: SubjectCreate): Promise<void> {
 		try {
-			await HttpClient.post(API_URLS.CREATE_SUBJECT, requestDTO);
+			const formData = new FormData();
+			formData.append('Name', subjectData.name);
+			formData.append('UrlImgMundo', subjectData.img);
+			formData.append('UrlImgDentro', subjectData.imgBackground);
+
+			if (subjectData.imageFile) formData.append('imageFile', subjectData.imageFile);
+			if (subjectData.bgImageFile) formData.append('bgImageFile', subjectData.bgImageFile);
+
+			await HttpClient.post(API_URLS.CREATE_SUBJECT, formData);
 		} catch (error) {
-			console.error('Error creating new subject:', error);
-			throw new Error('Failed to create new subject');
+			console.error('Error creating subject:', error);
+			throw new Error('Failed to create subject');
 		}
 	}
 
 	/**
-	 * Sends a request to update an existing subject.
+	 * Updates an existing subject with new data.
 	 * @param id - The ID of the subject to update.
-	 * @param data - The updated SubjectUpdate data.
+	 * @param subjectData - The updated subject data (includes files).
 	 */
-	async update(id: number, data: SubjectUpdate): Promise<void> {
-		const requestDTO = SubjectMapper.toUpdateDTO(data);
-
+	async update(id: number, subjectData: SubjectUpdate): Promise<void> {
 		try {
-			await HttpClient.put(API_URLS.UPDATE_SUBJECT(id), requestDTO);
+			// DEBE SER FORMDATA, no JSON, para poder enviar los archivos
+			const formData = new FormData();
+			
+			formData.append('Name', subjectData.name);
+			formData.append('UrlImgMundo', subjectData.img);
+			formData.append('UrlImgDentro', subjectData.imgBackground);
+
+			// Adjuntamos las imágenes físicas si el usuario las ha subido
+			if (subjectData.imageFile) {
+				formData.append('imageFile', subjectData.imageFile);
+			}
+			if (subjectData.bgImageFile) {
+				formData.append('bgImageFile', subjectData.bgImageFile);
+			}
+
+			await HttpClient.put(API_URLS.UPDATE_SUBJECT(id), formData);
 		} catch (error) {
 			console.error(`Error updating subject (ID: ${id}):`, error);
 			throw new Error('Failed to update subject');
