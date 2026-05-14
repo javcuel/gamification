@@ -5,15 +5,11 @@
  */
 export interface GameDTO {
 	IDGame: number;
-	IDSubject: number;
 	UrlImagen: string;
 	Name: string;
 	Abierto: boolean;
 	Visible: boolean;
-	Posicion: number;
-	IDUser: number;
-	Nuevo: boolean;
-	Subido: boolean;
+
 }
 
 /**
@@ -22,7 +18,6 @@ export interface GameDTO {
  * @interface
  */
 export interface GameCreateDTO {
-	// IDSubject: number;
 	Name: string;
 	UrlImagen: string;
 }
@@ -33,7 +28,6 @@ export interface GameCreateDTO {
  * @interface
  */
 export interface GameUpdateDTO {
-	// IDSubject: number;
 	Name: string;
 	UrlImagen: string;
 }

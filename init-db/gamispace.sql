@@ -111,16 +111,15 @@ CREATE TABLE `games` (
   `Name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL, -- Reducido a 100 para indexación
   `Abierto` tinyint(1) NOT NULL,
   `Visible` tinyint(1) NOT NULL,
-  `Disponible` tinyint(1) NOT NULL,
   PRIMARY KEY (`IDGame`),
   UNIQUE KEY `idx_game_name` (`Name`) -- Restricción para búsqueda exacta
 ) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 LOCK TABLES `games` WRITE;
 INSERT INTO `games` VALUES 
-(127,'url_img_1','Cafeteria',1,1,1),
-(109,'url_img_1','Caida de Datos',1,1,1),
-(128,'url_img_2','Strings Invaders',1,1,1);
+(127,'url_img_1','Cafeteria',1,1),
+(109,'url_img_1','Caida de Datos',1,1),
+(128,'url_img_2','Strings Invaders',1,1);
 UNLOCK TABLES;
 
 --
@@ -137,7 +136,7 @@ CREATE TABLE `subjects` (
   `Abierto` tinyint(1) NOT NULL DEFAULT 0,
   `Visible` tinyint(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`IDSubject`),
-  UNIQUE KEY `idx_subject_name` (`Name`) -- Restricción para vinculación por nombre
+  UNIQUE KEY `idx_subject_name` (`Name`) 
 ) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 LOCK TABLES `subjects` WRITE;

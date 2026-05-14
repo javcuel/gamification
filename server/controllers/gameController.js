@@ -130,7 +130,7 @@ export const createGame = async (req, res) => {
   try {
     // 1. Insertamos en la Base de Datos usando finalImgUrl
     const [result] = await db.query(
-      "INSERT INTO games (Name, UrlImagen, Abierto, Visible, Disponible) VALUES (?, ?, ?, ?, ?)",
+      "INSERT INTO games (Name, UrlImagen, Abierto, Visible) VALUES (?, ?, ?, ?)",
       [name, finalImgUrl, 0, 0, 0] 
     );
     

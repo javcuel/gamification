@@ -31,22 +31,16 @@ export class GameMapper {
 		// -----------------------------
 
 		return new Game(
-			dto.IDGame,
-			dto.IDSubject, // ¡Ahora esto vendrá lleno desde el backend!
-			finalImageUrl, 
-			dto.Name,
-			!!dto.Abierto,
-			!!dto.Visible,
-			dto.Posicion,
-			dto.IDUser,
-			!!dto.Nuevo,
-			!!dto.Subido,
-            // Convertimos el 0/1 de MySQL a booleanos reales de TypeScript (true/false)
-            (dto as any).AdminAbierto !== undefined ? !!(dto as any).AdminAbierto : undefined,
-            (dto as any).AdminVisible !== undefined ? !!(dto as any).AdminVisible : undefined,
-            (dto as any).TeacherAbierto !== undefined ? !!(dto as any).TeacherAbierto : undefined,
-            (dto as any).TeacherVisible !== undefined ? !!(dto as any).TeacherVisible : undefined
-		);
+        dto.IDGame,
+        finalImageUrl, 
+        dto.Name,
+        !!dto.Abierto,
+        !!dto.Visible,
+        (dto as any).AdminAbierto !== undefined ? !!(dto as any).AdminAbierto : undefined,
+        (dto as any).AdminVisible !== undefined ? !!(dto as any).AdminVisible : undefined,
+        (dto as any).TeacherAbierto !== undefined ? !!(dto as any).TeacherAbierto : undefined,
+        (dto as any).TeacherVisible !== undefined ? !!(dto as any).TeacherVisible : undefined
+    );
 	}
 
 	/**
@@ -57,15 +51,10 @@ export class GameMapper {
 	static toDTO(game: Game): GameDTO {
 		return {
 			IDGame: game.id,
-			IDSubject: game.idSubject,
 			UrlImagen: game.img,
 			Name: game.name,
 			Abierto: game.isOpen,
 			Visible: game.isVisible,
-			Posicion: game.position,
-			IDUser: game.idUser,
-			Nuevo: game.isNew,
-			Subido: game.uploaded
 		};
 	}
 

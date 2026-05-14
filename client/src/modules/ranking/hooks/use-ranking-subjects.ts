@@ -21,8 +21,8 @@ const useRankingSubjects = () => {
 			try {
                 let fetchedSubjects;
 
-                // Verificamos si es un Player ('P')
-                if (user.role === 'P') {
+                // Verificamos si es un Player ('P') o un Teacher 'T'
+                if (user.role === 'P' || user.role === 'T') {
                     // Si es player, pedimos solo sus asignaturas pasándole su ID
                     fetchedSubjects = await subjectRepository.getByUser(user.id);
                 } else {

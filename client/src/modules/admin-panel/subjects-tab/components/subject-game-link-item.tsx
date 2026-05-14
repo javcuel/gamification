@@ -33,7 +33,7 @@ const SubjectGameLinkItem: React.FC<SubjectGameLinkItemProps> = ({
     }, [game.teacherIsOpen, game.teacherIsVisible, game.id]);
 
     const isLinked = actionType === 'delete';
-    const actualSubjectId = subjectId || game.idSubject;
+    const actualSubjectId = subjectId;
 
     // 3. MEJORA: Usamos el estado global (isOpen/isVisible) como respaldo si no hay datos de Admin específicos
     const isAdminOpenLocked = (game.adminIsOpen ?? game.isOpen) === false;

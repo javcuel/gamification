@@ -6,15 +6,10 @@ import { Game } from '../../shared/api/domain/game';
 
 const mockGame: Game = {
 	id: 1,
-	idSubject: 1,
 	img: '/images/default_game_image.png',
 	name: 'MarsMinner',
 	isOpen: true,
-	isVisible: true,
-	position: 1,
-	idUser: 1,
-	isNew: true,
-	uploaded: true
+	isVisible: true
 };
 
 const meta: Meta<typeof GameItem> = {

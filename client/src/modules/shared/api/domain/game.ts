@@ -4,23 +4,17 @@
  * @class
  */
 export class Game {
-	constructor(
-		public id: number,
-		public idSubject: number,
-		public img: string,
-		public name: string,
-		public isOpen: boolean,
-		public isVisible: boolean,
-		public position: number,
-		public idUser: number,
-		public isNew: boolean,
-		public uploaded: boolean,
-        // NUEVAS PROPIEDADES (Opcionales, porque la consulta global del Admin no las trae)
+    constructor(
+        public id: number,
+        public img: string,
+        public name: string,
+        public isOpen: boolean,
+        public isVisible: boolean,
         public adminIsOpen?: boolean,
         public adminIsVisible?: boolean,
         public teacherIsOpen?: boolean,
         public teacherIsVisible?: boolean
-	) {}
+    ) {}
 }
 
 /**
