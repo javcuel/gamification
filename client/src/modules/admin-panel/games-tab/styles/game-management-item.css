@@ -1,0 +1,38 @@
+.user-management-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	border: solid 2px var(--text);
+	border-radius: 15px;
+	padding: 10px 10px;
+
+	background-color: transparent;
+}
+
+.user-management-item-button {
+	padding: 15px 15px;
+	margin: 2px 2px;
+
+	background-color: var(--secondary);
+	color: var(--text);
+	border: none;
+	border-radius: 15px;
+
+	transition:
+		background-color 0.3s ease,
+		filter 0.3s ease;
+}
+
+.user-management-item-buttons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	flex-shrink: 0;
+	width: 30%;
+	justify-content: flex-end;
+}
+
+.user-management-item-button:hover {
+	filter: brightness(1.2);
+}

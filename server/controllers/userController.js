@@ -1,0 +1,132 @@
+import jwt from "jsonwebtoken";
+import db from "../config/db.js";
+
+// Login user
+export const loginUser = async (req, res) => {
+  const { Name, Password } = req.body;
+
+  if (!Name || !Password) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  try {
+    const [rows] = await db.query(
+      "SELECT * FROM users WHERE Name = ? AND Password = ?",
+      [Name, Password]
+    );
+
+    if (rows.length === 0) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const token = jwt.sign(
+      {
+        IDUser: rows[0].IDUser,
+        Name: rows[0].Name,
+        UserType: rows[0].UserType,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+    return res.status(200).json({ message: "Login successfull", token });
+  } catch (error) {
+    console.error("Error login in:", error);
+    res.status(500).json({ message: "Error login in" });
+  }
+};
+
+// Get all users
+export const getUsers = async (req, res) => {
+  try {
+    const [rows] = await db.query(
+      "SELECT IDUser, Name, UserType, RealName FROM users"
+    );
+    res.json(rows);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ message: "Error fetching users" });
+  }
+};
+
+// Get user total score
+export const getScore = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [rows] = await db.query(
+      "SELECT SUM(um.Puntuacion) AS Puntuacion, SUM(um.Completado) AS Completado FROM users u JOIN usuariominijuego um ON u.IDUser = um.IDUser WHERE u.IDUser = ?",
+      [id]
+    );
+    res.json(rows);
+  } catch (error) {
+    console.error("Error fetching score:", error);
+    res.status(500).json({ error: "Error fetching score" });
+  }
+};
+
+// Creates a new user
+export const createUser = async (req, res) => {
+  const { Name, Password, UserType, RealName } = req.body;
+
+  if (!Name || !Password || !UserType) {
+    return res.status(400).json({ message: "Name, Password and UserType are required" });
+  }
+
+  try {
+    await db.query(
+      "INSERT INTO users (Name, Password, UserType, RealName) VALUES (?, ?, ?, ?)",
+      [Name, Password, UserType, RealName]
+    );
+    res.status(201).json({ message: "User created successfully" });
+  } catch (error) {
+    console.error("Error creating user:", error);
+    if (error.code === 'ER_DUP_ENTRY') {
+      return res.status(409).json({ message: "A user with this name already exists" });
+    }
+    res.status(500).json({ message: "Error creating user" });
+  }
+};
+
+// Update user data
+export const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const { Name, Password, UserType, RealName } = req.body;
+
+  if (!Name || !UserType) {
+    return res.status(400).json({ message: "Name and UserType are required" });
+  }
+
+  try {
+    if (Password) {
+      await db.query(
+        "UPDATE users SET Name = ?, Password = ?, UserType = ?, RealName = ? WHERE IDUser = ?",
+        [Name, Password, UserType, RealName, id]
+      );
+    } else {
+      await db.query(
+        "UPDATE users SET Name = ?, UserType = ?, RealName = ? WHERE IDUser = ?",
+        [Name, UserType, RealName, id]
+      );
+    }
+    res.json({ message: "User updated successfully" });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    if (error.code === 'ER_DUP_ENTRY') {
+      return res.status(409).json({ message: "A user with this name already exists" });
+    }
+    res.status(500).json({ message: "Error updating user" });
+  }
+};
+
+// Delete user
+export const deleteUser = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await db.query("DELETE FROM users WHERE IDUser = ?", [id]);
+    res.json({ message: "User deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).json({ message: "Error deleting user" });
+  }
+};

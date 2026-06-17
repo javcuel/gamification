@@ -1,0 +1,6 @@
+.docker/
+*.raw
+node_modules/
+.env
+dist/       
+build/      

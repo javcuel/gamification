@@ -1,0 +1,45 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: gamispace-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init-db:/docker-entrypoint-initdb.d
+
+  backend:
+    build: ./server
+    container_name: gamispace-backend
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=db
+      - FRONTEND_URL=${URL_FRONTEND}
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    volumes:
+      - backend_public:/app/public
+
+  frontend:
+    build: 
+      context: ./client
+      dockerfile: Dockerfile.prod
+      args:
+        - VITE_SERVER_URL=${URL_BACKEND}
+    container_name: gamispace-frontend
+    ports:
+      - "3000:80" 
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
+  backend_public:

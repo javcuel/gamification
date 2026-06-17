@@ -1,0 +1,96 @@
+import React, { useEffect, useState } from 'react';
+import Dropdown from '../shared/components/ui/Dropdown';
+import AddSubjectTab from './create-subject-tab/create-subject-tab';
+import AddGameTab from './create-game-tab/create-game-tab';
+import AddUserTab from './create-user-tab/create-user-tab';
+import SubjectsTab from './subjects-tab/subjects-tab';
+import ThemeTab from './theme-tab/admin-theme-tab';
+import UsersTab from './users-tab/users-tab';
+import GamesTab from './games-tab/games-tab';
+
+import './styles/admin-panel.css';
+
+import { useAuth } from '../../context/auth-context'; 
+
+const AdminLayout: React.FC = () => {
+    const { user } = useAuth();
+    const userRole = user?.role || 'P'; // We use role 'PLAYER' as default
+
+	const [activeTab, setActiveTab] = useState('tab1');
+	const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+	const [menuOpen, setMenuOpen] = useState(false);
+
+	useEffect(() => {
+		const handleResize = () => {
+			setIsMobile(window.innerWidth < 768);
+			if (window.innerWidth >= 768) {
+				setMenuOpen(false);
+			}
+		};
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
+
+	const handleTabChange = (tab: string) => {
+		setActiveTab(tab);
+		setMenuOpen(false);
+	};
+
+		const allTabs = [
+			{ id: 'tab1', label: 'Subjects', allowedRoles: ['A', 'T'] }, 	// Only Admin and Teacher
+			{ id: 'tab7', label: 'Games', allowedRoles: ['A'] },         	// Only Admin
+			{ id: 'tab2', label: 'Users', allowedRoles: ['A'] },         	// Only Admin
+			{ id: 'tab3', label: 'Add Subject', allowedRoles: ['A'] },   	// Only Admin
+			{ id: 'tab4', label: 'Add Game', allowedRoles: ['A'] },   		// Only Admin
+			{ id: 'tab5', label: 'Add User', allowedRoles: ['A'] },      	// Only Admin
+			{ id: 'tab6', label: 'Add Theme', allowedRoles: ['A'] },     	// Only Admin
+		];
+
+    const tabs = allTabs.filter(tab => tab.allowedRoles.includes(userRole));
+
+	return (
+		<div className='admin-container'>
+			<div className={`sidebar ${isMobile ? (menuOpen ? 'open' : 'collapsed') : ''}`}>
+				<div className='sidebar-nav'>
+					{tabs.map(({ id, label }) => (
+						<li key={id}>
+							<button
+								className={`sidebar-nav-link ${activeTab === id ? 'active' : ''}`}
+								onClick={() => handleTabChange(id)}
+							>
+								{label}
+							</button>
+						</li>
+					))}
+				</div>
+			</div>
+
+			<div className='panel'>
+				{isMobile && (
+					<div className='mobile-dropdown-wrapper'>
+						<Dropdown
+							options={tabs.map(tab => tab.label)}
+							placeholder='Select a tab'
+							onChange={label => {
+								const selectedTab = tabs.find(tab => tab.label === label);
+								if (selectedTab) handleTabChange(selectedTab.id);
+							}}
+						/>
+					</div>
+				)}
+
+				<div className='panel-content'>
+					{activeTab === 'tab1' && tabs.some(t => t.id === 'tab1') && <SubjectsTab />}
+					{activeTab === 'tab7' && tabs.some(t => t.id === 'tab7') && <GamesTab />}
+					{activeTab === 'tab2' && tabs.some(t => t.id === 'tab2') && <UsersTab />}
+					{activeTab === 'tab3' && tabs.some(t => t.id === 'tab3') && <AddSubjectTab />}
+					{activeTab === 'tab4' && tabs.some(t => t.id === 'tab4') && <AddGameTab />}
+					{activeTab === 'tab5' && tabs.some(t => t.id === 'tab5') && <AddUserTab />}
+					{activeTab === 'tab6' && tabs.some(t => t.id === 'tab6') && <ThemeTab />}
+				</div>
+			</div>
+		</div>
+	);
+};
+
+export default AdminLayout;

@@ -1,0 +1,48 @@
+.navbar {
+	height: 10%;
+	margin: 12px 0px;
+	padding: 10px 20px;
+	top: 12px;
+	z-index: 9999;
+	position: sticky;
+
+	background-color: transparent;
+	color: var(--text);
+	border: solid 2px var(--text);
+	border-radius: 15px;
+
+	transition:
+		background-color 1s ease,
+		border-color 1s ease;
+}
+
+.navbar-scrolled {
+	background-color: color-mix(in srgb, var(--secondary) 90%, transparent);
+}
+
+.navbar-toggler {
+	color: var(--text);
+	border: none;
+}
+
+.navbar-button {
+	color: var(--text);
+}
+.navbar-brand {
+	color: var(--text);
+
+	font-size: 1.5rem;
+}
+
+.navbar-brand:hover {
+	color: var(--text);
+
+	text-decoration: none;
+}
+
+/* @media (max-width: 991px) {
+  .navbar {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+}
+ */

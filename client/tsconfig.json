@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"lib": ["dom", "es2016"],
+		"jsx": "react-jsx",
+		"module": "ESNext",
+		"allowJs": true,
+		"noEmit": true,
+		"strict": true,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"baseUrl": "./",
+		"paths": {
+			"*": ["node_modules/*"]
+		}
+	},
+	"include": ["src", "src/custom.d.ts"]
+}

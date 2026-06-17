@@ -1,0 +1,168 @@
+import React, { useState } from 'react';
+import { RANKING_TYPES } from '../../../constants/ranking-types';
+import Dropdown from '../../shared/components/ui/Dropdown';
+import LoadingMsg from '../../shared/components/ui/loading-msg';
+import Toast from '../../shared/components/ui/toast';
+import useRankings from '../hooks/use-ranking';
+import useRankingGames from '../hooks/use-ranking-games';
+import '../styles/ranking.css';
+import useRankingSubjects from '../hooks/use-ranking-subjects';
+
+const DEFAULT_RANKING = RANKING_TYPES.PLAYERS;
+const DEFAULT_GAME = 0;
+const DEFAULT_SUBJECT = 0; 
+
+const RankingTable: React.FC = () => {
+	const [rankingType, setRankingType] = useState<string>(DEFAULT_RANKING);
+	const [selectedGame, setSelectedGame] = useState<number>(DEFAULT_GAME);
+    const [selectedSubject, setSelectedSubject] = useState<number>(DEFAULT_SUBJECT);
+
+	const { rankings, error, loading } = useRankings(selectedSubject, rankingType, selectedGame);
+	const { games, error: gamesError, loading: gamesLoading } = useRankingGames(selectedSubject);
+    const { subjects, error: subjectsError, loading: subjectsLoading } = useRankingSubjects();
+
+	const getPodiumClass = (index: number) => {
+		if (index === 0) return 'podium1';
+		if (index === 1) return 'podium2';
+		if (index === 2) return 'podium3';
+		return '';
+	};
+
+    const formatTime = (totalSeconds: number) => {
+        if (!totalSeconds) return "00:00.000";
+        const mins = Math.floor(totalSeconds / 60);
+        const secs = Math.floor(totalSeconds % 60);
+        const ms = Math.round((totalSeconds - Math.floor(totalSeconds)) * 1000);
+        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}.${ms.toString().padStart(3, '0')}`;
+    };
+
+	return (
+		<div className='container'>
+			<div className='row mb-3 align-items-end'>
+                {/* Subject Selector */}
+                <div className='col-md-4'>
+					<label>Select Subject</label>
+					{subjectsLoading ? (
+						<LoadingMsg message='Loading subjects...' />
+					) : subjectsError ? (
+						<Toast type='error' message={subjectsError} />
+					) : subjects.length === 0 ? (
+                        <div className="alert alert-warning py-2 mb-0" style={{ fontSize: '0.9rem' }}>
+                            No subjects assigned to you.
+                        </div>
+                    ) : (
+						<Dropdown
+							options={subjects.map(s => s.name)}
+							placeholder='Select Subject'
+							onChange={subjectName => {
+								const selected = subjects.find(s => s.name === subjectName);
+								if (selected) {
+									setSelectedSubject(selected.id);
+									setSelectedGame(DEFAULT_GAME); 
+								}
+							}}
+						/>
+					)}
+				</div>
+
+                {/* Ranking Type Selector */}
+				<div className='col-md-4'>
+					<label>Select ranking</label>
+					<Dropdown
+						options={Object.values(RANKING_TYPES)}
+						placeholder='Select ranking'
+						onChange={setRankingType}
+					/>
+				</div>
+
+                {/* Game Selector (Only if it's a game ranking) */}
+				{(rankingType === RANKING_TYPES.PLAYERS_BY_GAME ||
+					rankingType === RANKING_TYPES.GROUPS_BY_GAME) && (
+					<div className='col-md-4'>
+						<label>Select game</label>
+						{gamesLoading ? (
+							<LoadingMsg message='Loading games...' />
+						) : gamesError ? (
+							<Toast type='error' message={gamesError} />
+						) : selectedSubject !== 0 && games.length === 0 ? (
+                            <div className="alert alert-warning py-2 mb-0" style={{ fontSize: '0.9rem' }}>
+                                No games linked to this subject.
+                            </div>
+                        ) : (
+							<Dropdown
+								options={games.map(g => g.name)}
+								placeholder='Select game'
+								onChange={gameName => {
+									const selected = games.find(g => g.name === gameName);
+									if (selected) setSelectedGame(selected.id);
+								}}
+							/>
+						)}
+					</div>
+				)}
+			</div>
+
+            {/* LOAD NOTIFICATIONS AND GLOBAL ERRORS */}
+			{selectedSubject === 0 && subjects.length > 0 && (
+                <div className="alert alert-info">Please select a subject to view rankings.</div>
+            )}
+            
+            {subjects.length === 0 && !subjectsLoading && !subjectsError && (
+                <div className="alert alert-secondary">You do not have access to any rankings at this time because you are not enrolled in any active subjects.</div>
+            )}
+
+            {selectedSubject !== 0 && loading && <LoadingMsg message='Loading Rankings...' />}
+			{error && <Toast type='error' message={error} />}
+
+            {/* RANKING */}
+            {selectedSubject !== 0 && !loading && (
+                <div className='row'>
+                    <div className='col'>
+                        <div className='table-responsive-wrapper'>
+                            <table className='table'>
+                                <thead>
+                                    <tr>
+                                        <th>Position</th>
+                                        {rankingType === RANKING_TYPES.GROUPS ||
+                                        rankingType === RANKING_TYPES.GROUPS_BY_GAME ? (
+                                            <th>Group Name</th>
+                                        ) : (
+                                            <th>Name</th>
+                                        )}
+                                        <th>Points</th>
+                                        <th>Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {rankings.length > 0 ? (
+                                        rankings.slice(0, 10).map((entry, index) => (
+                                            <tr key={index} className={`table-row ${getPodiumClass(index)}`}>
+                                                <td>
+                                                    {index === 0 ? ' 1 🥇' : index === 1 ? ' 2 🥈' : index === 2 ? ' 3 🥉' : index + 1}
+                                                </td>
+                                                {/* Standardized name */}
+                                                <td>{entry.name || 'N/A'}</td>
+                                                {/* Exact score */}
+                                                <td>{entry.totalScore}</td>
+                                                {/* Exact timing without TypeScript errors */}
+                                                <td>{formatTime(entry.totalTime)}</td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan={4} className="text-center text-muted py-4">
+                                                No ranking data available for this selection yet.
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            )}
+		</div>
+	);
+};
+
+export default RankingTable;
