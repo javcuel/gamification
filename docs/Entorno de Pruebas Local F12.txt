@@ -1,0 +1,32 @@
+window.GamispaceAPI = {
+    requestProgress: function() {
+        console.log("[Mock] Petición de progreso recibida.");
+
+        setTimeout(() => {
+            if (this.onProgressReceived) {
+                this.onProgressReceived(
+                    '[{"level":1,"score":100,"time":10.5,"completed":true}]'
+                );
+            }
+        }, 500);
+    },
+
+    sendPlayData: function(level, score, time, completed) {
+        console.log(
+            "[Mock] Guardando -> Nivel: " +
+            level +
+            " | Puntos: " +
+            score +
+            " | Tiempo: " +
+            time +
+            " | Completado: " +
+            completed
+        );
+
+        setTimeout(() => {
+            if (this.onPlaySaved) {
+                this.onPlaySaved(true);
+            }
+        }, 500);
+    }
+};
