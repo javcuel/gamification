@@ -82,8 +82,8 @@ Crea un archivo `.env` en la raíz (y/o en las carpetas de cliente/servidor) bas
 3. **Construir y levantar los contenedores:**
 ```bash
 docker compose up -d --build
-
 ```
+Si obtienes "Error: Failed to fetch theme" espera unos segundos y recarga la página
 
 
 *El flag `--build` forzará a reconstruir las imágenes si hay cambios en el código local.*
