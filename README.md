@@ -1,4 +1,3 @@
-```markdown
 # Gamispace 🚀
 
 Web platform aimed at the integration of educational video games (*Serious Games*) and academic subjects. This project constitutes the Bachelor's Thesis (TFG - *Trabajo de Fin de Grado*) in Computer Engineering at the University of Valladolid (UVa).
@@ -57,8 +56,6 @@ gamification/
 │   └── gamispace.sql
 └── docker-compose.yml      # Container orchestration
 
-
-```
 
 ## 🚀 Installation and Deployment
 
