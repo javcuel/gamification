@@ -58,7 +58,7 @@ gamification/
 └── docker-compose.yml      # Container orchestration
 
 
-```
+
 
 ## 🚀 Installation and Deployment
 
@@ -114,6 +114,8 @@ The bidirectional flow enables listening to the following events:
 ## 👨‍💻 Author
 
 **Javier Cueli** Computer Engineering Student - University of Valladolid (UVa)
+
+```
 
 ```
 
