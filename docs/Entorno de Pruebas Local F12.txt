@@ -1,28 +1,21 @@
 window.GamispaceAPI = {
-    requestProgress: function() {
-        console.log("[Mock] Petición de progreso recibida.");
+    isPlatformReady: true, // Simulates that the web platform has already loaded
 
+    onPlatformReady: null,
+    onProgressReceived: null,
+    onPlaySaved: null,
+
+    requestProgress: function() {
+        console.log("[Mock] Progress request received.");
         setTimeout(() => {
             if (this.onProgressReceived) {
-                this.onProgressReceived(
-                    '[{"level":1,"score":100,"time":10.5,"completed":true}]'
-                );
+                this.onProgressReceived('[{"level":1,"score":100,"time":10.5,"completed":true}]');
             }
         }, 500);
     },
 
     sendPlayData: function(level, score, time, completed) {
-        console.log(
-            "[Mock] Guardando -> Nivel: " +
-            level +
-            " | Puntos: " +
-            score +
-            " | Tiempo: " +
-            time +
-            " | Completado: " +
-            completed
-        );
-
+        console.log(`[Mock] Saving -> Level: ${level} | Score: ${score} | Completed: ${completed}`);
         setTimeout(() => {
             if (this.onPlaySaved) {
                 this.onPlaySaved(true);
@@ -30,3 +23,6 @@ window.GamispaceAPI = {
         }, 500);
     }
 };
+
+// Manual trigger to simulate a delayed load event
+// Run in browser console: window.GamispaceAPI.onPlatformReady()

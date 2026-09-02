@@ -4,10 +4,10 @@ import { API_URLS } from '../../../constants/apiUrls';
 
 interface GameIframeProps {
     selectedGame: Game;
+    // Exposes the native load event to notify when the game environment is fully mounted
+    onLoad?: () => void; 
 }
-
-const Iframe = React.forwardRef<HTMLIFrameElement, GameIframeProps>(({ selectedGame }, ref) => {
-    // Usamos las variables centralizadas para armar la ruta: .../api/game-files/144/index.html
+const Iframe = React.forwardRef<HTMLIFrameElement, GameIframeProps>(({ selectedGame, onLoad }, ref) => {
     const gameUrl = `${API_URLS.BASE_URL}${API_URLS.GAME_FILES}/${selectedGame.id}/index.html`;
     
     return (
@@ -21,6 +21,7 @@ const Iframe = React.forwardRef<HTMLIFrameElement, GameIframeProps>(({ selectedG
                 width='70%'
                 height='700px'
                 style={{ border: 'none' }}
+                onLoad={onLoad} // Triggers the ready signal once the HTML document finishes loading
             />
         </div>
     );

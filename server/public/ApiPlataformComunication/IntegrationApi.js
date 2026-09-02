@@ -1,3 +1,20 @@
+/**
+ * @file IntegrationApi.js
+ * @description Reactive communication bridge between Gamispace (React) and WebGL binaries.
+ * 
+ * INVERSION OF CONTROL ARCHITECTURE:
+ * This script eliminates race conditions (Cold Starts) caused by network latency.
+ * 
+ * Execution flow:
+ * 1. React mounts the `Iframe` component and waits for its native `onLoad` event.
+ * 2. Once resolved, React raises the safety flag `isPlatformReady = true` and invokes `onPlatformReady()`.
+ * 3. Scenario A (Engine wins the race): The game loads quickly, reads `isPlatformReady = false`, and waits 
+ *    passively without throwing errors. When React finishes, it triggers the event and wakes up the game.
+ * 4. Scenario B (React wins the race): The platform loads quickly and raises the flag. When the game 
+ *    engine finishes booting its WebGL memory and subscribes, it reads `isPlatformReady = true` and receives data instantly.
+ * 
+ * @warning DO NOT reintroduce timers (setTimeout) or Polling loops to manage synchronization.
+ */
 window.GamispaceAPI = {
     // ---------------------------------------------------------
     // 1. FUNCTIONS TO BE CALLED BY THE ENGINE (Unity, Godot...)
@@ -50,7 +67,14 @@ window.GamispaceAPI = {
     /**
      * Will receive 'true' when the platform confirms that the data has been saved.
      */
-    onPlaySaved: null         
+    onPlaySaved: null,   
+    /**
+     * Triggered when the React platform confirms the iframe has fully loaded.
+     * Games should assign a function to this variable to initialize their data fetching.
+     */
+    onPlatformReady: null,
+    // Tracks if the React platform has already fired the ready event
+    isPlatformReady: false    
 };
 
 // ---------------------------------------------------------
@@ -75,4 +99,15 @@ window.addEventListener('message', function(event) {
             window.GamispaceAPI.onPlaySaved(true);
         }
     }
+
+    // Intercepts the ready signal from the parent window and notifies the game engine
+    if (message.type === 'GAMISPACE_PLATFORM_READY') {
+        console.log("[GamispaceAPI] Platform is ready. Notifying game...");
+        window.GamispaceAPI.isPlatformReady = true;
+        
+        if (typeof window.GamispaceAPI.onPlatformReady === 'function') {
+            window.GamispaceAPI.onPlatformReady();
+        }
+    }
+    
 });
