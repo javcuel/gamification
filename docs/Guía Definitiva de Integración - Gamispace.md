@@ -1,4 +1,3 @@
-```markdown
 # Universal Game Integration Guide - Gamispace
 
 Gamispace is an educational platform that integrates subjects, users, and video games[cite: 3]. The system is designed to be "Plug & Play" and is completely engine-agnostic[cite: 3]. The platform handles the heavy lifting (security, databases, and persistence)[cite: 3]. Your goal is simply to connect your game to our communication bridge[cite: 3].
