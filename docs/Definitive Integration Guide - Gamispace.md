@@ -1,32 +1,51 @@
 # Universal Game Integration Guide - Gamispace
 
-Gamispace is an educational platform that integrates subjects, users, and video games[cite: 3]. The system is designed to be "Plug & Play" and is completely engine-agnostic[cite: 3]. The platform handles the heavy lifting (security, databases, and persistence)[cite: 3]. Your goal is simply to connect your game to our communication bridge[cite: 3].
+Gamispace is an educational platform that integrates subjects, users, and video games. The system is designed to be "Plug & Play" and is completely engine-agnostic. The platform handles the heavy lifting (security, databases, and persistence). Your goal is simply to connect your game to our communication bridge.
 
 > **Important note on Copy & Paste:** We recommend using the provided source code files directly instead of copying and pasting from this document to avoid hidden line break errors.
 
 ## 1. Local Test Environment (Mock API)
 
-Once you have implemented the steps below, you can test that your game sends and receives data without having to compile and upload the game to the platform every time; you can simulate the server directly in your browser[cite: 3]. Open your exported game in the browser, press F12 to open the console, paste this code, and press Enter[cite: 3]:
+Once you have implemented the steps below, you can test that your game sends and receives data without having to compile and upload the game to the platform every time. 
 
-```javascript
+To safely simulate the platform locally, open the `index.html` file generated after exporting your game, and paste this code snippet wrapped in a `<script>` tag directly inside the `<head>` section. Save the file and open it in your browser:
+
+```html
+<script>
 window.GamispaceAPI = {
-    isPlatformReady: true, // Simulates that the web platform has already loaded
-
+    isPlatformReady: true,
     onPlatformReady: null,
     onProgressReceived: null,
     onPlaySaved: null,
+
+    // Temporary database (Starting with Level 1 completed)
+    mockDatabase: [{"level":1,"score":100,"time":10.5,"completed":true}],
 
     requestProgress: function() {
         console.log("[Mock] Progress request received.");
         setTimeout(() => {
             if (this.onProgressReceived) {
-                this.onProgressReceived('[{"level":1,"score":100,"time":10.5,"completed":true}]');
+                // Return the current state of memory converted to string
+                this.onProgressReceived(JSON.stringify(this.mockDatabase));
             }
         }, 500);
     },
 
     sendPlayData: function(level, score, time, completed) {
         console.log(`[Mock] Saving -> Level: ${level} | Score: ${score} | Completed: ${completed}`);
+        
+        // Search if we had already played this level in memory
+        let existingPlay = this.mockDatabase.find(d => d.level === level);
+        
+        if (existingPlay) {
+            // Update only if it's a new record or if it is now completed
+            if (score > existingPlay.score) existingPlay.score = score;
+            if (completed) existingPlay.completed = true;
+        } else {
+            // If it's a new level, add it to the database
+            this.mockDatabase.push({level: level, score: score, time: time, completed: completed});
+        }
+
         setTimeout(() => {
             if (this.onPlaySaved) {
                 this.onPlaySaved(true);
@@ -34,9 +53,7 @@ window.GamispaceAPI = {
         }, 500);
     }
 };
-
-// Manual trigger to simulate a delayed load event
-// Run in browser console: window.GamispaceAPI.onPlatformReady()
+</script>
 
 ```
 
